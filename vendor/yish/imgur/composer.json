@@ -1,0 +1,29 @@
+{
+    "name": "yish/imgur",
+    "description": "Imgur upload API with Laravel.",
+    "keywords": ["laravel", "upload", "imgur"],
+    "homepage": "https://github.com/Mombuyish/Laravel-Imgur",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Yish",
+            "email": "mombuartworks@gmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^6.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Yish\\Imgur\\": "src/"
+        }
+    },
+    "extra": {
+        "component": "package",
+        "laravel": {
+            "providers": [
+                "Yish\\Imgur\\UploadServiceProvider"
+            ]
+        }
+    }
+}
