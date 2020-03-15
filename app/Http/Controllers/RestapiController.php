@@ -154,16 +154,18 @@ Class RestapiController extends Controller{
 
     function chat(){
         //$cs = \App\User::inRandomOrder()->first();
-        $cs = \App\User::where('email','!=','donokasinoindro85@yahoo.com')
+        $cs = \App\User::where('join_cs',1)
+            //->orderBy('prioritas','asc')
             ->orderBy('frekuensi','asc')
-            ->orderBy('prioritas','asc')
+            
             ->limit(1)->get();
         //-- update cs terpilih utk menaikkan nilai frekunsi nya
-        \App\User::find($cs[0]->id)->increment('frekuensi', 1);
+        \App\User::find($cs[0]->id)->increment('frekuensi', $cs[0]->prioritas);
+        \App\User::find($cs[0]->id)->increment('lead', 1);
  
-        return redirect()->away('https://api.whatsapp.com/send?phone='.$cs[0]->wa.'&text=Saya%20ingin%20bertanya%20mengenai%20cincin%20kawin');
+        return redirect()->away('https://api.whatsapp.com/send?phone='.$cs[0]->wa.'&text=Hallo%20kak%20'.$cs[0]->nama_cs.'%20Saya%20ingin%20bertanya%20mengenai%20cincin%20kawin');
         //dd($cs);
-        //echo $cs[0]->wa;
+       // echo $cs[0]->wa;
     }
 
     function couple_pricelist(){
