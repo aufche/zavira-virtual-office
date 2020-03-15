@@ -27,7 +27,6 @@ class NeracaController extends Controller
     function index(){
         $currentMonth = date('m');
         $data = \App\Neraca::whereRaw('MONTH(created_at) = ?',[$currentMonth])->orderBy('id','desc')->get();
-
         return view ('neraca.index',compact('data'));
     }
 }
