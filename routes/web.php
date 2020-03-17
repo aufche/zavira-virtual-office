@@ -448,6 +448,11 @@ Route::prefix('neraca')->group(function () {
     Route::get('/','NeracaController@index')->name('neraca.index')->middleware('auth');
 });
 
+Route::prefix('users')->group(function () {
+    
+    Route::get('/','UserController@index')->name('users.index')->middleware('auth');
+});
+
 
 
 //-- end order web
