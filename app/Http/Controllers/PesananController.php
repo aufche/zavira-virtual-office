@@ -413,4 +413,10 @@ Class PesananController extends Controller{
         return view('logam.buyback');
     }
 
+    function hapus($id){
+        DB::table('pesanan')->where('id',$id)->update(['arsipkan'=>1]);
+        \App\Neraca::where('pesanan_id',$id)->delete();
+        return redirect()->route('semua')->with('status','Data berhasil diarsipkan/dihapus');
+    }
+
 }

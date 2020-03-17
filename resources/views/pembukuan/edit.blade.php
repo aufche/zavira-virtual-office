@@ -2,8 +2,8 @@
 <main class="app-content">
       <div class="app-title">
         <div>
-          <h1><i class="fa fa-dashboard"></i> Tambah Data Transaksi Cash</h1>
-          <p>Pada halaman ini, kamu bisa menambah data transaksi cash</p>
+          <h1><i class="fa fa-dashboard"></i> Edit Data Transaksi Cash</h1>
+          <p>Pada halaman ini, kamu bisa mengubah data transaksi cash</p>
         </div>
       </div>
 

@@ -28,6 +28,7 @@ Class PembukuanController extends Controller{
             if ($request->input('jenis_transaksi') == 1){
                 $data_keuangan = array_add($data_keuangan,'masuk',$request->input('nominal'));
                 $data_keuangan = array_add($data_keuangan,'keluar',0);
+                $data_keuangan = array_add($data_keuangan,'jenis_transaksi',1);
                 $text = 'Ada uang cash masuk sejumlah '.rupiah($request->input('nominal')).' penanggung jawab '.Auth::user()->name.' keterangan :'.$request->input('keterangan');
                 $neraca_nominal = $request->input('nominal');
                 $neraca_status = 1;
@@ -36,6 +37,7 @@ Class PembukuanController extends Controller{
             if ($request->input('jenis_transaksi') == 0){
                 $data_keuangan = array_add($data_keuangan,'keluar',$request->input('nominal'));
                 $data_keuangan = array_add($data_keuangan,'masuk',0);
+                $data_keuangan = array_add($data_keuangan,'jenis_transaksi',0);
                 $text = 'Ada uang cash keluar sejumlah '.rupiah($request->input('nominal')).' penanggung jawab '.Auth::user()->name.' keterangan :'.$request->input('keterangan');
                 $neraca_nominal = $request->input('nominal');
                 $neraca_status = 0;
@@ -61,6 +63,7 @@ Class PembukuanController extends Controller{
             $neraca->keterangan = $request->input('keterangan');
             $neraca->status = $neraca_status;
             $neraca->user_id = Auth::id();
+            $neraca->pembukuan_id = $id;
             $neraca->save();
     
             if ($id){
@@ -74,12 +77,18 @@ Class PembukuanController extends Controller{
             $data_pembukuan->buku_id = $request->input('buku_id');
             if ($request->input('jenis_transaksi') == 1){
                 $data_pembukuan->masuk = $request->input('nominal');
+                $neraca_status = 1;
             }else{
                 $data_pembukuan->keluar = $request->input('nominal');
+                $neraca_status = 0;
             }
             $data_pembukuan->keterangan = $request->input('keterangan');
+            $data_pembukuan->jenis_transaksi = $request->input('jenis_transaksi');
 
             $data_pembukuan->save();
+            
+            //== update di neraca
+            \App\Neraca::where('pembukuan_id',$id)->update(['nominal'=>$request->input('nominal'),'status'=>$neraca_status,'keterangan'=>$request->input('keterangan')]);
         
             return redirect()->route('pembukuan.edit',['id'=>$id])->with('status','Data berhasil di ubah');
         }
@@ -164,5 +173,13 @@ Class PembukuanController extends Controller{
             }
 
         }
+    }
+
+    function hapus($id,$buku){
+        \App\Pembukuan::where('id','=',$id)->delete();
+
+        kirim_telegram('Ada catatan transaksi cash yang di hapus oleh '.Auth::user()->name,-1001386921740);
+        \App\Neraca::where('pembukuan_id',$id)->delete();
+        return redirect()->route('pembukuan.detail',['buku'=>$buku]);
     }
 }
