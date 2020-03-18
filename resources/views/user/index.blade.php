@@ -38,7 +38,7 @@
                         <td><?php echo $item->lead;?></td>
                         <td><?php echo $item->prioritas;?></td>
                         <td><?php if ($item->join_cs == 1) echo 'Ya'; else echo 'Tidak';?></td>
-                        <td><?php echo route('users.edit',['id'=>$item->id]);?></td>
+                        <td><a href="<?php echo route('users.edit',['id'=>$item->id]);?>">Edit</a></td>
                     </tr>
                     <?php
                 }
