@@ -79,7 +79,7 @@ table.table-bordered > tbody > tr > td{
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" href="<?php echo route('pembukuan.edit',['id'=>$item->id]);?>">Edit</a>
-                                <a class="dropdown-item" onclick="return confirm('Yakin akan menghapus data ini ?')" href="<?php echo route('pembukuan.hapus',['id'=>$item->id]);?>">Hapus</a>
+                                <a class="dropdown-item" onclick="return confirm('Yakin akan menghapus data ini ?')" href="<?php echo route('pembukuan.hapus',['id'=>$item->id,'buku'=>$item->buku]);?>">Hapus</a>
                             </div>
                             </div></td>
                         <td><?php echo tanggal($item->tanggal);?></td>

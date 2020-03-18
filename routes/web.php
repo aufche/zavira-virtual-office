@@ -91,13 +91,7 @@ Route::prefix('pesanan')->group(function () {
 
     })->name('pelunasan')->middleware('auth');
 
-    Route::get('/hapus/{id}', function($id){
-        
-        //$data = \App\Pesanan::where('id',$id)->delete();
-        DB::table('pesanan')->where('id',$id)->update(['arsipkan'=>1]);
-        return redirect()->route('semua')->with('status','Data berhasil diarsipkan/dihapus');
-
-    })->name('hapus')->middleware('auth');
+    Route::get('/hapus/{id}', 'PesananController@hapus')->name('hapus')->middleware('auth');
 
     //Route::post('/prosespelunasan', 'PesananController@prosespelunasan')->name('prosespelunasan')->middleware('auth');
     Route::post('/prosespelunasan', 'PesananController@pelunasan')->name('pesanan.pelunasan')->middleware('auth');
@@ -348,13 +342,7 @@ Route::prefix('pembukuan')->group(function () {
         return view('pembukuan.add',compact('buku','jenis_transaksi'));
     })->name('pembukuan.add')->middleware('auth');
 
-    Route::get('/hapus/{id}', function($id){
-        \App\Pembukuan::where('id','=',$id)->delete();
-
-        kirim_telegram('Ada catatan transaksi cash yang di hapus oleh '.Auth::user()->name,-1001386921740);
-        return redirect()->route('pembukuan.semua');
-
-    })->name('pembukuan.hapus')->middleware('auth');
+    Route::get('/hapus/{id}/{buku}','PembukuanController@hapus')->name('pembukuan.hapus')->middleware('auth');
 
     Route::get('/transfer',function(){
         $user_id = Auth::user()->id;
@@ -458,6 +446,11 @@ Route::prefix('bukti')->group(function () {
 Route::prefix('neraca')->group(function () {
     Route::any('/insert','NeracaController@insert')->name('neraca.insert')->middleware('auth');
     Route::get('/','NeracaController@index')->name('neraca.index')->middleware('auth');
+});
+
+Route::prefix('users')->group(function () {
+    Route::any('/edit/{?id}','UserController@edit')->name('users.edit')->middleware('auth');
+    Route::get('/','UserController@index')->name('users.index')->middleware('auth');
 });
 
 
