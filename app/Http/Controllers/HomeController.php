@@ -228,6 +228,23 @@ class HomeController extends Controller
             $neraca->pesanan_id = $id;
             $neraca->user_id = Auth::id();
             $neraca->save();
+
+            
+
+            if ($request->input('rekening') == 'CASH'){
+                //** add ke pembukuan jika transaksi cash*/
+                $pembukuan = new \App\Pembukuan;
+                $pembukuan->keterangan = 'DP dan ongkir no order '.$id.' rekening '.$request->input('rekening');
+                $pembukuan->buku_id = Auth::user()->buku;
+                $pembukuan->user_id = Auth::user()->id;
+                $pembukuan->bulantahun = date('F Y');
+                $pembukuan->tanggal = $request->input('tmasuk');
+                $pembukuan->jenis_transaksi = 1;
+                $pembukuan->masuk = $request->input('dp')+$request->input('ongkir');
+                $pembukuan->keluar = 0;
+                $pembukuan->save();
+            }
+            
             
             //-- kirim notif via telegram
             $text = 'Pesanan baru telah di masukkan ke database dengan no order '.$id;

@@ -310,7 +310,16 @@
             <div class="form-row">
                     <div class="col mb-3 ">
                     <label for="validationDefault03">Tujuan Rekening</label>
-                    <input type="text" name="rekening" class="form-control" value="<?php echo old('rekening');?>" maxlength="10" >
+                    <select name="rekening" class="form-control" required>
+                        <option value="BCA">BCA</option>
+                        <option value="MANDIRI">Mandiri</option>
+                        <option value="BNI">BNI</option>
+                        <option value="BRI">BRI</option>
+                        <option value="NIAGA">NIAGA</option>
+                        <option value="EDC-BCA">EDC-BCA</option>
+                        <option value="EDC-BNI">EDC-BNI</option>
+                        <option value="CASH">CASH</option>
+                    </select>
                     </div>
 
                     <div class="col mb-3 ">
