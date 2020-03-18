@@ -21,6 +21,8 @@
                 <td>Uang Makan</td>
                 <td>Jumlah Lead</td>
                 <td>Prioritas</td>
+                <td>Status CS</td>
+                <td>Edit</td>
             </tr>
             <?php
                 foreach ($users as $item){
@@ -35,6 +37,8 @@
                         <td><?php echo $item->uang_makan;?></td>
                         <td><?php echo $item->lead;?></td>
                         <td><?php echo $item->prioritas;?></td>
+                        <td><?php if ($item->join_cs == 1) echo 'Ya'; else echo 'Tidak';?></td>
+                        <td><?php echo route('users.edit',['id'=>$item->id]);?></td>
                     </tr>
                     <?php
                 }

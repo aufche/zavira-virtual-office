@@ -449,7 +449,7 @@ Route::prefix('neraca')->group(function () {
 });
 
 Route::prefix('users')->group(function () {
-    
+    Route::any('/edit/{?id}','UserController@edit')->name('users.edit')->middleware('auth');
     Route::get('/','UserController@index')->name('users.index')->middleware('auth');
 });
 

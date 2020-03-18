@@ -11,4 +11,13 @@ class UserController extends Controller
         $users = \App\User::orderBy('lead','desc')->get();
         return view('user.index',compact('users'));
     }
+
+    function edit(Request $request,$id){
+        if ($request->isMethod('post')){
+
+        }else{
+            $data = \App\User::find($id);
+            return view('user.edit',compact('data'));
+        }
+    }
 }
