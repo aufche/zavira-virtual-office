@@ -22,6 +22,7 @@
                 <td>Penanggung Jawab</td>
                 <td>Masuk</td>
                 <td>Keluar</td>
+                <td>Option</td>
             </tr>
         <?php
             $pemasukan = 0;
@@ -52,6 +53,7 @@
                 <td colspan="4">-</td>
                 <td><?php echo rupiah($pemasukan);?></td>
                 <td><?php echo rupiah($pengeluaran);?></td>
+                <td><a href="<?php route('neraca.hapus',['id'=>$item->id]); ?>">Hapus</a></td>
             </tr>
         </table>
       </div>

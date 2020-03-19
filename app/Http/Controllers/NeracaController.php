@@ -29,4 +29,9 @@ class NeracaController extends Controller
         $data = \App\Neraca::whereRaw('MONTH(created_at) = ?',[$currentMonth])->orderBy('id','desc')->get();
         return view ('neraca.index',compact('data'));
     }
+
+    function hapus($id){
+        \App\Neraca::where('id',$id)->delete();
+        eturn redirect()->route('neraca.index')->with('status','Data pesanan berhasil dihapus');
+    }
 }

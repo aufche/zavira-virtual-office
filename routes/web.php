@@ -446,6 +446,7 @@ Route::prefix('bukti')->group(function () {
 Route::prefix('neraca')->group(function () {
     Route::any('/insert','NeracaController@insert')->name('neraca.insert')->middleware('auth');
     Route::get('/','NeracaController@index')->name('neraca.index')->middleware('auth');
+    Route::get('/hapus/{id}','NeracaController@hapus')->name('neraca.hapus')->middleware('auth');
 });
 
 Route::prefix('users')->group(function () {
