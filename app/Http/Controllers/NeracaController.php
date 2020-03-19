@@ -32,6 +32,6 @@ class NeracaController extends Controller
 
     function hapus($id){
         \App\Neraca::where('id',$id)->delete();
-        eturn redirect()->route('neraca.index')->with('status','Data pesanan berhasil dihapus');
+        return redirect()->route('neraca.index')->with('status','Data pesanan berhasil dihapus');
     }
 }
