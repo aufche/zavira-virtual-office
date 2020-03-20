@@ -224,7 +224,7 @@
                           <a class="dropdown-item" href="<?php echo route('buktidp',['id'=>$item->id]);?>" target="_blank"><i class="fas fa-file-invoice-dollar"></i> Cetak Bukti Pembayaran DP</a>
                           <!--<a class="dropdown-item" href="#">Cetak Nota Pembelian</a>-->
                           <div class="dropdown-divider"></div>
-                          <a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal_lunas" data-whatever="<?php echo $item->id;?>" data-jenis="pelunasan"><i class="fas fa-scroll"></i> Update Pelunasan</a>
+                          <a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal_lunas" data-whatever="<?php echo $item->id;?>" data-jenis="pelunasan"><i class="fas fa-scroll"></i> Update Pelunasan  Non Tunai</a>
                           <a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal_lunas" data-whatever="<?php echo $item->id;?>" data-jenis="resi"><i class="fas fa-scroll"></i> Update Resi</a>
                           <div class="dropdown-divider"></div>
                           <!--<a class="dropdown-item" href="<?php echo route('pelunasan',['id'=>$item->id,'re'=>'semua']);?>"><i class="fas fa-scroll"></i> Update Pelunasan dan Resi</a>-->
@@ -362,16 +362,16 @@
             <input type="hidden" id="modal_jenis" name="jenis" />
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">No. Order</label>
-            <input type="text" class="form-control" id="no_order" name="id" readonly>
+            <input type="text" class="form-control form-control-lg" id="no_order" name="id" readonly>
           </div>
           <div class="form-group">
             <label for="message-text" class="col-form-label" id="target">Nominal</label>
-            <input type="text" class="form-control" name="nominal">
+            <input type="text" class="form-control form-control-lg" name="nominal">
           </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button type="submit" class="btn btn-warning border-dark">Update</button>
+        <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-warning border-dark btn-lg">Update</button>
       </div>
       </form>
     </div>
