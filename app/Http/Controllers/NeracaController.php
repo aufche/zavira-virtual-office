@@ -24,6 +24,22 @@ class NeracaController extends Controller
         }
     }
 
+    function edit(Request $request,$id){
+        if ($request->isMethod('post')){
+            $id = $request->input('id');
+            $neraca = \App\Neraca::find($id);
+            $neraca->nominal = $request->input('nominal');
+            $neraca->keterangan = $request->input('keterangan');
+            $neraca->status = $request->input('status');
+            $neraca->save();
+            return redirect()->route('neraca.edit',['id'=>$id])->with('status','Data pesanan berhasil disimpan');
+            
+        }else{
+            $data = \App\Neraca::find($id);
+            return view('neraca.edit',compact('data'));
+        }
+    }
+
     function index(){
         $currentMonth = date('m');
         $data = \App\Neraca::whereRaw('MONTH(created_at) = ?',[$currentMonth])->orderBy('id','desc')->get();

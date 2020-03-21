@@ -44,7 +44,7 @@
                         echo rupiah($item->nominal);
                         $pengeluaran = $pengeluaran+$item->nominal; 
                     } else echo '-';?></td>
-                    <td><a href="<?php echo route('neraca.hapus',['id'=>$item->id]); ?>">Hapus</a></td>
+                    <td><a class="btn btn-danger border-dark" href="<?php echo route('neraca.hapus',['id'=>$item->id]); ?>">Hapus</a> <a class="border-dark btn btn-warning" href="<?php echo route('neraca.edit',['id'=>$item->id]); ?>">Edit</a></td>
                 </tr>
                 <?php
                 $n++;
@@ -54,7 +54,7 @@
                 <td colspan="4">-</td>
                 <td><?php echo rupiah($pemasukan);?></td>
                 <td><?php echo rupiah($pengeluaran);?></td>
-                
+                <td><strong><?php echo rupiah($pemasukan - $pengeluaran);?></strong></td>
             </tr>
         </table>
       </div>
