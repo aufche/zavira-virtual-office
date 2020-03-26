@@ -71,7 +71,7 @@
                 <td><?php echo $item->chat;?></td>
                 <td><?php echo $item->closing;?></td>
                 <td><?php if ($item->chat != 0){
-                    echo ($item->closing/$item->chat)*100;
+                    echo @($item->closing/$item->chat)*100;
                 }else{
                     echo '0';
                 }
@@ -87,7 +87,7 @@
             <td colspan="2"></td>
             <td><?php echo $nchat;?></td>
             <td><?php echo $nclosing;?></td>
-            <td><?php echo ($nclosing/$nchat)*100;?>%</td>
+            <td><?php echo @($nclosing/$nchat)*100;?>%</td>
             <td>-</td>
         </tr>
     </table>
