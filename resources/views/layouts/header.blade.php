@@ -34,6 +34,7 @@
         <div class="dropdown-menu" aria-labelledby="dropdown01">
           <a class="dropdown-item" href="<?php echo route('pesanan.finish');?>"><i class=" fa fa-wrench"></i> Update Finising</span></a>
           <a class="dropdown-item" href="<?php echo route('semua');?>"><i class=" fa fa-shopping-bag"></i> Data Pesanan</span></a>
+          <a class="dropdown-item" href="<?php echo route('pesanan.lead');?>"><i class="fas fa-comments"></i> Update Chat</span></a>
         </div>
       </li>
        

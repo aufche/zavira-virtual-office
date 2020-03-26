@@ -419,4 +419,41 @@ Class PesananController extends Controller{
         return redirect()->route('semua')->with('status','Data berhasil diarsipkan/dihapus');
     }
 
+    function lead($action=null,$id=null,Request $request){
+        if ($action == null){
+           if ($request->isMethod('post')){
+            
+            $lead = new \App\Lead;
+            $lead->chat = $request->input('chat');
+            $lead->closing = $request->input('closing');
+            $lead->user_id = Auth::id();
+            $lead->catatan = $request->input('catatan');
+            $lead->save();
+
+            return redirect()->route('pesanan.lead')->with('status','Data pesanan berhasil disimpan');
+
+            }else{
+                $user_id = Auth::id();
+                $lead = \App\Lead::orderBy('created_at','asc')->where('user_id',$user_id)->get();
+                return view('pesanan.lead',compact('lead'));
+            } 
+        }elseif($action == 'update'){
+            if ($request->isMethod('post')){
+                $id = $request->input('id');
+                $lead = \App\Lead::find($id);
+                $lead->chat = $request->input('chat');
+                $lead->closing = $request->input('closing');
+                $lead->catatan = $request->input('catatan');
+                $lead->save();
+
+                return redirect()->route('pesanan.lead')->with('status','Data pesanan berhasil disimpan');
+
+            }else{
+                $data = \App\Lead::find($id);
+                return view('pesanan.editlead',compact('data'));
+            }
+        }
+        
+    }
+
 }

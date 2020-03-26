@@ -162,10 +162,20 @@ Class RestapiController extends Controller{
         //-- update cs terpilih utk menaikkan nilai frekunsi nya
         \App\User::find($cs[0]->id)->increment('frekuensi', $cs[0]->prioritas);
         \App\User::find($cs[0]->id)->increment('lead', 1);
+
+        $text = "New lead didapatkan oleh ".$cs[0]->nama_cs." dengan jumlah lead saat ini ".$cs[0]->lead;
+       /** Telegram::sendMessage([
+                'chat_id' => -1001386921740, // zavira virtual office
+                'parse_mode' => 'HTML',
+                'text' => $text
+            ]);
+        */
  
-        return redirect()->away('https://api.whatsapp.com/send?phone='.$cs[0]->wa.'&text=Hallo%20kak%20'.$cs[0]->nama_cs.'%20Saya%20ingin%20bertanya%20mengenai%20cincin%20kawin');
+        //return redirect()->away('https://api.whatsapp.com/send?phone='.$cs[0]->wa.'&text=Hallo%20kak%20'.$cs[0]->nama_cs.'%20Saya%20ingin%20bertanya%20mengenai%20cincin%20kawin');
         //dd($cs);
        // echo $cs[0]->wa;
+
+       return response()->json($cs, 201);
     }
 
     function couple_pricelist(){
