@@ -2,7 +2,7 @@
 <main class="app-content">
       <div class="app-title">
         <div>
-          <h1><i class="fa fa-dashboard"></i> Lead and Closing</h1>
+          <h1><i class="far fa-thumbs-up"></i> Lead and Closing</h1>
           <p>Pencatatan Jumlah Lead dan Pesanan Tiap Hari</p>
         </div>
       </div>
@@ -16,14 +16,14 @@
                
                  <label for="">Jumlah Lead/Chat</label>
                  <input type="text" class="form-control form-control-lg" name="chat" />
-                 <small id="helpId" class="form-text text-muted">Pilih tanggal awal</small>
+                 
                   
             </div>
 
             <div class="col-md-6 mb3">
                  <label for="">Jumlah Konsumen Transfer/Closing</label>
                  <input type="text" class="form-control form-control-lg" name="closing" />
-                 <small id="helpId" class="form-text text-muted">Pilih tanggal akhir</small>
+                 
             </div>
 
             <div class="col-md-12">
