@@ -39,5 +39,9 @@ class User extends Authenticatable
     public function neraca(){
         return $this->hasMany('App\Neraca');
     }
+
+    public function lead(){
+        return $this->hasMany('App\Lead');
+    }
 }
 

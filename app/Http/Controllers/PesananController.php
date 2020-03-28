@@ -430,6 +430,15 @@ Class PesananController extends Controller{
             $lead->catatan = $request->input('catatan');
             $lead->save();
 
+            $cs = Auth::user();
+
+
+            Telegram::sendMessage([
+                'chat_id' => -1001386921740, // zavira virtual office
+                'parse_mode' => 'HTML',
+                'text' => $cs->name." telah memasukkan data chat. Chat : ".$request->input('chat')." Closing : ".$request->input('closing'),
+            ]);
+
             return redirect()->route('pesanan.lead')->with('status','Data pesanan berhasil disimpan');
 
             }else{
@@ -452,6 +461,9 @@ Class PesananController extends Controller{
                 $data = \App\Lead::find($id);
                 return view('pesanan.editlead',compact('data'));
             }
+        }elseif($action == 'all'){
+            $lead = \App\Lead::orderBy('created_at','asc')->simplePaginate(15);
+            return view('pesanan.leadall',compact('lead'));
         }
         
     }
