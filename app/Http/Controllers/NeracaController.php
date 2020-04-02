@@ -40,10 +40,19 @@ class NeracaController extends Controller
         }
     }
 
-    function index(){
-        $currentMonth = date('m');
-        $data = \App\Neraca::whereRaw('MONTH(created_at) = ?',[$currentMonth])->orderBy('id','desc')->get();
-        return view ('neraca.index',compact('data'));
+    function index(Request $request){
+        if ($request->isMethod('get')){
+            $currentMonth = date('m');
+            $currentYear = date('Y');
+            $data = \App\Neraca::whereRaw('MONTH(created_at) = ?',[$currentMonth])->whereRaw('YEAR(created_at) = ?',[$currentYear])->orderBy('id','desc')->get();
+            return view ('neraca.index',compact('data','currentMonth','currentYear'));
+        }elseif ($request->isMethod('post')){
+            $currentMonth = $request->input('bulan');
+            $currentYear = $request->input('tahun');
+            $data = \App\Neraca::whereRaw('MONTH(created_at) = ?',[$currentMonth])->whereRaw('YEAR(created_at) = ?',[$currentYear])->orderBy('id','desc')->get();
+            return view ('neraca.index',compact('data','currentYear','currentMonth'));
+        }
+        
     }
 
     function hapus($id){
