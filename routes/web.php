@@ -100,7 +100,7 @@ Route::prefix('pesanan')->group(function () {
 
     
     Route::get('/finish',function(){
-        return view('finish');
+        return view('pesanan.finish');
     })->name('pesanan.finish')->middleware('auth');
 
     Route::post('/finising','PesananController@finising')->name('pesanan.finising')->middleware('auth');
