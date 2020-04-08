@@ -70,7 +70,7 @@
               <label for="alamat">Pelunasan dari siapa?</label>
               <input type="text" class="form-control mb-3" name="show_user" id="show-user" />  
               <label for="alamat">No Order</label>
-              <input type="text" class="form-control" name="pesanan_id" readonly />        
+              <input type="text" class="form-control" name="pesanan_id" value="<?php if (isset($_GET['id'])) echo $_GET['id'];?>" readonly />        
               <?php } ?>
             </div>
 

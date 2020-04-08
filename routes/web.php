@@ -456,6 +456,11 @@ Route::prefix('users')->group(function () {
     Route::get('/','UserController@index')->name('users.index')->middleware('auth');
 });
 
+Route::prefix('promo')->group(function () {
+    Route::any('/insert/{action?}/{id?}','PromoController@insert')->name('promo.insert')->middleware('auth');
+    Route::get('/','PromoController@index')->name('promo.index')->middleware('auth');
+});
+
 
 
 //-- end order web

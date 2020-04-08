@@ -34,12 +34,14 @@ class HomeController extends Controller
         $namalogam = DB::table('namalogam')->pluck('id','title');
         $asal = DB::table('asal')->pluck('id','title');
         $kurir = DB::table('kurir')->pluck('id','title');
+        $promo = DB::table('promo')->where('aktif',1)->pluck('id','title');
 
         //print_r($namalogam);
         return view('add')
             ->with('pengrajin',$pengrajin)
             ->with('asal',$asal)
             ->with('kurir',$kurir)
+            ->with('promo',$promo)
             ->with('namalogam',$namalogam);
     }
 
@@ -108,6 +110,7 @@ class HomeController extends Controller
             'produksi_beratpria'=>$request->input('produksi_beratpria'),
             'produksi_beratwanita'=>$request->input('produksi_beratwanita'),
             'free_woodbox'=>$request->input('kotakcincinkayu'),
+            'promo_id'=>$request->input('promo_id'),
         ];
 
         if (!empty($request->file('gambar'))){
@@ -171,10 +174,11 @@ class HomeController extends Controller
             }
         }
 
-        if ($request->input('pengrajin_id') == 2){ // jika pengrajinnya mas yanto, otomatis lapisnya di tempat mas gunawan
+        /*if ($request->input('pengrajin_id') == 2){ // jika pengrajinnya mas yanto, otomatis lapisnya di tempat mas gunawan
            $modal_lapis = $request->input('biaya_lapis_perak_pria') + $request->input('biaya_lapis_perak_wanita');
            $data_pesanan = array_add($data_pesanan,'modal_lapis',$modal_lapis); 
         }
+        */
         //-- ini perlu di koreksi lagi
 
         //(($score_pria+$score_wanita) == 2 ? $data_pesanan = array_add($data_pesanan,'ispremium',1) : $data_pesanan = array_add($data_pesanan,'ispremium',0));
@@ -279,9 +283,10 @@ class HomeController extends Controller
         $namalogam = DB::table('namalogam')->pluck('id','title');
         $asal = DB::table('asal')->pluck('id','title');
         $kurir = DB::table('kurir')->pluck('id','title');
+        $promo = DB::table('promo')->where('aktif',1)->pluck('id','title');
         
         $data = \App\Pesanan::where('id',$id)->with('user','pengrajin')->get();
-        return view('edit',compact('pengrajin','namalogam','data','asal','kurir'));
+        return view('edit',compact('pengrajin','namalogam','data','asal','kurir','promo'));
     }
 
     function editing(Request $request){
@@ -415,10 +420,11 @@ class HomeController extends Controller
         }
 
 
-        if ($request->input('pengrajin_id') == 2){ // jika pengrajinnya mas yanto, otomatis lapisnya di tempat mas gunawan
+        /*if ($request->input('pengrajin_id') == 2){ // jika pengrajinnya mas yanto, otomatis lapisnya di tempat mas gunawan
            $modal_lapis = $request->input('biaya_lapis_perak_pria') + $request->input('biaya_lapis_perak_wanita');
            $pesanan->nama = $modal_lapis;
         }
+        */
 
         
         $pesanan->nama=$request->input('nama');
@@ -458,6 +464,7 @@ class HomeController extends Controller
         
         $pesanan->siap_cetak = $request->input('siap_cetak');
         $pesanan->free_woodbox = $request->input('kotakcincinkayu');
+        $pesanan->promo_id = $request->input('promo_id');
 
         if (!empty($request->input('kirim_ke_pengrajin'))){
             

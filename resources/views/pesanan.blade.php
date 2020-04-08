@@ -225,6 +225,7 @@
                           <!--<a class="dropdown-item" href="#">Cetak Nota Pembelian</a>-->
                           <div class="dropdown-divider"></div>
                           <a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal_lunas" data-whatever="<?php echo $item->id;?>" data-jenis="pelunasan"><i class="fas fa-scroll"></i> Update Pelunasan  Non Tunai</a>
+                          <a href="<?php echo route('pembukuan.add',['status'=>1,'id'=>$item->id]);?>" class="dropdown-item"><i class="fas fa-scroll"></i> Update Pelunasan Tunai</a>
                           <a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal_lunas" data-whatever="<?php echo $item->id;?>" data-jenis="resi"><i class="fas fa-scroll"></i> Update Resi</a>
                           <div class="dropdown-divider"></div>
                           <!--<a class="dropdown-item" href="<?php echo route('pelunasan',['id'=>$item->id,'re'=>'semua']);?>"><i class="fas fa-scroll"></i> Update Pelunasan dan Resi</a>-->

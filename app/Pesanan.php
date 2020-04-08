@@ -19,6 +19,10 @@ Class Pesanan extends Model{
         return $this->belongsTo('App\Asal');
     }
 
+    public function promo(){
+        return $this->belongsTo('App\Promo');
+    }
+
     public function kurir(){
         return $this->belongsTo('App\Kurir');
     }

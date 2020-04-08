@@ -142,8 +142,8 @@
                             }
                         ?>
                       </select>
-                    <label>Pilih finising perak (di Gunawan)</label>
-                      <select class="form-control" name="biaya_lapis_perak_pria" id="lapis_finising_perak_pria" disabled="disabled">
+                   <!--  <label>Pilih finising perak (di Gunawan)</label>
+                     <select class="form-control" name="biaya_lapis_perak_pria" id="lapis_finising_perak_pria" disabled="disabled">
                         <option value="0" selected="selected">Pilih jenis finising khusus cincin perak</option>
                         <option value="30000">Putih glossy</option>
                         <option value="30000">Putih doff</option>
@@ -159,6 +159,7 @@
                         <option value="25000">Doff kuning</option>
                         <option value="25000">Doff rose gold</option>
                       </select>
+                      -->
                     </div>
                     </div>
 
@@ -198,7 +199,7 @@
                             }
                         ?>
                       </select>
-                      <label>Pilih finising perak (di Gunawan)</label>
+                     <!-- <label>Pilih finising perak (di Gunawan)</label>
                       <select class="form-control" name="biaya_lapis_perak_wanita" id="lapis_finising_perak_wanita" disabled="disabled">
                         <option value="0" selected="selected">Pilih jenis finising khusus cincin perak</option>
                         <option value="30000">Putih glossy</option>
@@ -215,6 +216,7 @@
                         <option value="25000">Doff kuning</option>
                         <option value="25000">Doff rose gold</option>
                       </select>
+                      -->
 
                     </div>
 
@@ -343,6 +345,20 @@
                         <option value="" selected="selected">Pilih kurir</option>
                         <?php 
                             foreach ($kurir as $title=>$id){
+                                ?>
+                                <option value="<?php echo $id;?>"><?php echo $title;?></option>
+                                <?php
+                            }
+                        ?>
+                      </select>
+                    </div>
+
+                    <div class="col mb-3">
+                    <label for="validationDefault05">Promo <span class="badge badge-pill badge-danger">New</span></label>
+                    <select class="form-control" name="promo_id" required>
+                        <option value="0" selected="selected">Tidak mendapat promo</option>
+                        <?php 
+                            foreach ($promo as $title=>$id){
                                 ?>
                                 <option value="<?php echo $id;?>"><?php echo $title;?></option>
                                 <?php

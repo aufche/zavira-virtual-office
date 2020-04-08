@@ -174,7 +174,7 @@
                         ?>
                       </select>
 
-                       <label>Pilih finising perak (di Gunawan)</label>
+                       <!--<label>Pilih finising perak (di Gunawan)</label>
                       <select class="form-control" name="biaya_lapis_perak_pria" id="lapis_finising_perak_pria" disabled="disabled">
                         <option value="0" selected="selected">Pilih jenis finising khusus cincin perak</option>
                         <option value="30000">Putih glossy</option>
@@ -190,7 +190,7 @@
                         <option value="40000">Doff Kombinasi putih dan rose gold</option>
                         <option value="25000">Doff kuning</option>
                         <option value="25000">Doff rose gold</option>
-                      </select>
+                      </select> -->
                     </div>
                     </div>
 
@@ -232,7 +232,7 @@
                         ?>
                       </select>
 
-                      <label>Pilih finising perak (di Gunawan)</label>
+                      <!--<label>Pilih finising perak (di Gunawan)</label>
                       <select class="form-control" name="biaya_lapis_perak_wanita" id="lapis_finising_perak_wanita" disabled="disabled">
                         <option value="0" selected="selected">Pilih jenis finising khusus cincin perak</option>
                         <option value="30000">Putih glossy</option>
@@ -249,7 +249,7 @@
                         <option value="25000">Doff kuning</option>
                         <option value="25000">Doff rose gold</option>
                       </select>
-
+-->
                     </div>
 
                     <div class="col-md-3 mb-3">
@@ -333,7 +333,16 @@
             <div class="form-row">
                     <div class="col mb-3">
                     <label for="validationDefault03">Tujuan Rekening</label>
-                    <input type="text" name="rekening" value="<?php echo old('rekening',$data[0]->rekening);?>" class="form-control" maxlenght="10" >
+                    <select name="rekening" class="form-control" required>
+                        <option value="BCA" <?php if ($data[0]->rekening == 'BCA') echo 'selected="selected"';?>>BCA</option>
+                        <option value="MANDIRI" <?php if ($data[0]->rekening == 'MANDIRI') echo 'selected="selected"';?>>Mandiri</option>
+                        <option value="BNI" <?php if ($data[0]->rekening == 'BNI') echo 'selected="selected"';?>>BNI</option>
+                        <option value="BRI" <?php if ($data[0]->rekening == 'BRI') echo 'selected="selected"';?>>BRI</option>
+                        <option value="NIAGA" <?php if ($data[0]->rekening == 'NIAGA') echo 'selected="selected"';?>>NIAGA</option>
+                        <option value="EDC-BCA" <?php if ($data[0]->rekening == 'EDC-BCA') echo 'selected="selected"';?>>EDC-BCA</option>
+                        <option value="EDC-BNI" <?php if ($data[0]->rekening == 'EDC-BNI') echo 'selected="selected"';?>>EDC-BNI</option>
+                        <option value="CASH" <?php if ($data[0]->rekening == 'CASH') echo 'selected="selected"';?>>CASH</option>
+                    </select>
                     </div>
 
                     <div class="col mb-3">
@@ -358,6 +367,20 @@
                             foreach ($kurir as $title=>$id){
                                 ?>
                                 <option value="<?php echo $id;?>" <?php if (old('asal_id',$data[0]->kurir_id) == $id){echo 'selected="selected"';}?>><?php echo $title;?></option>
+                                <?php
+                            }
+                        ?>
+                      </select>
+                    </div>
+
+                    <div class="col mb-3">
+                    <label for="validationDefault05">Promo <span class="badge badge-pill badge-danger">New</span></label>
+                    <select class="form-control" name="promo_id" required>
+                        <option value="0" selected="selected">Tidak mendapat promo</option>
+                        <?php 
+                            foreach ($promo as $title=>$id){
+                                ?>
+                                <option value="<?php echo $id;?>" <?php if (old('asal_id',$data[0]->promo_id) == $id){echo 'selected="selected"';}?>><?php echo $title;?></option>
                                 <?php
                             }
                         ?>
