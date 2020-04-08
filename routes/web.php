@@ -96,20 +96,22 @@ Route::prefix('pesanan')->group(function () {
 
     //Route::post('/prosespelunasan', 'PesananController@prosespelunasan')->name('prosespelunasan')->middleware('auth');
     Route::post('/prosespelunasan', 'PesananController@pelunasan')->name('pesanan.pelunasan')->middleware('auth');
-    Route::get('/update',function(){
-        return view('update');
-    })->name('update')->middleware('auth');
+    
 
     
     Route::get('/finish',function(){
         return view('finish');
     })->name('pesanan.finish')->middleware('auth');
 
-    Route::post('/finising','HomeController@finising')->name('pesanan.finising')->middleware('auth');
+    Route::post('/finising','PesananController@finising')->name('pesanan.finising')->middleware('auth');
 
-    Route::post('/updateform','HomeController@updateform')->name('updateform')->middleware('auth');
-    Route::post('/updating','HomeController@updating')->name('updating')->middleware('auth');
-
+    Route::any('/updateform/{action?}','PesananController@updateform')->name('updateform')->middleware('auth');
+    Route::post('/updating','PesananController@updating')->name('updating')->middleware('auth');
+    
+    Route::get('/update',function(){
+        return view('update');
+    })->name('update')->middleware('auth');
+    
     Route::get('/detail/{id}',function($id){
         $data = \App\Pesanan::find($id);
         return view('detail',compact('data'));
@@ -146,6 +148,7 @@ Route::prefix('pesanan')->group(function () {
 
 
     Route::get('/generatekupon/{id}','PesananController@generatecoupon')->name('pesanan.kupon')->middleware('auth');
+    Route::get('/lapis','PesananController@lapis_berulang')->name('pesanan.lapis')->middleware('auth');
 
     //Route::get('/export')
 
@@ -159,6 +162,7 @@ Route::prefix('pesanan')->group(function () {
     Route::post('/woodbox','PesananController@woodbox_add')->name('pesanan.woodbox.add')->middleware('auth');
 
     Route::any('/buyback','PesananController@buyback')->name('logam.buyback')->middleware('auth');
+    
 
     
 

@@ -18,6 +18,12 @@
     <form action="<?php echo route('updating');?>" method="post">
         <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
         <input type = "hidden" name = "no" value = "<?php echo $data->id ?>">
+         <input type="hidden" value="<?php echo $update_apa;?>" name="update_apa" />
+         <!--
+             update_apa = 1 pengrajin
+             update_apa = 2 lapis
+             update_apa = 3 lapis+pengrajin
+             -->
             <div class="form-row">
                 <div class="col-md-6 mb-3">
                 <label for="validationDefault03">Berat Bahan Cincin Pria</label>
@@ -31,49 +37,59 @@
             </div>
 
             <div class="form-row">
-                <div class="col-md-6 mb-3">
-                <label for="validationDefault03">Ongkos Pengrajin</label><br />
-                <?php if ($data->pengrajin_id == 2 && empty($data->modal_pengrajin)) echo '<small class="text-muted">Data belum disini, sugesti ongkos pengrajin seperti dibawah</small>';?>
-                <input type="text" value="<?php if ($data->pengrajin_id == 2 && empty($data->modal_pengrajin) && $data->couple == 1) echo '100000'; elseif($data->pengrajin_id == 2 && empty($data->modal_pengrajin) && $data->couple == 0) echo '50000'; else echo $data->modal_pengrajin;?>" name="modal_pengrajin" class="form-control" >
-                </div>
-
-                <div class="col-md-6 mb-3">
-                <label for="validationDefault04">Ongkos Lapis</label><br />
-                <?php if ($data->pengrajin_id == 2 && empty($data->modal_lapis)) echo '<small class="text-muted">Data belum disini, sugesti biaya lapis seperti dibawah</small>';?>
-                <input type="text" value="<?php if ($data->pengrajin_id == 2 && empty($data->modal_lapis) && $data->couple == 1) echo '60000';  elseif($data->pengrajin_id == 2 && empty($data->modal_lapis) && $data->couple == 0) echo '30000'; else  echo $data->modal_lapis;?>" name="modal_lapis" class="form-control" >
                 <?php
-                  if ($data->jumlah_lapis > 1){
-                    echo '<p class="text-danger">Orderan ini sudah berulang lapis sampai '.$data->jumlah_lapis.' kali</p>';
-                    echo $data->keterangan_orderan;
-                  }
+                    if ($update_apa == 1 || $update_apa == 3){
+                        ?>
+                        <div class="col-md-6 mb-3">
+                        <label for="validationDefault03">Ongkos Pengrajin</label><br />
+                        <input type="text" value="<?php if ($data->pengrajin_id == 2 && empty($data->modal_pengrajin) && $data->couple == 1) echo '100000'; elseif($data->pengrajin_id == 2 && empty($data->modal_pengrajin) && $data->couple == 0) echo '50000'; else echo $data->modal_pengrajin;?>" name="modal_pengrajin" class="form-control" >
+                        </div>
+                        <?php
+                    }
                 ?>
-                </div>
+                
 
-                <div class="col-md-12 mb-3">
-                <div class="form-check">
-                  <!--<label class="form-check-label">
-                    <input type="checkbox" class="form-check-input" name="logam_sesuai" value="1" <?php if ($data->logam_sesuai == 1 || $data->logam_sesuai == 2) echo 'checked'; if ($data->logam_sesuai == 2) echo ' disabled';?> />
-                    Data logam produksi telah sesuai dengan kertas dari pengrajin
-                  </label>
-                  -->
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="update_apa"  value="1">
-                    <label class="form-check-label" for="inlineRadio1">Update : Ongkos Pengrajin</label>
-                    </div><br />
-                    <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="update_apa" value="2">
-                    <label class="form-check-label" for="inlineRadio2">Update : Biaya Lapis</label>
-                    </div><br />
-                    <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="update_apa" value="3">
-                    <label class="form-check-label" for="inlineRadio3">Update : Ongkos Pengrajin + Lapis</label>
-                    </div>
-                </div>
-                </div>
+                <?php
+                    if ($update_apa == 2 || $update_apa == 3){
+                        ?>
+                        <div class="col-md-6 mb-3">
+                        <label for="validationDefault04">Ongkos Lapis</label><br />
+                        <input type="text" value="<?php if ($data->pengrajin_id == 2 && empty($data->modal_lapis) && $data->couple == 1) echo '60000';  elseif($data->pengrajin_id == 2 && empty($data->modal_lapis) && $data->couple == 0) echo '30000'; else  echo $data->modal_lapis;?>" name="modal_lapis" class="form-control" >
+                        <?php
+                        if ($data->jumlah_lapis > 1){
+                            echo '<p class="text-danger">Orderan ini sudah berulang lapis sampai '.$data->jumlah_lapis.' kali</p>';
+                            echo $data->keterangan_orderan;
+                        }
+                        ?>
+                        <div class="form-check">
+                          <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" name="lapis_berulang" id="" value="1">
+                            Centang jika sudah lapis berkali-kali
+                          </label>
+                        </div>
+                        </div>
+                        <?php
+                    }
+                ?>
+                
+                
+
             </div>
 
-              
-
+              <?php
+                if ($update_apa == 1){
+                    $elemen_biaya = 'Pengrajin/Produksi';
+                }elseif ($update_apa == 2){
+                    $elemen_biaya = 'Lapis';
+                }elseif ($update_apa == 3){
+                    $elemen_biaya = 'Biaya Produksi dan Lapis';
+                }
+              ?>
+            <div class="alert alert-info border-dark" role="alert">
+              <h4 class="alert-heading h5">Update <?php echo  $elemen_biaya;?></h4>
+              <p>Kamu akan mengupdate elemen biaya <?php echo  $elemen_biaya;?></p>
+             
+            </div>
             
             <button type="submit" class="btn btn-primary btn-block btn-lg">Update</button>
         </form>

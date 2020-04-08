@@ -468,4 +468,147 @@ Class PesananController extends Controller{
         
     }
 
+
+    function updateform(Request $request, $action = null){
+        if ($request->isMethod('post')){
+            $id = $request->input('no');
+            $update_apa = $request->input('update_apa');
+            $data = \App\Pesanan::where('id',$id)->first();
+            if ($data!=null){
+                return view('updateform',compact('data','update_apa'));
+            }else{
+                return view('notfound');
+            }
+        }elseif ($request->isMethod('get')){
+            return view('update',compact('action'));
+        }
+        
+        
+    }
+
+    function updating(Request $request){
+        
+
+        $id = $request->input('no');
+        $pesanan = \App\Pesanan::find($id);
+        
+
+        if ($request->update_apa == '1'){
+            $nominal = $request->input('modal_pengrajin');
+        }elseif ($request->update_apa == '2'){
+            $nominal = $request->input('modal_lapis');
+        }elseif($request->update_apa == '3'){
+            $nominal = ($request->input('modal_lapis') + $request->input('modal_pengrajin'));
+        }
+
+        //--  lapis sudah berulang-ulang
+        if (($request->update_apa == 2 || $request->update_apa == 3) && $request->input('lapis_berulang') == 1 && !empty($pesanan->modal_lapis)){
+            $nlapis = new \App\Lapis;
+            $nlapis->pesanan_id = $id;
+            $nlapis->nominal = $request->input('modal_lapis');
+            $nlapis->save();
+        }
+
+        $hitung_sementara = [
+            'identitas' => date('d-D-M-Y'),
+            'nominal' => $nominal,
+            'pesanan_id'=>$id,
+        ];
+        
+
+
+        if (DB::table('hitung_sementara')->insert($hitung_sementara)){
+            $pesanan->produksi_beratpria = $request->input('produksi_beratpria');
+            $pesanan->produksi_beratwanita = $request->input('produksi_beratwanita');
+            $pesanan->modal_pengrajin = $request->input('modal_pengrajin');
+            $pesanan->modal_lapis = $request->input('modal_lapis');
+           /* if (!empty($request->input('logam_sesuai'))){
+                $pesanan->logam_sesuai = $request->input('logam_sesuai');
+            }
+            */
+            $pesanan->save();
+        }
+        
+
+        
+         
+
+        
+
+        /*$text = "<b>Data produksi no order ".$id."</b> \n".
+            "Telah diupdate";
+
+        Telegram::sendMessage([
+            'chat_id' => -1001386921740, // zavira virtual office
+            'parse_mode' => 'HTML',
+            'text' => $text
+        ]);
+        */
+        return redirect()->route('updateform',['action'=>$request->input('update_apa')])->with('status','Data No order '.$id.' berhasil disimpan ');
+    }
+
+    function finising(Request $request){
+        $ids = $request->input('ids');
+        $id = explode('*',$ids);
+        $tipe_finising = $request->input('tipe_finising');
+        //dd($request);
+
+        if ($tipe_finising == 1){
+            DB::table('pesanan')->whereIn('id', $id)->update(
+                [
+                    'finising' => $request->input('tipe_finising'),
+                    'jumlah_lapis' => 1,
+                ]);
+
+            $text = "<b>Kode 601 : Data produksi no order ".$ids."</b> \n".
+            "Telah masuk tahap finising";
+            
+            notif_cs($id,$tipe_finising);
+
+        }elseif ($tipe_finising == 2){
+            
+            DB::table('pesanan')->whereIn('id', $id)->update(['finising' => $request->input('tipe_finising')]);
+
+            $text = "<b>Kode 602 : Data produksi no order ".$ids."</b> \n".
+            "Telah kembali ke kantor";
+
+            notif_cs($id,$tipe_finising);
+        }
+           
+
+            Telegram::sendMessage([
+                'chat_id' => -1001386921740, // zavira virtual office
+                'parse_mode' => 'HTML',
+                'text' => $text
+            ]);
+
+       /* foreach ($id as $item){
+            $pesanan = \App\Pesanan::find($item);
+            if (!empty($pesanan->email)){
+                //-- kirim email
+                
+                \Mail::send('emails.finising', ['pesanan'=>$pesanan], function ($message) use($pesanan) {
+               
+                    $message->from('zavirajewelry@gmail.com', 'Zavira Jewelry');
+                    $message->replyTo('zavirajewelry@gmail.com', 'Zavira Jewelry');
+                    $message->to($pesanan->email,$pesanan->nama)->subject('No Resi Kiriman dari Zavira Jewelry');
+                });
+
+            }
+        }
+        */
+
+        //-- kirim notifikasi ke cs 
+        
+
+        notif_statistik();
+           
+        return redirect()->route('semua')->with('status','Proses finising '.$ids.' berhasil di update');
+    }
+
+    function lapis_berulang(){
+        $data = \App\Lapis::orderBy('pesanan_id','asc')->orderBy('id','desc')->simplePaginate(15);
+        return view('pesanan.lapis',compact('data'));
+    }
+
 }

@@ -27,6 +27,7 @@
         @endif
         <form action="<?php echo route('updateform');?>" method="post">
             <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
+            <input type = "hidden" name = "update_apa" value = "<?php echo $action ?>">
             <div class="form-group">
               <label for="no">No Order</label>
               <input type="text" class="form-control form-control-lg" name="no" id="textboxID" aria-describedby="no order" placeholder="">

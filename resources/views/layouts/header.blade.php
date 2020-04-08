@@ -77,19 +77,23 @@
             <a class="dropdown-item" href="<?php echo route('pesanan.hitung');?>" target="popup" onclick="window.open('<?php echo route('pesanan.hitung');?>','popup','width=600,height=600'); return false;"><i class=" fa fa-calculator"></i> Hitung Kebutuhan Logam</a>
             <a class="dropdown-item" href="<?php echo route('logam.buyback');?>"><i class=" fa fa-meteor"></i> Kalkulator Jual Kembali</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="<?php echo route('update');?>" target="popup" onclick="window.open('<?php echo route('update');?>','popup','width=1200,height=500'); return false;"><i class=" fa fa-edit"></i> Update Produksi</a>
-            <a class="dropdown-item" href="<?php echo route('pesanan.woodbox');?>" target="popup" onclick="window.open('<?php echo route('pesanan.woodbox');?>','popup','width=600,height=300'); return false;"><i class=" fa fa-edit"></i> Update Woodbox</a>
+            <a class="dropdown-item" href="<?php echo route('updateform',['action'=>1]);?>" target="popup" onclick="window.open('<?php echo route('updateform',['action'=>1]);?>','popup','width=1200,height=500'); return false;"><i class="fas fa-wrench"></i> Update Biaya Produksi</a>
+            <a class="dropdown-item" href="<?php echo route('updateform',['action'=>2]);?>" target="popup" onclick="window.open('<?php echo route('updateform',['action'=>2]);?>','popup','width=1200,height=500'); return false;"><i class="fab fa-pagelines"></i> Update Biaya Lapis</a>
+            <a class="dropdown-item" href="<?php echo route('updateform',['action'=>3]);?>" target="popup" onclick="window.open('<?php echo route('updateform',['action'=>3]);?>','popup','width=1200,height=500'); return false;"><i class="fas fa-chalkboard-teacher"></i> Update Biaya Lapis & Produksi</a>
             <div class="dropdown-divider"></div>
+            <!--<a class="dropdown-item" href="<?php echo route('pesanan.woodbox');?>" target="popup" onclick="window.open('<?php echo route('pesanan.woodbox');?>','popup','width=600,height=300'); return false;"><i class=" fa fa-edit"></i> Update Woodbox</a>
+            <div class="dropdown-divider"></div>-->
             <a class="dropdown-item" href="<?php echo route('bukti.index');?>"><i class=" fa fa-gift"></i> Bukti Transfer Pak Bejo</a>
             <a class="dropdown-item" href="<?php echo route('bukti.insert.get');?>"><i class=" fa fa-gift"></i> Update Bukti Transfer Pak Bejo</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="<?php echo route('pesanan.filter');?>"><i class=" fa fa-filter"></i> Filter</a>
             <a class="dropdown-item" href="<?php echo route('penting.index');?>"><i class=" fa fa-exclamation-circle"></i> Masalah Krusial</a>
-            <a class="dropdown-item" href="<?php echo route('ga.index');?>"><i class=" fa fa-gift"></i> Giveaway</a>
+            <!--<a class="dropdown-item" href="<?php echo route('ga.index');?>"><i class=" fa fa-gift"></i> Giveaway</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="https://www.facebook.com/zavirajewelry/inbox/?mailbox_id=1481893255466137&selected_item_id=340282366841710300949128291128235499821" target="_blank"><i class=" fa fa-comment-dots"></i> DM Zavira Jewelry</a>
           <a class="dropdown-item" href="https://www.facebook.com/zavirajewelry.gresik/inbox/?mailbox_id=521313014703153&selected_item_id=340282366841710300949128371083863275972" target="_blank"><i class=" fa fa-comment-dots"></i> DM Zavira Gresik</a>
           <a class="dropdown-item" href="https://www.facebook.com/zavirajewelry.bali/inbox/?mailbox_id=302901269837110&selected_item_id=340282366841710300949128329698656421808" target="_blank"><i class=" fa fa-comment-dots"></i> DM Zavira Bali</a>
+          -->
         </div>
       </li>
 
