@@ -195,14 +195,8 @@
                     }else{
                       echo 'Tidak';
                     };?></td>
-                    <td colspan="2">Undian</td>
-                    <td colspan="1"><?php if (!empty($item->undian)) {
-                      echo $item->undian;
-                    }else{
-                      ?>
-                      <a href="<?php echo route('pesanan.kupon',['id'=>$item->id]);?>">Bikin No Undian</a>
-                      <?php
-                    };?></td>
+                    <td colspan="2">Promo</td>
+                    <td colspan="1"><?php if ($item->promo_id) echo $item->promo->title;?></td>
                 </tr>
                 <tr class="bg-dark text-white">
                     <td class="border border-bottom border-dark border-top-0 border-right-0 border-left-0" colspan="2">

@@ -443,7 +443,7 @@ Class PesananController extends Controller{
 
             }else{
                 $user_id = Auth::id();
-                $lead = \App\Lead::orderBy('created_at','asc')->where('user_id',$user_id)->get();
+                $lead = \App\Lead::orderBy('created_at','asc')->where('user_id',$user_id)->simplePaginate(15);
                 return view('pesanan.lead',compact('lead'));
             } 
         }elseif($action == 'update'){
@@ -462,8 +462,15 @@ Class PesananController extends Controller{
                 return view('pesanan.editlead',compact('data'));
             }
         }elseif($action == 'all'){
+            $cs = \App\User::all()->pluck('id','name');
             $lead = \App\Lead::orderBy('created_at','asc')->simplePaginate(15);
-            return view('pesanan.leadall',compact('lead'));
+            return view('pesanan.leadall',compact('lead','cs'));
+        }elseif ($action == 'detail'){
+            $cs = \App\User::all()->pluck('id','name');
+            $cs_id = $request->input('cs_id');
+            $lead = \App\Lead::orderBy('created_at','asc')->where('user_id',$cs_id)->simplePaginate(15);
+            return view('pesanan.leadall',compact('lead','cs'));
+
         }
         
     }

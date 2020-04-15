@@ -10,7 +10,30 @@
     <?php
     if (isset($lead)){
         ?>
+    <div class="container mb-5 mt-5">
+        <form method="post" action="<?php echo route('pesanan.lead',['action'=>'detail']);?>">
+        <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
+        <div class="form-row">
+            <div class="col-md-8">
+                <select name="cs_id" class="form-control form-control-lg">
+                <?php
+                foreach ($cs as $name => $id){
+                    ?>
+                    <option value="<?php echo $id;?>"><?php echo $name;?></option>
+                    <?php
+                }
+                ?>
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-lg btn-block btn-warning border-dark">Cari</button>
+            </div>
+        </div>
+        </form>
+    </div>
     <div class="tile">
+    <?php echo $lead->appends(Request::except('page'))->links();?>
     <table class="table">
         <tr>
             <td>Tanggal Input</td>
@@ -19,6 +42,7 @@
             <td>Jumlah Chat</td>
             <td>Jumlah Closing</td>
             <td>Persentase</td>
+            <td>Catatan</td>
             <td>Update</td>
         </tr>
     <?php
@@ -38,6 +62,7 @@
                     echo '0';
                 }
                     ?>%</td>
+                <td><?php echo $item->catatan;?></td>
                 <td><a href="<?php echo route('pesanan.lead',['id'=>$item->id,'action'=>'update']);?>">Update</a></td>
             </tr>
             <?php
@@ -53,6 +78,7 @@
             <td>-</td>
         </tr>
     </table>
+    <?php echo $lead->appends(Request::except('page'))->links();?>
     </div>
             <?php
         }

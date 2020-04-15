@@ -47,6 +47,7 @@
     if (isset($lead)){
         ?>
     <div class="tile">
+    <?php echo $lead->links();?>
     <?php
         $cs = Auth::user();
     ?>
@@ -58,6 +59,7 @@
             <td>Jumlah Chat</td>
             <td>Jumlah Closing</td>
             <td>Persentase</td>
+            <td>Catatan</td>
             <td>Update</td>
         </tr>
     <?php
@@ -76,6 +78,7 @@
                     echo '0';
                 }
                     ?>%</td>
+                <td><?php echo $item->catatan;?></td>
                 <td><a href="<?php echo route('pesanan.lead',['id'=>$item->id,'action'=>'update']);?>">Update</a></td>
             </tr>
             <?php
@@ -91,6 +94,7 @@
             <td>-</td>
         </tr>
     </table>
+    <?php echo $lead->links();?>
     </div>
             <?php
         }
