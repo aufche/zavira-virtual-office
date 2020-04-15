@@ -245,12 +245,31 @@
                                     } 
                                     ?>
 
+                                    <?php
+                                    if (!empty($data->promo_id)){
+                                        ?>
+                                            <tr>
+                                                <td>-</td>
+                                                <td colspan="2"><?php echo $data->promo->title;?></td>
+                                                <td><?php if ($data->promo->nominal != 0 || $data->promo->nominal != null) echo rupiah($data->promo->nominal); else echo '-';?></td>
+                                            </tr>
+                                        <?php
+                                    } 
+                                    ?>
+
                                     <tr>
                                         <td colspan="3" align="right">Total</td>
                                         <td >
                                         <?php
                                             if (!empty($data->sertifikat_berlian) && !empty($data->sertifikat_harga_berlian)){
                                                 $total = $total + $data->sertifikat_harga_berlian;
+                                            }
+
+                                            if (!empty($data->promo_id)){
+                                                if ($data->promo->nominal != 0 || $data->promo->nominal != null){
+                                                    $total = $total - $data->promo->nominal;
+                                                }
+                                                
                                             }
                                             echo rupiah($total);
                                         ?>
