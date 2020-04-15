@@ -16,6 +16,7 @@
             <tr>
                 <td>ID</td>
                 <td>Nama Promo</td>
+                <td>Nominal</td>
                 <td>Status</td>
                 <td>Option</td>
             </tr>
@@ -26,6 +27,7 @@
             <tr>
                 <td><?php echo $item->id;?></td>
                 <td><?php echo $item->title;?></td>
+                <td><?php echo rupiah($item->nominal);?></td>
                 <td><?php if ($item->aktif == 1) echo 'Aktif'; else echo 'Tidak Aktif';?></td>
                 <td><a class="btn btn-danger border-dark" href="<?php echo route('promo.insert',['id'=>$item->id,'action'=>'hapus']); ?>">Hapus</a> <a class="border-dark btn btn-warning" href="<?php echo route('promo.insert',['action'=>'edit','id'=>$item->id]); ?>">Edit</a></td>
             </tr>

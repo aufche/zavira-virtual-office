@@ -15,6 +15,7 @@ class PromoController extends Controller
             $promo = new \App\Promo;
             $promo->title = $request->title;
             $promo->aktif = $request->aktif;
+            $promo->nominal = $request->nominal;
             $promo->save();
 
             return redirect()->route('promo.insert',['action'=>'edit','id'=>$promo->id])->with('status','Data pesanan berhasil disimpan');
@@ -29,6 +30,7 @@ class PromoController extends Controller
             $neraca = \App\Promo::find($id);
             $neraca->title = $request->input('title');
             $neraca->aktif = $request->input('aktif');
+            $neraca->nominal = $request->input('nominal');
             
             $neraca->save();
             return redirect()->route('promo.insert',['id'=>$id,'action'=>'edit'])->with('status','Data pesanan berhasil disimpan'); 

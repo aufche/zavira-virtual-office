@@ -17,9 +17,15 @@
         <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
         <input type = "hidden" name = "id" value = "<?php echo $data->id; ?>">
             <div class="form-row">
-                <div class="col-md-10 mb-3">
+                <div class="col-md-6 mb-3">
                 <label for="validationDefault03">Judul Promo</label>
                 <input type="text" value = "<?php echo $data->title; ?>" name="title" class="form-control-lg form-control" required>
+                
+                </div>
+
+                <div class="col-md-4 mb-3">
+                <label for="validationDefault03">Nominal</label>
+                <input type="text" value = "<?php echo $data->nominal; ?>" name="nominal" class="form-control-lg form-control" required>
                 
                 </div>
 

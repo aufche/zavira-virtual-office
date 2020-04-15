@@ -16,9 +16,16 @@
         <form action="<?php echo route('promo.insert');?>" method="post">
         <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
             <div class="form-row">
-                <div class="col-md-10 mb-3">
+                <div class="col-md-6 mb-3">
                 <label for="validationDefault03">Judul Promo</label>
                 <input type="text" name="title" class="form-control-lg form-control" required>
+                
+                </div>
+
+                <div class="col-md-4 mb-3">
+                <label for="validationDefault03">Nominal</label>
+                <input type="text" name="nominal" class="form-control-lg form-control" required>
+                
                 
                 </div>
 
