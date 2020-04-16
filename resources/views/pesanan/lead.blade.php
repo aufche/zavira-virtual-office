@@ -52,6 +52,7 @@
         $cs = Auth::user();
     ?>
     <div class="h4 mb-5">Nama <?php echo $cs->name;?></div>
+    <div class="table-responsive">
     <table class="table">
         <tr>
             <td>Tanggal Input</td>
@@ -91,9 +92,11 @@
             <td><?php echo $nchat;?></td>
             <td><?php echo $nclosing;?></td>
             <td><?php echo @($nclosing/$nchat)*100;?>%</td>
-            <td>-</td>
+            <td colspan="2">-</td>
         </tr>
     </table>
+    </div>
+    
     <?php echo $lead->links();?>
     </div>
             <?php

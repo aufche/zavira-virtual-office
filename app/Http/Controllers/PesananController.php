@@ -462,14 +462,25 @@ Class PesananController extends Controller{
                 return view('pesanan.editlead',compact('data'));
             }
         }elseif($action == 'all'){
+            
+            $currentMonth = date('m');
+            $currentYear = date('Y');
             $cs = \App\User::all()->pluck('id','name');
             $lead = \App\Lead::orderBy('created_at','asc')->simplePaginate(15);
-            return view('pesanan.leadall',compact('lead','cs'));
+            return view('pesanan.leadall',compact('lead','cs','currentYear','currentMonth'));
+
         }elseif ($action == 'detail'){
             $cs = \App\User::all()->pluck('id','name');
             $cs_id = $request->input('cs_id');
-            $lead = \App\Lead::orderBy('created_at','asc')->where('user_id',$cs_id)->simplePaginate(15);
-            return view('pesanan.leadall',compact('lead','cs'));
+            $currentMonth = $request->input('bulan');
+            $currentYear = $request->input('tahun');
+            if ($cs_id != 0){
+                $lead = \App\Lead::whereRaw('MONTH(created_at) = ?',[$currentMonth])->whereRaw('YEAR(created_at) = ?',[$currentYear])->orderBy('created_at','asc')->where('user_id',$cs_id)->simplePaginate(30);
+            }elseif ($cs_id == 0){
+                $lead = \App\Lead::whereRaw('MONTH(created_at) = ?',[$currentMonth])->whereRaw('YEAR(created_at) = ?',[$currentYear])->orderBy('created_at','asc')->simplePaginate(30);
+            }
+            
+            return view('pesanan.leadall',compact('lead','cs','currentMonth','currentYear','cs_id'));
 
         }
         

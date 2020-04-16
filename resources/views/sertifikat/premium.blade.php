@@ -199,7 +199,7 @@
                                        }     
                                     ?>
 
-<?php
+                                    <?php
                                        if (!empty($data->promo_id)){
                                            ?>
                                             <tr>
