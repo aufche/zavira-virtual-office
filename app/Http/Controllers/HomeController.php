@@ -213,7 +213,7 @@ class HomeController extends Controller
             ==============================
             */
 
-            $data_dp = [
+            /*$data_dp = [
                 'pesanan_id'=>$id,
                 'nominal'=>$request->input('dp'),
                 'created_at'=>\Carbon\Carbon::now(),
@@ -248,6 +248,14 @@ class HomeController extends Controller
                 $pembukuan->keluar = 0;
                 $pembukuan->save();
             }
+
+            /*$history = new \App\History;
+            $history->pesanan_id = $id;
+            $history->user_id = Auth::id();
+            $history->keterangan = 'Data pesanan berhasil diinput';
+            $history->save();
+*/
+            history_insert($id,Auth::id(),'Data pesanan berhasil diinput');
             
             
             //-- kirim notif via telegram
@@ -259,7 +267,7 @@ class HomeController extends Controller
             ]);
             
 
-        if (!empty($request->input('email'))){
+        /*if (!empty($request->input('email'))){
             //-- kirim email
 
             \Mail::send('emails.welcome', ['pesanan'=>$data_pesanan], function ($message) use ($data_pesanan){
@@ -270,7 +278,7 @@ class HomeController extends Controller
             });
             
         }
-            
+            */
 
             return redirect()->route('edit',['id'=>$id])->with('status','Data pesanan berhasil disimpan');		
         }
@@ -469,7 +477,7 @@ class HomeController extends Controller
         if (!empty($request->input('kirim_ke_pengrajin'))){
             
             if ($pesanan->kirim_ke_pengrajin == 0){
-                $pesanan->kirim_ke_pengrajin=$request->input('kirim_ke_pengrajin');
+                $pesanan->kirim_ke_pengrajin = $request->input('kirim_ke_pengrajin');
                 $text = "No order ".$request->input('id')."\n";
 
                 if (!empty($request->input('upria'))){
@@ -527,6 +535,9 @@ class HomeController extends Controller
                     'parse_mode' => 'HTML',
                     'text' => $text
                 ]);
+
+                history_insert($id,Auth::id(),'Data pesanan telah masuk ke bengkel pengrajin');
+
                 }
             
         }
@@ -540,7 +551,8 @@ class HomeController extends Controller
         
         // update 
         \App\Neraca::where('pesanan_id',$id)->update(['nominal'=>$request->input('dp')+$request->input('ongkir')]);
-            
+        
+
         return redirect()->route('edit',['id'=>$id])->with('status','Data berhasil di ubah');
 
                 

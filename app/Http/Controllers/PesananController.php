@@ -130,6 +130,8 @@ Class PesananController extends Controller{
             $id_array = []; //-- kosoingkan lagi untuk proses selanjutnya
         }
 
+        \App\Pesanan::whereNotNull('resi')->update(['finising'=>3]);
+
         return redirect()->route('semua')->with('status','Data telah berhasil diperbaiki');
     }
 
@@ -142,13 +144,13 @@ Class PesananController extends Controller{
             3 = pesanan sudah dikirim dengan no resi ter-input
             */
             $no_proses = \App\Pesanan::where('kirim_ke_pengrajin',0)->where('finising',null)->where('arsipkan',0)->get()->count();
-            $on_proses = \App\Pesanan::where('kirim_ke_pengrajin',1)->where('finising',null)->get()->count();
-            $on_lapis = \App\Pesanan::where('kirim_ke_pengrajin',1)->where('finising',1)->get()->count();
-            $on_office = \App\Pesanan::where('kirim_ke_pengrajin',1)->where('finising',2)->get()->count();
-            $on_sent = \App\Pesanan::where('kirim_ke_pengrajin',1)->where('finising',3)->get()->count();
-            $on_office_lunas = \App\Pesanan::where('kirim_ke_pengrajin',1)->where('finising',5)->get()->count();
-            $on_sent_no_resi = \App\Pesanan::where('kirim_ke_pengrajin',1)->where('finising',6)->get()->count();
-            $on_reparasi = \App\Pesanan::where('kirim_ke_pengrajin',1)->where('finising',4)->get()->count();
+            $on_proses = \App\Pesanan::where('kirim_ke_pengrajin',1)->where('finising',null)->where('arsipkan',0)->get()->count();
+            $on_lapis = \App\Pesanan::where('kirim_ke_pengrajin',1)->where('finising',1)->where('arsipkan',0)->get()->count();
+            $on_office = \App\Pesanan::where('kirim_ke_pengrajin',1)->where('finising',2)->where('arsipkan',0)->get()->count();
+            $on_sent = \App\Pesanan::where('kirim_ke_pengrajin',1)->where('finising',3)->where('arsipkan',0)->get()->count();
+            $on_office_lunas = \App\Pesanan::where('kirim_ke_pengrajin',1)->where('finising',5)->where('arsipkan',0)->get()->count();
+            $on_sent_no_resi = \App\Pesanan::where('kirim_ke_pengrajin',1)->where('finising',6)->where('arsipkan',0)->get()->count();
+            $on_reparasi = \App\Pesanan::where('kirim_ke_pengrajin',1)->where('finising',4)->where('arsipkan',0)->get()->count();
             $all_order = \App\Pesanan::get()->count();
 
             return view('pesanan.statistik',compact('on_proses','on_lapis','on_office','on_sent','all_order','no_proses','on_office_lunas','on_sent_no_resi','on_reparasi'));
@@ -156,19 +158,19 @@ Class PesananController extends Controller{
             if ($detail == 'no_proses')
                 $data = \App\Pesanan::where('kirim_ke_pengrajin',0)->where('finising',null)->where('arsipkan',0)->simplePaginate(15);
             if ($detail == 'on_proses')
-                $data = \App\Pesanan::where('kirim_ke_pengrajin',1)->where('finising',null)->simplePaginate(15);
+                $data = \App\Pesanan::where('kirim_ke_pengrajin',1)->where('finising',null)->where('arsipkan',0)->simplePaginate(15);
             if ($detail == 'on_lapis')
-                $data = \App\Pesanan::where('kirim_ke_pengrajin',1)->where('finising',1)->simplePaginate(15);
+                $data = \App\Pesanan::where('kirim_ke_pengrajin',1)->where('finising',1)->where('arsipkan',0)->simplePaginate(15);
             if ($detail == 'on_office')
-                $data = \App\Pesanan::where('kirim_ke_pengrajin',1)->where('finising',2)->simplePaginate(15);
+                $data = \App\Pesanan::where('kirim_ke_pengrajin',1)->where('finising',2)->where('arsipkan',0)->simplePaginate(15);
             if ($detail == 'on_sent')
-                $data = \App\Pesanan::where('kirim_ke_pengrajin',1)->where('finising',3)->simplePaginate(15);
+                $data = \App\Pesanan::where('kirim_ke_pengrajin',1)->where('finising',3)->where('arsipkan',0)->simplePaginate(15);
             if ($detail == 'on_office_lunas')
-                $data = \App\Pesanan::where('kirim_ke_pengrajin',1)->where('finising',5)->simplePaginate(15);
+                $data = \App\Pesanan::where('kirim_ke_pengrajin',1)->where('finising',5)->where('arsipkan',0)->simplePaginate(15);
             if ($detail == 'on_sent_no_resi')
-                $data = \App\Pesanan::where('kirim_ke_pengrajin',1)->where('finising',6)->simplePaginate(15);
+                $data = \App\Pesanan::where('kirim_ke_pengrajin',1)->where('finising',6)->where('arsipkan',0)->simplePaginate(15);
             if ($detail == 'on_reparasi')
-                $data = \App\Pesanan::where('kirim_ke_pengrajin',1)->where('finising',4)->simplePaginate(15);
+                $data = \App\Pesanan::where('kirim_ke_pengrajin',1)->where('finising',4)->where('arsipkan',0)->simplePaginate(15);
             
             return view('pesanan',compact('data'));
         
@@ -221,11 +223,14 @@ Class PesananController extends Controller{
                 'parse_mode' => 'HTML',
                 'text' => "No orderan ".$id." telah dilunasi sebesar ".rupiah($target)
             ]);
+            history_insert($id,Auth::id(),'Pesanan sudah dilunasi');
 
        }elseif ($jenis == 'resi'){
-           if (!empty($pesanan->pelunasan)){
+           /*if (!empty($pesanan->pelunasan)){
                $pesanan->finising = 5;
            }
+           */
+            $pesanan->finising = 3;
             $pesanan->resi = $target;
             $pesanan->save();
 
@@ -240,7 +245,9 @@ Class PesananController extends Controller{
 
         notif_statistik();
 
-        return redirect()->route('semua')->with('status','Data berhasil disimpan');		
+        //return redirect()->route('semua')->with('status','Data berhasil disimpan');
+        history_insert($id,Auth::id(),'Pesanan sudah dikirim dengan no resi '.$target);	
+        return redirect()->back();	
     }
     
     /*function prosespelunasan(Request $request){
@@ -416,6 +423,9 @@ Class PesananController extends Controller{
     function hapus($id){
         DB::table('pesanan')->where('id',$id)->update(['arsipkan'=>1]);
         \App\Neraca::where('pesanan_id',$id)->delete();
+        
+        history_insert($id,Auth::id(),'Data pesanan dihapus atau diarsipkan');
+
         return redirect()->route('semua')->with('status','Data berhasil diarsipkan/dihapus');
     }
 
@@ -572,6 +582,24 @@ Class PesananController extends Controller{
             
             notif_cs($id,$tipe_finising);
 
+            $orders = [];
+            foreach ($id as $item){
+                if (!empty($item)){
+                    $now = \Carbon\Carbon::now();
+
+                    $orders[] = [
+                        'pesanan_id' => $item,
+                        'user_id' => Auth::id(),
+                        'keterangan' => 'Masuk finising atau lapis',
+                        'updated_at' => $now,  // remove if not using timestamps
+                        'created_at' => $now   // remove if not using timestamps
+                    ];
+
+                }
+            }
+
+            \App\History::insert($orders);
+
         }elseif ($tipe_finising == 2){
             
             DB::table('pesanan')->whereIn('id', $id)->update(['finising' => $request->input('tipe_finising')]);
@@ -580,6 +608,25 @@ Class PesananController extends Controller{
             "Telah kembali ke kantor";
 
             notif_cs($id,$tipe_finising);
+
+            $orders = [];
+            foreach ($id as $item){
+                if (!empty($item)){
+                    $now = \Carbon\Carbon::now();
+
+                    $orders[] = [
+                        'pesanan_id' => $item,
+                        'user_id' => Auth::id(),
+                        'keterangan' => 'Barang sudah dilapis dan telah kembali ke kantor',
+                        'updated_at' => $now,  // remove if not using timestamps
+                        'created_at' => $now   // remove if not using timestamps
+                    ];
+
+                }
+            }
+
+            \App\History::insert($orders);
+
         }
            
 

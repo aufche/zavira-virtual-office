@@ -185,7 +185,7 @@
                           }
                         ?>
                     </td>
-                    <td colspan="2">Free kotak exclusive</td>
+                    <td colspan="2">Free kotak exclusive <?php echo $item->finising;?></td>
                     <td colspan="2"><?php if (!empty($item->free_woodbox)) {
                       echo '<span class="badge badge-danger">Ya</span>';
                       echo $item->free_woodbox;
@@ -250,7 +250,7 @@
                     <td colspan="2" class="border border-bottom border-dark border-top-0 border-right-0 border-left-0"><?php echo aa('DP<br />',rupiah($item->dp));?></td>
                     <td colspan="2" class="border border-bottom border-dark border-top-0 border-right-0 border-left-0"><?php echo aa('Ongkir<br />',rupiah($item->ongkir));?></td>
                     <td colspan="2" class="border border-bottom border-dark border-top-0 border-right-0 border-left-0"><?php echo aa('Pelunasan<br />',rupiah($item->pelunasan));?></td>
-                    <td colspan="2" class="border border-bottom border-dark border-top-0 border-right-0 border-left-0"><?php echo aa('Resi<br />',$item->resi);?> via <?php echo $item->kurir->title;?></td>
+                    <td colspan="2" class="border border-bottom border-dark border-top-0 border-right-0 border-left-0"><?php echo aa('Resi<br />',$item->resi,'<br />'.$item->kurir->title);?></td>
                     
                 </tr>
                 <!--<tr>

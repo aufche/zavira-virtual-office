@@ -55,6 +55,8 @@ Class ReparasiController extends Controller{
             'text' => $text_notif
         ]);
 
+        history_insert($request->input('id'),Auth::id(),'Pesanan masuk ke reparasi dengan '.$request->input('keterangan_reparasi'));
+
         return redirect()->route('semua');
     }
 
