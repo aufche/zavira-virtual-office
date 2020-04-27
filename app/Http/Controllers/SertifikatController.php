@@ -24,6 +24,8 @@ class SertifikatController extends Controller
     function prosessertifikat(Request $request){
 
         $toleransi_susut = -0.3; 
+        $toleransi_pria = 0;
+        $toleransi_wanita = 0;
 
         $id = $request->input('id');
         $pesanan = \App\Pesanan::find($id);
@@ -85,6 +87,8 @@ class SertifikatController extends Controller
                         'parse_mode' => 'HTML',
                         'text' => "Susut pria melebihi toleransi yang ditentukan ".$selisih_pria,
                     ]);
+
+                    $toleransi_pria = $selisih_pria;
                 }
 
                 if ($selisih_wanita < $toleransi_susut){
@@ -93,6 +97,8 @@ class SertifikatController extends Controller
                         'parse_mode' => 'HTML',
                         'text' => "Susut wanita melebihi toleransi yang ditentukan ".$selisih_wanita,
                     ]);
+
+                    $toleransi_wanita = $selisih_wanita;
                 }
 
             }elseif (!empty($request->input('sertifikat_beratpria')) && empty($request->input('sertifikat_beratwanita')) && $pesanan->is_premium != 0){
@@ -152,6 +158,8 @@ class SertifikatController extends Controller
         
 
         $pesanan->save();
+
+        history_insert($id,Auth::id(),'Dibuat sertifikat dengan selisih logam pria '.$toleransi_pria.' dan selisih logam wanita '.$toleransi_wanita);
 
         if ($pesanan->ispremium == 2){
             return redirect()->route('sertifikat.premium',['id'=>$id]);

@@ -34,7 +34,7 @@ Class KrusialController extends Controller{
             $id = DB::table('krusial')->insertGetId($data_krusial);
     
             kirim_telegram('Kode 5 : Ada masalah krusial dengan no order '.$request->input('pesanan_id').' tolong segera dicek',-1001386921740);
-
+            history_insert($request->input('pesanan_id'),Auth::id(),'Masalah krusial '.$request->input('catatan'));
 
     
             return redirect()->route('semua')->with('status','Permasalahan no order '.$request->input('pesanan_id').' telah dibuatkan ticketnya dengan nomor '.$id);
@@ -53,6 +53,8 @@ Class KrusialController extends Controller{
             $pesanan->save();
 
             kirim_telegram('Kode 7 : No order '.$request->input('pesanan_id').' sudah lapis '.$request->input('jumlah_lapis').' kali',-1001386921740);
+            history_insert($request->input('pesanan_id'),Auth::id(),'Lapis berulang '.$request->input('jumlah_lapis').' kali');
+
             
             //-- perlu diperbaiki
             kirim_telegram('Hallo,'.$pesanan->user->name.' Ada masalah dengan pesanan no order '.$request->input('pesanan_id'),$pesanan->user->chat_id);
@@ -76,6 +78,7 @@ Class KrusialController extends Controller{
 
         if ($request->input('is_done') == 1 && $krusial->is_done == 0){
             kirim_telegram('Kode 502 : Permasalahan no order '.$krusial->pesanan_id.' telah teratasi',-1001386921740);
+            history_insert($id,Auth::id(),'Permasalahan '.$krusial->catatan.' telah teratasi');
         }
 
         $krusial->catatan = $request->input('catatan');

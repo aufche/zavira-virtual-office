@@ -212,3 +212,11 @@ function notif_cs($id,$tipe_finising){
             ]);  
         }
 }
+
+ function history_insert($id,$cs_id,$keterangan){
+    $history = new \App\History;
+    $history->pesanan_id = $id;
+    $history->user_id = $cs_id;
+    $history->keterangan = $keterangan;
+    $history->save();
+ }
