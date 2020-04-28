@@ -472,9 +472,10 @@ Class PesananController extends Controller{
                 return view('pesanan.editlead',compact('data'));
             }
         }elseif($action == 'all'){
+            $cs_id = 0;
             $cs = \App\User::all()->pluck('id','name');
             $lead = \App\Lead::orderBy('created_at','asc')->simplePaginate(15);
-            return view('pesanan.leadall',compact('lead','cs'));
+            return view('pesanan.leadall',compact('lead','cs','cs_id'));
         }elseif ($action == 'detail'){
             $cs = \App\User::all()->pluck('id','name');
             $cs_id = $request->input('cs_id');

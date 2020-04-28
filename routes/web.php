@@ -465,6 +465,10 @@ Route::prefix('promo')->group(function () {
     Route::get('/','PromoController@index')->name('promo.index')->middleware('auth');
 });
 
+Route::prefix('timeline')->group(function () {
+    Route::get('/','HistoryController@detail')->name('timeline.index')->middleware('auth');
+});
+
 
 
 //-- end order web
