@@ -241,6 +241,7 @@
                           <div class="dropdown-divider"></div>
                           <a class="dropdown-item" href="<?php echo route('riwayat',['id'=>$item->id]);?>"><i class="fas fa-tools"></i> Catatan Reparasi</a>
                           <a class="dropdown-item" href="<?php echo route('reparasiform',['id'=>$item->id]);?>"><i class="fas fa-hammer"></i> Reparasi Baru</a>
+                          <a class="dropdown-item" href="<?php echo route('timeline.index',['id'=>$item->id]);?>"><i class="fas fa-business-time"></i> Timeline Orderan</a>
                           <div class="dropdown-divider"></div>
                           <a class="dropdown-item" href="<?php echo route('hapus',['id'=>$item->id]);?>"><i class="fas fa-trash-alt"></i> Hapus</a>
                         </div>

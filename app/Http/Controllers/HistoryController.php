@@ -11,6 +11,6 @@ class HistoryController extends Controller
 
     function detail($id){
         $history_pesanan = \App\History::orderBy('created_at','desc')->where('pesanan_id',$id)->get();
-        return view('history.detail',compact('history_pesanan'));
+        return view('history.detail',compact('history_pesanan','id'));
     }
 }
