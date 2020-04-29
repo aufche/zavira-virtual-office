@@ -487,11 +487,17 @@ Class PesananController extends Controller{
             $currentYear = $request->input('tahun');
             if ($cs_id != 0){
                 $lead = \App\Lead::whereRaw('MONTH(created_at) = ?',[$currentMonth])->whereRaw('YEAR(created_at) = ?',[$currentYear])->orderBy('created_at','desc')->where('user_id',$cs_id)->simplePaginate(30);
+
+                $sum_lead = \App\Lead::whereRaw('MONTH(created_at) = ?',[$currentMonth])->whereRaw('YEAR(created_at) = ?',[$currentYear])->orderBy('created_at','desc')->where('user_id',$cs_id)->sum('chat');
+                $sum_closing = \App\Lead::whereRaw('MONTH(created_at) = ?',[$currentMonth])->whereRaw('YEAR(created_at) = ?',[$currentYear])->orderBy('created_at','desc')->where('user_id',$cs_id)->sum('closing');
             }elseif ($cs_id == 0){
                 $lead = \App\Lead::whereRaw('MONTH(created_at) = ?',[$currentMonth])->whereRaw('YEAR(created_at) = ?',[$currentYear])->orderBy('created_at','desc')->simplePaginate(45);
+
+                $sum_lead = \App\Lead::whereRaw('MONTH(created_at) = ?',[$currentMonth])->whereRaw('YEAR(created_at) = ?',[$currentYear])->orderBy('created_at','desc')->sum('chat');
+                $sum_closing = \App\Lead::whereRaw('MONTH(created_at) = ?',[$currentMonth])->whereRaw('YEAR(created_at) = ?',[$currentYear])->orderBy('created_at','desc')->sum('closing');
             }
             
-            return view('pesanan.leadall',compact('lead','cs','currentMonth','currentYear','cs_id'));
+            return view('pesanan.leadall',compact('lead','cs','currentMonth','currentYear','cs_id','sum_lead','sum_closing'));
 
         }
         

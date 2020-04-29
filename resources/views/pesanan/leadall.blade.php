@@ -71,8 +71,19 @@
         </form>
     </div>
     <div class="tile">
+    
     <?php echo $lead->appends(Request::except('page'))->links();?>
+    
     <div class="table-responsive">
+    <?php 
+        if (isset($sum_lead) && isset($sum_closing)){
+            echo 'Jumlah chat '.$sum_lead;
+            echo '<br />Jumlah Closing '.$sum_closing;
+            echo '<br />';
+            echo 'Persentase '.@($sum_closing/$sum_lead)*100;
+            echo '%';
+        }
+    ?>
     <table class="table">
         <tr>
             <td>Tanggal Input</td>
