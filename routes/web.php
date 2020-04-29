@@ -466,7 +466,7 @@ Route::prefix('promo')->group(function () {
 });
 
 Route::prefix('timeline')->group(function () {
-    Route::get('/','HistoryController@detail')->name('timeline.index')->middleware('auth');
+    Route::get('/{id}','HistoryController@detail')->name('timeline.index')->middleware('auth');
 });
 
 

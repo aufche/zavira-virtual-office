@@ -472,12 +472,6 @@ Class PesananController extends Controller{
                 return view('pesanan.editlead',compact('data'));
             }
         }elseif($action == 'all'){
-<<<<<<< HEAD
-            $cs_id = 0;
-            $cs = \App\User::all()->pluck('id','name');
-            $lead = \App\Lead::orderBy('created_at','asc')->simplePaginate(15);
-            return view('pesanan.leadall',compact('lead','cs','cs_id'));
-=======
             
             $currentMonth = date('m');
             $currentYear = date('Y');
@@ -486,7 +480,6 @@ Class PesananController extends Controller{
             $lead = \App\Lead::orderBy('created_at','desc')->simplePaginate(45);
             return view('pesanan.leadall',compact('lead','cs','currentYear','currentMonth','cs_id'));
 
->>>>>>> 33fe3587e358df96a622071c2eff045ffc6e4ace
         }elseif ($action == 'detail'){
             $cs = \App\User::all()->pluck('id','name');
             $cs_id = $request->input('cs_id');
