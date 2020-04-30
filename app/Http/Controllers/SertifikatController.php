@@ -8,6 +8,7 @@ use Illuminate\Http\UploadedFile;
 use JD\Cloudder\Facades\Cloudder;
 use Telegram\Bot\Laravel\Facades\Telegram;
 use Telegram\Bot\FileUpload\InputFile;
+use Illuminate\Support\Facades\Auth;
 
 class SertifikatController extends Controller
 {
