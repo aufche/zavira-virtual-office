@@ -223,7 +223,7 @@ class HomeController extends Controller
             /*
             ====================
             add ke neraca
-            */
+            
 
             $neraca = new \App\Neraca;
             $neraca->nominal = $request->input('dp')+$request->input('ongkir');
@@ -232,6 +232,10 @@ class HomeController extends Controller
             $neraca->pesanan_id = $id;
             $neraca->user_id = Auth::id();
             $neraca->save();
+
+            */
+
+            neraca_insert(($request->input('dp')+$request->input('ongkir')),'DP dan ongkir no order '.$id.' rekening '.$request->input('rekening'),1,Auth::id(),$id,'DP');
 
             
 
@@ -550,7 +554,7 @@ class HomeController extends Controller
         //\App\Dp::where('pesanan_id',$id)->update(['nominal'=>raw($request->input('dp'))]);
         
         // update 
-        \App\Neraca::where('pesanan_id',$id)->update(['nominal'=>$request->input('dp')+$request->input('ongkir')]);
+        \App\Neraca::where('pesanan_id',$id)->where('identitas','DP')->update(['nominal'=>$request->input('dp')+$request->input('ongkir')]);
         
 
         return redirect()->route('edit',['id'=>$id])->with('status','Data berhasil di ubah');

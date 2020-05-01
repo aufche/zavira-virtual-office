@@ -220,3 +220,14 @@ function notif_cs($id,$tipe_finising){
     $history->keterangan = $keterangan;
     $history->save();
  }
+
+ function neraca_insert($nominal, $keterangan,$status,$user_id,$pesanan_id = null,$identitas = null){
+    $neraca = new \App\Neraca;
+    $neraca->nominal = $nominal;
+    $neraca->keterangan = $keterangan;
+    $neraca->status = $status;
+    $neraca->pesanan_id = $pesanan_id;
+    $neraca->user_id = $user_id;
+    $neraca->identitas = $identitas;
+    $neraca->save();
+ }

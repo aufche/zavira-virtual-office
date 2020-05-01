@@ -213,8 +213,20 @@ Class PesananController extends Controller{
            $pesanan->save();
 
         //-- simpan ke neraca
-           $neraca = new \App\Neraca;  
-           $neraca->neraca_insert($target,'Pelunasan no order '.$id,1,Auth::id());
+           //$neraca = new \App\Neraca;  
+           //$neraca->neraca_insert($target,'Pelunasan no order '.$id,1,Auth::id());
+
+           
+           //neraca_insert($target,'Pelunasan no order '.$id,1,Auth::id(),$id,'PELUNASAN');
+           \App\Neraca::updateOrCreate(['pesanan_id' => $id, 'identitas' => 'PELUNASAN'],
+            [
+                'nominal' => $target,
+                'keterangan' => 'Pelunasan no order '.$id,
+                'status' => 1,
+                'user_id' => Auth::id(),
+                'identitas' => 'PELUNASAN',
+                'pesanan_id' => $id
+                ]);
 
            //-- kirim notifikasi via telegram
 

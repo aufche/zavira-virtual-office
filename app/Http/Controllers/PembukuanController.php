@@ -42,6 +42,8 @@ Class PembukuanController extends Controller{
                 $neraca_nominal = $request->input('nominal');
                 $neraca_status = 0;
             }
+            
+            $id = DB::table('pembukuan')->insertGetId($data_keuangan);
 
             //-- edit pesanan jadi lunasi sesuai dgn nominal 
             if ($request->input('jenis_transaksi') == 1 && !empty($request->input('pesanan_id'))){
@@ -52,19 +54,36 @@ Class PembukuanController extends Controller{
                         'finising'=>3,
                         'resi'=>'DIAMBIL/COD'
                         ]);
+                
+                \App\Neraca::updateOrCreate(['pesanan_id' => $id, 'identitas' => 'PELUNASAN'],
+                    [
+                        'nominal' => $neraca_nominal,
+                        'keterangan' => $request->input('keterangan'),
+                        'status' => $neraca_status,
+                        'user_id' => Auth::id(),
+                        'identitas' => 'PELUNASAN',
+                        'pesanan_id' => $request->input('pesanan_id'),
+                        ]);
+            }else{
+                //-- DP cash atau penerimaan lain
+
+                $neraca = new \App\Neraca;
+                $neraca->nominal = $neraca_nominal;
+                $neraca->keterangan = $request->input('keterangan');
+                $neraca->status = $neraca_status;
+                $neraca->user_id = Auth::id();
+                $neraca->pembukuan_id = $id;
+                $neraca->save();
+
             }
     
-            $id = DB::table('pembukuan')->insertGetId($data_keuangan);
+            
 
             //-- add record to neraca
 
-            $neraca = new \App\Neraca;
-            $neraca->nominal = $neraca_nominal;
-            $neraca->keterangan = $request->input('keterangan');
-            $neraca->status = $neraca_status;
-            $neraca->user_id = Auth::id();
-            $neraca->pembukuan_id = $id;
-            $neraca->save();
+            
+
+            
     
             if ($id){
                 kirim_telegram($text,-1001386921740);

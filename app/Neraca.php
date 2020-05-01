@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Neraca extends Model
 {
     protected $table = 'neraca';
+    protected $fillable = ['nominal','keterangan','pesanan_id','user_id','pembukuan_id','status','identitas'];
 
     public function user(){
         return $this->belongsTo('App\User');
