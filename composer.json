@@ -11,12 +11,10 @@
         "guzzlehttp/guzzle": "~5.3|~6.0",
         "irazasyed/telegram-bot-sdk": "^3.0",
         "jrm2k6/cloudder": "0.4.*",
-        "laravel/framework": "6.0.*",
+        "laravel/framework": "^6.0.*",
         "laravel/tinker": "^1.0",
         "mavinoo/laravel-batch": "dev-master",
-        "mohammad-fouladgar/eloquent-builder": "^0.6.0",
         "pusher/pusher-php-server": "^3.2",
-        "rizalafani/rajaongkirlaravel": "^1.0",
         "yish/imgur": "^1.0"
     },
     "require-dev": {
