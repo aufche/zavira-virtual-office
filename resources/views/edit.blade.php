@@ -19,7 +19,7 @@
       <input type = "hidden" name = "gbr" value = "<?php echo $data[0]->gambar; ?>">
       <input type = "hidden" name = "bahanpria_old" value = "<?php echo $data[0]->bahanpria; ?>">
       <input type = "hidden" name = "bahanwanita_old" value = "<?php echo $data[0]->bahanwanita; ?>">
-        <div class="card border-warning">
+        <div class="card border-warning shadow">
         <div class="card-header bg-warning text-dark">Data Pengiriman</div>
             <div class="card-body">
             <div class="form-row">
@@ -87,7 +87,7 @@
 
        
 
-        <div class="card mb-3 border-warning">
+        <div class="card mb-3 shadow border-warning">
             <div class="card-header bg-warning text-dark">Model Cincin</div>
             <div class="card-body">
                 <div class="form-row">
@@ -146,7 +146,7 @@
             </div>
         </div>
 
-       <div class="card mb-3 border-dark">
+       <div class="card mb-3 shadow border-dark">
        <div class="card-header bg-dark text-white">Detail Cincin Pria</div>
             <div class="card-body">
                 <div class="form-row">
@@ -205,7 +205,7 @@
             </div>
         </div>
 
-        <div class="card mb-3 border-info">
+        <div class="card mb-3 shadow border-info">
         <div class="card-header bg-info text-white">Cincin Wanita</div> 
             <div class="card-body"> 
                 <div class="form-row">
@@ -263,7 +263,7 @@
             </div>
         </div>
 
-        <div class="card mb-3 border-dark">
+        <div class="card mb-3 shadow border-dark">
         <div class="card-header bg-dark text-white">Pengaturan Orderan</div>
         <div class="card-body">
             <div class="form-row">
@@ -327,12 +327,12 @@
         </div>
         </div>
 
-        <div class="card mb-3">
+        <div class="card mb-3 shadow">
         <div class="card-header">Pembayaran</div>
         <div class="card-body">
             <div class="form-row">
                     <div class="col mb-3">
-                    <label for="validationDefault03">Tujuan Rekening</label>
+                    <label for="validationDefault03">Tujuan Rekening <span class="badge badge-pill badge-warning">Penting</span></label> 
                     <select name="rekening" class="form-control" required>
                         <option value="BCA" <?php if ($data[0]->rekening == 'BCA') echo 'selected="selected"';?>>BCA</option>
                         <option value="MANDIRI" <?php if ($data[0]->rekening == 'MANDIRI') echo 'selected="selected"';?>>Mandiri</option>
@@ -343,6 +343,7 @@
                         <option value="EDC-BNI" <?php if ($data[0]->rekening == 'EDC-BNI') echo 'selected="selected"';?>>EDC-BNI</option>
                         <option value="CASH" <?php if ($data[0]->rekening == 'CASH') echo 'selected="selected"';?>>CASH</option>
                     </select>
+                    <small class="text-muted">Harus dipilih sesuai dengan keadaan sebenarnya</small>
                     </div>
 
                     <div class="col mb-3">

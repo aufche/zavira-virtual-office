@@ -26,7 +26,7 @@
       <div class="tile">
       <form autocomplete="off" action="<?php echo route('insert');?>" method="post" enctype="multipart/form-data">
       <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
-        <div class="card border-dark">
+        <div class="card shadow border-dark">
         <div class="card-header bg-dark text-white">Data Pengiriman</div>
             <div class="card-body">
             <div class="form-row">
@@ -87,7 +87,7 @@
         </div>
         <hr />
 
-        <div class="card mb-3 border-dark">
+        <div class="card mb-3 shadow border-dark">
             <div class="card-header bg-dark text-white">Model Cincin</div>
             <div class="card-body">
                 <div class="form-row">
@@ -115,7 +115,7 @@
             </div>
         </div>
 
-       <div class="card mb-3 border-dark">
+       <div class="card mb-3 shadow border-dark">
        <div class="card-header bg-dark text-white">Detail Cincin Pria</div>
             <div class="card-body">
                 <div class="form-row">
@@ -173,7 +173,7 @@
             </div>
         </div>
 
-        <div class="card mb-3 border-dark">
+        <div class="card mb-3 shadow border-dark">
         <div class="card-header bg-dark text-white">Cincin Wanita</div> 
             <div class="card-body"> 
                 <div class="form-row">
@@ -231,7 +231,7 @@
             </div>
         </div>
 
-        <div class="card mb-3 border-dark">
+        <div class="card mb-3 shadow border-dark">
         <div class="card-header bg-dark text-white">Pengaturan Orderan</div>
         <div class="card-body">
             <div class="form-row">
@@ -306,12 +306,12 @@
         </div>
         </div>
 
-        <div class="card mb-3 border-dark">
+        <div class="card mb-3 shadow border-dark">
         <div class="card-header bg-dark text-white">Pembayaran</div>
         <div class="card-body">
             <div class="form-row">
                     <div class="col mb-3 ">
-                    <label for="validationDefault03">Tujuan Rekening</label>
+                    <label for="validationDefault03">Tujuan Rekening <span class="badge badge-pill badge-warning">Penting</span></label>
                     <select name="rekening" class="form-control" required>
                         <option value="BCA">BCA</option>
                         <option value="MANDIRI">Mandiri</option>
@@ -322,6 +322,7 @@
                         <option value="EDC-BNI">EDC-BNI</option>
                         <option value="CASH">CASH</option>
                     </select>
+                    <small class="text-muted">Harus dipilih sesuai dengan keadaan sebenarnya</small>
                     </div>
 
                     <div class="col mb-3 ">

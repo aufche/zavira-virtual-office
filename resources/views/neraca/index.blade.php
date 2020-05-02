@@ -74,6 +74,8 @@
                 <td>No.</td>
                 <td>Tanggal</td>
                 <td>Keterangan</td>
+                <td>No. Order</td>
+                <td>No. Pembukuan</td>
                 <td>Penanggung Jawab</td>
                 <td>Masuk</td>
                 <td>Keluar</td>
@@ -89,6 +91,8 @@
                     <td><?php echo $n;?>. </td>
                     <td><?php echo date('d M Y', strtotime($item->created_at));?></td>
                     <td><?php echo $item->keterangan;?></td>
+                    <td><?php echo $item->pesanan_id;?></td>
+                    <td><?php echo $item->pembukuan_id;?></td>
                     <td><?php echo $item->user->name;?></td>
                     <td><?php if ($item->status == 1) {
                          echo rupiah($item->nominal);
@@ -106,7 +110,7 @@
             }
         ?>
             <tr>
-                <td colspan="4">-</td>
+                <td colspan="6">Summary</td>
                 <td><?php echo rupiah($pemasukan);?></td>
                 <td><?php echo rupiah($pengeluaran);?></td>
                 <td><strong><?php echo rupiah($pemasukan - $pengeluaran);?></strong></td>
