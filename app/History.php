@@ -9,4 +9,8 @@ class History extends Model
     //
     protected $table = 'history';
     
+
+    public function pesanan(){
+        return $this->belongsTo('App\Pesanan');
+    }
 }

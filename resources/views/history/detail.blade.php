@@ -100,6 +100,20 @@
    <div class="row">
       
       <div class="col-md-12 col-lg-12">
+<div class="card">
+   <div class="card-header">
+     <?php echo $history_pesanan[0]->pesanan->nama; ?>
+   </div>
+   <div class="card-body">
+      <h4 class="card-title">Title</h4>
+      <p class="card-text">Text</p>
+   </div>
+   <div class="card-footer text-muted">
+      Footer
+   </div>
+</div>
+
+
          <div id="tracking-pre"></div>
          <div id="tracking">
             <div class="text-center tracking-status-intransit">
@@ -107,7 +121,9 @@
             </div>
             <div class="tracking-list">
 
+            
             <?php
+               
               foreach ($history_pesanan as $item){
                 ?>
                 <div class="tracking-item">

@@ -47,6 +47,10 @@ Class Pesanan extends Model{
         return $this->hasOne('App\Namalogam','id','bahanwanita');
     }
 
+    public function history(){
+        return $this->hasMany('App\History');
+    }
+
    
 
 }
