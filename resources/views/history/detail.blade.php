@@ -98,20 +98,35 @@
     <div class="container">
    
    <div class="row">
+
+  
       
       <div class="col-md-12 col-lg-12">
-<div class="card">
-   <div class="card-header">
-     <?php echo $history_pesanan[0]->pesanan->nama; ?>
-   </div>
-   <div class="card-body">
-      <h4 class="card-title">Title</h4>
-      <p class="card-text">Text</p>
-   </div>
-   <div class="card-footer text-muted">
-      Footer
-   </div>
-</div>
+
+      <?php
+      if (isset($history_pesanan[0])){
+      ?>
+         <div class="card mb-3 border-warning">
+            <div class="card-header bg-warning">
+            <?php echo 'No Order '.$history_pesanan[0]->pesanan->id;?>
+            </div>
+            <div class="card-body">
+               <table class="table">
+                  <tr>
+                     <td>Nama</td>
+                     <td>Alamat</td>
+                     <td>No HP</td>
+                  </tr>
+                  <tr>
+                     <td><?php echo $history_pesanan[0]->pesanan->nama;?></td>
+                     <td><?php echo $history_pesanan[0]->pesanan->alamat;?></td>
+                     <td><?php echo $history_pesanan[0]->pesanan->nohp;?></td>
+                  </tr>
+               </table>
+            </div>
+         </div>
+
+            <?php } ?>
 
 
          <div id="tracking-pre"></div>
