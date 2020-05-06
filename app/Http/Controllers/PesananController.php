@@ -261,6 +261,61 @@ Class PesananController extends Controller{
         history_insert($id,Auth::id(),'Pesanan sudah dikirim dengan no resi '.$target);	
         return redirect()->back();	
     }
+
+    function pembayaran_pelunasan(Request $request, $id = null){
+        if ($request->isMethod('post')){
+        
+        $id = $request->input('id');
+        $jenis =  $request->input('jenis');
+        $target =  $request->input('nominal');
+
+           $pesanan = \App\Pesanan::find($id);
+
+           if ($jenis == 1){
+               //-- pelunasan reguler atau utama
+               if (!empty($pesanan->resi)){
+                    $pesanan->finising = 3; 
+                }else{
+                   $pesanan->finising = 5;  
+                }
+                $pesanan->pelunasan = $target;
+                $pesanan->save();
+
+                \App\Neraca::updateOrCreate(['pesanan_id' => $id, 'identitas' => 'PELUNASAN'],
+                    [
+                        'nominal' => $target,
+                        'keterangan' => 'Pelunasan no order '.$id,
+                        'status' => 1,
+                        'user_id' => Auth::id(),
+                        'identitas' => 'PELUNASAN',
+                        'pesanan_id' => $id
+                        ]);
+
+                    //-- kirim notifikasi via telegram
+
+                    Telegram::sendMessage([
+                        'chat_id' => -1001386921740, // zavira virtual office
+                        'parse_mode' => 'HTML',
+                        'text' => "No orderan ".$id." telah dilunasi sebesar ".rupiah($target)
+                    ]);
+                    history_insert($id,Auth::id(),'Pesanan sudah dilunasi');
+           }elseif ($jenis == 2){
+               // pelunasan tambahan                
+                $pesanan->pelunasan = ($pesanan->pelunasan + $target);
+                $pesanan->save();
+
+                neraca_insert($target,'Pembayaran tambahan no order '.$id,1,Auth::id(),$id);
+                history_insert($id,Auth::id(),'Ada pembayaran tambahan');
+           }
+           
+           //return view('utility.close');
+           return redirect()->route('pesanan.pembayaran.pelunasan',['id'=>$id])->with('status','Data pelunasan berhasil diupdate');
+
+        }elseif ($request->isMethod('get')){
+            $data = DB::table('pesanan')->select('id','pelunasan')->where('id',$id)->first();
+            return view('pesanan.pelunasan',compact('data'));
+        }
+    }
     
     /*function prosespelunasan(Request $request){
         $id = $request->input('id');

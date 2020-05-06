@@ -1,28 +1,27 @@
 @include('layouts.header');
 <main class="app-content">
-      <div class="app-title">
-        <div>
-          <h1><i class="fa fa-dashboard"></i> Tambah Data Transaksi Cash</h1>
-          <p>Pada halaman ini, kamu bisa menambah data transaksi cash</p>
-        </div>
-      </div>
-
-      <div class="tile">
-        <?php
+<?php
         if ($jenis_transaksi == 1){
             $class = "border-info";
             $class2 ="bg-info text-white";
-            $header = 'Menambah transaksi dana masuk';
+            $header = 'Transaksi dana masuk';
             $btn = "btn-info";
         }else{
             $class = "border-warning";
             $class2 ="bg-warning text-dark";
-            $header = 'Menambah transaksi dana keluar';
+            $header = 'Transaksi dana keluar';
             $btn = "btn-warning";
         }
         ?>
-        <h2 class="font-weight-light h3 text-uppercase"><?php echo $header;?></h2>
+
+      <div class="app-title">
+        <div>
+          <h1><i class="fas fa-kiwi-bird"></i> <?php echo $header;?></h1>
+          <p>Pada halaman ini, kamu bisa menambah data transaksi cash</p>
+        </div>
       </div>
+
+       
 
       <div class="tile">
        <form method="post" action="<?php echo route('pembukuan.insert');?>" autocomplete="off">
@@ -67,6 +66,13 @@
             <?php
               if ($jenis_transaksi == 1){
             ?>
+              <label for="alamat">Jenis Pembayaran</label>
+
+              <select name="jenis" class="form-control mb-3">
+                <option value="1" selected="selected">Pelunasan Utama</option>
+                <option value="2">Biaya lain seperti ongkir, resize, lapis ulang dsb</option>
+              </select>
+
               <label for="alamat">Pelunasan dari siapa?</label>
               <input type="text" class="form-control mb-3" name="show_user" id="show-user" />  
               <label for="alamat">No Order</label>
@@ -76,7 +82,7 @@
 
             <div class="col-md-8">
               <label for="alamat">Keterangan</label>
-              <textarea class="form-control" name="keterangan" rows="5" required><?php echo old('keterangan');?></textarea>                
+              <textarea class="form-control" name="keterangan" rows="8" required><?php echo old('keterangan');?></textarea>                
             </div>
             
             
