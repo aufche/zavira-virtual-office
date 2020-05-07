@@ -218,7 +218,7 @@
                           <a class="dropdown-item" href="<?php echo route('buktidp',['id'=>$item->id]);?>" target="_blank"><i class="fas fa-file-invoice-dollar"></i> Cetak Bukti Pembayaran DP</a>
                           <!--<a class="dropdown-item" href="#">Cetak Nota Pembelian</a>-->
                           <div class="dropdown-divider"></div>
-                          <a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal_lunas" data-whatever="<?php echo $item->id;?>" data-jenis="pelunasan"><i class="fas fa-scroll"></i> Update Pelunasan  Non Tunai</a>
+                          <a href="#" class="dropdown-item" target="popup" onclick="window.open('<?php echo route('pesanan.pembayaran.pelunasan',['id'=>$item->id]);?>','popup','width=600,height=500,location=no'); return false;" ><i class="fas fa-scroll"></i> Update Pelunasan  Non Tunai</a>
                           <a href="<?php echo route('pembukuan.add',['status'=>1,'id'=>$item->id]);?>" class="dropdown-item"><i class="fas fa-scroll"></i> Update Pelunasan Tunai</a>
                           <a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal_lunas" data-whatever="<?php echo $item->id;?>" data-jenis="resi"><i class="fas fa-scroll"></i> Update Resi</a>
                           <div class="dropdown-divider"></div>

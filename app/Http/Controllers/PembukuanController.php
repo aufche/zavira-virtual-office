@@ -42,20 +42,34 @@ Class PembukuanController extends Controller{
                 $neraca_nominal = $request->input('nominal');
                 $neraca_status = 0;
             }
+
+            if (!empty($request->input('pesanan_id'))){
+                $data_keuangan = array_add($data_keuangan,'pesanan_id',$request->input('pesanan_id'));
+            }
             
             $id = DB::table('pembukuan')->insertGetId($data_keuangan);
 
             //-- edit pesanan jadi lunasi sesuai dgn nominal 
             if ($request->input('jenis_transaksi') == 1 && !empty($request->input('pesanan_id'))){
-                DB::table('pesanan')
-                    ->where('id',$request->input('pesanan_id'))
-                    ->update([
-                        'pelunasan'=>$request->input('nominal'),
-                        'finising'=>3,
-                        'resi'=>'DIAMBIL/COD'
+                $jenis = $request->input('jenis');
+                if ($jenis == 1){
+                    //-- pelunasan reguler atau utama
+                    DB::table('pesanan')
+                        ->where('id',$request->input('pesanan_id'))
+                        ->update([
+                            'pelunasan'=>$request->input('nominal'),
+                            'finising'=>3,
+                            'resi'=>'DIAMBIL/COD'
                         ]);
+                }elseif ($jenis == 2){
+                    // pembayaran lain-lain
+                    DB::table('pesanan')->where('id',$request->input('pesanan_id'))->increment('pelunasan',$request->input('nominal'));
+                }
                 
-                \App\Neraca::updateOrCreate(['pesanan_id' => $id, 'identitas' => 'PELUNASAN'],
+         
+                
+                
+                \App\Neraca::updateOrCreate(['pesanan_id' => $request->input('pesanan_id'), 'identitas' => 'PELUNASAN'],
                     [
                         'nominal' => $neraca_nominal,
                         'keterangan' => $request->input('keterangan'),
@@ -63,7 +77,8 @@ Class PembukuanController extends Controller{
                         'user_id' => Auth::id(),
                         'identitas' => 'PELUNASAN',
                         'pesanan_id' => $request->input('pesanan_id'),
-                        ]);
+                        'pembukuan_id' => $id,
+                    ]);
             }else{
                 //-- DP cash atau penerimaan lain
 
@@ -97,6 +112,12 @@ Class PembukuanController extends Controller{
             if ($request->input('jenis_transaksi') == 1){
                 $data_pembukuan->masuk = $request->input('nominal');
                 $neraca_status = 1;
+
+                /*if ($data_pembukuan->masuk > $request->input('nominal'))
+                    DB::table('pesanan')->where('id',$data_pembukuan->pesanan_id)->decrement('pelunasan',$request->input('nominal'));
+                else
+                    DB::table('pesanan')->where('id',$data_pembukuan->pesanan_id)->increment('pelunasan',$request->input('nominal'));
+                */
             }else{
                 $data_pembukuan->keluar = $request->input('nominal');
                 $neraca_status = 0;
@@ -104,10 +125,15 @@ Class PembukuanController extends Controller{
             $data_pembukuan->keterangan = $request->input('keterangan');
             $data_pembukuan->jenis_transaksi = $request->input('jenis_transaksi');
 
+
+
             $data_pembukuan->save();
             
             //== update di neraca
             \App\Neraca::where('pembukuan_id',$id)->update(['nominal'=>$request->input('nominal'),'status'=>$neraca_status,'keterangan'=>$request->input('keterangan')]);
+
+            
+            //DB::table('pesanan')->where('id',$data_pembukuan->pesanan_id)->decrement('pelunasan',)
         
             return redirect()->route('pembukuan.edit',['id'=>$id])->with('status','Data berhasil di ubah');
         }

@@ -96,6 +96,7 @@ Route::prefix('pesanan')->group(function () {
 
     //Route::post('/prosespelunasan', 'PesananController@prosespelunasan')->name('prosespelunasan')->middleware('auth');
     Route::post('/prosespelunasan', 'PesananController@pelunasan')->name('pesanan.pelunasan')->middleware('auth');
+    Route::any('/pembayaran-pelunasan/{id?}','PesananController@pembayaran_pelunasan')->name('pesanan.pembayaran.pelunasan')->middleware('auth');
     
 
     
