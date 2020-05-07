@@ -139,13 +139,14 @@ Class PembukuanController extends Controller{
         }
     }
     
-    public function detail($id,$bulan=null){
+    public function detail($id,$bulan = null){
         $user_id = Auth::user()->id;
         if (\App\Buku::where('hak_akses','like','%'.$user_id.'%')->where('id','=',$id)->count() > 0){
             $buku = \App\Buku::find($id);
             if (empty($bulan)){
+                $bulan = date('F Y');
                 $data = \App\Pembukuan::where('buku_id','=',$id)
-                    ->where('bulantahun','=',date('F Y'))
+                    ->where('bulantahun','=',$bulan)
                     ->orderBy('tanggal','asc')
                     ->get();
             }else{
@@ -158,11 +159,25 @@ Class PembukuanController extends Controller{
 
             $old = \App\Pembukuan::selectRaw('bulantahun')->groupBy('bulantahun')->orderBy('bulantahun','desc')->get();
 
-            return view('pembukuan.semua',compact('data','buku','old'));
+            return view('pembukuan.semua',compact('data','buku','old','bulan'));
         }else{
             return view('notfound');
         }
     }
+
+    function export_pembukuan($id,$bulan){
+        $data = \App\Pembukuan::where('buku_id','=',$id)
+            ->where('bulantahun','=',urldecode($bulan))
+            ->orderBy('tanggal','asc')
+            ->get();
+        $buku = \App\Buku::find($id);
+
+        $pdf = \PDF::loadView('pdf.pembukuan',['data' => $data,'buku' => $buku, 'bulan' => $bulan]);
+
+        return $pdf->download('pembukuan.pdf');
+    }
+
+    
 
     public function edit($id){
         $user_id = Auth::user()->id;

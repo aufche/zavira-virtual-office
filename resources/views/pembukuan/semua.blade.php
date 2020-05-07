@@ -29,6 +29,7 @@ table.table-bordered > tbody > tr > td{
         <a class="btn btn-lg btn-outline-success mb-3" href="<?php echo route('pembukuan.add',['status'=>1]);?>" role="button">Dana Masuk</a> 
         <a class="btn btn-lg btn-outline-danger mb-3" href="<?php echo route('pembukuan.add',['status'=>0]);?>" role="button">Dana Keluar</a> 
         <a class="btn btn-lg btn-outline-info mb-3" href="<?php echo route('pembukuan.transfer');?>" role="button">Transfer</a> 
+        <a class="btn btn-lg btn-outline-info mb-3" href="<?php echo route('pembukuan.export',['id' => $buku->id, 'bulan' => $bulan]);?>" role="button">Export PDF</a> 
       </div>
 
       <div class="float-right">

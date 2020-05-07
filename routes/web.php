@@ -358,6 +358,7 @@ Route::prefix('pembukuan')->group(function () {
 
     })->name('pembukuan.transfer')->middleware('auth');
 
+    Route::get('/export/{id?}/{bulan?}','PembukuanController@export_pembukuan')->name('pembukuan.export')->middleware('auth');
     Route::post('/insert/{aksi?}','PembukuanController@insert')->name('pembukuan.insert')->middleware('auth');
     Route::post('/transfering','PembukuanController@transfer')->name('pembukuan.transfering')->middleware('auth');
 
