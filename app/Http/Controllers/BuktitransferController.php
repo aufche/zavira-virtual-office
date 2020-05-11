@@ -53,7 +53,7 @@ class BuktitransferController extends Controller
         return view('bukti.index',compact('bukti_transfer'));
     }
 
-    function cetak($detail){
+    function cetak($detail, $export = null){
             $id = [];
             $data = \App\Biayaproduksi::where('identitas','=',$detail)->get();
             foreach ($data as $item){
@@ -63,7 +63,15 @@ class BuktitransferController extends Controller
             $screenshot = \App\Buktitransfer::where('identitas',$detail)->first();
 
             $harga = \App\Setting::whereIn('kunci',['harga_harian_emas','harga_harian_palladium','harga_harian_platinum'])->orderBy('kunci','asc')->get();
-            return view('pesanan.biayaproduksi',compact('data','harga','screenshot'));
+            if ($export == 'pdf'){
+                
+                $pdf = \PDF::loadView('pdf.buktipembayaran',compact('data','harga','screenshot'))->setPaper('a4', 'landscape');
+                return $pdf->download('pembayaranlogam.pdf');
+
+            }else{
+                return view('pesanan.biayaproduksi',compact('data','harga','screenshot'));
+            }
+            
     }
 
     function search(Request $request){
@@ -71,5 +79,7 @@ class BuktitransferController extends Controller
         $bukti_transfer = \App\Buktitransfer::where('pesanan_id','like','%'.$q.'%')->paginate(15);
         return view('bukti.index',compact('bukti_transfer'));
     }
+
+    
 
 }

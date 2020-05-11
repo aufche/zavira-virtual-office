@@ -446,7 +446,7 @@ Route::prefix('bukti')->group(function () {
     })->name('bukti.insert.get')->middleware('auth');
     Route::post('/insert','BuktitransferController@insert')->name('bukti.insert.post')->middleware('auth');
 
-    Route::get('/cetak/{detail}','BuktitransferController@cetak')->name('bukti.cetak')->middleware('auth');
+    Route::get('/cetak/{detail}/{export?}','BuktitransferController@cetak')->name('bukti.cetak')->middleware('auth');
     Route::post('/search','BuktitransferController@search')->name('bukti.search')->middleware('auth');
 });
 

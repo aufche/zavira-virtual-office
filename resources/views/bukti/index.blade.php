@@ -48,7 +48,9 @@
                         </td>
                         <td><?php echo $item->pesanan_id;?></td>
                         <td><?php echo date('d M Y', strtotime($item->created_at));?></td>
-                        <td><a role="button" class="btn btn-warning border border-dark" href="<?php echo route('bukti.cetak',['detail'=>$item->identitas]);?>" target="_blank"><i class="fas fa-print"></i> Cetak</a></td>
+                        <td><a role="button" class="btn btn-warning border border-dark" href="<?php echo route('bukti.cetak',['detail' => $item->identitas ]);?>" target="_blank"><i class="fas fa-print"></i> Cetak</a>
+                            <a role="button" class="btn btn-warning border border-dark" href="<?php echo route('bukti.cetak',['detail' => $item->identitas,'export' => 'pdf']);?>"><i class="fas fa-print"></i> Export PDF</a>
+                        </td>
                     </tr>
                     <?php
                 }
