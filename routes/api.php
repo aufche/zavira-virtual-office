@@ -23,6 +23,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/logam','RestapiController@logam');
 Route::get('/hargapokok','RestapiController@hargapokok');
+Route::get('/kalkulator','RestapiController@kalkulator');
 Route::post('/orderweb','RestapiController@orderweb');
 Route::post('/ordercustom','RestapiController@ordercustom');
 Route::get('/resi/{id}','RestapiController@resi');
