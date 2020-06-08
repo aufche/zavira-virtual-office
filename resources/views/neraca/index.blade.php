@@ -60,10 +60,6 @@
       <div class="tile">
         <a class="btn btn-warning mb-3 border-dark" href="<?php echo route('neraca.insert');?>">Tambah</a>
         
-        
-        
-
-        
         @if (session('status'))
             <div class="alert alert-success">
                 {{ session('status') }}

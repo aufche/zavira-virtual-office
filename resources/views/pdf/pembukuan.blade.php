@@ -12,15 +12,15 @@
     table.table-bordered{
     border:1px solid #000;
     margin-top:20px;
-  }
-table.table-bordered > thead > tr > th{
-    border:1px solid #000;
-    
-}
-table.table-bordered > tbody > tr > td{
-    border:1px solid #000;
-    font-size:12px;
-}
+      }
+    table.table-bordered > thead > tr > th{
+        border:1px solid #000;
+        
+    }
+    table.table-bordered > tbody > tr > td{
+        border:1px solid #000;
+        font-size:12px;
+    }
     </style>
   </head>
   <body>
