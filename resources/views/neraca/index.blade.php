@@ -103,7 +103,19 @@
                         echo rupiah($item->nominal);
                         $pengeluaran = $pengeluaran+$item->nominal; 
                     } else echo '-';?></td>
-                    <td><a class="btn btn-danger border-dark" href="<?php echo route('neraca.hapus',['id'=>$item->id]); ?>">Hapus</a> <a class="border-dark btn btn-warning" href="<?php echo route('neraca.edit',['id'=>$item->id]); ?>">Edit</a></td>
+                    <td>
+                    
+                    <div class="btn-group" role="group">
+                        <button id="btnGroupDrop1" type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Action
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                        <a class="dropdown-item" href="<?php echo route('neraca.hapus',['id'=>$item->id]); ?>">Hapus</a>
+                        <a class="dropdown-item" href="<?php echo route('neraca.edit',['id'=>$item->id]); ?>">Edit</a>
+                        </div>
+                    </div>
+                    
+                    </td>
                 </tr>
                 <?php
                 $n++;
