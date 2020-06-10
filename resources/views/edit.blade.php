@@ -2,8 +2,8 @@
 <main class="app-content">
       <div class="app-title">
         <div>
-          <h1><i class="fa fa-dashboard"></i> Edit Order</h1>
-          <p>Pada halaman ini, kamu bisa menambah data orderan</p>
+          <h1><i class="far fa-gem"></i> Edit Order</h1>
+          <p>Pada halaman ini, kamu bisa mengubah data orderan</p>
         </div>
       </div>
 
@@ -146,7 +146,16 @@
             </div>
         </div>
 
-       <div class="card mb-3 shadow border-dark">
+        <?php 
+        if (empty($data[0]->ukuranpria) && empty($data[0]->bpria)){
+            echo '<div class="card mb-3 shadow border-dark" style="display:none">';
+        }else{
+            
+            echo '<div class="card mb-3 shadow border-dark">';
+        }
+        ?>
+
+       
        <div class="card-header bg-dark text-white">Detail Cincin Pria</div>
             <div class="card-body">
                 <div class="form-row">
@@ -161,37 +170,10 @@
                     </div>
                     
                     <div class="col-md-3 mb-3">
-                    <div class="form-group">
-                      <label for="bpria">Bahan</label>
-                      <select class="form-control" name="bpria" id="bahanpria" onchange="disable_silver('PRIA')">
-                        <option value="0" selected="selected">Pilih logam</option>
-                        <?php 
-                            foreach ($namalogam as $title=>$id){
-                                ?>
-                                <option value="<?php echo $id;?>|<?php echo $title;?>" <?php if (old('bahanpria',$data[0]->bahanpria) == $id){echo 'selected="selected"';};?>><?php echo $title;?></option>
-                                <?php
-                            }
-                        ?>
-                      </select>
-
-                       <!--<label>Pilih finising perak (di Gunawan)</label>
-                      <select class="form-control" name="biaya_lapis_perak_pria" id="lapis_finising_perak_pria" disabled="disabled">
-                        <option value="0" selected="selected">Pilih jenis finising khusus cincin perak</option>
-                        <option value="30000">Putih glossy</option>
-                        <option value="30000">Putih doff</option>
-                        <option value="10000">Kuning glossy</option>
-                        <option value="10000">Rose gold glossy</option>
-                        <option value="30000">Hitam glossy</option>
-                        <option value="35000">Hitam Doff</option>
-                        <option value="40000">Hitam kombinasi</option>
-                        <option value="35000">Kombinasi putih dan kuning glossy</option>
-                        <option value="35000">Kombinasi rose gold dan putih glossy</option>
-                        <option value="40000">Doff Kombinasi kuning dan putih</option>
-                        <option value="40000">Doff Kombinasi putih dan rose gold</option>
-                        <option value="25000">Doff kuning</option>
-                        <option value="25000">Doff rose gold</option>
-                      </select> -->
-                    </div>
+                    <label>Cincin pria menggunakan bahan <strong><?php echo $data[0]->bahanpria()->first()['title'];?></strong></label>
+                    <a class="btn btn-warning  btn-block" href="<?php echo route('pesanan.edit.logam',['id'=>$data[0]->id]);?>">Klik disini untuk mengubah</a>
+                    
+                    
                     </div>
 
                     <div class="col-md-3 mb-3">
@@ -205,7 +187,14 @@
             </div>
         </div>
 
-        <div class="card mb-3 shadow border-info">
+        <?php 
+        if (empty($data[0]->ukuranwanita) && empty($data[0]->bwanita)){
+            echo '<div class="card mb-3 shadow border-info" style="display:none">';
+        }else{
+            echo '<div class="card mb-3 shadow border-info">';
+        }
+        ?>
+        
         <div class="card-header bg-info text-white">Cincin Wanita</div> 
             <div class="card-body"> 
                 <div class="form-row">
@@ -220,36 +209,8 @@
                     </div>
                     
                     <div class="col-md-3 mb-3">
-                    <label for="validationDefault05">Bahan</label>
-                    <select class="form-control" name="bwanita" id="bahanwanita" onchange="disable_silver('WANITA')">
-                        <option value="0" selected="selected">Pilih logam</option>
-                        <?php 
-                            foreach ($namalogam as $title=>$id){
-                                ?>
-                                <option value="<?php echo $id;?>|<?php echo $title;?>" <?php if (old('bahanwanita',$data[0]->bahanwanita) == $id){echo 'selected="selected"';};?>><?php echo $title;?></option>
-                                <?php
-                            }
-                        ?>
-                      </select>
-
-                      <!--<label>Pilih finising perak (di Gunawan)</label>
-                      <select class="form-control" name="biaya_lapis_perak_wanita" id="lapis_finising_perak_wanita" disabled="disabled">
-                        <option value="0" selected="selected">Pilih jenis finising khusus cincin perak</option>
-                        <option value="30000">Putih glossy</option>
-                        <option value="30000">Putih doff</option>
-                        <option value="10000">Kuning glossy</option>
-                        <option value="10000">Rose gold glossy</option>
-                        <option value="30000">Hitam glossy</option>
-                        <option value="35000">Hitam Doff</option>
-                        <option value="40000">Hitam kombinasi</option>
-                        <option value="35000">Kombinasi putih dan kuning glossy</option>
-                        <option value="35000">Kombinasi rose gold dan putih glossy</option>
-                        <option value="40000">Doff Kombinasi kuning dan putih</option>
-                        <option value="40000">Doff Kombinasi putih dan rose gold</option>
-                        <option value="25000">Doff kuning</option>
-                        <option value="25000">Doff rose gold</option>
-                      </select>
--->
+                    <label>Cincin wanita menggunakan bahan <strong><?php echo $data[0]->bahanwanita()->first()['title'];?></strong></label>
+                    <a class="btn btn-warning  btn-block" href="<?php echo route('pesanan.edit.logam',['id'=>$data[0]->id]);?>">Klik disini untuk mengubah</a>
                     </div>
 
                     <div class="col-md-3 mb-3">

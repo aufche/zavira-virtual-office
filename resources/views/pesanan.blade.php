@@ -206,8 +206,9 @@
 
                         <div class="dropdown-menu shadow shadow-lg" aria-labelledby="dropdownMenuLink">
                            
-                          <a class="dropdown-item" href="<?php echo route('edit',['id'=>$item->id]);?>"><i class="fas fa-edit"></i> Edit</a>
-                          
+                          <a class="dropdown-item" href="<?php echo route('edit',['id'=>$item->id]);?>"><i class="fas fa-edit"></i> Edit Data Pesanan</a>
+                          <a class="dropdown-item" href="<?php echo route('pesanan.edit.logam',['id'=>$item->id]);?>"><i class="fas fa-edit"></i> Edit Logam</a>
+                          <div class="dropdown-divider"></div>
                           <a class="dropdown-item" href="<?php 
                             if (!empty($item->pelunasan)){
                               echo route('cetak.amplop',['id'=>$item->id]);

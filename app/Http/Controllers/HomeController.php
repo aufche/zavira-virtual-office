@@ -326,7 +326,7 @@ class HomeController extends Controller
        
 
         //-- cari harga
-        if (!empty($request->input('bpria')) && !empty($request->input('upria'))){
+        /*if (!empty($request->input('bpria')) && !empty($request->input('upria'))){
             $pria = explode('|',$request->input('bpria'));
             if ($pria[0] != $request->input('bahanpria_old')){
                 $hargapria = cariharga($pria[0]);
@@ -401,7 +401,7 @@ class HomeController extends Controller
         }elseif (($score_pria+$score_wanita)==0){
             $pesanan->ongkos_bikin = 0;
         }
- 
+    */
 
         if (!empty($request->file('gambar'))){
         

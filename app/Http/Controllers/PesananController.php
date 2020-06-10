@@ -750,4 +750,103 @@ Class PesananController extends Controller{
         return view('pesanan.lapis',compact('data'));
     }
 
+    function edit_logam(Request $request, $id = null){
+        if ($request->isMethod('post')){
+            //-- post
+
+            $score_pria = 0;
+            $score_wanita = 0;
+            $pria_premium = null;
+            $wanita_premium = null;
+            $komisi_pria = 0;
+            $komisi_wanita = 0;
+
+            $id = $request->input('id');
+            $pesanan = \App\Pesanan::find($id);
+
+            if (!empty($request->input('bpria'))){
+                
+            $pria = explode('|',$request->input('bpria'));
+            if ($pria[0] != $request->input('bahanpria_old')){
+                
+                $hargapria = cariharga($pria[0]);
+                $pesanan->sertifikat_hargapria = $hargapria['hargapergram'];
+                $pesanan->produksi_hargapria = $hargapria['hargaproduksipergram'];
+                $pesanan->bahanpria = $pria[0];
+
+                    //($hargapria['jenis'] == 'silver' ? $score_pria = 0 : $score_pria = 1);
+
+                    if ($hargapria['jenis'] == 'silver'){
+                        $score_pria = 0;
+                        $pria_premium = null;
+                        if ($request->input('asal_id') == 1) $komisi_pria = 5000; else $komisi_pria = 0;
+                    }else{
+                        $score_pria = 1;
+                        $pria_premium = 'P';
+                        if ($request->input('asal_id') == 1) $komisi_pria = 15000; else $komisi_pria = 0;
+                    }
+                }else{
+                    $data_pria = cariharga($pria[0]);
+                    $data_pria_lama = data_lama($data_pria,'P');
+                    $score_pria = $data_pria_lama['score'];
+                    $pria_premium = $data_pria_lama['premium'];
+                }
+                
+            }
+
+            if (!empty($request->input('bwanita'))){
+                $wanita = explode('|',$request->input('bwanita'));
+                if ($wanita[0] != $request->input('bahanwanita_old')){
+                    $hargawanita = cariharga($wanita[0]);
+                    $pesanan->sertifikat_hargawanita = $hargawanita['hargapergram'];
+                    $pesanan->produksi_hargawanita = $hargawanita['hargaproduksipergram'];
+                    $pesanan->bahanwanita = $wanita[0];
+
+                    //($hargawanita['jenis'] == 'silver' ? $score_wanita = 0 : $score_wanita = 1);
+
+                    if ($hargawanita['jenis'] == 'silver'){
+                        $score_wanita = 0;
+                        $wanita_premium = null;
+                        if ($request->input('asal_id') == 1) $komisi_wanita = 5000; else $komisi_wanita = 0;
+                    }else{
+                        $score_wanita = 1;
+                        $wanita_premium = 'W';
+                        if ($request->input('asal_id') == 1) $komisi_wanita = 15000; else $komisi_wanita = 0;
+                    }
+                }else{
+                    $data_wanita = cariharga($wanita[0]);
+                    $data_wanita_lama = data_lama($data_wanita,'W');
+                    $score_wanita = $data_wanita_lama['score'];
+                    $wanita_premium = $data_wanita_lama['premium'];
+                }
+                
+            }
+
+            /*$pesanan->komisi = $komisi_pria+$komisi_wanita;
+            $pesanan->ispremium = $score_pria+$score_wanita;
+            $pesanan->yang_premium = $pria_premium.$wanita_premium;
+*/
+            if (($score_pria+$score_wanita)==2){
+            //-- couple
+                $ongkos = \App\Setting::where('kunci','ongkos_bikin')->first();
+                $pesanan->ongkos_bikin = $ongkos->isi;
+            }elseif (($score_pria+$score_wanita)==1){
+                $ongkos = \App\Setting::where('kunci','ongkos_bikin')->first();
+                $pesanan->ongkos_bikin = ($ongkos->isi/2)+12500;
+            }elseif (($score_pria+$score_wanita)==0){
+                $pesanan->ongkos_bikin = 0;
+            }
+
+            $pesanan->save();
+
+            return redirect()->route('pesanan.edit.logam',['id'=>$id])->with('status','Logam no order '.$id.' berhasil di ubah');
+
+        }elseif ($request->isMethod('get') && !empty($id)){
+            //-- get, fill form 
+            $data = DB::table('pesanan')->where('id',$id)->first();
+            $namalogam = DB::table('namalogam')->pluck('id','title');
+            return view('pesanan.edit_logam',compact('data','namalogam'));
+        }
+    }
+
 }
