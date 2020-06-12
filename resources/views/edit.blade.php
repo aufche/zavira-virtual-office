@@ -132,12 +132,14 @@
                     <label for="alamat">Finising/Keterangan</label>
                     <textarea class="form-control editable  medium-editor-textarea" name="keterangan" id="keterangan" rows="6"><?php echo old('keterangan',$data[0]->keterangan);?></textarea><br />
                     <input type="checkbox" value="1" name="siap_cetak" <?php if ($data[0]->siap_cetak == 1) echo 'checked="checked"';?>/> Centang untuk menandakan orderan ini siap cetak<br />
-                    <input type="checkbox" value="1" name="kirim_ke_pengrajin" <?php if ($data[0]->kirim_ke_pengrajin == 1) echo 'checked="checked"';?>/> 
-                    <?php if ($data[0]->kirim_ke_pengrajin == 1){
+                    <!--<input type="checkbox" value="1" name="kirim_ke_pengrajin" <?php if ($data[0]->kirim_ke_pengrajin == 1) echo 'checked="checked"';?>/>  -->
+                    <?php 
+                    /*if ($data[0]->kirim_ke_pengrajin == 1){
                         echo 'Orderan ini sudah dikirim ke pengrajin';
                     }else{
                         echo 'Kirim pesanan ini ke pengrajin langsung (<a href="#" data-toggle="modal" data-target="#exampleModalLong" onclick="preview();">Preview</a>)';
                     }
+                    */
                     ?>
 
                     </div>

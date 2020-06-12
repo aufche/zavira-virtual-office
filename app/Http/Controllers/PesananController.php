@@ -849,4 +849,84 @@ Class PesananController extends Controller{
         }
     }
 
+    function distribusi(Request $request, $id = null){
+        if ($request->isMethod('post')){
+            
+            $id = $request->input('id');
+            $pesanan = \App\Pesanan::find($id);
+            $pesanan->keterangan = $request->input('keterangan');
+            $pesanan->kirim_ke_pengrajin = 1;
+            
+
+            //-- kiirim via telegram 
+            if (!empty($pesanan->upria)){
+                  $text .= "Pria ".$request->input('upria')."\n".
+                  "Grafir ".$pesanan->gpria."\n".
+                  "Bahan ".$pesanan->bahanpria()->first()['title']."\n".
+                  "Berat maksimal ".$pesanan->produksi_beratpria."\n".
+                  "\n".
+                  "\n";      
+                }
+
+            if (!empty($pesanan->uwanita)){
+                $text .= "Wanita ".$request->input('uwanita')."\n".
+                "Grafir ".$pesanan->gwanita."\n".
+                "Bahan ".$pesanan->bahanwanita()->first()['title']."\n".
+                "Berat maksimal ".$pesanan->produksi_beratwanita."\n".
+                "\n".
+                "\n";
+            }
+
+
+            $text = "";
+            $text .= "Pengrajin ".$pesanan->pengrajin->nama."\n";   
+            $text .= "<b>Keterangan</b> \n".$request->input('keterangan')."\n \n \n".
+                    "<b>Deadline</b> ".date('d M Y', strtotime($request->input('tdeadline')))."\n".
+                    "\n \n".
+                    "Pengrajin ".$pesanan->pengrajin->nama."\n".
+                    "Matur nuwun \n \n".
+                    "Ttd \n".Auth::user()->name;
+
+                if (!empty($pesanan->gambar)){
+                   Telegram::setAccessToken($pesanan->pengrajin->token);
+                   Telegram::sendPhoto([
+                            'chat_id' => $pesanan->pengrajin->id_chat, // zavira virtual office
+                            'parse_mode' => 'HTML',
+                            'photo'=>InputFile::create($pesanan->gambar, "photo.jpg"),
+                             'caption' => "Gambar untuk no order ".$id
+                        ]); 
+                }
+                        
+                
+                if (!empty($pesanan->gambargambar)){
+                    $pics = explode(',',$pesanan->gambargambar);
+                    foreach ($pics as $pic){
+                        Telegram::setAccessToken($pesanan->pengrajin->token);
+                        Telegram::sendPhoto([
+                            'chat_id' => $pesanan->pengrajin->id_chat, // zavira virtual office
+                            'parse_mode' => 'HTML',
+                            'photo'=>InputFile::create($pic, "photo.jpg"),
+                            'caption' => "Gambar untuk no order ".$id
+                        ]);   
+                    }
+                }
+                Telegram::setAccessToken($pesanan->pengrajin->token);
+                Telegram::sendMessage([
+                    'chat_id' => $pesanan->pengrajin->id_chat, // zavira virtual office
+                    'parse_mode' => 'HTML',
+                    'text' => $text
+                ]);
+
+                history_insert($id,Auth::id(),'Data pesanan telah masuk ke bengkel pengrajin');
+
+                $pesanan->save();
+
+                return redirect()->route('pesanan.distribusi',['id'=>$pesanan->id])->with('status','Orderan berhasil didistribusikan');
+
+        }elseif ($request->isMethod('get')){
+            $data = \App\Pesanan::find($id);
+            return view('pesanan.distribusi',compact('data'));
+        }
+    }
+
 }

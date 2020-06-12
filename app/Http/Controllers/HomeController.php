@@ -477,8 +477,11 @@ class HomeController extends Controller
         $pesanan->siap_cetak = $request->input('siap_cetak');
         $pesanan->free_woodbox = $request->input('kotakcincinkayu');
         $pesanan->promo_id = $request->input('promo_id');
+        $pesanan->save();
 
-        if (!empty($request->input('kirim_ke_pengrajin'))){
+
+         
+        /*if (!empty($request->input('kirim_ke_pengrajin'))){
             
             if ($pesanan->kirim_ke_pengrajin == 0){
                 $pesanan->kirim_ke_pengrajin = $request->input('kirim_ke_pengrajin');
@@ -545,9 +548,9 @@ class HomeController extends Controller
                 }
             
         }
+        */
         
         
-        $pesanan->save();
         /*
         update table DP
         */
@@ -662,12 +665,13 @@ class HomeController extends Controller
 
 
     function take($id,$template){
-        $data = \App\Pesanan::orderBy('id','desc')->where('id',$id)->with('pengrajin','asal')->get();
+        //$data = \App\Pesanan::orderBy('id','desc')->where('id',$id)->with('pengrajin','asal')->get();
+        $data = \App\Pesanan::find($id);
         if ($template=='print'){
             //echo $data[0]->kirim_ke_pengrajin;
 //dd($data);
             //$item->siap_cetak == 0 && $item->finising == null && $item->kirim_ke_pengrajin == 0
-            if ($data[0]->siap_cetak != null && $data[0]->kirim_ke_pengrajin != 0){
+            if ($data->siap_cetak != null){
                 return view('take',compact('data'));
             }else{
                return view('notfound')->with('status','Orderan ini belum siap untuk dicetak.');

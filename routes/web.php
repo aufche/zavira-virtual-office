@@ -49,6 +49,7 @@ Route::prefix('pesanan')->group(function () {
     Route::any('/sf', 'HomeController@simplefilter')->name('pesanan.result.simple.filter')->middleware('auth');
     Route::any('/lead/{action?}/{id?}', 'PesananController@lead')->name('pesanan.lead')->middleware('auth');
     Route::any('/editlogam/{id?}', 'PesananController@edit_logam')->name('pesanan.edit.logam')->middleware('auth');
+    Route::any('/distribusi/{id?}', 'PesananController@distribusi')->name('pesanan.distribusi')->middleware('auth');
    
     /*Route::get('/take/{id}/{template}', function($id,$template){
         $data = \App\Pesanan::orderBy('id','desc')->where('id',$id)->with('pengrajin','asal')->get();
