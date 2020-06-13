@@ -852,25 +852,26 @@ Class PesananController extends Controller{
     function distribusi(Request $request, $id = null){
         if ($request->isMethod('post')){
             
+            $text = "";
             $id = $request->input('id');
             $pesanan = \App\Pesanan::find($id);
             $pesanan->keterangan = $request->input('keterangan');
             $pesanan->kirim_ke_pengrajin = 1;
             
-
+            ///dd($pesanan);
             //-- kiirim via telegram 
-            if (!empty($pesanan->upria)){
-                  $text .= "Pria ".$request->input('upria')."\n".
-                  "Grafir ".$pesanan->gpria."\n".
+            if (!empty($pesanan->ukuranpria)){
+                  $text .= "Pria ".$pesanan->ukuranpria."\n".
+                  "Grafir ".$pesanan->grafirpria."\n".
                   "Bahan ".$pesanan->bahanpria()->first()['title']."\n".
                   "Berat maksimal ".$pesanan->produksi_beratpria."\n".
                   "\n".
                   "\n";      
                 }
 
-            if (!empty($pesanan->uwanita)){
-                $text .= "Wanita ".$request->input('uwanita')."\n".
-                "Grafir ".$pesanan->gwanita."\n".
+            if (!empty($pesanan->ukuranwanita)){
+                $text .= "Wanita ".$pesanan->ukuranwanita."\n".
+                "Grafir ".$pesanan->grafirwanita."\n".
                 "Bahan ".$pesanan->bahanwanita()->first()['title']."\n".
                 "Berat maksimal ".$pesanan->produksi_beratwanita."\n".
                 "\n".
@@ -878,10 +879,10 @@ Class PesananController extends Controller{
             }
 
 
-            $text = "";
+            
             $text .= "Pengrajin ".$pesanan->pengrajin->nama."\n";   
-            $text .= "<b>Keterangan</b> \n".$request->input('keterangan')."\n \n \n".
-                    "<b>Deadline</b> ".date('d M Y', strtotime($request->input('tdeadline')))."\n".
+            $text .= "<b>Keterangan</b> \n".$pesanan->keterangan."\n \n \n".
+                    "<b>Deadline</b> ".date('d M Y', strtotime($pesanan->deadline))."\n".
                     "\n \n".
                     "Pengrajin ".$pesanan->pengrajin->nama."\n".
                     "Matur nuwun \n \n".
