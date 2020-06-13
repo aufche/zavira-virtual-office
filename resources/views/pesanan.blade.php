@@ -154,7 +154,10 @@
                     <td><?php echo date('d M Y', strtotime($item->tglmasuk));?></td>
                     <td><?php echo date('d M Y', strtotime($item->tglselesai));?><br /><span class="badge badge-pill badge-warning">Deadline pengrajin <?php echo date('d M Y', strtotime($item->deadline));?></span></td>
                     <td><?php echo $item->asal->title;?><br />By <?php echo $item->user->name;?></td>
-                    <td><?php echo $item->pengrajin->nama;?></td>
+                    <td><?php 
+                        echo $item->pengrajin->nama;
+                        if ($item->produksi_dibayar != 0) echo ' <span class="badge badge-success"><i class="fas fa-check"></i></span>'; else echo '<span class="badge badge-danger"><i class="fas fa-times"></i></span>';
+                    ?></td>
                     <td><?php echo text_urgent($item->urgent);?></td>
                 </tr>
 

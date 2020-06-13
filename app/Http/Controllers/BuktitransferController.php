@@ -27,8 +27,10 @@ class BuktitransferController extends Controller
 
         $pesanan_id = DB::table('biaya_produksi')->where('identitas',$identitas)->get();
         $pesanan_id_str = null;
+        $order_id = [];
         foreach ($pesanan_id as $item){
             $pesanan_id_str = $pesanan_id_str.$item->pesanan_id.'('.$item->pw.'),';
+            $order_id[] = $item->pesanan_id;
         }
 
 
@@ -41,6 +43,9 @@ class BuktitransferController extends Controller
         ];
 
         DB::table('bukti_transfer')->insert($bukti_transfer);
+        
+        $ids_order = array_unique($order_id);
+        DB::table('pesanan')->whereIn('id',$ids_order)->update(['produksi_dibayar' => 1]);
 
         $neraca = new \App\Neraca;
         $neraca->neraca_insert($request->input('nominal'),'Bayar logam ke pak bejo dengan no identitas '.$request->input('identitas'),0,Auth::id());

@@ -132,7 +132,7 @@ Class PesananController extends Controller{
 
         \App\Pesanan::whereNotNull('resi')->update(['finising'=>3]);
 
-        return redirect()->route('semua')->with('status','Data telah berhasil diperbaiki');
+        return redirect()->route('pesanan.statistik')->with('status','Data telah berhasil diperbaiki');
     }
 
     function statistik($detail=null){
