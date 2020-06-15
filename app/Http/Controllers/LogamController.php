@@ -327,6 +327,37 @@ function harga_logam($platinum=null){
         
         //dd($kadar);
 }
+
+function edit_markup(Request $request){
+    if ($request->isMethod('post')){
+
+        $jenis = $request->input('jenis');
+        $status = $request->input('status');
+        $nominal = $request->input('nominal');
+
+        
+
+        if ($status == 1){
+            DB::table('namalogam')->where('jenis',$jenis)->increment('markup',$nominal);
+            $x = ' menaikkan harga markup ';
+        }elseif($status == 0){
+            $x = ' menurunkan harga markup ';
+            DB::table('namalogam')->where('jenis',$jenis)->decrement('markup',$nominal);
+        }
+        
+        /*$text = "testing";
+        \Telegram::sendMessage([
+            'chat_id' => -1001386921740, // zavira virtual office
+            'parse_mode' => 'HTML',
+            'text' => $text
+        ]);
+*/
+        return view('logam.editmarkup');
+
+    }elseif ($request->isMethod('get')){
+        return view('logam.editmarkup');
+    }
+}
     
 
 
