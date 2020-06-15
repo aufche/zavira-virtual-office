@@ -165,6 +165,7 @@ Route::prefix('pesanan')->group(function () {
     Route::post('/woodbox','PesananController@woodbox_add')->name('pesanan.woodbox.add')->middleware('auth');
 
     Route::any('/buyback','PesananController@buyback')->name('logam.buyback')->middleware('auth');
+    Route::any('/force-edit/{id?}','PesananController@update_harga_pergram')->name('pesanan.force.edit')->middleware('auth');
     
 
     

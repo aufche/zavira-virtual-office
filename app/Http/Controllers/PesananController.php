@@ -930,4 +930,25 @@ Class PesananController extends Controller{
         }
     }
 
+    function update_harga_pergram(Request $request, $id = null){
+        if ($request->isMethod('post')){
+            // post
+            $id = $request->input('id');
+            DB::table('pesanan')->where('id',$id)->update(
+                [
+                    'sertifikat_hargapria' => $request->input('sertifikat_hargapria'),
+                    'sertifikat_hargawanita' => $request->input('sertifikat_hargawanita'),
+                ]
+            );
+
+            history_insert($id,Auth::id(),'Harga logam diedit secara langsung');
+
+            return redirect()->route('semua')->with('status','Data harga berhasil diubah');
+
+        }else{
+            $data = DB::table('pesanan')->select('id','sertifikat_hargapria','sertifikat_hargawanita')->where('id',$id)->first();
+            return view('pesanan.force_edit',compact('data'));
+        }
+    }
+
 }
