@@ -228,6 +228,7 @@
                           <div class="dropdown-divider"></div>
                           <!--<a class="dropdown-item" href="<?php echo route('pelunasan',['id'=>$item->id,'re'=>'semua']);?>"><i class="fas fa-scroll"></i> Update Pelunasan dan Resi</a>-->
                           <a class="dropdown-item" href="<?php echo route('pesanan.distribusi',['id'=>$item->id]);?>" target="popup" onclick="window.open('<?php echo route('pesanan.distribusi',['id'=>$item->id]);?>','popup','width=600,height=900'); return false;"><i class="fa fa-share"></i> Distribusi ke Pengrajin</a>
+                          <a class="dropdown-item" href="<?php echo route('take',['id'=>$item->id,'template' => 'ringkasan']);?>" target="popup" onclick="window.open('<?php echo route('take',['id'=>$item->id,'template' => 'ringkasan']);?>','popup','width=600,height=900'); return false;"><i class="fa fa-share"></i> Ringkasan Orderan</a>
                           <a class="dropdown-item" href="<?php echo route('take',['id'=>$item->id,'template'=>'print']);?>" target="popup" onclick="window.open('<?php echo route('take',['id'=>$item->id,'template'=>'print']);?>','popup','width=800,height=600'); return false;"><i class="fas fa-print"></i> Cetak Order Ini</a>
                           <!--<a class="dropdown-item" href="#" target="popup" onclick="konfirmasi('Yakin akan mencetak orderan ini?','<?php echo route('take',['id'=>$item->id,'template'=>'print']);?>')"><i class="fas fa-print"></i> Cetak Order Ini</a>-->
 

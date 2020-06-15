@@ -669,7 +669,6 @@ class HomeController extends Controller
         $data = \App\Pesanan::find($id);
         if ($template=='print'){
             //echo $data[0]->kirim_ke_pengrajin;
-//dd($data);
             //$item->siap_cetak == 0 && $item->finising == null && $item->kirim_ke_pengrajin == 0
             if ($data->siap_cetak != null){
                 return view('take',compact('data'));
@@ -692,6 +691,8 @@ class HomeController extends Controller
 
             return $pdf->download('invoice.pdf');
             
+        }elseif ($template == 'ringkasan'){
+            return view ('pesanan.ringkasan', compact('data'));
         }
         
     }
