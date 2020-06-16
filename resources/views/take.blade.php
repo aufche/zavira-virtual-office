@@ -82,7 +82,7 @@
   <body onload="window.print();">
     <div class="container mt-2">
     <?php
-    foreach ($data as $item){
+        $item = $data;
             if ($item->couple == 1){
                 $row_span = 11;
             }else{
@@ -180,9 +180,7 @@
             <td>Pengrajin<br /><?php echo $item->pengrajin->nama;?></td>
           </tr>
         </table>
-        <?php
-    }
-  ?>
+        
   </div>
   
   </body>

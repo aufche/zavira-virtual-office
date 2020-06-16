@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use JD\Cloudder\Facades\Cloudder;
 use Telegram\Bot\Laravel\Facades\Telegram;
 use Telegram\Bot\FileUpload\InputFile;
+use Illuminate\Support\Arr;
 
 Class RestapiController extends Controller{
 
@@ -19,6 +20,40 @@ Class RestapiController extends Controller{
         $data = \App\Setting::whereIn('kunci',['harga_pokok_emas','harga_pokok_palladium','ongkos_bikin','harga_pokok_silver','harga_pokok_platinum'])->get();
 
         return response()->json($data, 201);
+    }
+
+    function kalkulator(){
+
+        $nama_logam = \App\Namalogam::orderBy('title','asc')->get();
+        //$harga_pokok = \App\Setting::whereIn('kunci',['harga_pokok_emas','harga_pokok_palladium','ongkos_bikin','harga_pokok_silver','harga_pokok_platinum'])->get();
+
+        $emas = DB::table('setting')->select('isi')->where('kunci','harga_pokok_emas')->first();
+        $palladium = DB::table('setting')->select('isi')->where('kunci','harga_pokok_palladium')->first();
+        $platinum = DB::table('setting')->select('isi')->where('kunci','harga_pokok_platinum')->first();
+        
+        $data = [];
+        $data2 = [];
+
+        foreach ($nama_logam as $item){
+
+           if ($item->jenis == 'emas'){
+               $price = ( $item->kadar /100 ) * $emas->isi;
+           }elseif ($item->jenis == 'palladium'){
+                $price = ( $item->kadar /100 ) * $palladium->isi;
+           }elseif ($item->jenis == 'platinum'){
+                $price = ( $item->kadar /100 ) * $platinum->isi;
+           }
+
+//           $data = Arr::add($data, $item->title, $price);
+            $data['label'] = $item->title;
+            $data['price'] = $price;
+
+            array_push($data2, $data);
+
+           
+        }
+
+        return response()->json($data2, 201);
     }
 
     function resi($id){

@@ -154,7 +154,10 @@
                     <td><?php echo date('d M Y', strtotime($item->tglmasuk));?></td>
                     <td><?php echo date('d M Y', strtotime($item->tglselesai));?><br /><span class="badge badge-pill badge-warning">Deadline pengrajin <?php echo date('d M Y', strtotime($item->deadline));?></span></td>
                     <td><?php echo $item->asal->title;?><br />By <?php echo $item->user->name;?></td>
-                    <td><?php echo $item->pengrajin->nama;?></td>
+                    <td><?php 
+                        echo $item->pengrajin->nama;
+                        if ($item->produksi_dibayar != 0) echo ' <span class="badge badge-success"><i class="fas fa-check"></i></span>'; else echo '<span class="badge badge-danger"><i class="fas fa-times"></i></span>';
+                    ?></td>
                     <td><?php echo text_urgent($item->urgent);?></td>
                 </tr>
 
@@ -206,8 +209,9 @@
 
                         <div class="dropdown-menu shadow shadow-lg" aria-labelledby="dropdownMenuLink">
                            
-                          <a class="dropdown-item" href="<?php echo route('edit',['id'=>$item->id]);?>"><i class="fas fa-edit"></i> Edit</a>
-                          
+                          <a class="dropdown-item" href="<?php echo route('edit',['id'=>$item->id]);?>"><i class="fas fa-edit"></i> Edit Data Pesanan</a>
+                          <a class="dropdown-item" href="<?php echo route('pesanan.edit.logam',['id'=>$item->id]);?>"><i class="fas fa-edit"></i> Edit Logam</a>
+                          <div class="dropdown-divider"></div>
                           <a class="dropdown-item" href="<?php 
                             if (!empty($item->pelunasan)){
                               echo route('cetak.amplop',['id'=>$item->id]);
@@ -223,6 +227,8 @@
                           <a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal_lunas" data-whatever="<?php echo $item->id;?>" data-jenis="resi"><i class="fas fa-scroll"></i> Update Resi</a>
                           <div class="dropdown-divider"></div>
                           <!--<a class="dropdown-item" href="<?php echo route('pelunasan',['id'=>$item->id,'re'=>'semua']);?>"><i class="fas fa-scroll"></i> Update Pelunasan dan Resi</a>-->
+                          <a class="dropdown-item" href="<?php echo route('pesanan.distribusi',['id'=>$item->id]);?>" target="popup" onclick="window.open('<?php echo route('pesanan.distribusi',['id'=>$item->id]);?>','popup','width=600,height=900'); return false;"><i class="fa fa-share"></i> Distribusi ke Pengrajin</a>
+                          <a class="dropdown-item" href="<?php echo route('take',['id'=>$item->id,'template' => 'ringkasan']);?>" target="popup" onclick="window.open('<?php echo route('take',['id'=>$item->id,'template' => 'ringkasan']);?>','popup','width=600,height=900'); return false;"><i class="fa fa-share"></i> Ringkasan Orderan</a>
                           <a class="dropdown-item" href="<?php echo route('take',['id'=>$item->id,'template'=>'print']);?>" target="popup" onclick="window.open('<?php echo route('take',['id'=>$item->id,'template'=>'print']);?>','popup','width=800,height=600'); return false;"><i class="fas fa-print"></i> Cetak Order Ini</a>
                           <!--<a class="dropdown-item" href="#" target="popup" onclick="konfirmasi('Yakin akan mencetak orderan ini?','<?php echo route('take',['id'=>$item->id,'template'=>'print']);?>')"><i class="fas fa-print"></i> Cetak Order Ini</a>-->
 
@@ -243,6 +249,7 @@
                           <a class="dropdown-item" href="<?php echo route('reparasiform',['id'=>$item->id]);?>"><i class="fas fa-hammer"></i> Reparasi Baru</a>
                           <a class="dropdown-item" href="<?php echo route('timeline.index',['id'=>$item->id]);?>"><i class="fas fa-business-time"></i> Timeline Orderan</a>
                           <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="<?php echo route('pesanan.force.edit',['id'=>$item->id]);?>"><i class="far fa-edit"></i> Edit Harga Per Gram</a>
                           <a class="dropdown-item" href="<?php echo route('hapus',['id'=>$item->id]);?>"><i class="fas fa-trash-alt"></i> Hapus</a>
                         </div>
                       </div>

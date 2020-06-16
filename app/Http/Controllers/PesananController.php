@@ -132,7 +132,7 @@ Class PesananController extends Controller{
 
         \App\Pesanan::whereNotNull('resi')->update(['finising'=>3]);
 
-        return redirect()->route('semua')->with('status','Data telah berhasil diperbaiki');
+        return redirect()->route('pesanan.statistik')->with('status','Data telah berhasil diperbaiki');
     }
 
     function statistik($detail=null){
@@ -748,6 +748,207 @@ Class PesananController extends Controller{
     function lapis_berulang(){
         $data = \App\Lapis::orderBy('pesanan_id','asc')->orderBy('id','desc')->simplePaginate(15);
         return view('pesanan.lapis',compact('data'));
+    }
+
+    function edit_logam(Request $request, $id = null){
+        if ($request->isMethod('post')){
+            //-- post
+
+            $score_pria = 0;
+            $score_wanita = 0;
+            $pria_premium = null;
+            $wanita_premium = null;
+            $komisi_pria = 0;
+            $komisi_wanita = 0;
+
+            $id = $request->input('id');
+            $pesanan = \App\Pesanan::find($id);
+
+            if (!empty($request->input('bpria'))){
+                
+            $pria = explode('|',$request->input('bpria'));
+            if ($pria[0] != $request->input('bahanpria_old')){
+                
+                $hargapria = cariharga($pria[0]);
+                $pesanan->sertifikat_hargapria = $hargapria['hargapergram'];
+                $pesanan->produksi_hargapria = $hargapria['hargaproduksipergram'];
+                $pesanan->bahanpria = $pria[0];
+
+                    //($hargapria['jenis'] == 'silver' ? $score_pria = 0 : $score_pria = 1);
+
+                    if ($hargapria['jenis'] == 'silver'){
+                        $score_pria = 0;
+                        $pria_premium = null;
+                        if ($request->input('asal_id') == 1) $komisi_pria = 5000; else $komisi_pria = 0;
+                    }else{
+                        $score_pria = 1;
+                        $pria_premium = 'P';
+                        if ($request->input('asal_id') == 1) $komisi_pria = 15000; else $komisi_pria = 0;
+                    }
+                }else{
+                    $data_pria = cariharga($pria[0]);
+                    $data_pria_lama = data_lama($data_pria,'P');
+                    $score_pria = $data_pria_lama['score'];
+                    $pria_premium = $data_pria_lama['premium'];
+                }
+                
+            }
+
+            if (!empty($request->input('bwanita'))){
+                $wanita = explode('|',$request->input('bwanita'));
+                if ($wanita[0] != $request->input('bahanwanita_old')){
+                    $hargawanita = cariharga($wanita[0]);
+                    $pesanan->sertifikat_hargawanita = $hargawanita['hargapergram'];
+                    $pesanan->produksi_hargawanita = $hargawanita['hargaproduksipergram'];
+                    $pesanan->bahanwanita = $wanita[0];
+
+                    //($hargawanita['jenis'] == 'silver' ? $score_wanita = 0 : $score_wanita = 1);
+
+                    if ($hargawanita['jenis'] == 'silver'){
+                        $score_wanita = 0;
+                        $wanita_premium = null;
+                        if ($request->input('asal_id') == 1) $komisi_wanita = 5000; else $komisi_wanita = 0;
+                    }else{
+                        $score_wanita = 1;
+                        $wanita_premium = 'W';
+                        if ($request->input('asal_id') == 1) $komisi_wanita = 15000; else $komisi_wanita = 0;
+                    }
+                }else{
+                    $data_wanita = cariharga($wanita[0]);
+                    $data_wanita_lama = data_lama($data_wanita,'W');
+                    $score_wanita = $data_wanita_lama['score'];
+                    $wanita_premium = $data_wanita_lama['premium'];
+                }
+                
+            }
+
+            /*$pesanan->komisi = $komisi_pria+$komisi_wanita;
+            $pesanan->ispremium = $score_pria+$score_wanita;
+            $pesanan->yang_premium = $pria_premium.$wanita_premium;
+*/
+            if (($score_pria+$score_wanita)==2){
+            //-- couple
+                $ongkos = \App\Setting::where('kunci','ongkos_bikin')->first();
+                $pesanan->ongkos_bikin = $ongkos->isi;
+            }elseif (($score_pria+$score_wanita)==1){
+                $ongkos = \App\Setting::where('kunci','ongkos_bikin')->first();
+                $pesanan->ongkos_bikin = ($ongkos->isi/2)+12500;
+            }elseif (($score_pria+$score_wanita)==0){
+                $pesanan->ongkos_bikin = 0;
+            }
+
+            $pesanan->save();
+
+            return redirect()->route('pesanan.edit.logam',['id'=>$id])->with('status','Logam no order '.$id.' berhasil di ubah');
+
+        }elseif ($request->isMethod('get') && !empty($id)){
+            //-- get, fill form 
+            $data = DB::table('pesanan')->where('id',$id)->first();
+            $namalogam = DB::table('namalogam')->pluck('id','title');
+            return view('pesanan.edit_logam',compact('data','namalogam'));
+        }
+    }
+
+    function distribusi(Request $request, $id = null){
+        if ($request->isMethod('post')){
+            
+            $text = "";
+            $id = $request->input('id');
+            $pesanan = \App\Pesanan::find($id);
+            $pesanan->keterangan = $request->input('keterangan');
+            $pesanan->kirim_ke_pengrajin = 1;
+            
+            ///dd($pesanan);
+            //-- kiirim via telegram 
+            if (!empty($pesanan->ukuranpria)){
+                  $text .= "Pria ".$pesanan->ukuranpria."\n".
+                  "Grafir ".$pesanan->grafirpria."\n".
+                  "Bahan ".$pesanan->bahanpria()->first()['title']."\n".
+                  "Berat maksimal ".$pesanan->produksi_beratpria."\n".
+                  "\n".
+                  "\n";      
+                }
+
+            if (!empty($pesanan->ukuranwanita)){
+                $text .= "Wanita ".$pesanan->ukuranwanita."\n".
+                "Grafir ".$pesanan->grafirwanita."\n".
+                "Bahan ".$pesanan->bahanwanita()->first()['title']."\n".
+                "Berat maksimal ".$pesanan->produksi_beratwanita."\n".
+                "\n".
+                "\n";
+            }
+
+
+            
+            $text .= "Pengrajin ".$pesanan->pengrajin->nama."\n";   
+            $text .= "<b>Keterangan</b> \n".$pesanan->keterangan."\n \n \n".
+                    "<b>Deadline</b> ".date('d M Y', strtotime($pesanan->deadline))."\n".
+                    "\n \n".
+                    "Pengrajin ".$pesanan->pengrajin->nama."\n".
+                    "Matur nuwun \n \n".
+                    "Ttd \n".Auth::user()->name;
+
+                if (!empty($pesanan->gambar)){
+                   Telegram::setAccessToken($pesanan->pengrajin->token);
+                   Telegram::sendPhoto([
+                            'chat_id' => $pesanan->pengrajin->id_chat, // zavira virtual office
+                            'parse_mode' => 'HTML',
+                            'photo'=>InputFile::create($pesanan->gambar, "photo.jpg"),
+                             'caption' => "Gambar untuk no order ".$id
+                        ]); 
+                }
+                        
+                
+                if (!empty($pesanan->gambargambar)){
+                    $pics = explode(',',$pesanan->gambargambar);
+                    foreach ($pics as $pic){
+                        Telegram::setAccessToken($pesanan->pengrajin->token);
+                        Telegram::sendPhoto([
+                            'chat_id' => $pesanan->pengrajin->id_chat, // zavira virtual office
+                            'parse_mode' => 'HTML',
+                            'photo'=>InputFile::create($pic, "photo.jpg"),
+                            'caption' => "Gambar untuk no order ".$id
+                        ]);   
+                    }
+                }
+                Telegram::setAccessToken($pesanan->pengrajin->token);
+                Telegram::sendMessage([
+                    'chat_id' => $pesanan->pengrajin->id_chat, // zavira virtual office
+                    'parse_mode' => 'HTML',
+                    'text' => $text
+                ]);
+
+                history_insert($id,Auth::id(),'Data pesanan telah masuk ke bengkel pengrajin');
+
+                $pesanan->save();
+
+                return redirect()->route('pesanan.distribusi',['id'=>$pesanan->id])->with('status','Orderan berhasil didistribusikan');
+
+        }elseif ($request->isMethod('get')){
+            $data = \App\Pesanan::find($id);
+            return view('pesanan.distribusi',compact('data'));
+        }
+    }
+
+    function update_harga_pergram(Request $request, $id = null){
+        if ($request->isMethod('post')){
+            // post
+            $id = $request->input('id');
+            DB::table('pesanan')->where('id',$id)->update(
+                [
+                    'sertifikat_hargapria' => $request->input('sertifikat_hargapria'),
+                    'sertifikat_hargawanita' => $request->input('sertifikat_hargawanita'),
+                ]
+            );
+
+            history_insert($id,Auth::id(),'Harga logam diedit secara langsung');
+
+            return redirect()->route('semua')->with('status','Data harga berhasil diubah');
+
+        }else{
+            $data = DB::table('pesanan')->select('id','sertifikat_hargapria','sertifikat_hargawanita')->where('id',$id)->first();
+            return view('pesanan.force_edit',compact('data'));
+        }
     }
 
 }

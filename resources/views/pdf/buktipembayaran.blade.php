@@ -24,7 +24,7 @@ table.table-bordered > tbody > tr > td{
 
   </head>
   <body>
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
       <div class="col-lg-12">
       

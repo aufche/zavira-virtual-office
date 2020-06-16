@@ -48,6 +48,8 @@ Route::prefix('pesanan')->group(function () {
 
     Route::any('/sf', 'HomeController@simplefilter')->name('pesanan.result.simple.filter')->middleware('auth');
     Route::any('/lead/{action?}/{id?}', 'PesananController@lead')->name('pesanan.lead')->middleware('auth');
+    Route::any('/editlogam/{id?}', 'PesananController@edit_logam')->name('pesanan.edit.logam')->middleware('auth');
+    Route::any('/distribusi/{id?}', 'PesananController@distribusi')->name('pesanan.distribusi')->middleware('auth');
    
     /*Route::get('/take/{id}/{template}', function($id,$template){
         $data = \App\Pesanan::orderBy('id','desc')->where('id',$id)->with('pengrajin','asal')->get();
@@ -163,6 +165,7 @@ Route::prefix('pesanan')->group(function () {
     Route::post('/woodbox','PesananController@woodbox_add')->name('pesanan.woodbox.add')->middleware('auth');
 
     Route::any('/buyback','PesananController@buyback')->name('logam.buyback')->middleware('auth');
+    Route::any('/force-edit/{id?}','PesananController@update_harga_pergram')->name('pesanan.force.edit')->middleware('auth');
     
 
     
@@ -448,7 +451,7 @@ Route::prefix('bukti')->group(function () {
     })->name('bukti.insert.get')->middleware('auth');
     Route::post('/insert','BuktitransferController@insert')->name('bukti.insert.post')->middleware('auth');
 
-    Route::get('/cetak/{detail}','BuktitransferController@cetak')->name('bukti.cetak')->middleware('auth');
+    Route::get('/cetak/{detail}/{export?}','BuktitransferController@cetak')->name('bukti.cetak')->middleware('auth');
     Route::post('/search','BuktitransferController@search')->name('bukti.search')->middleware('auth');
 });
 
