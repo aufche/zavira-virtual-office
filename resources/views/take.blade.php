@@ -80,6 +80,7 @@
   </head>
   <!-- onload="window.print();" -->
   <body onload="window.print();">
+  <!--<body> -->
     <div class="container mt-2">
     <?php
         $item = $data;
@@ -134,7 +135,51 @@
                     <td ><?php echo $item->ukuranpria;?></td>
                 </tr>
                 <tr>
-                    <td >Bahan</td>
+                    <td >Bahan<br />
+                       <?php
+                        $jenis = $item->bahanpria()->first()['jenis'];
+                        $kadar = $item->bahanpria()->first()['kadar'] / 100;
+                        
+                        if ($jenis == 'emas' || $jenis == 'palladium'){
+                            echo $item->bahanpria()->first()['jenis'].' murni : '.$kadar * $item->produksi_beratpria.' gram<br />';
+                            echo 'Campuran perak '.($item->produksi_beratpria - ($kadar * $item->produksi_beratpria)).' gram';
+                        }elseif ($jenis == 'ep'){
+                            if ($item->bahanpria()->first()['kadar'] <= 50){
+                                // campuran pall 0.5 gram
+                                $campuran_palladium = 0.5;
+                                $text = 'Palladium : 0.5gram';
+                                $total_tambahan = 0.5;
+                                
+                            }elseif ($item->bahanpria()->first()['kadar'] > 50 ){
+                                $campuran_palladium = 0.5; 
+                                $campuran_platinum = 0.5;
+                                $text = 'Palladium : 0.5 gram<br />Platinum : 0.5gram';
+                                $total_tambahan = 1;
+
+                                //-- campuran pall 0.5 gram
+                                //-- platinum 0.5 gram
+                            }
+
+                            echo 'Emas murni '.($kadar * $item->produksi_beratpria).' gram<br />';
+                            echo $text.'<br />';
+                            $tambahan_perak = ($item->produksi_beratpria - (($kadar * $item->produksi_beratpria) + $total_tambahan));
+                            if ($tambahan_perak > 0 ){
+                                echo 'Tambahan perak '.$tambahan_perak.' gram';
+                            }
+                        }elseif ($jenis == 'platidium'){
+                            $pall_pt = $kadar * $item->produksi_beratpria / 2;
+                            echo 'Palladium murni  : '.$pall_pt.' gram <br />';
+                            echo 'Platinum murni  : '.$pall_pt.' gram <br />';
+                            $tambahan_perak = $item->produksi_beratpria - ($kadar * $item->produksi_beratpria);
+                            if ($tambahan_perak > 0){
+                                echo 'Tamabahan perak '.$tambahan_perak.' gram';
+                            }
+                        }elseif ($jenis == 'silver'){
+                    
+                        }
+                            
+                    ?>
+                    </td>
                     <td ><?php echo $item->bahanpria()->first()['title'];?><br /><?php echo aa('Berat maksimal ',$item->produksi_beratpria,'gr');?></td>
                 </tr>
                 <tr>
@@ -159,7 +204,51 @@
             <td><?php echo $item->ukuranwanita;?></td>
           </tr>
           <tr>
-            <td>Bahan</td>
+            <td>Bahan<br />
+            <?php
+                $jenis = $item->bahanwanita()->first()['jenis'];
+                $kadar = $item->bahanwanita()->first()['kadar'] / 100;
+                
+                if ($jenis == 'emas' || $jenis == 'palladium'){
+                    echo $item->bahanwanita()->first()['jenis'].' murni : '.$kadar * $item->produksi_beratwanita.' gram<br />';
+                    echo 'Campuran perak '.($item->produksi_beratwanita - ($kadar * $item->produksi_beratwanita)).' gram';
+                }elseif ($jenis == 'ep'){
+                    if ($item->bahanwanita()->first()['kadar'] <= 50){
+                        // campuran pall 0.5 gram
+                        $campuran_palladium = 0.5;
+                        $text = 'Palladium : 0.5gram';
+                        $total_tambahan = 0.5;
+                        
+                    }elseif ($item->bahanwanita()->first()['kadar'] > 50 ){
+                        $campuran_palladium = 0.5; 
+                        $campuran_platinum = 0.5;
+                        $text = 'Palladium : 0.5 gram<br />Platinum : 0.5gram';
+                        $total_tambahan = 1;
+
+                        //-- campuran pall 0.5 gram
+                        //-- platinum 0.5 gram
+                    }
+
+                    echo 'Emas murni '.($kadar * $item->produksi_beratwanita).' gram<br />';
+                    echo $text.'<br />';
+                    $tambahan_perak = ($item->produksi_beratwanita - (($kadar * $item->produksi_beratwanita) + $total_tambahan));
+                    if ($tambahan_perak > 0 ){
+                        echo 'Tambahan perak '.$tambahan_perak.' gram';
+                    }
+                }elseif ($jenis == 'platidium'){
+                    $pall_pt = $kadar * $item->produksi_beratwanita / 2;
+                    echo 'Palladium murni  : '.$pall_pt.' gram <br />';
+                    echo 'Platinum murni  : '.$pall_pt.' gram <br />';
+                    $tambahan_perak = $item->produksi_beratwanita - ($kadar * $item->produksi_beratwanita);
+                    if ($tambahan_perak > 0){
+                        echo 'Tamabahan perak '.$tambahan_perak.' gram';
+                    }
+                }elseif ($jenis == 'silver'){
+                    
+                }
+                            
+             ?>
+            </td>
             <td><?php echo $item->bahanwanita()->first()['title'];?><br /><?php echo aa('Berat maksimal ',$item->produksi_beratwanita,'gr');?></td>
           </tr>
           <tr>
