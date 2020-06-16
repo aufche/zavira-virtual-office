@@ -764,13 +764,23 @@ class HomeController extends Controller
                 }
 
                 if ($data_pesanan->bahanpria()->first()['jenis'] =='ep'){
-                    
+                    //-- emas putih
                     
                     if ($data_pesanan->bahanpria()->first()['kadar'] > 50){
-                        $tambahan_berat = 0.5; // platinum
+                        // -- kadar 75%
+                        $kadar = $data_pesanan->bahanpria()->first()['kadar'] / 100;
+                        $berat_murni = ($kadar * $data_pesanan->produksi_beratpria);
+
+
+                        $tambahan_palladium = 0.5;
+                        $berat_total = $berat_murni + $tambahan_palladium ;
+
+                        $tambahan_platinum = $data_pesanan->produksi_beratpria - $berat_total;
+
+                        $tambahan_berat = $tambahan_platinum; // platinum
                         $harga_tambahan_berat = $harga[2]->isi;
 
-                        $tambahan_berat_2 = 0.5; // palladium
+                        $tambahan_berat_2 = $tambahan_palladium; // palladium
                         $harga_tambahan_berat_2 = $harga[1]->isi;
                     }else{
                         $tambahan_berat = 0.5;
@@ -843,11 +853,23 @@ class HomeController extends Controller
                     
                     
                     if ($data_pesanan->bahanwanita()->first()['kadar'] > 50){
-                        $tambahan_berat = 0.5; // palladium
-                        $harga_tambahan_berat = $harga[1]->isi;
 
-                        $tambahan_berat_2 = 0.5; // platinum
-                        $harga_tambahan_berat_2 = $harga[2]->isi;
+                        $kadar = $data_pesanan->bahanwanita()->first()['kadar'] / 100;
+                        $berat_murni = ($kadar * $data_pesanan->produksi_beratwanita);
+
+
+                        $tambahan_palladium = 0.5;
+                        $berat_total = $berat_murni + $tambahan_palladium ;
+
+                        $tambahan_platinum = $data_pesanan->produksi_beratwanita - $berat_total;
+
+                        $tambahan_berat = $tambahan_platinum; // platinum
+                        $harga_tambahan_berat = $harga[2]->isi;
+
+                        $tambahan_berat_2 = $tambahan_palladium; // palladium
+                        $harga_tambahan_berat_2 = $harga[1]->isi;
+
+                        
                     }else{
                         $tambahan_berat = 0.5;
                         $harga_tambahan_berat = $harga[1]->isi;

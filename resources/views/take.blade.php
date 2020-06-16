@@ -140,7 +140,7 @@
                         $jenis = $item->bahanpria()->first()['jenis'];
                         $kadar = $item->bahanpria()->first()['kadar'] / 100;
                         
-                        if ($jenis == 'emas' || $jenis == 'palladium'){
+                        if ($jenis == 'emas' || $jenis == 'palladium' || $jenis == 'platinum'){
                             echo $item->bahanpria()->first()['jenis'].' murni : '.$kadar * $item->produksi_beratpria.' gram<br />';
                             echo 'Campuran perak '.($item->produksi_beratpria - ($kadar * $item->produksi_beratpria)).' gram';
                         }elseif ($jenis == 'ep'){
@@ -209,7 +209,7 @@
                 $jenis = $item->bahanwanita()->first()['jenis'];
                 $kadar = $item->bahanwanita()->first()['kadar'] / 100;
                 
-                if ($jenis == 'emas' || $jenis == 'palladium'){
+                if ($jenis == 'emas' || $jenis == 'palladium' || $jenis == 'platinum'){
                     echo $item->bahanwanita()->first()['jenis'].' murni : '.$kadar * $item->produksi_beratwanita.' gram<br />';
                     echo 'Campuran perak '.($item->produksi_beratwanita - ($kadar * $item->produksi_beratwanita)).' gram';
                 }elseif ($jenis == 'ep'){
