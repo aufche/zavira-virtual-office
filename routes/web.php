@@ -476,6 +476,10 @@ Route::prefix('timeline')->group(function () {
     Route::get('/{id}','HistoryController@detail')->name('timeline.index')->middleware('auth');
 });
 
+Route::prefix('susut')->group(function () {
+    Route::any('/add/{id?}','SusutController@add')->name('susut.add')->middleware('auth');
+});
+
 
 
 //-- end order web

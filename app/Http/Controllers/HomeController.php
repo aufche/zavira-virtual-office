@@ -260,6 +260,13 @@ class HomeController extends Controller
             $history->save();
 */
             history_insert($id,Auth::id(),'Data pesanan berhasil diinput');
+
+            $susut = new \App\Susut;
+            $susut->pria = $request->input('produksi_beratpria');
+            $susut->wanita = $request->input('produksi_beratwanita');
+            $susut->status = 'Order berhasil di input ';
+            $susut->pesanan_id = $id;
+            $susut->save();
             
             
             //-- kirim notif via telegram
@@ -471,8 +478,8 @@ class HomeController extends Controller
         //$pesanan->gambargambar=$request->input('gambargambar');
         $pesanan->last_edited_by=Auth::user()->name;
         $pesanan->urgent=$request->input('urgent');
-        $pesanan->produksi_beratpria=$request->input('produksi_beratpria');
-        $pesanan->produksi_beratwanita=$request->input('produksi_beratwanita');
+        $pesanan->produksi_beratpria = $request->input('produksi_beratpria');
+        $pesanan->produksi_beratwanita = $request->input('produksi_beratwanita');
         
         $pesanan->siap_cetak = $request->input('siap_cetak');
         $pesanan->free_woodbox = $request->input('kotakcincinkayu');
