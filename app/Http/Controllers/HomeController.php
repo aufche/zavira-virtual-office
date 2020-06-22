@@ -715,6 +715,9 @@ class HomeController extends Controller
     function proseshitung(Request $request){
         
         $harga = \App\Setting::whereIn('kunci',['harga_harian_emas','harga_harian_palladium','harga_harian_platinum'])->orderBy('kunci','asc')->get();
+        $emas_pergram = $harga[0]->isi;
+        $palladium_pergram = $harga[1]->isi;
+        $platinum_pergam = $harga[2]->isi;
 
         //dd($harga);
 
@@ -792,14 +795,14 @@ class HomeController extends Controller
 
                         $tambahan_platinum = $data_pesanan->produksi_beratpria - $berat_total;
 
-                        $tambahan_berat = $tambahan_platinum; // platinum
-                        $harga_tambahan_berat = $harga[2]->isi;
+                        $tambahan_berat = $tambahan_palladium; // platinum
+                        $harga_tambahan_berat = $palladium_pergram;
 
-                        $tambahan_berat_2 = $tambahan_palladium; // palladium
-                        $harga_tambahan_berat_2 = $harga[1]->isi;
+                        $tambahan_berat_2 = $tambahan_platinum; // palladium
+                        $harga_tambahan_berat_2 = $platinum_pergam;
                     }else{
                         $tambahan_berat = 0.5;
-                        $harga_tambahan_berat = $harga[1]->isi;
+                        $harga_tambahan_berat = $palladium_pergram;
                         $tambahan_berat_2 = 0;
                         $harga_tambahan_berat_2 = 0;
                     }
@@ -878,11 +881,11 @@ class HomeController extends Controller
 
                         $tambahan_platinum = $data_pesanan->produksi_beratwanita - $berat_total;
 
-                        $tambahan_berat = $tambahan_platinum; // platinum
-                        $harga_tambahan_berat = $harga[2]->isi;
+                        $tambahan_berat = $tambahan_palladium; // platinum
+                        $harga_tambahan_berat = $palladium_pergram;
 
-                        $tambahan_berat_2 = $tambahan_palladium; // palladium
-                        $harga_tambahan_berat_2 = $harga[1]->isi;
+                        $tambahan_berat_2 = $tambahan_platinum; // palladium
+                        $harga_tambahan_berat_2 = $platinum_pergam;
 
                         
                     }else{

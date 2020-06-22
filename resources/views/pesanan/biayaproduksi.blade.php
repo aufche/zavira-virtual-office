@@ -121,6 +121,8 @@ table.table-bordered > tbody > tr > td{
                     echo aa('',$item->tambahan_berat,'gr');
                     $tambahan = $tambahan+$item->tambahan_berat;
                     $biaya_tambahan = $biaya_tambahan+($item->tambahan_berat*$item->harga_tambahan_berat);
+                    
+
                   }
                 ?></td>
                 <td>
@@ -130,6 +132,7 @@ table.table-bordered > tbody > tr > td{
                     echo aa('',$item->tambahan_berat_2,'gr');
                     $tambahan2 = $tambahan2+$item->tambahan_berat_2;
                     $biaya_tambahan_2 = $biaya_tambahan_2+($item->tambahan_berat_2*$item->harga_tambahan_berat_2);
+                    echo $biaya_tambahan_2;
                   }
                 ?></td>
               </tr>
