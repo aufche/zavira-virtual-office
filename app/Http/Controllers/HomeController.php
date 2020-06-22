@@ -259,14 +259,22 @@ class HomeController extends Controller
             $history->keterangan = 'Data pesanan berhasil diinput';
             $history->save();
 */
-            history_insert($id,Auth::id(),'Data pesanan berhasil diinput');
+            ///history_insert($id,Auth::id(),'Data pesanan berhasil diinput');
 
             $susut = new \App\Susut;
             $susut->pria = $request->input('produksi_beratpria');
             $susut->wanita = $request->input('produksi_beratwanita');
             $susut->status = 'Order berhasil di input ';
             $susut->pesanan_id = $id;
+            $susut->user_id = Auth::id();
             $susut->save();
+
+            $data_history = [
+                ['pesanan_id' => $id,'user_id' => Auth::id(), 'keterangan' => 'Pesanan berhasil di input','created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now() ],
+                ['pesanan_id' => $id,'user_id' => Auth::id(), 'keterangan' => 'Berat awal cincin pria '.$request->input('produksi_beratpria').' gr dan  berat awal cincin wanita '.$request->input('produksi_beratwanita').' gr','created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now() ],
+            ];
+
+           \App\History::insert($data_history);
             
             
             //-- kirim notif via telegram

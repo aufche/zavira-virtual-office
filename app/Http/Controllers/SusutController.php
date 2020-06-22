@@ -37,4 +37,14 @@ class SusutController extends Controller
             
         }
     }
+
+    function index($detail = null){
+        if ($detail == null){
+            $data = \App\Susut::orderBy('id','desc')->orderBy('pesanan_id','desc')->paginate(10);
+        }else{
+            $data = \App\Susut::where('pesanan_id',$detail)->orderBy('id','asc')->paginate(10);
+        }
+        
+        return view('susut.index',compact('data'));
+    }
 }

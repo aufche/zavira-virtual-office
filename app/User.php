@@ -40,6 +40,10 @@ class User extends Authenticatable
         return $this->hasMany('App\Neraca');
     }
 
+    public function susut(){
+        return $this->hasMany('App\Susut');
+    }
+
     public function lead(){
         return $this->hasMany('App\Lead');
     }
