@@ -77,7 +77,9 @@
             <a class="dropdown-item" href="<?php echo route('pesanan.hitung');?>" target="popup" onclick="window.open('<?php echo route('pesanan.hitung');?>','popup','width=600,height=600'); return false;"><i class=" fa fa-calculator"></i> Hitung Kebutuhan Logam</a>
             <a class="dropdown-item" href="<?php echo route('logam.buyback');?>"><i class=" fa fa-meteor"></i> Kalkulator Jual Kembali</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="<?php echo route('susut.add');?>" target="popup" onclick="window.open('<?php echo route('susut.add');?>','popup','width=600,height=900'); return false;"><i class="fas fa-pen-square"></i> Update Susut Logam</a>
+            <a class="dropdown-item" href="<?php echo route('susut.index');?>"><i class="far fa-sad-tear"></i> Susut Logam</a>
+            <a class="dropdown-item" href="<?php echo route('susut.add');?>" target="popup" onclick="window.open('<?php echo route('susut.add');?>','popup','width=600,height=900'); return false;"><i class="fas fa-flushed"></i> Update Susut Logam</a>
+            <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="<?php echo route('updateform',['action'=>1]);?>" target="popup" onclick="window.open('<?php echo route('updateform',['action'=>1]);?>','popup','width=1200,height=500'); return false;"><i class="fas fa-wrench"></i> Update Biaya Produksi</a>
             <a class="dropdown-item" href="<?php echo route('updateform',['action'=>2]);?>" target="popup" onclick="window.open('<?php echo route('updateform',['action'=>2]);?>','popup','width=1200,height=500'); return false;"><i class="fab fa-pagelines"></i> Update Biaya Lapis</a>
             <a class="dropdown-item" href="<?php echo route('updateform',['action'=>3]);?>" target="popup" onclick="window.open('<?php echo route('updateform',['action'=>3]);?>','popup','width=1200,height=500'); return false;"><i class="fas fa-chalkboard-teacher"></i> Update Biaya Lapis & Produksi</a>

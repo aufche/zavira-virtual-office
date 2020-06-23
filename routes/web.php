@@ -478,6 +478,8 @@ Route::prefix('timeline')->group(function () {
 
 Route::prefix('susut')->group(function () {
     Route::any('/add/{id?}','SusutController@add')->name('susut.add')->middleware('auth');
+    Route::any('/edit/{id?}','SusutController@edit')->name('susut.edit')->middleware('auth');
+    Route::post('/search','SusutController@search')->name('susut.search')->middleware('auth');
     Route::get('/{detail?}','SusutController@index')->name('susut.index')->middleware('auth');
 });
 

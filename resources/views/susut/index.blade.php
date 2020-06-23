@@ -3,12 +3,32 @@
       <div class="app-title">
         <div>
           <h1>Susut Logam</h1>
-          <p>Pada halaman ini kamu melihat seluruh pengguna sistem</p>
+          <p>Halaman ini memuat history susut logam</p>
         </div>
       </div>
 
       <div class="tile">
-      
+      @if (session('status'))
+            <div class="alert alert-success">
+                {{ session('status') }}
+            </div>
+        @endif
+
+        @if (session('warning'))
+            <div class="alert alert-danger">
+                {{ session('warning') }}
+            </div>
+        @endif
+
+        <form method="post" action="<?php echo route('susut.search');?>" class="form-inline">
+        
+            @csrf
+                
+                <input type="text" name="q"  class="form-control mb-2 mr-sm-2 form-control-lg border border-warning" placeholder="no order" aria-describedby="helpId">
+                
+            <button type="submit" class="btn btn-warning mb-2 btn-lg border border-dark"><i class="fas fa-search"></i> Search</button>
+        
+      </form>
      
         <table class="table table-hover">
             <tr>
@@ -20,6 +40,7 @@
                 <td class="bg-warning ">Susut Wanita</td>
                 <td>Status</td>
                 <td>Penanggung Jawab</td>
+                <td>Edit</td>
             </tr>
             <?php
                 $n = 1;
@@ -44,6 +65,7 @@
                         <td class="bg-warning "><?php echo $susut_w;?> gr</td>
                         <td><?php echo $item->status;?></td>
                         <td><?php if (!empty($item->user_id)) echo $item->user->name;?></td>
+                        <td><a class="btn btn-warning" href="<?php echo route('susut.edit',['id'=>$item->id]);?>">Edit</a></td>
                     </tr>
                     <?php
                     $n++;
