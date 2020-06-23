@@ -35,9 +35,9 @@
                 <td>Tanggal</td>
                 <td>No Order</td>
                 <td class="bg-info text-white">Pria</td>
-                <td class="bg-info text-white">Susut Pria</td>
+                <!--<td class="bg-info text-white">Susut Pria</td>-->
                 <td class="bg-warning ">Wanita</td>
-                <td class="bg-warning ">Susut Wanita</td>
+                <!--<td class="bg-warning ">Susut Wanita</td>-->
                 <td>Status</td>
                 <td>Penanggung Jawab</td>
                 <td>Edit</td>
@@ -60,9 +60,9 @@
                         <td><?php echo date('d M Y G:i A', strtotime($item->created_at));?></td>
                         <td><a href="<?php echo route('susut.index',['detail' => $item->pesanan_id]);?>"><?php echo $item->pesanan_id;?></a></td>
                         <td class="bg-info text-white"><?php echo $item->pria;?> gr</td>
-                        <td class="bg-info text-white"><?php echo $susut_p;?> gr</td>
+                        <!--<td class="bg-info text-white"><?php echo $susut_p;?> gr</td>-->
                         <td class="bg-warning "><?php echo $item->wanita;?> gr</td>
-                        <td class="bg-warning "><?php echo $susut_w;?> gr</td>
+                        <!--<td class="bg-warning "><?php echo $susut_w;?> gr</td>-->
                         <td><?php echo $item->status;?></td>
                         <td><?php if (!empty($item->user_id)) echo $item->user->name;?></td>
                         <td><a class="btn btn-warning" href="<?php echo route('susut.edit',['id'=>$item->id]);?>">Edit</a></td>
