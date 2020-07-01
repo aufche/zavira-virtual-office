@@ -295,6 +295,9 @@ Route::prefix('logam')->group(function () {
     })->name('logam.del')->middleware('auth');
 
     Route::get('/kalkulator/{apa?}','LogamController@kalkulator')->name('logam.kalkulator')->middleware('auth');
+    Route::get('/calc',function(){
+        return view('logam.calc');
+    })->name('logam.konversi')->middleware('auth');
 
     Route::any('/em','LogamController@edit_markup')->name('logam.em')->middleware('auth');
     

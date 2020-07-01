@@ -91,6 +91,8 @@
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="<?php echo route('pesanan.filter');?>"><i class=" fa fa-filter"></i> Filter</a>
             <a class="dropdown-item" href="<?php echo route('penting.index');?>"><i class=" fa fa-exclamation-circle"></i> Masalah Krusial</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="<?php echo route('logam.konversi');?>"><i class=" fa fa-exclamation-circle"></i> Konversi Kadar</a>
             <!--<a class="dropdown-item" href="<?php echo route('ga.index');?>"><i class=" fa fa-gift"></i> Giveaway</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="https://www.facebook.com/zavirajewelry/inbox/?mailbox_id=1481893255466137&selected_item_id=340282366841710300949128291128235499821" target="_blank"><i class=" fa fa-comment-dots"></i> DM Zavira Jewelry</a>
