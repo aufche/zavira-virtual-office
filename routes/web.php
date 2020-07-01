@@ -486,11 +486,14 @@ Route::prefix('susut')->group(function () {
     Route::get('/{detail?}','SusutController@index')->name('susut.index')->middleware('auth');
 });
 
-
+Route::get('saldo', function(){
+    Artisan::call('saldo:jumlahkan');
+});
 
 //-- end order web
 
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
+
 
 //Route::post('test','DpController@testbayar')->name('testaja');
 /*
