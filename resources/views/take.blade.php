@@ -266,7 +266,9 @@
          
           <tr>
             <td colspan="2">Finising<br /><?php echo $item->keterangan;?></td>
-            <td>Pengrajin<br /><?php echo $item->pengrajin->nama;?></td>
+            <td>Pengrajin <?php echo $item->pengrajin->nama;?><br />
+            <?php if (!empty($item->plated_id)) echo '<strong>Lapis '.$item->plated->title.'</strong>';?>
+            </td>
           </tr>
         </table>
         

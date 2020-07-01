@@ -240,18 +240,32 @@
                     <input type="text" name="tselesai" value="<?php echo old('tglselesai',$data[0]->tglselesai);?>" id="date2" class="form-control" id="datepicker" />
                     </div>
                     
-                    <div class="col-md-3 mb-3">
+                    <div class="col-md-2 mb-3">
                     <label for="validationDefault05">Deadline Pengrajin</label>
                     <input type="text" name="tdeadline" value="<?php echo old('deadline',$data[0]->deadline);?>" id="date3" class="form-control" >
                     </div>
 
-                    <div class="col-md-3 mb-3">
+                    <div class="col-md-2 mb-3">
                     <label for="validationDefault05">Pengrajin</label>
                     <select class="form-control" name="pengrajin_id" id="pengrajin_id" required>
                         <?php 
                             foreach ($pengrajin as $title=>$id){
                                 ?>
                                 <option value="<?php echo $id;?>" <?php if (old('pengrajin_id',$data[0]->pengrajin_id) == $id){echo 'selected="selected"';};?>><?php echo $title;?></option>
+                                <?php
+                            }
+                        ?>
+                      </select>
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                    <label for="validationDefault05">Tempat Lapis / Plated <span class="badge badge-pill badge-warning">New</span></label>
+                    <select class="form-control" name="plated_id" required>
+                            <option value="">Pilih</option>
+                        <?php 
+                            foreach ($plated as $title=>$id){
+                                ?>
+                                <option value="<?php echo $id;?>" <?php if (!empty($data[0]->plated_id) && $data[0]->plated_id == $id){echo 'selected="selected"';};?>><?php echo $title;?></option>
                                 <?php
                             }
                         ?>

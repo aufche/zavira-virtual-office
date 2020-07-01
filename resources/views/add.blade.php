@@ -245,17 +245,33 @@
                     <input type="text" name="tselesai" id="date2" value="<?php echo old('tselesai');?>" class="form-control" id="datepicker" />
                     </div>
                     
-                    <div class="col-md-3 mb-3">
+                    <div class="col-md-2 mb-3">
                     <label for="validationDefault05">Deadline Pengrajin</label>
                     <input type="text" name="tdeadline" value="<?php echo old('tdeadline');?>" id="date3" class="form-control" >
                     </div>
 
-                    <div class="col-md-3 mb-3">
+                    <div class="col-md-2 mb-3">
                     <label for="validationDefault05">Pengrajin</label>
                     <select class="form-control" name="pengrajin_id" id="pengrajin_id" required>
                         <option value="" selected="selected">Pilih pengrajin</option>
                         <?php 
                             foreach ($pengrajin as $title=>$id){
+                                ?>
+                                <option value="<?php echo $id;?>"><?php echo $title;?></option>
+                                <?php
+                            }
+                        ?>
+                      </select>
+
+                      
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                    <label for="validationDefault05">Tempat Lapis / Plated <span class="badge badge-pill badge-warning">New</span></label>
+                    <select class="form-control" name="plated_id" required>
+                        <option value="" selected="selected">Pilih tempat lapis</option>
+                        <?php 
+                            foreach ($plated as $title=>$id){
                                 ?>
                                 <option value="<?php echo $id;?>"><?php echo $title;?></option>
                                 <?php
@@ -284,7 +300,7 @@
                     <label for="alamat">Urgent?</label>
                     <select class="form-control" name="urgent" id="pengrajin_id">
                         <option value="0" selected="selected">Tidak</option>
-                        <option value="1">Urget</option>
+                        <option value="1">Urgent</option>
                       </select>
                     </div>
 

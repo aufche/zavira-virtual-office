@@ -157,7 +157,11 @@
                     <td><?php 
                         echo $item->pengrajin->nama;
                         if ($item->produksi_dibayar != 0) echo ' <span class="badge badge-success"><i class="fas fa-check"></i></span>'; else echo '<span class="badge badge-danger"><i class="fas fa-times"></i></span>';
-                    ?></td>
+
+                        if (!empty($item->plated_id)) echo '<br />Lapis di '.$item->plated->title;
+                    ?>
+                    
+                    </td>
                     <td><?php echo text_urgent($item->urgent);?></td>
                 </tr>
 

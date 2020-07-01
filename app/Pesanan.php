@@ -51,6 +51,10 @@ Class Pesanan extends Model{
         return $this->hasMany('App\History');
     }
 
+    public function plated(){
+        return $this->belongsTo('App\Plated');
+    }
+
    
 
 }

@@ -34,6 +34,7 @@ class HomeController extends Controller
         $namalogam = DB::table('namalogam')->pluck('id','title');
         $asal = DB::table('asal')->pluck('id','title');
         $kurir = DB::table('kurir')->pluck('id','title');
+        $plated = DB::table('plated')->pluck('id','title');
         $promo = DB::table('promo')->where('aktif',1)->pluck('id','title');
 
         //print_r($namalogam);
@@ -42,6 +43,7 @@ class HomeController extends Controller
             ->with('asal',$asal)
             ->with('kurir',$kurir)
             ->with('promo',$promo)
+            ->with('plated',$plated)
             ->with('namalogam',$namalogam);
     }
 
@@ -103,6 +105,7 @@ class HomeController extends Controller
             'pengrajin_id'=>$request->input('pengrajin_id'),
             'urgent'=>$request->input('urgent'),
             'kurir_id'=>$request->input('kurir_id'),
+            'plated_id'=>$request->input('plated_id'),
             'user_id'=>Auth::id(),
             'last_edited_by'=>Auth::user()->name,
             'couple'=>$iscouple,
@@ -310,10 +313,11 @@ class HomeController extends Controller
         $namalogam = DB::table('namalogam')->pluck('id','title');
         $asal = DB::table('asal')->pluck('id','title');
         $kurir = DB::table('kurir')->pluck('id','title');
+        $plated = DB::table('plated')->pluck('id','title');
         $promo = DB::table('promo')->where('aktif',1)->pluck('id','title');
         
         $data = \App\Pesanan::where('id',$id)->with('user','pengrajin')->get();
-        return view('edit',compact('pengrajin','namalogam','data','asal','kurir','promo'));
+        return view('edit',compact('pengrajin','namalogam','data','asal','kurir','promo','plated'));
     }
 
     function editing(Request $request){
@@ -483,6 +487,7 @@ class HomeController extends Controller
         $pesanan->asal_id=$request->input('asal');
         $pesanan->pengrajin_id=$request->input('pengrajin_id');
         $pesanan->kurir_id=$request->input('kurir_id');
+        $pesanan->plated_id = $request->input('plated_id');
         //$pesanan->gambargambar=$request->input('gambargambar');
         $pesanan->last_edited_by=Auth::user()->name;
         $pesanan->urgent=$request->input('urgent');
