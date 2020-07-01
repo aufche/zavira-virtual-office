@@ -90,6 +90,7 @@
         <div class="card mb-3 shadow border-dark">
             <div class="card-header bg-dark text-white">Model Cincin</div>
             <div class="card-body">
+            <p>Jika cincin pria dan wanita sama (dalam 1 gambar) maka cukup upload gambar melalui input di bawah ini</p>
                 <div class="form-row">
                     <div class="col-md-4 mb-3">
                         <div class="form-group">
@@ -100,7 +101,7 @@
                     </div>
 
                     <div class="col-md-4 mb-3">
-                    <label for="gambar">Upload 1 Gambar</label>
+                    <label for="gambar">Upload gambar cincin pria dan wanita dalam 1 file</label>
                     <input type="file" class="form-control-file" name="gambar" id="gambar" placeholder="" aria-describedby="gambar">
                     <small id="gambar" class="form-text text-muted">Upload gambar cincin/model cincin</small> 
                     </div>
@@ -119,12 +120,12 @@
        <div class="card-header bg-dark text-white">Detail Cincin Pria</div>
             <div class="card-body">
                 <div class="form-row">
-                    <div class="col-md-3 mb-3">
+                    <div class="col-md-2 mb-3">
                     <label for="validationDefault03">Ukuran Cincin Pria</label>
                     <input type="text" name="upria" value="<?php echo old('upria');?>" class="form-control" >
                     </div>
 
-                    <div class="col-md-3 mb-3">
+                    <div class="col-md-2 mb-3">
                     <label for="validationDefault04">Grafir Pria</label>
                     <input type="text" name="gpria" value="<?php echo old('gpria');?>" class="form-control" >
                     </div>
@@ -142,32 +143,22 @@
                             }
                         ?>
                       </select>
-                   <!--  <label>Pilih finising perak (di Gunawan)</label>
-                     <select class="form-control" name="biaya_lapis_perak_pria" id="lapis_finising_perak_pria" disabled="disabled">
-                        <option value="0" selected="selected">Pilih jenis finising khusus cincin perak</option>
-                        <option value="30000">Putih glossy</option>
-                        <option value="30000">Putih doff</option>
-                        <option value="10000">Kuning glossy</option>
-                        <option value="10000">Rose gold glossy</option>
-                        <option value="30000">Hitam glossy</option>
-                        <option value="35000">Hitam Doff</option>
-                        <option value="40000">Hitam kombinasi</option>
-                        <option value="35000">Kombinasi putih dan kuning glossy</option>
-                        <option value="35000">Kombinasi rose gold dan putih glossy</option>
-                        <option value="40000">Doff Kombinasi kuning dan putih</option>
-                        <option value="40000">Doff Kombinasi putih dan rose gold</option>
-                        <option value="25000">Doff kuning</option>
-                        <option value="25000">Doff rose gold</option>
-                      </select>
-                      -->
+                  
                     </div>
                     </div>
 
-                    <div class="col-md-3 mb-3">
+                    <div class="col-md-2 mb-3">
                     <label for="validationDefault04">Berat maksimal</label>
                     <input type="text" name="produksi_beratpria" value="<?php echo old('produksi_beratpria');?>" class="form-control" id="berat_max_pria" />
                     <small id="gambar" class="form-text text-muted">Diisi untuk order non perak. Berat maksimal, contoh 4</small> 
                     </div>
+
+                    <div class="col-md-2 mb-3">
+                    <label for="gambar">Gambar Cincin Pria</label>
+                    <input type="file" class="form-control-file" name="gambar_cincin_pria" placeholder="" aria-describedby="gambar">
+                    <small id="gambar" class="form-text text-muted">Upload gambar cincin cincin pria</small> 
+                    </div>
+
                 </div>
                 <!-- form-row--->
             </div>
@@ -177,12 +168,12 @@
         <div class="card-header bg-dark text-white">Cincin Wanita</div> 
             <div class="card-body"> 
                 <div class="form-row">
-                    <div class="col-md-3 mb-3">
+                    <div class="col-md-2 mb-3">
                     <label for="validationDefault03">Ukuran Cincin Wanita</label>
                     <input type="text" name="uwanita" value="<?php echo old('uwanita');?>" class="form-control" >
                     </div>
 
-                    <div class="col-md-3 mb-3">
+                    <div class="col-md-2 mb-3">
                     <label for="validationDefault04">Grafir Wanita</label>
                     <input type="text" name="gwanita" value="<?php echo old('gwanita');?>" class="form-control" >
                     </div>
@@ -199,31 +190,20 @@
                             }
                         ?>
                       </select>
-                     <!-- <label>Pilih finising perak (di Gunawan)</label>
-                      <select class="form-control" name="biaya_lapis_perak_wanita" id="lapis_finising_perak_wanita" disabled="disabled">
-                        <option value="0" selected="selected">Pilih jenis finising khusus cincin perak</option>
-                        <option value="30000">Putih glossy</option>
-                        <option value="30000">Putih doff</option>
-                        <option value="10000">Kuning glossy</option>
-                        <option value="10000">Rose gold glossy</option>
-                        <option value="30000">Hitam glossy</option>
-                        <option value="35000">Hitam Doff</option>
-                        <option value="40000">Hitam kombinasi</option>
-                        <option value="35000">Kombinasi putih dan kuning glossy</option>
-                        <option value="35000">Kombinasi rose gold dan putih glossy</option>
-                        <option value="40000">Doff Kombinasi kuning dan putih</option>
-                        <option value="40000">Doff Kombinasi putih dan rose gold</option>
-                        <option value="25000">Doff kuning</option>
-                        <option value="25000">Doff rose gold</option>
-                      </select>
-                      -->
+                    
 
                     </div>
 
-                    <div class="col-md-3 mb-3">
+                    <div class="col-md-2 mb-3">
                     <label for="validationDefault04">Berat maksimal </label>
                     <input type="text" name="produksi_beratwanita" value="<?php echo old('produksi_beratwanita');?>" class="form-control" id="berat_max_wanita" />
                     <small id="gambar" class="form-text text-muted">Diisi untuk order non perak. Berat maksimal, contoh 4</small> 
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                    <label for="gambar">Gambar Cincin Wanita</label>
+                    <input type="file" class="form-control-file" name="gambar_cincin_wanita" placeholder="" aria-describedby="gambar">
+                    <small id="gambar" class="form-text text-muted">Upload gambar cincin cincin wanita</small> 
                     </div>
 
                 </div>

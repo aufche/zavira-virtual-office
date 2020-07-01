@@ -118,9 +118,10 @@ class HomeController extends Controller
 
         if (!empty($request->file('gambar'))){
         
-            $this->validate($request,[
+            /*$this->validate($request,[
                 'gambar'=>'required|mimes:jpeg,bmp,jpg,png|between:1, 6000',
             ]);
+            */
      
             $image_name = $request->file('gambar')->getRealPath();
      
@@ -128,6 +129,34 @@ class HomeController extends Controller
             $res = Cloudder::getResult();
             //$gbr = $res['url'];
             $data_pesanan = array_add($data_pesanan,'gambar',$res['url']);
+        }
+
+        if (!empty($request->file('gambar_cincin_pria'))){
+        
+            $this->validate($request,[
+                'gambar_cincin_pria'=>'mimes:jpeg,bmp,jpg,png|between:1, 6000',
+            ]);
+     
+            $image_name = $request->file('gambar_cincin_pria')->getRealPath();
+     
+            Cloudder::upload($image_name, null);
+            $res = Cloudder::getResult();
+            //$gbr = $res['url'];
+            $data_pesanan = array_add($data_pesanan,'gambar_cincin_pria',$res['url']);
+        }
+
+        if (!empty($request->file('gambar_cincin_wanita'))){
+        
+            $this->validate($request,[
+                'gambar_cincin_wanita'=>'mimes:jpeg,bmp,jpg,png|between:1, 6000',
+            ]);
+     
+            $image_name = $request->file('gambar_cincin_wanita')->getRealPath();
+     
+            Cloudder::upload($image_name, null);
+            $res = Cloudder::getResult();
+            //$gbr = $res['url'];
+            $data_pesanan = array_add($data_pesanan,'gambar_cincin_wanita',$res['url']);
         }
 
         if (!empty($request->input('gambargambar'))){
@@ -316,7 +345,7 @@ class HomeController extends Controller
         $plated = DB::table('plated')->pluck('id','title');
         $promo = DB::table('promo')->where('aktif',1)->pluck('id','title');
         
-        $data = \App\Pesanan::where('id',$id)->with('user','pengrajin')->get();
+        $data = \App\Pesanan::where('id',$id)->with('user','pengrajin')->first();
         return view('edit',compact('pengrajin','namalogam','data','asal','kurir','promo','plated'));
     }
 
@@ -424,15 +453,36 @@ class HomeController extends Controller
 
         if (!empty($request->file('gambar'))){
         
-            $this->validate($request,[
+           /* $this->validate($request,[
                 'gambar'=>'required|mimes:jpeg,bmp,jpg,png|between:1, 6000',
             ]);
+            */
      
             $image_name = $request->file('gambar')->getRealPath();
      
             Cloudder::upload($image_name, null);
             $res = Cloudder::getResult();
             $pesanan->gambar=$res['url'];
+
+        }
+
+        if (!empty($request->file('gambar_cincin_pria'))){
+      
+             $image_name = $request->file('gambar_cincin_pria')->getRealPath();
+      
+             Cloudder::upload($image_name, null);
+             $res = Cloudder::getResult();
+             $pesanan->gambar_cincin_pria = $res['url'];
+ 
+         }
+
+         if (!empty($request->file('gambar_cincin_wanita'))){
+      
+            $image_name = $request->file('gambar_cincin_wanita')->getRealPath();
+     
+            Cloudder::upload($image_name, null);
+            $res = Cloudder::getResult();
+            $pesanan->gambar_cincin_wanita = $res['url'];
 
         }
 

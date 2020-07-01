@@ -108,6 +108,24 @@
           <tr>
             <td rowspan="<?php echo $row_span;?>">
             <?php
+                if (!empty($item->gambar_cincin_pria)){
+                ?>
+                   <fieldset>
+                        <legend>Gambar cincin pria :</legend>
+                    <img src="<?php echo $item->gambar_cincin_pria;?>" class="img-fluid" width="300px" alt="cincin" /><br />
+                    </fieldset>
+                <?php
+                }
+
+                if (!empty($item->gambar_cincin_wanita)){
+                    ?>
+                        <fieldset>
+                        <legend>Gambar cincin wanita :</legend>
+                        <img src="<?php echo $item->gambar_cincin_wanita;?>" class="img-fluid" width="300px" alt="cincin" />
+                        </fieldset>
+                    <?php
+                    }
+
             if (!empty($item->gambar)){
               ?>
               <img src="<?php echo $item->gambar;?>" class="img-fluid" width="300px" alt="cincin" /><br />

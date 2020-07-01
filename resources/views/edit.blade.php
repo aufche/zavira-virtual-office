@@ -15,37 +15,37 @@
         @endif
       <form action="<?php echo route('editing');?>" method="post" enctype="multipart/form-data" autocomplete="off">
       <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
-      <input type = "hidden" name = "id" value = "<?php echo $data[0]->id; ?>">
-      <input type = "hidden" name = "gbr" value = "<?php echo $data[0]->gambar; ?>">
-      <input type = "hidden" name = "bahanpria_old" value = "<?php echo $data[0]->bahanpria; ?>">
-      <input type = "hidden" name = "bahanwanita_old" value = "<?php echo $data[0]->bahanwanita; ?>">
+      <input type = "hidden" name = "id" value = "<?php echo $data->id; ?>">
+      <input type = "hidden" name = "gbr" value = "<?php echo $data->gambar; ?>">
+      <input type = "hidden" name = "bahanpria_old" value = "<?php echo $data->bahanpria; ?>">
+      <input type = "hidden" name = "bahanwanita_old" value = "<?php echo $data->bahanwanita; ?>">
         <div class="card border-warning shadow">
         <div class="card-header bg-warning text-dark">Data Pengiriman</div>
             <div class="card-body">
             <div class="form-row">
             <div class="col-md-4 mb-3">
             <label for="validationDefault03">Nama Pemesan</label>
-            <input type="text" value="<?php echo old('nama',$data[0]->nama);?>" name="nama" class="form-control" required>
+            <input type="text" value="<?php echo old('nama',$data->nama);?>" name="nama" class="form-control" required>
             </div>
 
             <div class="col-md-4 mb-3">
             <label for="validationDefault04">No. HP</label>
-            <input type="text" value="<?php echo $data[0]->nohp;?>" name="nohp" class="form-control" required>
+            <input type="text" value="<?php echo $data->nohp;?>" name="nohp" class="form-control" required>
             </div>
             
             <div class="col-md-4 mb-3">
             <label for="validationDefault05">Email</label>
-            <input type="text" name="email" value="<?php echo $data[0]->email;?>" class="form-control" />
+            <input type="text" name="email" value="<?php echo $data->email;?>" class="form-control" />
             </div>
 
              <div class="col-md-4 mb-3">
                 <label for="validationDefault05">Kecamatan</label>
-                <input type="text" name="kecamatan" class="form-control" value="<?php echo $data[0]->kecamatan;?>">
+                <input type="text" name="kecamatan" class="form-control" value="<?php echo $data->kecamatan;?>">
                 </div>
 
                  <div class="col-md-8 mb-3">
                 <label for="alamat">Alamat Pengiriman</label>
-                <textarea class="form-control" name="alamat" id="alamat" rows="4" required><?php echo $data[0]->alamat;?></textarea>
+                <textarea class="form-control" name="alamat" id="alamat" rows="4" required><?php echo $data->alamat;?></textarea>
                 </div>
 
             </div>
@@ -56,24 +56,24 @@
                 <div class="col-md-3 mb-3">
                 <label for="validationDefault03">Jenis Kelamin</label>
                 <select class="form-control" name="jenis_kelamin">
-                    <option value="1" <?php if ($data[0]->jenis_kelamin==1) echo 'selected="selected"';?>>Pria</option>
-                    <option value="2" <?php if ($data[0]->jenis_kelamin==2) echo 'selected="selected"';?>>Wanita</option>
+                    <option value="1" <?php if ($data->jenis_kelamin==1) echo 'selected="selected"';?>>Pria</option>
+                    <option value="2" <?php if ($data->jenis_kelamin==2) echo 'selected="selected"';?>>Wanita</option>
                 </select>
                 </div>
 
                 <div class="col-md-3 mb-3">
                 <label for="validationDefault04">Akun Instagram/Twitter/Facebook</label>
-                <input type="text" name="social_media"  class="form-control" value="<?php echo $data[0]->social_media;?>" />
+                <input type="text" name="social_media"  class="form-control" value="<?php echo $data->social_media;?>" />
                 </div>
 
                 <div class="col-md-3 mb-3">
                 <label for="validationDefault04">Tanggal Lahir</label>
-                <input type="text" name="tgl_lahir" id="date"  class="form-control" value="<?php echo $data[0]->tgl_lahir;?>" />
+                <input type="text" name="tgl_lahir" id="date"  class="form-control" value="<?php echo $data->tgl_lahir;?>" />
                 </div>
 
                 <div class="col-md-3 mb-3">
                 <label for="validationDefault04">Tahu Zavira Dari Mana</label>
-                <input type="text" name="tahu_dari"  class="form-control" value="<?php echo $data[0]->tahu_dari;?>" />
+                <input type="text" name="tahu_dari"  class="form-control" value="<?php echo $data->tahu_dari;?>" />
                 </div>
 
             </div>
@@ -94,12 +94,12 @@
                     <div class="col-md-4 mb-3">
                         <div class="form-group">
                           <label for="kodecincin">Kode Cincin</label>
-                          <input required type="text" value="<?php echo old('kodecincin',$data[0]->kodecincin);?>" class="form-control" name="kodecincin" id="kodecincin" aria-describedby="kodecincin" placeholder="">
+                          <input required type="text" value="<?php echo old('kodecincin',$data->kodecincin);?>" class="form-control" name="kodecincin" id="kodecincin" aria-describedby="kodecincin" placeholder="">
                           <small id="kodecincin" class="form-text text-muted">Masukkan kode cincin, jika tidak tersedia tuliskan custom + nama konsumen</small>
 
                           <label for="kodecincin">Jika banyak gambar, tempel URL disini</label>
-                          <textarea rows="3" class="form-control" name="gambargambar"><?php echo old('gambargambar',$data[0]->gambargambar);?></textarea>
-                          <input type="hidden" name="gambargambarhidden" value="<?php echo $data[0]->gambargambar;?>" />
+                          <textarea rows="3" class="form-control" name="gambargambar"><?php echo old('gambargambar',$data->gambargambar);?></textarea>
+                          <input type="hidden" name="gambargambarhidden" value="<?php echo $data->gambargambar;?>" />
                           <small id="kodecincin" class="form-text text-muted">Silahkan upload gambar-gambar cincin <a href="https://imgur.com/upload" target="_blank">disini</a></small>
                         </div>
                     </div>
@@ -112,14 +112,14 @@
 
                     <div class="col-md-4 mb-3">
                     <?php 
-                    if (!empty($data[0]->gambar)){
+                    if (!empty($data->gambar)){
                         ?>
-                            <img src="<?php echo $data[0]->gambar;?>" alt="" class="img-fluid"  />
+                            <img src="<?php echo $data->gambar;?>" alt="" class="img-fluid"  />
                         <?php
                     }
 
-                    if (!empty($data[0]->gambargambar)){
-                        $gambar = explode(',',$data[0]->gambargambar);
+                    if (!empty($data->gambargambar)){
+                        $gambar = explode(',',$data->gambargambar);
                         foreach($gambar as $gbr){
                             ?>
                             <img src="<?php echo $gbr;?>" alt="" class="img-fluid"  />
@@ -130,11 +130,11 @@
                     ?>
 
                     <label for="alamat">Finising/Keterangan</label>
-                    <textarea class="form-control editable  medium-editor-textarea" name="keterangan" id="keterangan" rows="6"><?php echo old('keterangan',$data[0]->keterangan);?></textarea><br />
-                    <input type="checkbox" value="1" name="siap_cetak" <?php if ($data[0]->siap_cetak == 1) echo 'checked="checked"';?>/> Centang untuk menandakan orderan ini siap cetak<br />
-                    <!--<input type="checkbox" value="1" name="kirim_ke_pengrajin" <?php if ($data[0]->kirim_ke_pengrajin == 1) echo 'checked="checked"';?>/>  -->
+                    <textarea class="form-control editable  medium-editor-textarea" name="keterangan" id="keterangan" rows="6"><?php echo old('keterangan',$data->keterangan);?></textarea><br />
+                    <input type="checkbox" value="1" name="siap_cetak" <?php if ($data->siap_cetak == 1) echo 'checked="checked"';?>/> Centang untuk menandakan orderan ini siap cetak<br />
+                    <!--<input type="checkbox" value="1" name="kirim_ke_pengrajin" <?php if ($data->kirim_ke_pengrajin == 1) echo 'checked="checked"';?>/>  -->
                     <?php 
-                    /*if ($data[0]->kirim_ke_pengrajin == 1){
+                    /*if ($data->kirim_ke_pengrajin == 1){
                         echo 'Orderan ini sudah dikirim ke pengrajin';
                     }else{
                         echo 'Kirim pesanan ini ke pengrajin langsung (<a href="#" data-toggle="modal" data-target="#exampleModalLong" onclick="preview();">Preview</a>)';
@@ -149,7 +149,7 @@
         </div>
 
         <?php 
-        if (empty($data[0]->ukuranpria) && empty($data[0]->bpria)){
+        if (empty($data->ukuranpria) && empty($data->bpria)){
             echo '<div class="card mb-3 shadow border-dark" style="display:none">';
         }else{
             
@@ -161,27 +161,36 @@
        <div class="card-header bg-dark text-white">Detail Cincin Pria</div>
             <div class="card-body">
                 <div class="form-row">
-                    <div class="col-md-3 mb-3">
+                    <div class="col-md-2 mb-3">
                     <label for="validationDefault03">Ukuran Cincin Pria</label>
-                    <input type="text" value="<?php echo old('ukuranpria',$data[0]->ukuranpria);?>" name="upria" class="form-control" >
+                    <input type="text" value="<?php echo old('ukuranpria',$data->ukuranpria);?>" name="upria" class="form-control" >
                     </div>
 
-                    <div class="col-md-3 mb-3">
+                    <div class="col-md-2 mb-3">
                     <label for="validationDefault04">Grafir Pria</label>
-                    <input type="text" name="gpria" value="<?php echo old('grafirpria',$data[0]->grafirpria);?>" class="form-control" >
+                    <input type="text" name="gpria" value="<?php echo old('grafirpria',$data->grafirpria);?>" class="form-control" >
                     </div>
                     
                     <div class="col-md-3 mb-3">
-                    <label>Cincin pria menggunakan bahan <strong><?php echo $data[0]->bahanpria()->first()['title'];?></strong></label>
-                    <a class="btn btn-warning  btn-block" href="<?php echo route('pesanan.edit.logam',['id'=>$data[0]->id]);?>">Klik disini untuk mengubah</a>
+                    <label>Cincin pria menggunakan bahan <strong><?php echo $data->bahanpria()->first()['title'];?></strong></label>
+                    <a class="btn btn-warning  btn-block" href="<?php echo route('pesanan.edit.logam',['id'=>$data->id]);?>">Klik disini untuk mengubah</a>
                     
                     
                     </div>
 
-                    <div class="col-md-3 mb-3">
+                    <div class="col-md-2 mb-3">
                     <label for="validationDefault04">Berat maksimal</label>
-                    <input type="text" id="berat_max_pria" name="produksi_beratpria" value="<?php echo old('produksi_beratpria',$data[0]->produksi_beratpria);?>" class="form-control" >
+                    <input type="text" id="berat_max_pria" name="produksi_beratpria" value="<?php echo old('produksi_beratpria',$data->produksi_beratpria);?>" class="form-control" >
                     <small id="gambar" class="form-text text-muted">Diisi untuk order non perak. Berat maksimal, contoh 4</small> 
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                    <?php
+                        if (!empty($data->gambar_cincin_pria)) echo '<img src="'.$data->gambar_cincin_pria.'" class="img-fluid" />';
+                    ?>
+                    <label for="gambar">Gambar Cincin Pria</label>
+                    <input type="file" class="form-control-file" name="gambar_cincin_pria" placeholder="" aria-describedby="gambar">
+                    <small id="gambar" class="form-text text-muted">Upload gambar cincin cincin pria</small> 
                     </div>
 
                 </div>
@@ -190,7 +199,7 @@
         </div>
 
         <?php 
-        if (empty($data[0]->ukuranwanita) && empty($data[0]->bwanita)){
+        if (empty($data->ukuranwanita) && empty($data->bwanita)){
             echo '<div class="card mb-3 shadow border-info" style="display:none">';
         }else{
             echo '<div class="card mb-3 shadow border-info">';
@@ -200,25 +209,34 @@
         <div class="card-header bg-info text-white">Cincin Wanita</div> 
             <div class="card-body"> 
                 <div class="form-row">
-                    <div class="col-md-3 mb-3">
+                    <div class="col-md-2 mb-3">
                     <label for="validationDefault03">Ukuran Cincin Wanita</label>
-                    <input type="text" name="uwanita" value="<?php echo old('ukuranwanita',$data[0]->ukuranwanita);?>" class="form-control" >
+                    <input type="text" name="uwanita" value="<?php echo old('ukuranwanita',$data->ukuranwanita);?>" class="form-control" >
                     </div>
 
-                    <div class="col-md-3 mb-3">
+                    <div class="col-md-2 mb-3">
                     <label for="validationDefault04">Grafir Wanita</label>
-                    <input type="text" name="gwanita" value="<?php echo old('grafirwanita',$data[0]->grafirwanita);?>" class="form-control" >
+                    <input type="text" name="gwanita" value="<?php echo old('grafirwanita',$data->grafirwanita);?>" class="form-control" >
                     </div>
                     
                     <div class="col-md-3 mb-3">
-                    <label>Cincin wanita menggunakan bahan <strong><?php echo $data[0]->bahanwanita()->first()['title'];?></strong></label>
-                    <a class="btn btn-warning  btn-block" href="<?php echo route('pesanan.edit.logam',['id'=>$data[0]->id]);?>">Klik disini untuk mengubah</a>
+                    <label>Cincin wanita menggunakan bahan <strong><?php echo $data->bahanwanita()->first()['title'];?></strong></label>
+                    <a class="btn btn-warning  btn-block" href="<?php echo route('pesanan.edit.logam',['id'=>$data->id]);?>">Klik disini untuk mengubah</a>
                     </div>
 
-                    <div class="col-md-3 mb-3">
+                    <div class="col-md-2 mb-3">
                     <label for="validationDefault04">Berat maksimal</label>
-                    <input type="text" id="berat_max_wanita" name="produksi_beratwanita" value="<?php echo old('produksi_beratwanita',$data[0]->produksi_beratwanita);?>" class="form-control" >
+                    <input type="text" id="berat_max_wanita" name="produksi_beratwanita" value="<?php echo old('produksi_beratwanita',$data->produksi_beratwanita);?>" class="form-control" >
                     <small id="gambar" class="form-text text-muted">Diisi untuk order non perak. Berat maksimal, contoh 4</small> 
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                    <?php
+                        if (!empty($data->gambar_cincin_wanita)) echo '<img src="'.$data->gambar_cincin_wanita.'" class="img-fluid" />';
+                    ?>
+                    <label for="gambar">Gambar Cincin Pria</label>
+                    <input type="file" class="form-control-file" name="gambar_cincin_wanita" placeholder="" aria-describedby="gambar">
+                    <small id="gambar" class="form-text text-muted">Upload gambar cincin cincin wanita</small> 
                     </div>
 
                 </div>
@@ -232,17 +250,17 @@
             <div class="form-row">
                     <div class="col-md-3 mb-3">
                     <label for="validationDefault03">Tanggal Masuk</label>
-                    <input type="text" name="tmasuk" value="<?php echo old('tglmasuk',$data[0]->tglmasuk);?>" id="date" class="form-control" >
+                    <input type="text" name="tmasuk" value="<?php echo old('tglmasuk',$data->tglmasuk);?>" id="date" class="form-control" >
                     </div>
 
                     <div class="col-md-3 mb-3">
                     <label for="validationDefault04">Tanggal Selesai</label>
-                    <input type="text" name="tselesai" value="<?php echo old('tglselesai',$data[0]->tglselesai);?>" id="date2" class="form-control" id="datepicker" />
+                    <input type="text" name="tselesai" value="<?php echo old('tglselesai',$data->tglselesai);?>" id="date2" class="form-control" id="datepicker" />
                     </div>
                     
                     <div class="col-md-2 mb-3">
                     <label for="validationDefault05">Deadline Pengrajin</label>
-                    <input type="text" name="tdeadline" value="<?php echo old('deadline',$data[0]->deadline);?>" id="date3" class="form-control" >
+                    <input type="text" name="tdeadline" value="<?php echo old('deadline',$data->deadline);?>" id="date3" class="form-control" >
                     </div>
 
                     <div class="col-md-2 mb-3">
@@ -251,7 +269,7 @@
                         <?php 
                             foreach ($pengrajin as $title=>$id){
                                 ?>
-                                <option value="<?php echo $id;?>" <?php if (old('pengrajin_id',$data[0]->pengrajin_id) == $id){echo 'selected="selected"';};?>><?php echo $title;?></option>
+                                <option value="<?php echo $id;?>" <?php if (old('pengrajin_id',$data->pengrajin_id) == $id){echo 'selected="selected"';};?>><?php echo $title;?></option>
                                 <?php
                             }
                         ?>
@@ -265,7 +283,7 @@
                         <?php 
                             foreach ($plated as $title=>$id){
                                 ?>
-                                <option value="<?php echo $id;?>" <?php if (!empty($data[0]->plated_id) && $data[0]->plated_id == $id){echo 'selected="selected"';};?>><?php echo $title;?></option>
+                                <option value="<?php echo $id;?>" <?php if (!empty($data->plated_id) && $data->plated_id == $id){echo 'selected="selected"';};?>><?php echo $title;?></option>
                                 <?php
                             }
                         ?>
@@ -278,7 +296,7 @@
                     <?php 
                             foreach ($asal as $title=>$id){
                                 ?>
-                                <option value="<?php echo $id;?>" <?php if (old('asal_id',$data[0]->asal_id) == $id){echo 'selected="selected"';};?>><?php echo $title;?></option>
+                                <option value="<?php echo $id;?>" <?php if (old('asal_id',$data->asal_id) == $id){echo 'selected="selected"';};?>><?php echo $title;?></option>
                                 <?php
                             }
                         ?>
@@ -288,14 +306,14 @@
                     <div class="col-md-3 mb-3">
                     <label for="alamat">Urgent?</label>
                     <select class="form-control" name="urgent">
-                        <option value="0" <?php if (old('urgent',$data[0]->urgent) == 0){echo 'selected="selected"';};?>>Tidak</option>
-                        <option value="1" <?php if (old('urgent',$data[0]->urgent) == 1){echo 'selected="selected"';};?>>Urget</option>
+                        <option value="0" <?php if (old('urgent',$data->urgent) == 0){echo 'selected="selected"';};?>>Tidak</option>
+                        <option value="1" <?php if (old('urgent',$data->urgent) == 1){echo 'selected="selected"';};?>>Urget</option>
                       </select>
                     </div>
 
                     <div class="col-md-6 mb-3">
                     <label for="validationDefault05">Grafir kotak kayu</label>
-                    <textarea class="form-control" name="kotakcincinkayu" id="kotakcincinkayu" rows="3"><?php echo old('kotakcincinkayu');?><?php echo $data[0]->free_woodbox;?></textarea>
+                    <textarea class="form-control" name="kotakcincinkayu" id="kotakcincinkayu" rows="3"><?php echo old('kotakcincinkayu');?><?php echo $data->free_woodbox;?></textarea>
                     <small class="text-muted">Isi kan JIKA termasuk free kotak kayu/akrilik</small>
                     </div>
 
@@ -311,31 +329,31 @@
                     <div class="col mb-3">
                     <label for="validationDefault03">Tujuan Rekening <span class="badge badge-pill badge-warning">Penting</span></label> 
                     <select name="rekening" class="form-control" required>
-                        <option value="BCA" <?php if ($data[0]->rekening == 'BCA') echo 'selected="selected"';?>>BCA</option>
-                        <option value="MANDIRI" <?php if ($data[0]->rekening == 'MANDIRI') echo 'selected="selected"';?>>Mandiri</option>
-                        <option value="BNI" <?php if ($data[0]->rekening == 'BNI') echo 'selected="selected"';?>>BNI</option>
-                        <option value="BRI" <?php if ($data[0]->rekening == 'BRI') echo 'selected="selected"';?>>BRI</option>
-                        <option value="NIAGA" <?php if ($data[0]->rekening == 'NIAGA') echo 'selected="selected"';?>>NIAGA</option>
-                        <option value="EDC-BCA" <?php if ($data[0]->rekening == 'EDC-BCA') echo 'selected="selected"';?>>EDC-BCA</option>
-                        <option value="EDC-BNI" <?php if ($data[0]->rekening == 'EDC-BNI') echo 'selected="selected"';?>>EDC-BNI</option>
-                        <option value="CASH" <?php if ($data[0]->rekening == 'CASH') echo 'selected="selected"';?>>CASH</option>
+                        <option value="BCA" <?php if ($data->rekening == 'BCA') echo 'selected="selected"';?>>BCA</option>
+                        <option value="MANDIRI" <?php if ($data->rekening == 'MANDIRI') echo 'selected="selected"';?>>Mandiri</option>
+                        <option value="BNI" <?php if ($data->rekening == 'BNI') echo 'selected="selected"';?>>BNI</option>
+                        <option value="BRI" <?php if ($data->rekening == 'BRI') echo 'selected="selected"';?>>BRI</option>
+                        <option value="NIAGA" <?php if ($data->rekening == 'NIAGA') echo 'selected="selected"';?>>NIAGA</option>
+                        <option value="EDC-BCA" <?php if ($data->rekening == 'EDC-BCA') echo 'selected="selected"';?>>EDC-BCA</option>
+                        <option value="EDC-BNI" <?php if ($data->rekening == 'EDC-BNI') echo 'selected="selected"';?>>EDC-BNI</option>
+                        <option value="CASH" <?php if ($data->rekening == 'CASH') echo 'selected="selected"';?>>CASH</option>
                     </select>
                     <small class="text-muted">Harus dipilih sesuai dengan keadaan sebenarnya</small>
                     </div>
 
                     <div class="col mb-3">
                     <label for="validationDefault04">Harga Barang</label>
-                    <input type="text" name="hargabarang" value="<?php echo old('hargabarang',$data[0]->hargabarang);?>" class="form-control hargabarang" >
+                    <input type="text" name="hargabarang" value="<?php echo old('hargabarang',$data->hargabarang);?>" class="form-control hargabarang" >
                     </div>
                     
                     <div class="col mb-3">
                     <label for="validationDefault05">Jumlah DP</label>
-                    <input type="text" name="dp" value="<?php echo old('dp',$data[0]->dp);?>" class="form-control dp" >
+                    <input type="text" name="dp" value="<?php echo old('dp',$data->dp);?>" class="form-control dp" >
                     </div>
 
                     <div class="col mb-3">
                     <label for="validationDefault05">Ongkir</label>
-                    <input type="text" name="ongkir" value="<?php echo old('ongkir',$data[0]->ongkir);?>" class="form-control ongkir" >
+                    <input type="text" name="ongkir" value="<?php echo old('ongkir',$data->ongkir);?>" class="form-control ongkir" >
                     </div>
 
                     <div class="col mb-3">
@@ -344,7 +362,7 @@
                     <?php 
                             foreach ($kurir as $title=>$id){
                                 ?>
-                                <option value="<?php echo $id;?>" <?php if (old('asal_id',$data[0]->kurir_id) == $id){echo 'selected="selected"';}?>><?php echo $title;?></option>
+                                <option value="<?php echo $id;?>" <?php if (old('asal_id',$data->kurir_id) == $id){echo 'selected="selected"';}?>><?php echo $title;?></option>
                                 <?php
                             }
                         ?>
@@ -358,7 +376,7 @@
                         <?php 
                             foreach ($promo as $title=>$id){
                                 ?>
-                                <option value="<?php echo $id;?>" <?php if (old('asal_id',$data[0]->promo_id) == $id){echo 'selected="selected"';}?>><?php echo $title;?></option>
+                                <option value="<?php echo $id;?>" <?php if (old('asal_id',$data->promo_id) == $id){echo 'selected="selected"';}?>><?php echo $title;?></option>
                                 <?php
                             }
                         ?>
