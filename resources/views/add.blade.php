@@ -317,6 +317,7 @@
                         <option value="EDC-BCA">EDC-BCA</option>
                         <option value="EDC-BNI">EDC-BNI</option>
                         <option value="CASH">CASH</option>
+                        <option value="SHOPEE">SHOPEE</option>
                     </select>
                     <small class="text-muted">Harus dipilih sesuai dengan keadaan sebenarnya</small>
                     </div>

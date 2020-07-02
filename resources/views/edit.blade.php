@@ -337,6 +337,7 @@
                         <option value="EDC-BCA" <?php if ($data->rekening == 'EDC-BCA') echo 'selected="selected"';?>>EDC-BCA</option>
                         <option value="EDC-BNI" <?php if ($data->rekening == 'EDC-BNI') echo 'selected="selected"';?>>EDC-BNI</option>
                         <option value="CASH" <?php if ($data->rekening == 'CASH') echo 'selected="selected"';?>>CASH</option>
+                        <option value="SHOPEE" <?php if ($data->rekening == 'SHOPEE') echo 'selected="selected"';?>>SHOPEE</option>
                     </select>
                     <small class="text-muted">Harus dipilih sesuai dengan keadaan sebenarnya</small>
                     </div>
