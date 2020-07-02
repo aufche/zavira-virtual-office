@@ -860,6 +860,7 @@ Class PesananController extends Controller{
             
             ///dd($pesanan);
             //-- kiirim via telegram 
+            $text .= "No order ".$id."\n \n";
             if (!empty($pesanan->ukuranpria)){
                   $text .= "Pria ".$pesanan->ukuranpria."\n".
                   "Grafir ".$pesanan->grafirpria."\n".
@@ -888,15 +889,35 @@ Class PesananController extends Controller{
                     "Matur nuwun \n \n".
                     "Ttd \n".Auth::user()->name;
 
-                if (!empty($pesanan->gambar)){
+                if (!empty($pesanan->gambar_cincin_pria)){
                    Telegram::setAccessToken($pesanan->pengrajin->token);
                    Telegram::sendPhoto([
                             'chat_id' => $pesanan->pengrajin->id_chat, // zavira virtual office
                             'parse_mode' => 'HTML',
-                            'photo'=>InputFile::create($pesanan->gambar, "photo.jpg"),
-                             'caption' => "Gambar untuk no order ".$id
+                            'photo'=>InputFile::create($pesanan->gambar_cincin_pria, "photo.jpg"),
+                             'caption' => "Gambar cincin pria untuk no order ".$id
                         ]); 
                 }
+
+                if (!empty($pesanan->gambar_cincin_wanita)){
+                    Telegram::setAccessToken($pesanan->pengrajin->token);
+                    Telegram::sendPhoto([
+                             'chat_id' => $pesanan->pengrajin->id_chat, // zavira virtual office
+                             'parse_mode' => 'HTML',
+                             'photo'=>InputFile::create($pesanan->gambar_cincin_wanita, "photo.jpg"),
+                              'caption' => "Gambar cincin wanita untuk no order ".$id
+                         ]); 
+                 }
+
+                if (!empty($pesanan->gambar)){
+                    Telegram::setAccessToken($pesanan->pengrajin->token);
+                    Telegram::sendPhoto([
+                             'chat_id' => $pesanan->pengrajin->id_chat, // zavira virtual office
+                             'parse_mode' => 'HTML',
+                             'photo'=>InputFile::create($pesanan->gambar, "photo.jpg"),
+                              'caption' => "Gambar untuk no order ".$id
+                         ]); 
+                 }
                         
                 
                 if (!empty($pesanan->gambargambar)){

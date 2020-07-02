@@ -27,6 +27,25 @@
                 <div class="form-row mb-3">
                     <?php 
                     
+                    if (!empty($data->gambar_cincin_pria)){
+                        ?>
+                            <figure>
+                                <img src="<?php echo $data->gambar_cincin_pria;?>" alt="" class="img-fluid img-thumbnail"  />
+                                <figcaption>Cincin Pria</figcaption>
+                            </figure>
+                            
+                        <?php
+                    }
+
+                    if (!empty($data->gambar_cincin_wanita)){
+                        ?>
+                            <figure>
+                                <img src="<?php echo $data->gambar_cincin_wanita;?>" alt="" class="img-fluid img-thumbnail"  /> 
+                                <figcaption>Cincin Wanita</figcaption>
+                            </figure>
+                            
+                        <?php
+                    }
 
                     if (!empty($data->gambar)){
                         ?>

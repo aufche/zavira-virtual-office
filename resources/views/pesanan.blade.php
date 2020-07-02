@@ -122,6 +122,24 @@
                       <hr>
                       <?php echo $item->keterangan;?><hr />
                       <?php
+                        if (!empty($item->gambar_cincin_pria)){
+                          ?>
+                          <fieldset>
+                            <legend>Cincin Pria</legend>
+                            <img src="<?php echo $item->gambar_cincin_pria;?>" class="img-thumbnail img-fluid" alt="cincin" /><br />
+                          </fieldset>
+                          <?php
+                        }
+
+                        if (!empty($item->gambar_cincin_wanita)){
+                          ?>
+                          <fieldset>
+                            <legend>Cincin Wanita</legend>
+                            <img src="<?php echo $item->gambar_cincin_wanita;?>" class="img-thumbnail img-fluid" alt="cincin" /><br />
+                          </fieldset>
+                          <?php
+                        }
+
                         if (!empty($item->gambar)){
                           ?>
                           <img src="<?php echo $item->gambar;?>" class="img-thumbnail" alt="cincin" /><br />
