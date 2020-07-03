@@ -10,6 +10,8 @@
         overflow: visible;
     }
 }
+
+
 </style>
 <main class="app-content">
       <div class="app-title">
@@ -92,6 +94,7 @@
                 ?>
 
                 <div class="table-responsive  mb-5 clearfix">
+                
                     <table class="table table-hover table-bordered shadow rounded">
                     <thead>
                     <tr>
@@ -224,59 +227,8 @@
                     <td colspan="1"><?php if ($item->promo_id) echo $item->promo->title;?></td>
                 </tr>
                 <tr class="bg-dark text-white">
-                    <td class="border border-bottom border-dark border-top-0 border-right-0 border-left-0" colspan="2">
-                        <div class="dropdown dropright">
-                        
-                        <a class="btn btn-warning dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-asterisk"></i> Action</a>
-
-                        <div class="dropdown-menu shadow shadow-lg" aria-labelledby="dropdownMenuLink">
-                           
-                          <a class="dropdown-item" href="<?php echo route('edit',['id'=>$item->id]);?>"><i class="fas fa-edit"></i> Edit Data Pesanan</a>
-                          <a class="dropdown-item" href="<?php echo route('pesanan.edit.logam',['id'=>$item->id]);?>"><i class="fas fa-edit"></i> Edit Logam</a>
-                          <div class="dropdown-divider"></div>
-                          <a class="dropdown-item" href="<?php 
-                            if (!empty($item->pelunasan)){
-                              echo route('cetak.amplop',['id'=>$item->id]);
-                            }else{
-                              echo route('pelunasan',['id'=>$item->id,'re'=>'cetak.amplop']);
-                            }
-                          ?>" target="_blank"><i class="fas fa-envelope-open-text"></i> Cetak Amplop</a>
-                          <a class="dropdown-item" href="<?php echo route('buktidp',['id'=>$item->id]);?>" target="_blank"><i class="fas fa-file-invoice-dollar"></i> Cetak Bukti Pembayaran DP</a>
-                          <!--<a class="dropdown-item" href="#">Cetak Nota Pembelian</a>-->
-                          <div class="dropdown-divider"></div>
-                          <a href="#" class="dropdown-item" target="popup" onclick="window.open('<?php echo route('pesanan.pembayaran.pelunasan',['id'=>$item->id]);?>','popup','width=600,height=500,location=no'); return false;" ><i class="fas fa-scroll"></i> Update Pelunasan  Non Tunai</a>
-                          <a href="<?php echo route('pembukuan.add',['status'=>1,'id'=>$item->id]);?>" class="dropdown-item"><i class="fas fa-scroll"></i> Update Pelunasan Tunai</a>
-                          <a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal_lunas" data-whatever="<?php echo $item->id;?>" data-jenis="resi"><i class="fas fa-scroll"></i> Update Resi</a>
-                          <div class="dropdown-divider"></div>
-                          <!--<a class="dropdown-item" href="<?php echo route('pelunasan',['id'=>$item->id,'re'=>'semua']);?>"><i class="fas fa-scroll"></i> Update Pelunasan dan Resi</a>-->
-                          <a class="dropdown-item" href="<?php echo route('pesanan.distribusi',['id'=>$item->id]);?>" target="popup" onclick="window.open('<?php echo route('pesanan.distribusi',['id'=>$item->id]);?>','popup','width=600,height=900'); return false;"><i class="fa fa-share"></i> Distribusi ke Pengrajin</a>
-                          <a class="dropdown-item" href="<?php echo route('take',['id'=>$item->id,'template' => 'ringkasan']);?>" target="popup" onclick="window.open('<?php echo route('take',['id'=>$item->id,'template' => 'ringkasan']);?>','popup','width=600,height=900'); return false;"><i class="fa fa-share"></i> Ringkasan Orderan</a>
-                          <a class="dropdown-item" href="<?php echo route('take',['id'=>$item->id,'template'=>'print']);?>" target="popup" onclick="window.open('<?php echo route('take',['id'=>$item->id,'template'=>'print']);?>','popup','width=800,height=600'); return false;"><i class="fas fa-print"></i> Cetak Order Ini</a>
-                          <!--<a class="dropdown-item" href="#" target="popup" onclick="konfirmasi('Yakin akan mencetak orderan ini?','<?php echo route('take',['id'=>$item->id,'template'=>'print']);?>')"><i class="fas fa-print"></i> Cetak Order Ini</a>-->
-
-                          <a class="dropdown-item" href="<?php echo route('penting.add',['id'=>$item->id,'tambahan'=>'lapis']);?>"><i class="fas fa-exclamation-triangle"></i> Pengaduan Masalah</a>
-                          <div class="dropdown-divider"></div>
-                          <a class="dropdown-item" href="<?php echo route('sertifikatform',['id'=>$item->id]);?>"><i class="fas fa-award"></i> Buat/Edit Sertifikat</a>
-                          <a class="dropdown-item" target="_blank" href="
-                            <?php if ($item->ispremium == 1){
-                                  echo route('sertifikat.single',['id'=>$item->id]);
-                                }elseif ($item->ispremium == 2){
-                                  echo route('sertifikat.premium',['id'=>$item->id]);
-                                }elseif($item->ispremium == 0){ 
-                                  echo route('sertifikat.silver',['id'=>$item->id]); 
-                                }
-                                ?>"><i class="fas fa-sticky-note"></i> Cetak Sertifikat</a>
-                          <div class="dropdown-divider"></div>
-                          <a class="dropdown-item" href="<?php echo route('riwayat',['id'=>$item->id]);?>"><i class="fas fa-tools"></i> Catatan Reparasi</a>
-                          <a class="dropdown-item" href="<?php echo route('reparasiform',['id'=>$item->id]);?>"><i class="fas fa-hammer"></i> Reparasi Baru</a>
-                          <a class="dropdown-item" href="<?php echo route('timeline.index',['id'=>$item->id]);?>"><i class="fas fa-business-time"></i> Timeline Orderan</a>
-                          <div class="dropdown-divider"></div>
-                          <a class="dropdown-item" href="<?php echo route('pesanan.force.edit',['id'=>$item->id]);?>"><i class="far fa-edit"></i> Edit Harga Per Gram</a>
-                          <a class="dropdown-item" href="<?php echo route('hapus',['id'=>$item->id]);?>"><i class="fas fa-trash-alt"></i> Hapus</a>
-                        </div>
-                      </div>
-                    </td>
-                    <td class="border border-bottom border-dark border-top-0 border-right-0 border-left-0"><?php echo aa('Harga<br />',rupiah($item->hargabarang));?></td>
+                    
+                    <td colspan="3" class="border border-bottom border-dark border-top-0 border-right-0 border-left-0"><?php echo aa('Harga<br />',rupiah($item->hargabarang));?></td>
                     <td colspan="2" class="border border-bottom border-dark border-top-0 border-right-0 border-left-0"><?php echo aa('DP<br />',rupiah($item->dp));?></td>
                     <td colspan="2" class="border border-bottom border-dark border-top-0 border-right-0 border-left-0"><?php echo aa('Ongkir<br />',rupiah($item->ongkir));?></td>
                     <td colspan="2" class="border border-bottom border-dark border-top-0 border-right-0 border-left-0"><?php echo aa('Pelunasan<br />',rupiah($item->pelunasan));?></td>
@@ -288,6 +240,85 @@
                     <td colspan="3">Siap Cetak <?php echo $item->siap_cetak;?></td>
                     <td colspan="5">kirim ke pak bejo <?php echo $item->kirim_ke_pengrajin;?></td>
                 </tr>-->
+                <tr>
+                  <td colspan="11">
+                  
+                  <nav class="navbar navbar-expand-lg navbar-light text-dark bg-light ">
+                  
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-<?php echo $item->id;?>" aria-controls="navbarNavDropdown-<?php echo $item->id;?>" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon">
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavDropdown-<?php echo $item->id;?>">
+                      <ul class="navbar-nav">
+                      <li class="nav-item dropdown active">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Edit</a>
+                          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="<?php echo route('edit',['id'=>$item->id]);?>"><i class="fas fa-edit"></i> Edit Data Pesanan</a>
+                            <a class="dropdown-item" href="<?php echo route('pesanan.edit.logam',['id'=>$item->id]);?>"><i class="fas fa-edit"></i> Edit Logam</a>
+                          </div>
+                        </li>
+                        <li class="nav-item dropdown active">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cetak</a>
+                          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          <a class="dropdown-item" href="<?php 
+                            if (!empty($item->pelunasan)){
+                              echo route('cetak.amplop',['id'=>$item->id]);
+                            }else{
+                              echo route('pelunasan',['id'=>$item->id,'re'=>'cetak.amplop']);
+                            }
+                          ?>" target="_blank"><i class="fas fa-envelope-open-text"></i> Cetak Amplop</a>
+                          <a class="dropdown-item" href="<?php echo route('buktidp',['id'=>$item->id]);?>" target="_blank"><i class="fas fa-file-invoice-dollar"></i> Cetak Bukti Pembayaran DP</a>
+                          <a class="dropdown-item" href="<?php echo route('take',['id'=>$item->id,'template'=>'print']);?>" target="popup" onclick="window.open('<?php echo route('take',['id'=>$item->id,'template'=>'print']);?>','popup','width=800,height=600'); return false;"><i class="fas fa-print"></i> Cetak Order Ini</a>
+                          </div>
+                        </li>
+                        <li class="nav-item dropdown active">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Update</a>
+                          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          <a href="#" class="dropdown-item" target="popup" onclick="window.open('<?php echo route('pesanan.pembayaran.pelunasan',['id'=>$item->id]);?>','popup','width=600,height=500,location=no'); return false;" ><i class="fas fa-scroll"></i> Update Pelunasan  Non Tunai</a>
+                          <a href="<?php echo route('pembukuan.add',['status'=>1,'id'=>$item->id]);?>" class="dropdown-item"><i class="fas fa-scroll"></i> Update Pelunasan Tunai</a>
+                          <a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal_lunas" data-whatever="<?php echo $item->id;?>" data-jenis="resi"><i class="fas fa-scroll"></i> Update Resi</a>
+                          </div>
+                        </li>
+                        <li class="nav-item dropdown active">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Reparasi</a>
+                          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="<?php echo route('riwayat',['id'=>$item->id]);?>"><i class="fas fa-tools"></i> Catatan Reparasi</a>
+                            <a class="dropdown-item" href="<?php echo route('reparasiform',['id'=>$item->id]);?>"><i class="fas fa-hammer"></i> Reparasi Baru</a>
+                          </div>
+                        </li>
+                        <li class="nav-item dropdown active">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sertifikat</a>
+                          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          <a class="dropdown-item" href="<?php echo route('sertifikatform',['id'=>$item->id]);?>"><i class="fas fa-award"></i> Buat/Edit Sertifikat</a>
+                          <a class="dropdown-item" target="_blank" href="
+                            <?php if ($item->ispremium == 1){
+                                  echo route('sertifikat.single',['id'=>$item->id]);
+                                }elseif ($item->ispremium == 2){
+                                  echo route('sertifikat.premium',['id'=>$item->id]);
+                                }elseif($item->ispremium == 0){ 
+                                  echo route('sertifikat.silver',['id'=>$item->id]); 
+                                }
+                                ?>"><i class="fas fa-sticky-note"></i> Cetak Sertifikat</a>
+                          </div>
+                        </li>
+                        <li class="nav-item dropdown active">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Utility</a>
+                          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          <a class="dropdown-item" href="<?php echo route('timeline.index',['id'=>$item->id]);?>"><i class="fas fa-business-time"></i> Timeline Orderan</a>
+                          <a class="dropdown-item" href="<?php echo route('penting.add',['id'=>$item->id,'tambahan'=>'lapis']);?>"><i class="fas fa-exclamation-triangle"></i> Pengaduan Masalah</a>
+                          <a class="dropdown-item" href="<?php echo route('pesanan.distribusi',['id'=>$item->id]);?>" target="popup" onclick="window.open('<?php echo route('pesanan.distribusi',['id'=>$item->id]);?>','popup','width=600,height=900'); return false;"><i class="fa fa-share"></i> Distribusi ke Pengrajin</a>
+                          <a class="dropdown-item" href="<?php echo route('take',['id'=>$item->id,'template' => 'ringkasan']);?>" target="popup" onclick="window.open('<?php echo route('take',['id'=>$item->id,'template' => 'ringkasan']);?>','popup','width=600,height=900'); return false;"><i class="fa fa-share"></i> Ringkasan Orderan</a>
+                          </div>
+                        </li>
+                        <li class="nav-item active">
+                        <a class="nav-link" href="<?php echo route('hapus',['id'=>$item->id]);?>" onclick="return confirm('Yakin mau menghapus orderan ini ?')"> Hapus</a>
+                        </li>
+                        
+                      </ul>
+                    </div>
+                  </nav>
+                  </td>              
+                </tr>
                     </tbody>
             </table>
             </div> <!-- responsive table -->

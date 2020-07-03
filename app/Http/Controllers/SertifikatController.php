@@ -28,6 +28,8 @@ class SertifikatController extends Controller
         $toleransi_pria = 0;
         $toleransi_wanita = 0;
 
+
+
         $id = $request->input('id');
         $pesanan = \App\Pesanan::find($id);
         
@@ -160,7 +162,20 @@ class SertifikatController extends Controller
 
         $pesanan->save();
 
-        history_insert($id,Auth::id(),'Dibuat sertifikat dengan selisih logam pria '.$toleransi_pria.' dan selisih logam wanita '.$toleransi_wanita);
+        if ($toleransi_pria != 0 || $toleransi_wanita != 0){
+            //-- insert ke history
+            $data = [
+                ['pesanan_id' => $id, 'user_id' => Auth::id(), 'keterangan' => 'Susut melebihi toleransi yang diijinkan, yaitu toleransi pria '.$toleransi_pria.' dan toleransi wanita '.$toleransi_wanita ],
+                ['pesanan_id' => $id, 'user_id' => Auth::id(), 'keterangan' => 'Sertifikat logam telah dibuat' ],
+            ];
+
+            \App\History::insert($data);
+
+        }else{
+            history_insert($id,Auth::id(),'Dibuat sertifikat dengan selisih logam pria '.$toleransi_pria.' dan selisih logam wanita '.$toleransi_wanita);
+        }
+
+
 
         if ($pesanan->ispremium == 2){
             return redirect()->route('sertifikat.premium',['id'=>$id]);
