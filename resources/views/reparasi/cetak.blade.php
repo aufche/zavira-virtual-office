@@ -51,7 +51,7 @@
             </tr>
             <tr>
               <td>Tgl Reparasi</td>
-              <td><?php echo date('d F Y');?></td>
+              <td><?php echo date('d M Y G:i A', strtotime($data->created_at))?></td>
             </tr>
             <tr>
                 <td>
@@ -90,7 +90,8 @@
             </tr>
             <tr>
               <td>Deadline</td>
-              <td></td>
+              <td><strong><u><?php echo date('d M Y', strtotime($data->tdeadline));?></u></strong></td>
+              
             </tr>
         </table>
   </div>

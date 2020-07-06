@@ -11,13 +11,19 @@ use DB;
 
 Class ReparasiController extends Controller{
 
+    function index(){
+        $data = \App\Reparasi::with('pesanan')->orderBy('id','desc')->Simplepaginate(10);
+        $title = 'Semua Reparasi';
+        return view('reparasi.index',compact('data'));
+    }
+    
     function reparasiform($id){
         $data = \App\Pesanan::where('id',$id)->get();
         return view('reparasiform')->with('data',$data);
     }
 
     function prosesreparasiform(Request $request){
-        $id = DB::table('reparasi')->insertGetId(
+        /*$id = DB::table('reparasi')->insertGetId(
             [
                 'kelengkapan' => $request->input('kelengkapan_paket'),
                 'keterangan' => $request->input('keterangan_reparasi'),
@@ -26,6 +32,15 @@ Class ReparasiController extends Controller{
                 'tdeadline' => $request->input('tdeadline'),
             ]
         );
+        */
+
+        $reparasi = new \App\Reparasi;
+        $reparasi->kelengkapan = $request->input('kelengkapan_paket');
+        $reparasi->keterangan = $request->input('keterangan_reparasi');
+        $reparasi->pesanan_id = $request->input('id');
+        $reparasi->tdeadline = $request->input('tdeadline');
+        $reparasi->save();
+
 
         //-- update finising menjadi finising=4
         \App\Pesanan::where('id',$request->input('id'))->update(
@@ -57,15 +72,15 @@ Class ReparasiController extends Controller{
 
         history_insert($request->input('id'),Auth::id(),'Pesanan masuk ke reparasi dengan '.$request->input('keterangan_reparasi'));
 
-        return redirect()->route('semua');
+        return redirect()->route('reparasi.index')->with('status','Data reparasi berhasil disimpan');
     }
 
     function riwayat($id){
-        $data = \App\Reparasi::where('pesanan_id',$id)->get();
+        $data = \App\Reparasi::where('pesanan_id',$id)->paginate(10);
         /*$pdf = PDF::loadView('riwayat', ['data'=>$data]);
         return $pdf->download('invoice.pdf');
         */
-        return view('riwayat')->with('data',$data);
+        return view('reparasi.index',compact('data','id'));
     }
 
     function delete($id){

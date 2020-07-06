@@ -217,10 +217,7 @@ Route::prefix('reparasi')->group(function () {
         return view('reparasi.cetak')->with('data',$data);
     })->name('reparasi.cetak')->middleware('auth');
 
-    Route::get('/',function(){
-        $data = \App\Reparasi::with('pesanan')->orderBy('id','desc')->Simplepaginate(10);
-        return view('reparasi.index',compact('data'));
-    })->name('reparasi.index')->middleware('auth');
+    Route::get('/','ReparasiController@index')->name('reparasi.index')->middleware('auth');
 
     Route::get('/delete/{id}','ReparasiController@delete')->name('reparasi.delete')->middleware('auth');
 });
