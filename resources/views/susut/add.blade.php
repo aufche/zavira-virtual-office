@@ -55,6 +55,7 @@
                               <select class="form-control form-control-lg" name="status">
                                 <option value="dari pengrajin">Dari pengrajin</option>
                                 <option value="dari bagian lapis">Dari bagian lapis</option>
+                                <option value="dari pengrajin+lapis">Dari pengrajin + Lapis</option>
                                 <option value="dari pengrajin (reparasi)">Dari pengrajin (Reparasi)</option>
                                 <option value="dari bagian lapis (reparasi)">Dari bagian lapis(Reparasi)</option>
                               </select>

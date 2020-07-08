@@ -254,7 +254,9 @@
                           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Edit</a>
                           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" href="<?php echo route('edit',['id'=>$item->id]);?>"><i class="fas fa-edit"></i> Edit Data Pesanan</a>
-                            <a class="dropdown-item" href="<?php echo route('pesanan.edit.logam',['id'=>$item->id]);?>"><i class="fas fa-edit"></i> Edit Logam</a>
+                            <a class="dropdown-item" href="<?php echo route('pesanan.edit.logam',['id'=>$item->id]);?>"><i class="fas fa-circle-notch"></i> Edit Logam</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="<?php echo route('pesanan.force.edit',['id'=>$item->id]);?>"><i class="fas fa-asterisk"></i> Edit Harga Manual</a>
                           </div>
                         </li>
                         <li class="nav-item dropdown active">
@@ -304,6 +306,7 @@
                         <li class="nav-item dropdown active">
                           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Utility</a>
                           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          <a class="dropdown-item" href="<?php echo route('susut.index',['detail'=>$item->id]);?>"><i class="fas fa-business-time"></i> Susut Logam</a>
                           <a class="dropdown-item" href="<?php echo route('timeline.index',['id'=>$item->id]);?>"><i class="fas fa-business-time"></i> Timeline Orderan</a>
                           <a class="dropdown-item" href="<?php echo route('penting.add',['id'=>$item->id,'tambahan'=>'lapis']);?>"><i class="fas fa-exclamation-triangle"></i> Pengaduan Masalah</a>
                           <a class="dropdown-item" href="<?php echo route('pesanan.distribusi',['id'=>$item->id]);?>" target="popup" onclick="window.open('<?php echo route('pesanan.distribusi',['id'=>$item->id]);?>','popup','width=600,height=900'); return false;"><i class="fa fa-share"></i> Distribusi ke Pengrajin</a>
