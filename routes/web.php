@@ -472,6 +472,11 @@ Route::prefix('promo')->group(function () {
     Route::get('/','PromoController@index')->name('promo.index')->middleware('auth');
 });
 
+Route::prefix('stock')->group(function () {
+    Route::any('/insert/{action?}/{id?}','StockController@insert')->name('stock.insert')->middleware('auth');
+    Route::get('/','StockController@index')->name('stock.index')->middleware('auth');
+});
+
 Route::prefix('timeline')->group(function () {
     Route::get('/{id}','HistoryController@detail')->name('timeline.index')->middleware('auth');
 });

@@ -36,6 +36,7 @@ class HomeController extends Controller
         $kurir = DB::table('kurir')->pluck('id','title');
         $plated = DB::table('plated')->pluck('id','title');
         $promo = DB::table('promo')->where('aktif',1)->pluck('id','title');
+        $stock = DB::table('stock')->where('status',1)->pluck('id','title');
 
         //print_r($namalogam);
         return view('add')
@@ -44,6 +45,7 @@ class HomeController extends Controller
             ->with('kurir',$kurir)
             ->with('promo',$promo)
             ->with('plated',$plated)
+            ->with('stock',$stock)
             ->with('namalogam',$namalogam);
     }
 
@@ -114,6 +116,7 @@ class HomeController extends Controller
             'produksi_beratwanita'=>$request->input('produksi_beratwanita'),
             'free_woodbox'=>$request->input('kotakcincinkayu'),
             'promo_id'=>$request->input('promo_id'),
+            'stock_id' => $request->input('stock_id'),
         ];
 
         if (!empty($request->file('gambar'))){
@@ -307,6 +310,10 @@ class HomeController extends Controller
             ];
 
            \App\History::insert($data_history);
+
+           if (!empty($request->input('stock_id'))){
+               \App\Stock::decrement('jumlah',1);
+           }
             
             
             //-- kirim notif via telegram

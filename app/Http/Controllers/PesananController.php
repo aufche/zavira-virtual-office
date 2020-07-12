@@ -249,7 +249,7 @@ Class PesananController extends Controller{
             //-- kirim notifikasi via telegram
 
            Telegram::sendMessage([
-                'chat_id' => -1001386921740, // zavira virtual office
+                'chat_id' => $pesanan->user->chat_id, // zavira virtual office
                 'parse_mode' => 'HTML',
                 'text' => "No orderan ".$id." telah ada no resinya ".$target,
             ]);
