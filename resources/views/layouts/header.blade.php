@@ -91,6 +91,7 @@
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="<?php echo route('pesanan.filter');?>"><i class=" fa fa-filter"></i> Filter</a>
             <a class="dropdown-item" href="<?php echo route('penting.index');?>"><i class=" fa fa-exclamation-circle"></i> Masalah Krusial</a>
+            <a class="dropdown-item" href="<?php echo route('stock.index');?>"><i class=" fa fa-gift"></i> Kelengkapan Produk</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="<?php echo route('logam.konversi');?>"><i class=" fa fa-exclamation-circle"></i> Konversi Kadar</a>
             <!--<a class="dropdown-item" href="<?php echo route('ga.index');?>"><i class=" fa fa-gift"></i> Giveaway</a>

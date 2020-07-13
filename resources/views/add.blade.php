@@ -105,7 +105,7 @@
 
                                     <div class="col-md-4 mb-3">
                                     <label for="gambar">Upload gambar cincin pria dan wanita dalam 1 file</label>
-                                    <input type="file" class="form-control-file" name="gambar" id="gambar" placeholder="" aria-describedby="gambar">
+                                    <input type="file" class="form-control-file" name="gambar" id="gambar" placeholder="" aria-describedby="gambar" @change="onFileChange($event,'couple')">
                                     <small id="gambar" class="form-text text-muted">Upload gambar cincin/model cincin</small> 
                                     </div>
 
@@ -136,7 +136,7 @@
                                     <div class="col-md-3 mb-3">
                                     <div class="form-group">
                                     <label for="bpria">Bahan</label>
-                                    <select class="form-control mb-3" name="bpria" id="bpria" required onchange="disable_silver('PRIA')" v-on:change="ubah($event,'bahan_pria')">
+                                    <select class="form-control mb-3" name="bpria" id="bpria" required  v-on:change="ubah($event,'bahan_pria')">
                                         <option value="0" selected="selected">Pilih logam</option>
                                         <?php 
                                             foreach ($namalogam as $title=>$id){
@@ -158,7 +158,7 @@
 
                                     <div class="col-md-2 mb-3">
                                     <label for="gambar">Gambar Cincin Pria</label>
-                                    <input type="file" class="form-control-file" name="gambar_cincin_pria" placeholder="" aria-describedby="gambar">
+                                    <input type="file" class="form-control-file" name="gambar_cincin_pria" placeholder="" aria-describedby="gambar" @change="onFileChange($event,'pria')">
                                     <small id="gambar" class="form-text text-muted">Upload gambar cincin cincin pria</small> 
                                     </div>
 
@@ -183,7 +183,7 @@
                                     
                                     <div class="col-md-3 mb-3">
                                     <label for="validationDefault05">Bahan</label>
-                                    <select class="form-control mb-3" name="bwanita" id="bwanita" onchange="disable_silver('WANITA')" v-on:change="ubah($event,'bahan_wanita')">
+                                    <select class="form-control mb-3" name="bwanita" id="bwanita"  v-on:change="ubah($event,'bahan_wanita')">
                                         <option value="" selected="selected">Pilih logam</option>
                                         <?php 
                                             foreach ($namalogam as $title=>$id){
@@ -205,7 +205,7 @@
 
                                     <div class="col-md-2 mb-3">
                                     <label for="gambar">Gambar Cincin Wanita</label>
-                                    <input type="file" class="form-control-file" name="gambar_cincin_wanita" placeholder="" aria-describedby="gambar">
+                                    <input type="file" class="form-control-file" name="gambar_cincin_wanita" placeholder="" aria-describedby="gambar" @change="onFileChange($event,'wanita')">
                                     <small id="gambar" class="form-text text-muted">Upload gambar cincin cincin wanita</small> 
                                     </div>
 
@@ -225,12 +225,12 @@
 
                                     <div class="col-md-3 mb-3">
                                     <label for="validationDefault04">Tanggal Selesai</label>
-                                    <input type="text" name="tselesai" id="date2" value="<?php echo old('tselesai');?>" class="form-control" id="datepicker" />
+                                    <input  type="text" name="tselesai" id="date2" value="<?php echo old('tselesai');?>" class="form-control" id="datepicker" />
                                     </div>
                                     
                                     <div class="col-md-2 mb-3">
                                     <label for="validationDefault05">Deadline Pengrajin</label>
-                                    <input type="text" name="tdeadline" value="<?php echo old('tdeadline');?>" id="date3" class="form-control" >
+                                    <input  type="text" name="tdeadline" value="<?php echo old('tdeadline');?>" id="date3" class="form-control" >
                                     </div>
 
                                     <div class="col-md-2 mb-3">
@@ -304,7 +304,7 @@
 
                                     <div class="col-md-3 mb-3">
                                     <label for="alamat">Finising/Keterangan</label>
-                                    <textarea class="form-control" name="keterangan" id="keterangan" rows="3"><?php echo old('keterangan');?></textarea>
+                                    <textarea v-model="finising" class="form-control" name="keterangan" id="keterangan" rows="3"><?php echo old('keterangan');?></textarea>
                                     </div>
 
                                     <div class="col-md-3 mb-3">
@@ -347,6 +347,7 @@
                                     <div class="col mb-3 ">
                                     <label for="validationDefault05">Jumlah DP</label>
                                     <input type="text" name="dp" class="form-control dp" value="<?php echo old('dp');?>" required v-model="dp">
+                                    <small class="form-text text-muted">@{{ dp | rp }}</small>
                                     </div>
 
                                     <div class="col mb-3 ">
@@ -406,7 +407,10 @@
                            <td>{{ alamat }}</td>
                         </tr>
                         <tr>
-                            <td colspan="2" style="background-color:green">Data cincin Pria</td>
+                            <td colspan="2"><img v-if="couple" :src="couple" class="img-fluid" /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="bg-dark text-white">Data cincin Pria</td>
                         </tr>
                         <tr>
                            <td>Ukuran</td>
@@ -424,6 +428,10 @@
                            <td>Berat Maksimal</td>
                            <td>{{ berat_pria | add_gram}}</td>
                         </tr>
+                        <tr>
+                            <td colspan="2"><img v-if="url_pria" :src="url_pria" class="img-fluid" /></td>
+                        </tr>
+                        
 
                         <tr>
                             <td colspan="2" style="background-color:pink">Data cincin Wanita</td>
@@ -444,21 +452,12 @@
                            <td>Berat Maksimal</td>
                            <td>{{ berat_wanita | add_gram }}</td>
                         </tr>
+                        <tr>
+                            <td colspan="2"><img v-if="url" :src="url" class="img-fluid" /></td>
+                        </tr>
 
                         <tr>
-                            <td colspan="2" style="background-color:pink">Detail Pengrajin</td>
-                        </tr>
-                        <tr>
-                           <td>Tanggal Masuk</td>
-                           <td>{{ alamat }}</td>
-                        </tr>
-                        <tr>
-                           <td>Tanggal Selesai</td>
-                           <td>{{ alamat }}</td>
-                        </tr>
-                        <tr>
-                           <td>Deadline Pengrajin</td>
-                           <td>{{ alamat }}</td>
+                            <td colspan="2" class="bg-warning text-dark">Detail Pengrajin</td>
                         </tr>
                         <tr>
                            <td>Pengrajin</td>
@@ -474,7 +473,7 @@
                         </tr>
 
                         <tr>
-                            <td colspan="2" style="background-color:pink">Data Pembayaran</td>
+                            <td colspan="2" class="bg-warning text-dark">Data Pembayaran</td>
                         </tr>
                         <tr>
                            <td>Rekening</td>
@@ -525,7 +524,11 @@
            rekening:null,
            dp:null,
            promo:null,
-           kurir:null
+           kurir:null,
+           url:null,
+           url_pria:null,
+           couple:null
+
         },
 
         filters: {
@@ -536,7 +539,18 @@
             
             rp(value){
                 if (!value) return '';
-                return value;
+
+                var	number_string = value.toString(),
+                    sisa 	= number_string.length % 3,
+                    rupiah 	= number_string.substr(0, sisa),
+                    ribuan 	= number_string.substr(sisa).match(/\d{3}/g);
+                        
+                if (ribuan) {
+                    separator = sisa ? '.' : '';
+                    rupiah += separator + ribuan.join('.');
+                }
+
+                return 'Rp '+rupiah;
 
             }
         },
@@ -552,7 +566,19 @@
                 if (ciduk == 'kurir') this.kurir = event.target.options[event.target.options.selectedIndex].text;
                 
                 
-            }
+            },
+
+            onFileChange(e,sex) {
+                const file = e.target.files[0];
+                if (sex == 'wanita'){
+                    this.url = URL.createObjectURL(file);
+                }else if (sex == 'pria'){
+                    this.url_pria = URL.createObjectURL(file);
+                }else if (sex == 'couple'){
+                    this.couple = URL.createObjectURL(file);
+                }
+                
+             }
         }
     });
 
