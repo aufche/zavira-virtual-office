@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo asset('css/daterangepicker.css');?>" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha256-rByPlHULObEjJ6XQxW/flG2r+22R5dKiAoef+aXWfik=" crossorigin="anonymous" />
 
-    
+      
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" />
     
@@ -35,6 +35,8 @@
           <a class="dropdown-item" href="<?php echo route('pesanan.finish');?>"><i class=" fa fa-wrench"></i> Update Finising</span></a>
           <a class="dropdown-item" href="<?php echo route('semua');?>"><i class=" fa fa-shopping-bag"></i> Data Pesanan</span></a>
           <a class="dropdown-item" href="<?php echo route('pesanan.lead');?>"><i class="fas fa-comments"></i> Update Chat</span></a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="<?php echo route('pesanan.chart');?>"><i class="fas fa-chart-line"></i> Grafir Orderan</span></a>
         </div>
       </li>
        

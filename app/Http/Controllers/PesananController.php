@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Telegram\Bot\Laravel\Facades\Telegram;
 use Telegram\Bot\FileUpload\InputFile;
 use DB;
+use App\Charts\UserChart;
 
 Class PesananController extends Controller{
 
@@ -970,6 +971,42 @@ Class PesananController extends Controller{
             $data = DB::table('pesanan')->select('id','sertifikat_hargapria','sertifikat_hargawanita')->where('id',$id)->first();
             return view('pesanan.force_edit',compact('data'));
         }
+    }
+
+    function chart(Request $request, $tahun = null, $bulan = null){
+        if ($request->isMethod('post')){
+            
+                $bulan = $request->input('bulan');
+                $tahun = $request->input('tahun');
+    
+                $data = DB::table('pesanan')->select(DB::raw('DATE(tglmasuk) as date'),DB::raw('count(*) as views'))->whereMonth('tglmasuk',$bulan)->whereYear('tglmasuk',$tahun)->where('arsipkan',0)->groupBy('date')->get();
+                //return response()->json($data);
+
+                return view('pesanan.chart',compact('data','bulan','tahun'));
+           
+    
+           
+        }elseif ($request->isMethod('get')){
+            
+            
+            $bulan = date('m');
+            $tahun = date('Y');
+
+            $data = DB::table('pesanan')->select(DB::raw('DATE(tglmasuk) as date'),DB::raw('count(*) as views'))->whereMonth('tglmasuk',$bulan)->whereYear('tglmasuk',$tahun)->where('arsipkan',0)->groupBy('date')->get();
+
+            return view('pesanan.chart', compact('data','bulan','tahun'));
+
+            
+            
+        }
+        
+        
+    }
+
+    function by_date($date){
+        $data = \App\Pesanan::whereDate('tglmasuk','=',$date)->simplePaginate(15);
+        return view ('pesanan',compact('data'));
+
     }
 
     

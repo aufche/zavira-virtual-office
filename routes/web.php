@@ -166,6 +166,8 @@ Route::prefix('pesanan')->group(function () {
 
     Route::any('/buyback','PesananController@buyback')->name('logam.buyback')->middleware('auth');
     Route::any('/force-edit/{id?}','PesananController@update_harga_pergram')->name('pesanan.force.edit')->middleware('auth');
+    Route::any('/chart','PesananController@chart')->name('pesanan.chart')->middleware('auth');
+    Route::get('/bydate/{date}','PesananController@by_date')->name('pesanan.bydate')->middleware('auth');
     
 
     
@@ -493,6 +495,10 @@ Route::get('saldo', function(){
 });
 
 //-- end order web
+Route::get('cart',function(){
+    $pesanan = \App\Pesanan::all()->groupBy(function($item){ return $item->created_at; })->take(10);
+    dd($pesanan);
+});
 
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 

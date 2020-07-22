@@ -117,6 +117,8 @@ class HomeController extends Controller
             'free_woodbox'=>$request->input('kotakcincinkayu'),
             'promo_id'=>$request->input('promo_id'),
             'stock_id' => $request->input('stock_id'),
+            'created_at' => \Carbon\Carbon::now(),
+            'updated_at' => \Carbon\Carbon::now(),
         ];
 
         if (!empty($request->file('gambar'))){
