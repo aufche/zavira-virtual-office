@@ -77,21 +77,35 @@
                 Finising<br />
                 <?php echo $data->pesanan->keterangan;?>
                 <br /><br />
-                <b>Pengrajin <?php echo $data->pesanan->pengrajin->nama;?></b>
                 </td>
             </tr>
+            
+            <?php 
+              if ($data->ncincin == 'p' || $data->ncincin == 'c'){
+              ?>
             <tr>
               <td>Bahan Pria</td>
               <td><?php echo $data->pesanan->bahanpria()->first()['title'];?><br /><b>Grafir</b> : <?php echo $data->pesanan->grafirpria;?></td>
             </tr>
+              <?php }
+              if ($data->ncincin == 'w' || $data->ncincin == 'c'){
+              ?>
             <tr>
               <td>Bahan Wanita</td>
               <td><?php echo $data->pesanan->bahanwanita()->first()['title'];?><br /><b>Grafir</b> : <?php echo $data->pesanan->grafirwanita;?></td>
             </tr>
+              <?php } ?>
             <tr>
               <td>Deadline</td>
               <td><strong><u><?php echo date('d M Y', strtotime($data->tdeadline));?></u></strong></td>
-              
+            </tr>
+            <tr>
+              <td>Pengrajin</td>
+              <td><strong><u><?php echo $data->pesanan->pengrajin->nama;?></u></strong></td>
+            </tr>
+            <tr>
+              <td>Lapis</td>
+              <td><strong><u><?php echo $data->pesanan->plated->title;?></u></strong></td>
             </tr>
         </table>
   </div>

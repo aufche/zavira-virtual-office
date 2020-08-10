@@ -271,6 +271,16 @@
                           ?>" target="_blank"><i class="fas fa-envelope-open-text"></i> Cetak Amplop</a>
                           <a class="dropdown-item" href="<?php echo route('buktidp',['id'=>$item->id]);?>" target="_blank"><i class="fas fa-file-invoice-dollar"></i> Cetak Bukti Pembayaran DP</a>
                           <a class="dropdown-item" href="<?php echo route('take',['id'=>$item->id,'template'=>'print']);?>" target="popup" onclick="window.open('<?php echo route('take',['id'=>$item->id,'template'=>'print']);?>','popup','width=800,height=600'); return false;"><i class="fas fa-print"></i> Cetak Order Ini</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" target="_blank" href="
+                            <?php if ($item->ispremium == 1){
+                                  echo route('sertifikat.single',['id'=>$item->id]);
+                                }elseif ($item->ispremium == 2){
+                                  echo route('sertifikat.premium',['id'=>$item->id]);
+                                }elseif($item->ispremium == 0){ 
+                                  echo route('sertifikat.silver',['id'=>$item->id]); 
+                                }
+                                ?>"><i class="fas fa-sticky-note"></i> Cetak Nota Pembelian</a>
                           </div>
                         </li>
                         <li class="nav-item dropdown active">
@@ -289,21 +299,6 @@
                           </div>
                         </li>
                         <li class="nav-item dropdown active">
-                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sertifikat</a>
-                          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                          <a class="dropdown-item" href="<?php echo route('sertifikatform',['id'=>$item->id]);?>"><i class="fas fa-award"></i> Buat/Edit Sertifikat</a>
-                          <a class="dropdown-item" target="_blank" href="
-                            <?php if ($item->ispremium == 1){
-                                  echo route('sertifikat.single',['id'=>$item->id]);
-                                }elseif ($item->ispremium == 2){
-                                  echo route('sertifikat.premium',['id'=>$item->id]);
-                                }elseif($item->ispremium == 0){ 
-                                  echo route('sertifikat.silver',['id'=>$item->id]); 
-                                }
-                                ?>"><i class="fas fa-sticky-note"></i> Cetak Sertifikat</a>
-                          </div>
-                        </li>
-                        <li class="nav-item dropdown active">
                           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Utility</a>
                           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                           <a class="dropdown-item" href="<?php echo route('susut.index',['detail'=>$item->id]);?>"><i class="fas fa-business-time"></i> Susut Logam</a>
@@ -312,6 +307,9 @@
                           <a class="dropdown-item" href="<?php echo route('pesanan.distribusi',['id'=>$item->id]);?>" target="popup" onclick="window.open('<?php echo route('pesanan.distribusi',['id'=>$item->id]);?>','popup','width=600,height=900'); return false;"><i class="fa fa-share"></i> Distribusi ke Pengrajin</a>
                           <a class="dropdown-item" href="<?php echo route('take',['id'=>$item->id,'template' => 'ringkasan']);?>" target="popup" onclick="window.open('<?php echo route('take',['id'=>$item->id,'template' => 'ringkasan']);?>','popup','width=600,height=900'); return false;"><i class="fa fa-share"></i> Ringkasan Orderan</a>
                           </div>
+                        </li>
+                        <li class="nav-item dropdown active">
+                          <a class="nav-link" href="<?php echo route('sertifikatform',['id'=>$item->id]);?>"><i class="fas fa-award"></i> Buat Nota Pembelian</a>
                         </li>
                         <li class="nav-item active">
                         <a class="nav-link" href="<?php echo route('hapus',['id'=>$item->id]);?>" onclick="return confirm('Yakin mau menghapus orderan ini ?')"> Hapus</a>

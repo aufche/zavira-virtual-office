@@ -404,14 +404,14 @@ Class PesananController extends Controller{
             $bulan = $request->input('bulan');
             $tahun = $request->input('tahun');
             if ($cs_id != 0 && $bulan !=0 ){
-                $stat = \App\Pesanan::where('user_id',$cs_id)->whereMonth('tglmasuk',$bulan)->whereYear('tglmasuk',$tahun)->where('arsipkan',0)->get();
+                $stat = \App\Pesanan::where('user_id',$cs_id)->whereNotIn('asal_id',[5,6,7])->whereMonth('tglmasuk',$bulan)->whereYear('tglmasuk',$tahun)->where('arsipkan',0)->get();
             }elseif($cs_id != 0 && $bulan == 0){
-                $stat = \App\Pesanan::where('user_id',$cs_id)->whereYear('tglmasuk',$tahun)->where('arsipkan',0)->get();
+                $stat = \App\Pesanan::where('user_id',$cs_id)->whereNotIn('asal_id',[5,6,7])->whereYear('tglmasuk',$tahun)->where('arsipkan',0)->get();
             }elseif($cs_id == 0 && $bulan == 0){
-                $stat = \App\Pesanan::whereYear('tglmasuk',$tahun)->where('arsipkan',0)->get();
+                $stat = \App\Pesanan::whereYear('tglmasuk',$tahun)->whereNotIn('asal_id',[5,6,7])->where('arsipkan',0)->get();
             }
             else{
-                $stat = \App\Pesanan::whereMonth('tglmasuk',$bulan)->whereYear('tglmasuk',$tahun)->where('arsipkan',0)->get();
+                $stat = \App\Pesanan::whereMonth('tglmasuk',$bulan)->whereNotIn('asal_id',[5,6,7])->whereYear('tglmasuk',$tahun)->where('arsipkan',0)->get();
             }
             
             return view('pesanan.stat',compact('stat','cs_id','cs','bulan','tahun'));

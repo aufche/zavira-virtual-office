@@ -496,8 +496,15 @@ Route::get('saldo', function(){
 
 //-- end order web
 Route::get('cart',function(){
-    $pesanan = \App\Pesanan::all()->groupBy(function($item){ return $item->created_at; })->take(10);
-    dd($pesanan);
+    $event = new Spatie\GoogleCalendar\Event;
+
+    $event->name = 'A new event';
+    $event->description = 'ini deskrispo';
+    $event->startDateTime = Carbon\Carbon::now();
+    $event->endDateTime = Carbon\Carbon::now()->addHour();
+    $event->location = 'Yogyakarta';
+    $event->remindersOverridesMethod = 'popup';
+    $event->save();
 });
 
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');

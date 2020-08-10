@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "kalender-produksi-zavira",
+  "private_key_id": "03574d3db0a4d984cac4ce6b8b100ba48154c77f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC4/2kiiBHni46v\nStbo8XFIfIl2hduHvdZMc7XlA+qVUwHGMfM8Lr2LGKznSI0MeOJI2kCuMH5Bp+fN\nDWbBubaIqq7N2GBfzt2vJ9IRgS3EMhnYsWxyZ2myUeEUjtzS08xo2KN5Hbnbae1V\n2o1+ADlS79u+6wWHLGZmoIE5Hi/OyZ2xCmJBRhdIIVYSWlPSNQv/4yQkUsJ8oi41\nBZAmyWziykDZOf20BsE+5e8KcZ8qsgnO7Bfo/LlJ/rUg/Bl9htCChV519YJtiX2d\ngFod7B6VlZSAOnLlp1jZA7VYMfvUnJZaqrRHS001NynQog0j2NnCAXJWjBCGKwa7\nrvZWD/eVAgMBAAECggEADbja67X2cgYu2r9tNSZ3ldNa/5Yf5FqHSJt1R1v6LK0A\nCYX5+fb+QJDffmD/dAiMFwWisj5O7IAlAwI2otxWIZ6wzFGmRbpamjE/dTnvkvPO\naVLbwu6lxJWAjF2pG+BG82iiU4u0wLAuQRCEL0Tv+5VmvNYXo7ZTkCg2qEMeHl3u\nJpMc4UULLk0oAQv6Y5HjMu1JsQDRKEPfYRVot13iOpFiwFeJaY6E6Bz1/ENNxVAy\nbluDhrhr72FDT06kmtC9C5GiYi1hL761ZXeROH/iEwE1sURsatf/y3RXEpDYnecV\noPOUu/ho3SHvPE7IASkirW4YizCEyMXyGdgDLZar/wKBgQDc2lK4yxI8kJ4KRELz\nnQS+jrc6TnFGWfjHyc26IxY3tLdIbHB5TRhervC/lyDxN+22X+Hf8Sy/CAeeleet\nEtqpokAjWvs/R4vaI4ZKJy8BND20CIQUUBiTTmTBU/NL5ieRs65FchYplhZUhs4E\n7tB5uze9wsndUBw0fXKI4PsZ8wKBgQDWcFQAQ5tfl4U2An2+75S5W1f+iLHuY/8X\nbYCksMTurTHbiVdd/SLmZTP2XI8A5NtjTL38w2hNwV7/jXF7evQPjEy/HP3BA26r\nsPnFh+6PjJTiatbRN0L1AFubA3fOsNBpb+qojob5623OVT8NOM7pW4HQYqgSeZgK\nFcAXQLDCVwKBgQCBTmZugZ8szLNraWoVvlI/y8llnvXdbeIl/3avS8m/VdSV17/G\nlaf2D9EvK6oC8W8Bf4P9HPTI6Eelxzj88XQLK88HpEZEV3x/fJssoWJ4/wA9f1rt\nlbO904FUW/Wv85IpUZ1wVYq6UIDEfqTy6GwxSbcqKHkOVdAdv3EmySrblwKBgBdR\n2eC5eXEY0jTAappUBZFuvJACn470Mu6CSwYd7xyhmxVrxyOCfsQdZ1w4TpjjSnRv\nCQ4u1e32xHT4Fco+4cG7GTGDXpkZ3XQwZ8kyciAMQrios7nGz7JDGrMt2l6Q3elJ\ncXRpI4aUMrnIjXXLory/5csan3p63KzkFqKwt0g7AoGBAJVTrQQBiJpeJhLJ6bPq\ndhHI5RZ9/Pm6GM6uJIEITpC+PpNAfnsih0mKYGbGmy2GO/pvV/WxjZqf3hyqTiY7\nbGUxQRQ6/wtxDpPgWVumeh/desed5WZ+rIMNkx/jWy0jtHxTfISR57tDi8Jej19Z\n4oB0+k+rT2o/TpKH7sthKLIW\n-----END PRIVATE KEY-----\n",
+  "client_email": "dadline-reminder-zavira-office@kalender-produksi-zavira.iam.gserviceaccount.com",
+  "client_id": "110537622492217495617",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dadline-reminder-zavira-office%40kalender-produksi-zavira.iam.gserviceaccount.com"
+}

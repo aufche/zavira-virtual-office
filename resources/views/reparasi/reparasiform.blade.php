@@ -48,16 +48,22 @@
                 <div class="form-row">
                     <div class="col-md-4 mb-3">
                     <label for="validationDefault05">Deadline</label>
-                    <input type="text" name="tdeadline" value="<?php echo old('tdeadline');?>" id="date3" class="form-control form-control-lg" >
+                    <input type="text" name="tdeadline" value="<?php echo old('tdeadline');?>" id="date3" class="form-control form-control-lg mb-3" >
+                    <label for="validationDefault05">Cincin yang direparasi</label>
+                    <select class="form-control form-control-lg" name="ncincin">
+                      <option value="p">Pria Saja</option>
+                      <option value="w">Wanita Saja</option>
+                      <option value="c">Couple</option>
+                    </select>
                     </div>
                     <div class="col-md-4 mb-3">
                     <label for="alamat">Kelengkapan Paket</label>
-                    <textarea class="form-control form-control-lg" name="kelengkapan_paket" id="alamat" rows="3"></textarea>
+                    <textarea class="form-control form-control-lg" name="kelengkapan_paket" id="alamat" rows="5"></textarea>
                     </div>
 
                     <div class="col-md-4 mb-3">
                     <label for="alamat">Keterangan Reparasi</label>
-                    <textarea class="form-control form-control-lg" name="keterangan_reparasi" id="alamat" rows="3"></textarea>
+                    <textarea class="form-control form-control-lg" name="keterangan_reparasi" id="alamat" rows="5"></textarea>
                     </div>
                 </div>
                 <!-- form-row--->

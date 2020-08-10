@@ -19,7 +19,7 @@ Class ReparasiController extends Controller{
     
     function reparasiform($id){
         $data = \App\Pesanan::where('id',$id)->get();
-        return view('reparasiform')->with('data',$data);
+        return view('reparasi.reparasiform')->with('data',$data);
     }
 
     function prosesreparasiform(Request $request){
@@ -39,6 +39,7 @@ Class ReparasiController extends Controller{
         $reparasi->keterangan = $request->input('keterangan_reparasi');
         $reparasi->pesanan_id = $request->input('id');
         $reparasi->tdeadline = $request->input('tdeadline');
+        $reparasi->ncincin = $request->input('ncincin');
         $reparasi->save();
 
 

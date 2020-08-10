@@ -60,6 +60,7 @@
 
     <div class="container">
     <?php
+        $n = 0;
         foreach ($data as $item){
             ?>
             <div class="progress mb-4" style="height:75px;">
@@ -67,8 +68,10 @@
                 <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning text-dark" role="progressbar" style="width: <?php echo ($item->views * 100);?>px" aria-valuenow="<?php echo $item->views;?>" aria-valuemin="0" aria-valuemax="100"><a href="<?php echo route('pesanan.bydate',['date'=>$item->date]);?>">Tanggal <?php echo date('d M Y', strtotime($item->date));?> = <?php echo $item->views;?> order</a></div>
           </div>
             <?php
+            $n = $n + $item->views;
         }
     ?>
+    Alhamdulillah, bulan ini ada total <?php echo $n; ?> orders
     </div>
     
     </div>

@@ -92,12 +92,12 @@
                     <td><?php echo $item->user->name;?></td>
                     <td><?php if ($item->status == 1) {
                          echo rupiah($item->nominal);
-                         $pemasukan = $pemasukan+$item->nominal;  
+                         $pemasukan = (int)$pemasukan + (int)$item->nominal;  
                     }
                          else echo '-';?></td>
                     <td><?php if ($item->status == 0){
                         echo rupiah($item->nominal);
-                        $pengeluaran = $pengeluaran+$item->nominal; 
+                        $pengeluaran = (int)$pengeluaran + (int)$item->nominal; 
                     } else echo '-';?></td>
                     <td>
                     
@@ -121,7 +121,7 @@
                 <td colspan="6">Summary</td>
                 <td><?php echo rupiah($pemasukan);?></td>
                 <td><?php echo rupiah($pengeluaran);?></td>
-                <td><strong><?php echo rupiah($pemasukan - $pengeluaran);?></strong></td>
+                <td><strong><?php echo rupiah( (int)$pemasukan - (int)$pengeluaran);?></strong></td>
             </tr>
         </table>
       </div>
