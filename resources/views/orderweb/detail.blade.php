@@ -8,6 +8,12 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Livvic&display=swap" rel="stylesheet">
+    <style>
+    body{
+        font-family:Livvic;
+    }
+    </style>
   </head>
   <body>
     <div class="container">
@@ -27,6 +33,11 @@
                         <tr>
                         <td>Cincin Pria</td>
                         <td>
+                        <?php
+                             if (!empty($data->model_cincin_pria)){
+                                echo '<img src="'.$data->model_cincin_pria.'" class="img-fluid" />';
+                            }   
+                        ?><br />
                         Bahan <?php echo $data->bahanpria;?><br />
                         Berat <?php echo $data->beratpria;?><br />
                         Ukuran <?php echo $data->ukuranpria;?><br />grafir <?php echo $data->grafirpria;?></td>
@@ -39,6 +50,11 @@
                         <tr>
                         <td>Cincin Wanita</td>
                         <td>
+                        <?php
+                             if (!empty($data->model_cincin_wanita)){
+                                echo '<img src="'.$data->model_cincin_wanita.'" class="img-fluid" />';
+                            }   
+                        ?><br />
                         Bahan <?php echo $data->bahanwanita;?><br />
                         Berat <?php echo $data->beratwanita;?><br />
                         Ukuran <?php echo $data->ukuranwanita;?><br />grafir <?php echo $data->grafirwanita;?></td>
