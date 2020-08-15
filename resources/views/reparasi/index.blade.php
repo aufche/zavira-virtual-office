@@ -25,6 +25,7 @@
                     <td>Keterangan</td>
                     <td>Cincin yang direparasi</td>
                     <td>Tanggal Input</td>
+                    <td>CS</td>
                     <td>Options</td>
                 </tr>
             
@@ -42,6 +43,7 @@
                           if ($item->ncincin == 'c') echo 'Couple';
                         ?></td>
                         <td><?php echo date('d M Y G:i A', strtotime($item->created_at));?></td>
+                        <td><?php echo $item->pesanan->user->name;?></td>
                         <td>
                         <div class="btn-group shadow" role="group">
                           <button id="btnGroupDrop1" type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

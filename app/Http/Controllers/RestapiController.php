@@ -106,10 +106,8 @@ Class RestapiController extends Controller{
             'nohp'=>number_international($request->input('nohp')),
             'email'=>$request->input('email'),
             'alamat'=>$request->input('alamat'),
-            //'kecamatan'=>$request->input('kecamatan'),
-            //'kodepost'=>$request->input('kodepost'),
-            //'promo'=>$request->input('promo'),
-            'link'=>$request->input('link'),
+            'created_at' => \Carbon\Carbon::now(),
+            'updated_at' => \Carbon\Carbon::now(),
         ];
 
         if (!empty($request->input('kodecincin'))){
@@ -122,23 +120,23 @@ Class RestapiController extends Controller{
 
     
 
-        if (!empty($request->input('pria'))){
+        //if (!empty($request->input('pria'))){
             //-- pesen cincin pria
             $orderan = array_add($orderan,'bahanpria',$request->input('bahanpria'));
             $orderan = array_add($orderan,'ukuranpria',$request->input('ukuranpria'));
             $orderan = array_add($orderan,'grafirpria',$request->input('grafirpria'));
             $orderan = array_add($orderan,'beratpria',$request->input('berat_pria'));
             $orderan = array_add($orderan,'hargapria',$request->input('jenis_logam_pria'));
-        }
+       // }
 
-        if (!empty($request->input('wanita'))){
+       // if (!empty($request->input('wanita'))){
             //-- pesen cincin wanita
             $orderan = array_add($orderan,'bahanwanita',$request->input('bahanwanita'));
             $orderan = array_add($orderan,'ukuranwanita',$request->input('ukuranwanita'));
             $orderan = array_add($orderan,'grafirwanita',$request->input('grafirwanita'));
             $orderan = array_add($orderan,'beratwanita',$request->input('berat_wanita'));
             $orderan = array_add($orderan,'hargawanita',$request->input('jenis_logam_wanita'));
-        }
+      //  }
 
 
         if (!empty($request->file('upload_cincin'))){
@@ -153,7 +151,34 @@ Class RestapiController extends Controller{
             $res = Cloudder::getResult();
             $orderan = array_add($orderan,'upload_cincin',$res['url']);
         }
+
+        if (!empty($request->file('model_cincin_pria'))){
         
+            $this->validate($request,[
+                'model_cincin_pria'=>'required|mimes:jpeg,bmp,jpg,png|between:1, 6000',
+            ]);
+     
+            $image_name = $request->file('model_cincin_pria')->getRealPath();
+     
+            Cloudder::upload($image_name, null);
+            $res = Cloudder::getResult();
+            $orderan = array_add($orderan,'model_cincin_pria',$res['url']);
+        }
+
+        if (!empty($request->file('model_cincin_wanita'))){
+        
+            $this->validate($request,[
+                'model_cincin_wanita'=>'required|mimes:jpeg,bmp,jpg,png|between:1, 6000',
+            ]);
+     
+            $image_name = $request->file('model_cincin_wanita')->getRealPath();
+     
+            Cloudder::upload($image_name, null);
+            $res = Cloudder::getResult();
+            $orderan = array_add($orderan,'model_cincin_wanita',$res['url']);
+        }
+        
+       
 
         $id = DB::table('orderweb')->insertGetId($orderan);
 
