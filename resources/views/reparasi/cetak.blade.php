@@ -103,10 +103,16 @@
               <td>Pengrajin</td>
               <td><strong><u><?php echo $data->pesanan->pengrajin->nama;?></u></strong></td>
             </tr>
+            <?php
+             if (!empty($data->plated_id)){
+               ?>
             <tr>
               <td>Lapis</td>
               <td><strong><u><?php echo $data->pesanan->plated->title;?></u></strong></td>
             </tr>
+            <?php
+              }
+             ?>
         </table>
   </div>
   

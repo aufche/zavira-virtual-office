@@ -172,7 +172,7 @@
                                     if ($data->yang_premium == 'P'){
                                        ?>
                                             <tr>
-                                                <td><?php echo $number = $number+1;?></td>
+                                                <td>s<?php echo $number = $number+1;?></td>
                                                 <td>Cincin Pria<br /><?php echo $data->bahanpria()->first()['title'];?></td>
                                                 <td><?php echo aa('',$data->sertifikat_beratpria,'gr');?></td>
                                                 <td><?php echo (rupiah($data->sertifikat_beratpria * $data->sertifikat_hargapria));?></td>
@@ -183,7 +183,7 @@
                                             ?>
                                             <tr>
                                                 <td><?php echo $number = $number+1;?></td>
-                                                <td>Cincin Wanita<br /><?php echo aa('',$data->sertifikat_beratwanita,'gr');?></td>
+                                                <td>Cincin Wanita<br /><?php echo $data->bahanwanita()->first()['title'];?></td>
                                                 <td><?php echo aa('',$data->sertifikat_beratwanita,'gr');?></td>
                                                 <td><?php echo rupiah($data->sertifikat_hargawanita);?></td>
                                             </tr>
@@ -193,7 +193,7 @@
                                             $cincin_perak_pria = 0;
                                         }
 
-                                       $total = $data->sertifikat_beratpria * $data->sertifikat_hargapria + $data->ongkos_bikin;
+                                       $total = $data->sertifikat_beratpria * $data->sertifikat_hargapria + $data->ongkos_bikin + $cincin_perak_pria;
                                     }
                                     elseif ($data->yang_premium == 'W'){
                                     
