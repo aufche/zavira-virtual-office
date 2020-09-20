@@ -93,7 +93,7 @@
 
         <table id="tableId" class="table table-bordered" width="100%">
         <tr>
-            <td rowspan="3">Catatan Khusus:</td>
+            <td rowspan="3" valign="top">Catatan Khusus:</td>
             <td>Tanggal Order</td>
             <td><?php echo date('d M Y');?></td>
           </tr>
@@ -112,7 +112,8 @@
                 ?>
                    <fieldset>
                         <legend>Gambar cincin pria :</legend>
-                    <img src="<?php echo $item->gambar_cincin_pria;?>" class="img-fluid" width="300px" alt="cincin" /><br />
+                        <img src="<?php echo $item->gambar_cincin_pria;?>" class="img-fluid" width="300px" alt="cincin" /><br />
+                        <?php echo $item->finising_pria;?>
                     </fieldset>
                 <?php
                 }
@@ -122,6 +123,7 @@
                         <fieldset>
                         <legend>Gambar cincin wanita :</legend>
                         <img src="<?php echo $item->gambar_cincin_wanita;?>" class="img-fluid" width="300px" alt="cincin" />
+                        <?php echo $item->finising_wanita;?>
                         </fieldset>
                     <?php
                     }
@@ -139,6 +141,20 @@
                 <img src="<?php echo $gbr;?>" alt="" class="img-fluid" width="300px" /><br />
                 <?php
             }
+            }
+
+            if (!empty($item->finising_pria) && (empty($item->gambar_cincin_pria)) ){
+                echo 'Finising Cincin Pria<br />';
+                echo $item->finising_pria;
+                echo '<br />';
+            }
+
+            echo '<hr />';
+
+            if (!empty($item->finising_wanita) && (empty($item->gambar_cincin_wanita))){
+                echo 'Finising Cincin Wanita<br />';
+                echo $item->finising_wanita;
+                echo '<br />';
             }
             ?>
             </td>
@@ -283,7 +299,7 @@
           
          
           <tr>
-            <td colspan="2">Finising<br /><?php echo $item->keterangan;?></td>
+            <td colspan="2">Keterangan<br /><?php echo $item->keterangan;?></td>
             <td>Pengrajin <?php echo $item->pengrajin->nama;?><br />
             <?php if (!empty($item->plated_id)) echo '<strong>Lapis '.$item->plated->title.'</strong>';?>
             </td>

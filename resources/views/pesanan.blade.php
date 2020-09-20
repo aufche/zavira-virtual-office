@@ -122,14 +122,14 @@
                     <a data-toggle="collapse" href="#collapseExample<?php echo $item->id;?>"><?php echo $item->nama;?></a>
                     <div class="collapse" id="collapseExample<?php echo $item->id;?>">
                       Alamat pengiriman : <?php echo $item->alamat;?>, <?php echo $item->nohp;?><br />
-                      <hr>
-                      <?php echo $item->keterangan;?><hr />
+                      <hr />
                       <?php
                         if (!empty($item->gambar_cincin_pria)){
                           ?>
                           <fieldset>
                             <legend>Cincin Pria</legend>
                             <img src="<?php echo $item->gambar_cincin_pria;?>" class="img-thumbnail img-fluid" alt="cincin" /><br />
+                            <?php echo $item->finising_pria;?>
                           </fieldset>
                           <?php
                         }
@@ -139,6 +139,7 @@
                           <fieldset>
                             <legend>Cincin Wanita</legend>
                             <img src="<?php echo $item->gambar_cincin_wanita;?>" class="img-thumbnail img-fluid" alt="cincin" /><br />
+                            <?php echo $item->finising_pria;?>
                           </fieldset>
                           <?php
                         }
@@ -157,6 +158,20 @@
                             <?php
                         }
                         }
+
+                        if (!empty($item->finising_pria) && (empty($item->gambar_cincin_pria)) ){
+                          echo 'Finising Cincin Pria<br />';
+                          echo $item->finising_pria;
+                          echo '<br />';
+                          }
+              
+                          echo '<hr />';
+              
+                          if (!empty($item->finising_wanita) && (empty($item->gambar_cincin_wanita))){
+                              echo 'Finising Cincin Wanita<br />';
+                              echo $item->finising_wanita;
+                              echo '<br />';
+                          }
                       ?><br />
                       <?php echo aa('Harga ',rupiah($item->hargabarang,'<br />'));?><br />
                       <?php echo aa('DP ',rupiah($item->dp,'<br />'));?><br />
@@ -167,6 +182,8 @@
                           echo aa('Grafir ',$item->free_woodbox);
                         }
                       ?>
+                      <hr />
+                      <?php echo 'Keterangan <br />'.$item->keterangan;?>
                     </div>
                     </td>
                     <td><?php echo $item->kodecincin;?></td>

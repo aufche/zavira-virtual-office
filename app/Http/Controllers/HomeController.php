@@ -119,6 +119,8 @@ class HomeController extends Controller
             'stock_id' => $request->input('stock_id'),
             'created_at' => \Carbon\Carbon::now(),
             'updated_at' => \Carbon\Carbon::now(),
+            'finising_pria' => $request->input('finising_pria'),
+            'finising_wanita' => $request->input('finising_pria'),
         ];
 
         if (!empty($request->file('gambar'))){
@@ -555,6 +557,9 @@ class HomeController extends Controller
         
         $pesanan->siap_cetak = $request->input('siap_cetak');
         $pesanan->free_woodbox = $request->input('kotakcincinkayu');
+        $pesanan->promo_id = $request->input('promo_id');
+        $pesanan->finising_pria = $request->input('finising_pria');
+        $pesanan->finising_wanita = $request->input('finising_wanita');
         $pesanan->promo_id = $request->input('promo_id');
         $pesanan->save();
 

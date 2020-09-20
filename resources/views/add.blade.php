@@ -162,6 +162,11 @@
                                     <small id="gambar" class="form-text text-muted">Upload gambar cincin cincin pria</small> 
                                     </div>
 
+                                    <div class="col-md-12 mb-3">
+                                    <label for="gambar">Detail Finising Cincin Pria <span class="badge badge-pill badge-warning">New</span></label>
+                                      <textarea class="form-control" rows="4" name="finising_pria" v-model="finising_pria"></textarea>
+                                    </div>
+
                                 </div>
                                 <!-- form-row--->
                             </div>
@@ -209,6 +214,11 @@
                                     <small id="gambar" class="form-text text-muted">Upload gambar cincin cincin wanita</small> 
                                     </div>
 
+                                    <div class="col-md-12 mb-3">
+                                    <label for="gambar">Detail Finising Cincin Wanita <span class="badge badge-pill badge-warning">New</span></label>
+                                      <textarea class="form-control" name="finising_wanita" rows="4" v-model="finising_wanita"></textarea>
+                                    </div>
+
                                 </div>
                                 <!-- form-row--->
                             </div>
@@ -250,7 +260,7 @@
                                     </div>
 
                                     <div class="col-md-2 mb-3">
-                                    <label for="validationDefault05">Tempat Lapis / Plated <span class="badge badge-pill badge-warning">New</span></label>
+                                    <label for="validationDefault05">Tempat Lapis / Plated</label>
                                     <select class="form-control" name="plated_id" required v-on:change="ubah($event,'lapis')">
                                         <option value="" selected="selected">Pilih tempat lapis</option>
                                         <?php 
@@ -303,7 +313,7 @@
 
 
                                     <div class="col-md-3 mb-3">
-                                    <label for="alamat">Finising/Keterangan</label>
+                                    <label for="alamat">Keterangan Tambahan</label>
                                     <textarea v-model="finising" class="form-control" name="keterangan" id="keterangan" rows="3"><?php echo old('keterangan');?></textarea>
                                     </div>
 
@@ -429,6 +439,10 @@
                            <td>{{ berat_pria | add_gram}}</td>
                         </tr>
                         <tr>
+                           <td>Finising Cincin Pria</td>
+                           <td>{{ finising_pria }}</td>
+                        </tr>
+                        <tr>
                             <td colspan="2"><img v-if="url_pria" :src="url_pria" class="img-fluid" /></td>
                         </tr>
                         
@@ -451,6 +465,10 @@
                         <tr>
                            <td>Berat Maksimal</td>
                            <td>{{ berat_wanita | add_gram }}</td>
+                        </tr>
+                        <tr>
+                           <td>Finising Cincin Wanita</td>
+                           <td>{{ finising_wanita }}</td>
                         </tr>
                         <tr>
                             <td colspan="2"><img v-if="url" :src="url" class="img-fluid" /></td>
@@ -527,7 +545,9 @@
            kurir:null,
            url:null,
            url_pria:null,
-           couple:null
+           couple:null,
+           finising_pria:null,
+           finising_wanita:null
 
         },
 

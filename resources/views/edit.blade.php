@@ -193,6 +193,11 @@
                     <small id="gambar" class="form-text text-muted">Upload gambar cincin cincin pria</small> 
                     </div>
 
+                    <div class="col-md-12 mb-3">
+                    <label for="gambar">Detail Finising Cincin Pria</label>
+                        <textarea class="form-control" rows="4" name="finising_pria"><?php echo $data->finising_pria; ?></textarea>
+                    </div>
+
                 </div>
                 <!-- form-row--->
             </div>
@@ -234,9 +239,14 @@
                     <?php
                         if (!empty($data->gambar_cincin_wanita)) echo '<img src="'.$data->gambar_cincin_wanita.'" class="img-fluid" />';
                     ?>
-                    <label for="gambar">Gambar Cincin Pria</label>
+                    <label for="gambar">Gambar Cincin Wanita</label>
                     <input type="file" class="form-control-file" name="gambar_cincin_wanita" placeholder="" aria-describedby="gambar">
                     <small id="gambar" class="form-text text-muted">Upload gambar cincin cincin wanita</small> 
+                    </div>
+
+                    <div class="col-md-12 mb-3">
+                    <label for="gambar">Detail Finising Cincin Wanita</label>
+                        <textarea class="form-control" rows="4" name="finising_wanita"><?php echo $data->finising_wanita; ?></textarea>
                     </div>
 
                 </div>
