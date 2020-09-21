@@ -51,6 +51,7 @@
                 <option value="1">Proses Finising</option>
                 <option value="2">Selesai finising dan sudah di kantor</option>
                 <option value="3">Sudah dikirim</option>
+                <option value="0">Semua Status Produksi</option>
                 </select>
             </div>
 

@@ -41,6 +41,11 @@ class Kernel extends HttpKernel
             'throttle:60,1',
             'bindings',
         ],
+
+        'acl' => [
+            'auth' => \App\Http\Middleware\Authenticate::class,
+            'checklead' => \App\Http\Middleware\CheckLead::class,
+        ]
     ];
 
     /**
@@ -61,5 +66,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         //'cors' => \App\Http\Middleware\Cors::class,
+        'checklead' => \App\Http\Middleware\CheckLead::class,
     ];
 }

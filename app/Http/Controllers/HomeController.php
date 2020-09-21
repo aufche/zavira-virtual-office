@@ -735,9 +735,13 @@ class HomeController extends Controller
         $akhir = $request->input('tanggal_akhir');
         $finising_type = $request->input('finising_type');
 
-        $data = \App\Pesanan::where('finising',$finising_type)->whereBetween('tglmasuk',[$awal,$akhir])->simplePaginate(10);
-        //dd($data);
-
+        if ($finising_type > 0){
+            $data = \App\Pesanan::where('finising',$finising_type)->whereBetween('tglmasuk',[$awal,$akhir])->where('arsipkan',0)->simplePaginate(10);
+        }elseif ($finising_type == 0){
+            $data = \App\Pesanan::whereBetween('tglmasuk',[$awal,$akhir])->where('arsipkan',0)->simplePaginate(10);
+        }
+        
+        
         return view('pesanan',compact('data'));
     }
 

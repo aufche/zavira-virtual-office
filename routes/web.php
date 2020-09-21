@@ -30,15 +30,15 @@ Auth::routes();
 
 
 Route::prefix('pesanan')->group(function () {
-    Route::any('/stat', 'PesananController@statistik_perbandingan')->name('pesanan.stat')->middleware('auth');
+    Route::any('/stat', 'PesananController@statistik_perbandingan')->name('pesanan.stat')->middleware('acl');
     Route::get('/statistik/{detail?}', 'PesananController@statistik')->name('pesanan.statistik')->middleware('auth');
     Route::get('/loadpesanan', 'HomeController@loadpesanan')->name('pesanan.loadpesanan')->middleware('auth');
-    Route::get('/add', 'HomeController@index')->name('input')->middleware('auth');
+    Route::get('/add', 'HomeController@index')->name('input')->middleware('acl');
     Route::post('/insert', 'HomeController@insert')->name('insert');
-    Route::get('/edit/{id}', 'HomeController@edit')->name('edit')->middleware('auth');
+    Route::get('/edit/{id}', 'HomeController@edit')->name('edit')->middleware('acl');
     Route::post('/editing', 'HomeController@editing')->name('editing');
-    Route::get('/semua', 'HomeController@pesanan')->name('semua')->middleware('auth');
-    Route::any('/search', 'HomeController@search')->name('search')->middleware('auth');
+    Route::get('/semua', 'HomeController@pesanan')->name('semua')->middleware('acl');
+    Route::any('/search', 'HomeController@search')->name('search')->middleware('acl');
 
     Route::get('/filter','PesananController@filter')->name('pesanan.filter')->middleware('auth');
 
@@ -46,10 +46,10 @@ Route::prefix('pesanan')->group(function () {
 
     Route::get('/simplefilter','PesananController@simplefilter')->name('pesanan.simple.filter')->middleware('auth');
 
-    Route::any('/sf', 'HomeController@simplefilter')->name('pesanan.result.simple.filter')->middleware('auth');
+    Route::any('/sf', 'HomeController@simplefilter')->name('pesanan.result.simple.filter')->middleware('acl');
     Route::any('/lead/{action?}/{id?}', 'PesananController@lead')->name('pesanan.lead')->middleware('auth');
     Route::any('/editlogam/{id?}', 'PesananController@edit_logam')->name('pesanan.edit.logam')->middleware('auth');
-    Route::any('/distribusi/{id?}', 'PesananController@distribusi')->name('pesanan.distribusi')->middleware('auth');
+    Route::any('/distribusi/{id?}', 'PesananController@distribusi')->name('pesanan.distribusi')->middleware('acl');
    
     /*Route::get('/take/{id}/{template}', function($id,$template){
         $data = \App\Pesanan::orderBy('id','desc')->where('id',$id)->with('pengrajin','asal')->get();
@@ -83,7 +83,7 @@ Route::prefix('pesanan')->group(function () {
         
     })->name('take')->middleware('auth');
     */
-    Route::get('/take/{id}/{template}','HomeController@take')->name('take')->middleware('auth');
+    Route::get('/take/{id}/{template}','HomeController@take')->name('take')->middleware('acl');
 
     Route::get('/pelunasan/{id}/{re}', function($id,$re){
         
@@ -92,33 +92,33 @@ Route::prefix('pesanan')->group(function () {
                 ->with('data',$data)
                 ->with('redirect',$re);
 
-    })->name('pelunasan')->middleware('auth');
+    })->name('pelunasan')->middleware('acl');
 
     Route::get('/hapus/{id}', 'PesananController@hapus')->name('hapus')->middleware('auth');
 
     //Route::post('/prosespelunasan', 'PesananController@prosespelunasan')->name('prosespelunasan')->middleware('auth');
     Route::post('/prosespelunasan', 'PesananController@pelunasan')->name('pesanan.pelunasan')->middleware('auth');
-    Route::any('/pembayaran-pelunasan/{id?}','PesananController@pembayaran_pelunasan')->name('pesanan.pembayaran.pelunasan')->middleware('auth');
+    Route::any('/pembayaran-pelunasan/{id?}','PesananController@pembayaran_pelunasan')->name('pesanan.pembayaran.pelunasan')->middleware('acl');
     
 
     
     Route::get('/finish',function(){
         return view('pesanan.finish');
-    })->name('pesanan.finish')->middleware('auth');
+    })->name('pesanan.finish')->middleware('acl');
 
     Route::post('/finising','PesananController@finising')->name('pesanan.finising')->middleware('auth');
 
-    Route::any('/updateform/{action?}','PesananController@updateform')->name('updateform')->middleware('auth');
+    Route::any('/updateform/{action?}','PesananController@updateform')->name('updateform')->middleware('acl');
     Route::post('/updating','PesananController@updating')->name('updating')->middleware('auth');
     
     Route::get('/update',function(){
         return view('update');
-    })->name('update')->middleware('auth');
+    })->name('update')->middleware('acl');
     
     Route::get('/detail/{id}',function($id){
         $data = \App\Pesanan::find($id);
         return view('detail',compact('data'));
-    })->name('pesanan.detail')->middleware('auth');
+    })->name('pesanan.detail')->middleware('acl');
 
     Route::get('/hitung',function(){
         return view('pesanan.hitung');
@@ -151,7 +151,7 @@ Route::prefix('pesanan')->group(function () {
 
 
     Route::get('/generatekupon/{id}','PesananController@generatecoupon')->name('pesanan.kupon')->middleware('auth');
-    Route::get('/lapis','PesananController@lapis_berulang')->name('pesanan.lapis')->middleware('auth');
+    Route::get('/lapis','PesananController@lapis_berulang')->name('pesanan.lapis')->middleware('acl');
 
     //Route::get('/export')
 
@@ -175,9 +175,9 @@ Route::prefix('pesanan')->group(function () {
 });
 
 Route::prefix('sertifikat')->group(function () {
-    Route::get('/create/{id}', 'SertifikatController@sertifikatform')->name('sertifikatform')->middleware('auth');
+    Route::get('/create/{id}', 'SertifikatController@sertifikatform')->name('sertifikatform')->middleware('acl');
     Route::post('/insert', 'SertifikatController@prosessertifikat')->name('prosessertifikat');
-    Route::get('/print/{id}', 'SertifikatController@printsertifikat')->name('sertifikat.premium')->middleware('auth');
+    Route::get('/print/{id}', 'SertifikatController@printsertifikat')->name('sertifikat.premium')->middleware('acl');
 
     Route::get('/printsilver/{id}', function($id){
         $data = \App\Pesanan::where('id',$id)->get();
@@ -211,13 +211,13 @@ Route::prefix('sertifikat')->group(function () {
 });
 
 Route::prefix('reparasi')->group(function () {
-    Route::get('/create/{id}', 'ReparasiController@reparasiform')->name('reparasiform')->middleware('auth');
+    Route::get('/create/{id}', 'ReparasiController@reparasiform')->name('reparasiform')->middleware('acl');
     Route::post('/insert', 'ReparasiController@prosesreparasiform')->name('prosesreparasiform');
-    Route::get('/riwayat/{id}', 'ReparasiController@riwayat')->name('riwayat')->middleware('auth');
+    Route::get('/riwayat/{id}', 'ReparasiController@riwayat')->name('riwayat')->middleware('acl');
     Route::get('/cetak/{id}',function($id){
         $data = \App\Reparasi::find($id);
         return view('reparasi.cetak')->with('data',$data);
-    })->name('reparasi.cetak')->middleware('auth');
+    })->name('reparasi.cetak')->middleware('acl');
 
     Route::get('/','ReparasiController@index')->name('reparasi.index')->middleware('auth');
 
@@ -249,11 +249,11 @@ Route::prefix('cetak')->group(function () {
             return redirect()->route('semua')->with('status','Email pelanggan tidak tersedia');
         }
         */
-    })->name('buktidp')->middleware('auth');
+    })->name('buktidp')->middleware('acl');
     
     
    
-    Route::get('/amplop/{id}','PesananController@cetakamplop')->name('cetak.amplop')->middleware('auth');
+    Route::get('/amplop/{id}','PesananController@cetakamplop')->name('cetak.amplop')->middleware('acl');
     Route::get('/garansi/{id}','PesananController@garansi')->name('cetak.garansi')->middleware('auth');
 
 });
@@ -343,8 +343,8 @@ Route::prefix('pembukuan')->group(function () {
         }
     })->name('pembukuan.semua')->middleware('auth');
 
-    Route::get('/detail/{id}/{bulan?}','PembukuanController@detail')->name('pembukuan.detail')->middleware('auth');
-    Route::get('/edit/{id}','PembukuanController@edit')->name('pembukuan.edit')->middleware('auth');
+    Route::get('/detail/{id}/{bulan?}','PembukuanController@detail')->name('pembukuan.detail')->middleware('acl');
+    Route::get('/edit/{id}','PembukuanController@edit')->name('pembukuan.edit')->middleware('acl');
 
     Route::get('/add/{status}', function($status){
         
@@ -353,7 +353,7 @@ Route::prefix('pembukuan')->group(function () {
         $jenis_transaksi = $status;
         
         return view('pembukuan.add',compact('buku','jenis_transaksi'));
-    })->name('pembukuan.add')->middleware('auth');
+    })->name('pembukuan.add')->middleware('acl');
 
     Route::get('/hapus/{id}/{buku}','PembukuanController@hapus')->name('pembukuan.hapus')->middleware('auth');
 

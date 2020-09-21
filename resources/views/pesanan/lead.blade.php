@@ -7,7 +7,11 @@
         </div>
       </div>
     <div class="tile">
-
+    @if (session('status'))
+            <div class="alert alert-success">
+                {{ session('status') }}
+            </div>
+        @endif
     <form action="<?php echo route('pesanan.lead');?>" method="post" autocomplete="off">
     <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
         <div class="form-row">
