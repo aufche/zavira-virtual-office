@@ -28,7 +28,7 @@
                 foreach ($users as $item){
                     ?>
                     <tr>
-                        <td><?php echo $item->name;?></td>
+                        <td><a href="<?php echo route('pesanan.rekap',['id'=>$item->id]);?>"><?php echo $item->name;?></a></td>
                         <td><?php echo $item->nama_cs;?></td>
                         <td><?php echo $item->email;?></td>
                         <td><?php echo $item->wa;?></td>

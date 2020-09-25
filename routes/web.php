@@ -168,6 +168,7 @@ Route::prefix('pesanan')->group(function () {
     Route::any('/force-edit/{id?}','PesananController@update_harga_pergram')->name('pesanan.force.edit')->middleware('auth');
     Route::any('/chart','PesananController@chart')->name('pesanan.chart')->middleware('auth');
     Route::get('/bydate/{date}','PesananController@by_date')->name('pesanan.bydate')->middleware('auth');
+    Route::get('/rekap/{id}','PesananController@rekap')->name('pesanan.rekap')->middleware('acl');
     
 
     

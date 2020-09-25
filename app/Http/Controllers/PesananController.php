@@ -886,7 +886,7 @@ Class PesananController extends Controller{
             $text .= "<b>Keterangan</b> \n".$pesanan->keterangan."\n \n \n".
                     "<b>Deadline</b> ".date('d M Y', strtotime($pesanan->deadline))."\n".
                     "\n \n".
-                    "Pengrajin ".$pesanan->pengrajin->nama."\n".
+                    "Lapis ".$pesanan->plated->title."\n".
                     "Matur nuwun \n \n".
                     "Ttd \n".Auth::user()->name;
 
@@ -896,7 +896,7 @@ Class PesananController extends Controller{
                             'chat_id' => $pesanan->pengrajin->id_chat, // zavira virtual office
                             'parse_mode' => 'HTML',
                             'photo'=>InputFile::create($pesanan->gambar_cincin_pria, "photo.jpg"),
-                             'caption' => "Gambar cincin pria untuk no order ".$id
+                             'caption' => "Gambar cincin pria no order ".$id."\n <b>dengan finising</b> \n ".$pesanan->finising_pria
                         ]); 
                 }
 
@@ -906,7 +906,7 @@ Class PesananController extends Controller{
                              'chat_id' => $pesanan->pengrajin->id_chat, // zavira virtual office
                              'parse_mode' => 'HTML',
                              'photo'=>InputFile::create($pesanan->gambar_cincin_wanita, "photo.jpg"),
-                              'caption' => "Gambar cincin wanita untuk no order ".$id
+                              'caption' => "Gambar cincin wanita no order ".$id."\n <b>dengan finising</b> \n ".$pesanan->finising_wanita
                          ]); 
                  }
 
@@ -1008,6 +1008,12 @@ Class PesananController extends Controller{
         return view ('pesanan',compact('data'));
 
     }
+
+    function rekap($user_id){
+        $data = \App\Pesanan::where('user_id',$user_id)->orderBy('id','desc')->with('user')->simplePaginate(30);
+        return view('pesanan.rekap',compact('data'));
+    }
+
 
     
 

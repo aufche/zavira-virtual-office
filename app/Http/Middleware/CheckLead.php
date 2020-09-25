@@ -17,6 +17,10 @@ class CheckLead
     public function handle($request, Closure $next)
     {
         
+        if (Auth::user()->email == 'donokasinoindro85@yahoo.com'){
+            return $next($request);
+        }
+
         $logged_id = Auth::id();
         $skg = date('Y-m-d');
         $leads = \App\Lead::where('user_id', $logged_id)->whereDate('created_at', '=', date('Y-m-d'))->count();

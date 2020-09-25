@@ -40,7 +40,7 @@ table.table-bordered > tbody > tr > td{
                  <small id="helpId" class="form-text text-muted">Pilih tanggal akhir</small>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-2">
             <label for="validationDefault05">Customer Service</label>
             <select class="form-control form-control-lg" name="cs">
                 <?php 
@@ -50,6 +50,14 @@ table.table-bordered > tbody > tr > td{
                         <?php
                     }
                     ?>
+                </select>
+            </div>
+
+            <div class="col-md-2">
+            <label for="validationDefault05">Reseller ?</label>
+            <select class="form-control form-control-lg" name="include">
+                    <option value="1">Termasuk Reseller</option>
+                    <option value="0">Tidak termasuk reseller</option>
                 </select>
             </div>
 
