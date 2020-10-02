@@ -866,18 +866,27 @@ Class PesananController extends Controller{
                   $text .= "Pria ".$pesanan->ukuranpria."\n".
                   "Grafir ".$pesanan->grafirpria."\n".
                   "Bahan ".$pesanan->bahanpria()->first()['title']."\n".
-                  "Berat maksimal ".$pesanan->produksi_beratpria."\n".
-                  "\n".
-                  "\n";      
+                  "Berat maksimal ".$pesanan->produksi_beratpria."\n";
+                  if (!empty($pesanan->finising_pria) && (empty($pesanan->gambar_cincin_pria)) ){
+                    $text .= "Finising cincin pria \n ".$pesanan->finising_pria;
+                  }
+                    $text .="\n \n";      
                 }
 
             if (!empty($pesanan->ukuranwanita)){
                 $text .= "Wanita ".$pesanan->ukuranwanita."\n".
                 "Grafir ".$pesanan->grafirwanita."\n".
                 "Bahan ".$pesanan->bahanwanita()->first()['title']."\n".
-                "Berat maksimal ".$pesanan->produksi_beratwanita."\n".
-                "\n".
-                "\n";
+                "Berat maksimal ".$pesanan->produksi_beratwanita."\n";
+
+                if (!empty($pesanan->finising_wanita) && (empty($pesanan->gambar_cincin_wanita)) ){
+                    $text .= "Finising cincin wanita \n ".$pesanan->finising_wanita;
+                }
+                    $text .="\n \n";
+            }
+
+            if (!empty($pesanan->finising_pria) && (empty($pesanan->gambar_cincin_pria)) ){
+
             }
 
 

@@ -130,13 +130,7 @@ Class LabaController extends Controller{
             $include = $request->input('include');
 
             //$data = DB::table('pesanan')->whereBetween('tglmasuk',[$awal,$akhir])->where('user_id',$cs_id)->get();
-            if ($include == 0 ){
-                $data = \App\Pesanan::where('user_id',$cs_id)->whereBetween('tglmasuk',[$awal,$akhir])->get();    
-            }elseif ($include == 1){
-                $data = \App\Pesanan::where('user_id',$cs_id)->whereBetween('tglmasuk',[$awal,$akhir])->get();    
-                //whereNotIn('asal_id',[5,6,7])
-            }
-            $data = \App\Pesanan::where('user_id',$cs_id)->whereBetween('tglmasuk',[$awal,$akhir])->get();
+            $data = \App\Pesanan::where('user_id',$cs_id)->whereNotIn('asal_id',[5,6,7])->where('arsipkan',0)->whereBetween('tglmasuk',[$awal,$akhir])->get();
 
             $elemen_gaji = DB::table('users')->where('id',$cs_id)->first();
             return view('laba.gaji',compact('cs','data','elemen_gaji','awal','akhir','cs_id'));    
