@@ -120,7 +120,7 @@ class HomeController extends Controller
             'created_at' => \Carbon\Carbon::now(),
             'updated_at' => \Carbon\Carbon::now(),
             'finising_pria' => $request->input('finising_pria'),
-            'finising_wanita' => $request->input('finising_pria'),
+            'finising_wanita' => $request->input('finising_wanita'),
         ];
 
         if (!empty($request->file('gambar'))){

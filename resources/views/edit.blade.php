@@ -150,7 +150,8 @@
 
         <?php 
         if (empty($data->ukuranpria) && empty($data->bpria)){
-            echo '<div class="card mb-3 shadow border-dark" style="display:none">';
+            //echo '<div class="card mb-3 shadow border-dark" style="display:none">';
+            echo '<div class="card mb-3 shadow border-dark">';
         }else{
             
             echo '<div class="card mb-3 shadow border-dark">';
@@ -205,7 +206,8 @@
 
         <?php 
         if (empty($data->ukuranwanita) && empty($data->bwanita)){
-            echo '<div class="card mb-3 shadow border-info" style="display:none">';
+            //echo '<div class="card mb-3 shadow border-info" style="display:none">';
+            echo '<div class="card mb-3 shadow border-info">';
         }else{
             echo '<div class="card mb-3 shadow border-info">';
         }

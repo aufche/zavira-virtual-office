@@ -175,6 +175,13 @@ class SertifikatController extends Controller
             history_insert($id,Auth::id(),'Dibuat sertifikat dengan selisih logam pria '.$toleransi_pria.' dan selisih logam wanita '.$toleransi_wanita);
         }
 
+        //-- insert ke tabel susut 
+        $data = [
+            ['pria' => $request->input('sertifikat_beratpria'), 'wanita' => $request->input('sertifikat_beratwanita'),'status' => 'Berat ketika dibuat sertifikat','pesanan_id' => $id,'user_id' => Auth::id()],
+        ];
+
+        \App\Susut::insert($data);
+
 
 
         if ($pesanan->ispremium == 2){

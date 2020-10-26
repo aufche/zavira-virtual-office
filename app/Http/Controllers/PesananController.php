@@ -10,6 +10,20 @@ use App\Charts\UserChart;
 
 Class PesananController extends Controller{
 
+    function my_order(){
+        $user_id = Auth::id();
+
+        $query = new \App\Pesanan;
+        $data = $query->where('user_id',$user_id)->orderBy('id','desc')->simplePaginate(15);
+        $jml = $query->where('user_id',$user_id)->orderBy('id','desc')->count();
+
+        $cs = 'Daftar client '.Auth::user()->name.' sebanyak '.$jml;
+        return view('pesanan',compact('data','cs'));
+    }
+
+        
+
+    
     function cetakamplop($id){
         $pesanan = \App\Pesanan::where('id',$id)->first();
         return view('pesanan.amplop')->with('data',$pesanan);
@@ -31,6 +45,7 @@ Class PesananController extends Controller{
 
         return redirect()->route('semua')->with('status','Kode voucher '.$voucher.' dan nomor undian '.$undian.' berhasil dibuat. Silahkan informasikan kepada konsumen');
     }
+
 
     function filtered(Request $request){
        

@@ -38,6 +38,7 @@ Route::prefix('pesanan')->group(function () {
     Route::get('/edit/{id}', 'HomeController@edit')->name('edit')->middleware('acl');
     Route::post('/editing', 'HomeController@editing')->name('editing');
     Route::get('/semua', 'HomeController@pesanan')->name('semua')->middleware('acl');
+    Route::get('/aku', 'PesananController@my_order')->name('pesanan.aku')->middleware('acl');
     Route::any('/search', 'HomeController@search')->name('search')->middleware('acl');
 
     Route::get('/filter','PesananController@filter')->name('pesanan.filter')->middleware('auth');

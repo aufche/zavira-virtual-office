@@ -172,7 +172,7 @@
                                     if ($data->yang_premium == 'P'){
                                        ?>
                                             <tr>
-                                                <td>s<?php echo $number = $number+1;?></td>
+                                                <td><?php echo $number = $number+1;?></td>
                                                 <td>Cincin Pria<br /><?php echo $data->bahanpria()->first()['title'];?></td>
                                                 <td><?php echo aa('',$data->sertifikat_beratpria,'gr');?></td>
                                                 <td><?php echo (rupiah($data->sertifikat_beratpria * $data->sertifikat_hargapria));?></td>

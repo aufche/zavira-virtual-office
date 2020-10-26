@@ -32,6 +32,8 @@
         <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle text-white" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pesanan</a>
         <div class="dropdown-menu" aria-labelledby="dropdown01">
+          <a class="dropdown-item" href="<?php echo route('pesanan.aku');?>"><i class=" fa fa-user"></i> My Client</span> <span class="badge badge-danger">New</span></a>
+          <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="<?php echo route('pesanan.finish');?>"><i class=" fa fa-wrench"></i> Update Finising</span></a>
           <a class="dropdown-item" href="<?php echo route('semua');?>"><i class=" fa fa-shopping-bag"></i> Data Pesanan</span></a>
           <a class="dropdown-item" href="<?php echo route('pesanan.lead');?>"><i class="fas fa-comments"></i> Update Chat</span></a>

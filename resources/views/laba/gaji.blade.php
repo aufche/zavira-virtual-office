@@ -26,7 +26,7 @@ table.table-bordered > tbody > tr > td{
     <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
         <div class="form-row">
             
-            <div class="col-md-4">
+            <div class="col-md-2">
                
                  <label for="">Dari Tanggal</label>
                  <input type="text" class="form-control form-control-lg" name="tanggal_awal" id="date" value="<?php echo $awal;?>" />
@@ -34,13 +34,13 @@ table.table-bordered > tbody > tr > td{
                   
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-2">
                  <label for="">Sampai Tanggal</label>
                  <input type="text" class="form-control form-control-lg" name="tanggal_akhir" id="date2" value="<?php echo $akhir;?>" />
                  <small id="helpId" class="form-text text-muted">Pilih tanggal akhir</small>
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-3">
             <label for="validationDefault05">Customer Service</label>
             <select class="form-control form-control-lg" name="cs">
                 <?php 
@@ -53,11 +53,19 @@ table.table-bordered > tbody > tr > td{
                 </select>
             </div>
 
+            <div class="col-md-3">
+            <label for="validationDefault05">Orderan Selesai</label>
+            <select class="form-control form-control-lg" name="status_order">
+                    <option value="done" <?php if ($status_order == 'done') echo 'selected';?>>Orderan Selesai</option>
+                    <option value="not" <?php if ($status_order == 'not') echo 'selected';?>>Orderan Belum Selesai</option>
+                </select>
+            </div>
+
             <div class="col-md-2">
-            <label for="validationDefault05">Reseller ?</label>
-            <select class="form-control form-control-lg" name="include">
-                    <option value="1">Termasuk Reseller</option>
-                    <option value="0">Tidak termasuk reseller</option>
+            <label for="validationDefault05">Termasuk Reseller?</label>
+            <select class="form-control form-control-lg" name="include_reseller">
+                    <option value="1" <?php if ($status_order == '1') echo 'selected';?>>Ya</option>
+                    <option value="0" <?php if ($status_order == '0') echo 'selected';?>>Tidak</option>
                 </select>
             </div>
 
@@ -143,22 +151,26 @@ table.table-bordered > tbody > tr > td{
                     <td><?php echo $item->bahanwanita()->first()['title'];?></td>
                     <td>
                       <?php echo aa('DP ',rupiah($item->dp,'<br />'));?><br />
-                      <?php echo aa('Pelunasan ',rupiah($item->pelunasan,'<br />'));?><br />
-                        Total Belanja <?php echo rupiah($item->dp+$item->pelunasan);?></td>
+                      <?php echo aa('Pelunasan ',rupiah((int)$item->pelunasan,'<br />'));?><br />
+                        Total Belanja <?php echo rupiah((int)$item->dp+$item->pelunasan);?></td>
                     <td>
                     <?php 
-                        $modal = (int)($item->produksi_beratpria * $item->produksi_hargapria) + (int)($item->produksi_beratwanita * $item->produksi_hargawanita) + (int)$item->ongkir + (int)$item->modal_pengrajin + (int)$item->modal_lapis;
-                        echo aa('Modal Cincin Pria ',rupiah((int)($item->produksi_beratpria * $item->produksi_hargapria),'<br />')).'<br />';
-                        echo aa('Modal Cincin Wanita ',rupiah((int)($item->produksi_beratwanita * $item->produksi_hargawanita),'<br />')).'<br />';
+                        $modal = ((int)$item->produksi_beratpria * (int)$item->produksi_hargapria) + ((int)$item->produksi_beratwanita * (int)$item->produksi_hargawanita) + (int)$item->ongkir + (int)$item->modal_pengrajin + (int)$item->modal_lapis;
+                        echo aa('Modal Cincin Pria ',rupiah( (int)$item->produksi_beratpria * $item->produksi_hargapria),'<br />').'<br />';
+                        echo aa('Modal Cincin Wanita ',rupiah( (int)$item->produksi_beratwanita * $item->produksi_hargawanita),'<br />').'<br />';
                         echo aa('Ongkir ',rupiah((int)$item->ongkir,'<br />')).'<br />';
                         echo aa('Pengrajin ',rupiah((int)$item->modal_pengrajin,'<br />')).'<br />';
                         echo aa('Lapis ',rupiah((int)$item->modal_lapis,'<br />')).'<br />';
                         echo '<strong>'.aa('Total ',rupiah($modal),'<br />').'</strong>';
+                       
                     ?></td>
                     <td><?php 
-                        $laba = (int)($item->dp+$item->pelunasan) - (int)($modal);
+                        if ($item->modal_pengrajin != null && $item->modal_lapis != null && $item->ongkir != null){
+                            $laba = ( (int)$item->dp + (int)$item->pelunasan) - (int)($modal);
                         echo rupiah($laba);
                         $laba_total = $laba_total+$laba;
+                        }
+                        
                         if ($item->ispremium == 2 && $item->asal_id == 1) {
                             $komisi = $komisi+30000;
                         }elseif ($item->ispremium == 1 && $item->asal_id == 1){
@@ -170,6 +182,7 @@ table.table-bordered > tbody > tr > td{
                             //-- perak single
                             $komisi = $komisi+5000;
                         }
+                        
                     ?></td>
                 </tr>
                 <?php
@@ -212,7 +225,7 @@ table.table-bordered > tbody > tr > td{
                     </tr>
                     <tr>
                         <td>Bonus Keuntungan</td>
-                        <td><?php echo rupiah(0.1*$laba_total);?></td>
+                        <td><?php echo rupiah(0.1*(int)$laba_total);?></td>
                     </tr>
                     <tr>
                         <td>Komisi Toko</td>
@@ -220,7 +233,7 @@ table.table-bordered > tbody > tr > td{
                     </tr>
                     <tr>
                         <td>Total</td>
-                        <td><?php echo rupiah($elemen_gaji->gaji_pokok+$elemen_gaji->tunjangan+$elemen_gaji->uang_makan+(int)(0.1*$laba_total)+$komisi);?></td>
+                        <td><?php echo rupiah($elemen_gaji->gaji_pokok+$elemen_gaji->tunjangan+$elemen_gaji->uang_makan+(int)(0.05*$laba_total)+$komisi);?></td>
                     </tr>
                 </table>
             </div>

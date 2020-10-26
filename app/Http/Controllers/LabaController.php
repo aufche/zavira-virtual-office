@@ -123,20 +123,70 @@ Class LabaController extends Controller{
         $awal = date('Y-m-d');
         $akhir = date('Y-m-d');
         $cs_id = 0;
+        $status_order = 'done';
+        $include_reseller = '0';
+        
         if ($request->isMethod('post')) {
             $awal = $request->input('tanggal_awal');
             $akhir = $request->input('tanggal_akhir');
             $cs_id = $request->input('cs');
-            $include = $request->input('include');
+            $status_order = $request->input('status_order');
+            $include_reseller = $request->input('include_reseller');
 
-            //$data = DB::table('pesanan')->whereBetween('tglmasuk',[$awal,$akhir])->where('user_id',$cs_id)->get();
-            $data = \App\Pesanan::where('user_id',$cs_id)->whereNotIn('asal_id',[5,6,7])->where('arsipkan',0)->whereBetween('tglmasuk',[$awal,$akhir])->get();
+           /* $query = new \App\Pesanan;
+            //$query->whereBetween('tglmasuk',[$awal,$akhir]);
+            
+            /*if ($status_order == 'done'){
+                //-- orderan selesai, berarti modal pengrajin, lapis dan ongkir sudah terisi
+                $query->whereNotNull('modal_pengrajin');
+                $query->whereNotNull('modal_lapis');
+                $query->whereNotNull('ongkir');
+            }
+            
+                 $query->whereNotNull('modal_pengrajin');
+                $query->whereNotNull('modal_lapis');
+                $query->whereNotNull('ongkir');
+                $query->where('user_id',$cs_id);
+            $data = $query->get();
+*/
+            if ($status_order == 'done' && $include_reseller == 1){
+                $data = \App\Pesanan::whereBetween('tglmasuk',[$awal,$akhir])
+                    ->whereNotNull('modal_pengrajin')
+                    ->whereNotNull('modal_lapis')
+                    ->whereNotNull('ongkir')
+                    ->whereIn('asal_id',[5,6])
+                    ->where('user_id',$cs_id)->get();
+            }elseif ($status_order == 'not' && $include_reseller == 0){
+                $data = \App\Pesanan::whereBetween('tglmasuk',[$awal,$akhir])
+                    ->whereNotIn('asal_id',[5,6])
+                    ->where('user_id',$cs_id)->get();
+            }elseif ($status_order == 'done' && $include_reseller == 0){
+                $data = \App\Pesanan::whereBetween('tglmasuk',[$awal,$akhir])
+                    ->whereNotNull('modal_pengrajin')
+                    ->whereNotNull('modal_lapis')
+                    ->whereNotNull('ongkir')
+                    ->whereNotIn('asal_id',[5,6])
+                    ->where('user_id',$cs_id)->get();
+            }elseif ($status_order == 'not' && $include_reseller == 1){
+                $data = \App\Pesanan::whereBetween('tglmasuk',[$awal,$akhir])
+                ->whereIn('asal_id',[5,6])
+                ->where('user_id',$cs_id)->get();
+            }
+          
+            
+
+            //whereNotNull('modal_pengrajin')->whereNotNull('modal_lapis')->whereNotNull('ongkir')->where('user_id',$cs_id)->get();
+
+            //->whereBetween('tglmasuk',[$awal,$akhir])->where('user_id',$cs_id)->get();
+
+            
+            //$data = \App\Pesanan::where('user_id',$cs_id)->whereNotIn('asal_id',[5,6,7])->where('arsipkan',0)->whereBetween('tglmasuk',[$awal,$akhir])->get();
 
             $elemen_gaji = DB::table('users')->where('id',$cs_id)->first();
-            return view('laba.gaji',compact('cs','data','elemen_gaji','awal','akhir','cs_id'));    
+            return view('laba.gaji',compact('cs','data','elemen_gaji','awal','akhir','cs_id','status_order','include_reseller'));    
                                         
         } 
-        return view('laba.gaji',compact('cs','awal','akhir','cs_id'));
+        return view('laba.gaji',compact('cs','awal','akhir','cs_id','status_order','include_reseller'));
     }
 
     

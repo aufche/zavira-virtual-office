@@ -93,7 +93,7 @@
 
         <table id="tableId" class="table table-bordered" width="100%">
         <tr>
-            <td rowspan="3" valign="top">Catatan Khusus:</td>
+            <td rowspan="3" valign="top"><strong>CS <?php echo $item->user->name;?></strong><br />Catatan Khusus:</td>
             <td>Tanggal Order</td>
             <td><?php echo date('d M Y');?></td>
           </tr>

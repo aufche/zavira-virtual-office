@@ -160,10 +160,13 @@ return [
         App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        
         'JD\Cloudder\CloudderServiceProvider',
         //Mavinoo\LaravelBatch\LaravelBatchServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         //rizalafani\rajaongkirlaravel\RajaOngkirServiceProvider::class,
+        
+        
 
     ],
 
@@ -218,6 +221,7 @@ return [
         //'Batch' => Mavinoo\LaravelBatch\LaravelBatchFacade::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         //'RajaOngkir' => rizalafani\rajaongkirlaravel\RajaOngkirFacade::class,
+        
 
     ],
 

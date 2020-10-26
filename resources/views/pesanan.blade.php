@@ -17,7 +17,13 @@
       <div class="app-title">
         <div>
           <h1 class="h3"><i class="fas fa-tachometer-alt"></i> All Orders</h1>
-          <p>This page contains all orders</p>
+          <p><?php 
+            if (!isset($cs)){
+              echo 'Semua Orderan';
+            }else{
+              echo $cs;
+            }
+          ?></p>
           <p id="man"></p>
         </div>
       </div>
