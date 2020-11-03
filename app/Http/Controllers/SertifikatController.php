@@ -16,7 +16,7 @@ class SertifikatController extends Controller
     // --- sertifikat blok --//
     
     function sertifikatform($id){
-        $data = \App\Pesanan::where('id',$id)->get();
+        $data = \App\Pesanan::where('id',$id)->first();
         
         return view('sertifikat.sertifikatform')
             ->with('data',$data);
@@ -63,7 +63,7 @@ class SertifikatController extends Controller
             $pesanan->sertifikat_hargawanita = $request->input('harga_cincin_jika_perak_wanita');
         }
         
-        if (!empty($request->input('sertifikat_beratpria')) && !empty($request->input('sertifikat_beratwanita')) && $pesanan->is_premium != 0){
+        if (!empty($request->input('sertifikat_beratpria')) && !empty($request->input('sertifikat_beratwanita')) && $pesanan->ispremium != 0){
             //-- couple
             /*$produksi_pria = $pesanan->produksi_beratpria * $pesanan->produksi_hargapria;
             $Produksi_wanita = $pesanan->produksi_beratwanita * $pesanan->produksi_hargawanita;
@@ -88,7 +88,7 @@ class SertifikatController extends Controller
                       Telegram::sendMessage([
                         'chat_id' => -1001386921740, // zavira virtual office
                         'parse_mode' => 'HTML',
-                        'text' => "Susut pria melebihi toleransi yang ditentukan ".$selisih_pria,
+                        'text' => "No Order ".$request->input('id')." Susut pria melebihi toleransi yang ditentukan ".$selisih_pria,
                     ]);
 
                     $toleransi_pria = $selisih_pria;
@@ -98,13 +98,13 @@ class SertifikatController extends Controller
                     Telegram::sendMessage([
                         'chat_id' => -1001386921740, // zavira virtual office
                         'parse_mode' => 'HTML',
-                        'text' => "Susut wanita melebihi toleransi yang ditentukan ".$selisih_wanita,
+                        'text' => "No Order ".$request->input('id')." Susut wanita melebihi toleransi yang ditentukan ".$selisih_wanita,
                     ]);
 
                     $toleransi_wanita = $selisih_wanita;
                 }
 
-            }elseif (!empty($request->input('sertifikat_beratpria')) && empty($request->input('sertifikat_beratwanita')) && $pesanan->is_premium != 0){
+            }elseif (!empty($request->input('sertifikat_beratpria')) && empty($request->input('sertifikat_beratwanita')) && $pesanan->ispremium != 0){
                 //-- cincin pria 
 
                 $selisih_pria = $pesanan->produksi_beratpria - $request->input('sertifikat_beratpria');
@@ -119,11 +119,11 @@ class SertifikatController extends Controller
                       Telegram::sendMessage([
                         'chat_id' => -1001386921740, // zavira virtual office
                         'parse_mode' => 'HTML',
-                        'text' => "Susut pria melebihi toleransi yang ditentukan ".$selisih_pria,
+                        'text' => "No Order ".$request->input('id')." Susut pria melebihi toleransi yang ditentukan ".$selisih_pria,
                     ]);
                 }
 
-            }elseif (empty($request->input('sertifikat_beratpria')) && !empty($request->input('sertifikat_beratwanita')) && $pesanan->is_premium !=0 ){
+            }elseif (empty($request->input('sertifikat_beratpria')) && !empty($request->input('sertifikat_beratwanita')) && $pesanan->ispremium !=0 ){
                 //-- cincin wanita saja
 
                 $selisih_pria = $pesanan->produksi_beratpria -  $request->input('sertifikat_beratpria');
@@ -139,7 +139,7 @@ class SertifikatController extends Controller
                     Telegram::sendMessage([
                         'chat_id' => -1001386921740, // zavira virtual office
                         'parse_mode' => 'HTML',
-                        'text' => "Susut wanita melebihi toleransi yang ditentukan ".$selisih_wanita,
+                        'text' => "No Order ".$request->input('id')." Susut wanita melebihi toleransi yang ditentukan ".$selisih_wanita,
                     ]);
                 }
 
@@ -165,8 +165,8 @@ class SertifikatController extends Controller
         if ($toleransi_pria != 0 || $toleransi_wanita != 0){
             //-- insert ke history
             $data = [
-                ['pesanan_id' => $id, 'user_id' => Auth::id(), 'keterangan' => 'Susut melebihi toleransi yang diijinkan, yaitu toleransi pria '.$toleransi_pria.' dan toleransi wanita '.$toleransi_wanita ],
-                ['pesanan_id' => $id, 'user_id' => Auth::id(), 'keterangan' => 'Sertifikat logam telah dibuat' ],
+                ['created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now(), 'pesanan_id' => $id, 'user_id' => Auth::id(), 'keterangan' => 'Susut melebihi toleransi yang diijinkan, yaitu toleransi pria '.$toleransi_pria.' dan toleransi wanita '.$toleransi_wanita ],
+                ['created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now(), 'pesanan_id' => $id, 'user_id' => Auth::id(), 'keterangan' => 'Sertifikat logam telah dibuat' ],
             ];
 
             \App\History::insert($data);
@@ -176,11 +176,15 @@ class SertifikatController extends Controller
         }
 
         //-- insert ke tabel susut 
-        $data = [
-            ['pria' => $request->input('sertifikat_beratpria'), 'wanita' => $request->input('sertifikat_beratwanita'),'status' => 'Berat ketika dibuat sertifikat','pesanan_id' => $id,'user_id' => Auth::id()],
-        ];
+        
+        $susut = new \App\Susut;
+        $susut->pria = $request->input('sertifikat_beratpria');
+        $susut->wanita = $request->input('sertifikat_beratwanita');
+        $susut->status = 'Berat ketika dibuat sertifikat';
+        $susut->pesanan_id = $id;
+        $susut->user_id = Auth::id();
+        $susut->save();
 
-        \App\Susut::insert($data);
 
 
 

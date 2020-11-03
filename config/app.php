@@ -167,6 +167,7 @@ return [
         //rizalafani\rajaongkirlaravel\RajaOngkirServiceProvider::class,
         
         
+        
 
     ],
 
@@ -221,6 +222,7 @@ return [
         //'Batch' => Mavinoo\LaravelBatch\LaravelBatchFacade::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         //'RajaOngkir' => rizalafani\rajaongkirlaravel\RajaOngkirFacade::class,
+        
         
 
     ],
