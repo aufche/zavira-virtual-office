@@ -21,7 +21,7 @@
   <body>
 
 
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark shadow">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark shadow mb-4">
   <a class="navbar-brand" href="#">Zavira Jewelry</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -125,5 +125,7 @@
     
   </div>
 </nav>
+
 <div class="container-fluid mt-4">
+
     

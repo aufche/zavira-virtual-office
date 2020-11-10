@@ -47,5 +47,9 @@ class User extends Authenticatable
     public function lead(){
         return $this->hasMany('App\Lead');
     }
+
+    public function buyback(){
+        return $this->hasMany('App\Buyback');
+    }
 }
 

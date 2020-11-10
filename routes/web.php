@@ -321,6 +321,12 @@ Route::prefix('dp')->group(function () {
     Route::get('/bayar','DpController@bayar')->name('dp.bayar')->middleware('auth');
 });
 
+Route::prefix('buyback')->group(function () {
+    Route::any('/insert','BuybackController@insert')->name('buyback.insert')->middleware('auth');
+    Route::any('/edit/{id?}','BuybackController@edit')->name('buyback.edit')->middleware('auth');
+    Route::any('/','BuybackController@index')->name('buyback.index')->middleware('auth');
+});
+
 
 
 

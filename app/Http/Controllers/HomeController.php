@@ -193,6 +193,9 @@ class HomeController extends Controller
                 $pria_premium = 'P';
                 if ($request->input('asal_id') == 1) $komisi_pria = 15000; else $komisi_pria = 0;
             }
+
+            //-- cari apakah ada stock cincin buyback
+            //$buyback = \App\Buyback::where('namalogam_id',$request->input('bpria'))->where('status',1)->get();
         }
 
         if (!empty($request->input('bwanita'))){

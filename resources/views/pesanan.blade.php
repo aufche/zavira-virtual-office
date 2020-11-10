@@ -1,4 +1,4 @@
-@include('layouts.header');
+@include('layouts.header')
 <style type="text/css">
    @media (max-width: 767px) {
     .table-responsive .dropdown-menu {
