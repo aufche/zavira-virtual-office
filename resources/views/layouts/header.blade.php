@@ -79,7 +79,10 @@
           <a class="dropdown-item" href="<?php echo route('logam.kalkulator',['apa'=>'pricelist']);?>" target="popup" onclick="window.open('<?php echo route('logam.kalkulator',['apa'=>'pricelist']);?>','popup','width=600,height=800'); return false;"><i class=" fa fa-tags"></i> Pricelist</a>
             <a class="dropdown-item" href="<?php echo route('logam.kalkulator');?>" target="popup" onclick="window.open('<?php echo route('logam.kalkulator');?>','popup','width=600,height=800'); return false;"><i class=" fa fa-calculator"></i> Kalkulator</a>
             <a class="dropdown-item" href="<?php echo route('pesanan.hitung');?>" target="popup" onclick="window.open('<?php echo route('pesanan.hitung');?>','popup','width=600,height=600'); return false;"><i class=" fa fa-calculator"></i> Hitung Kebutuhan Logam</a>
+            <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="<?php echo route('logam.buyback');?>"><i class=" fa fa-meteor"></i> Kalkulator Jual Kembali</a>
+            <a class="dropdown-item" href="<?php echo route('buyback.index');?>"><i class=" fa fa-meteor"></i> Daftar Cincin Jual Kembali</a>
+            <a class="dropdown-item" href="<?php echo route('buyback.insert');?>"><i class=" fa fa-meteor"></i> Tambah Jual Kembali</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="<?php echo route('susut.index');?>"><i class="far fa-sad-tear"></i> Susut Logam</a>
             <a class="dropdown-item" href="<?php echo route('susut.add');?>" target="popup" onclick="window.open('<?php echo route('susut.add');?>','popup','width=600,height=900'); return false;"><i class="fas fa-flushed"></i> Update Susut Logam</a>
