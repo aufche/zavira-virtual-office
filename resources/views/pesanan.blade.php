@@ -25,6 +25,7 @@
             }
           ?></p>
           <p id="man"></p>
+          <?php echo $selesai;?>
         </div>
       </div>
 

@@ -659,10 +659,11 @@ class HomeController extends Controller
         $user = DB::table('users')->pluck('id','name');
         */
 
-        $data = \App\Pesanan::orderBy('id','desc')
-            ->where('arsipkan',0)
-            ->with('user','pengrajin','asal','kurir')
-            ->simplePaginate(15);
+        $data = \App\Pesanan::orderBy('id','desc')->where('arsipkan',0)->simplePaginate(15);
+
+        $user_id = Auth::id();
+        $selesai = \App\Pesanan::where('user_id',$user_id)->where('finising',3)->whereNotNull('resi')->count();
+        //$belum = \App\Pesanan::where('user_id',$user_id)->where('finising',3)->whereNotNull('resi')->count();
 
             
             /*$masalah_krusial = \App\Krusial::where('is_done',0)->orWhere('is_proses',0)->get();
@@ -672,7 +673,7 @@ class HomeController extends Controller
                 return view('pesanan',compact('data'));
             }
             */
-            return view('pesanan',compact('data'));
+            return view('pesanan',compact('data','selesai'));
     }
 
     function search(Request $request){

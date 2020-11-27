@@ -44,9 +44,17 @@ table.table-bordered > tbody > tr > td{
     <form action="<?php echo route('laba.semua');?>" method="post" autocomplete="off">
     <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
         <div class="form-row">
-            <div class="col-md-4">
+        <div class="col-md-3">
+               
+               <label for="">No Order</label>
+               <input type="text" class="form-control form-control-lg" name="no_order" />
+               <small id="helpId" class="form-text text-muted">No Order</small>
+                
+          </div>
+
+            <div class="col-md-3">
             <label for="validationDefault05">Asal Orderan</label>
-            <select class="form-control" name="asal_id">
+            <select class="form-control form-control-lg" name="asal_id">
                 <option value="0" selected="selected">Pilih asal orderan</option>
                 <?php 
                     foreach ($showroom as $title=>$id){
@@ -58,17 +66,17 @@ table.table-bordered > tbody > tr > td{
                 </select>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                
                  <label for="">Dari Tanggal</label>
-                 <input type="text" class="form-control" name="tanggal_awal" id="date" />
+                 <input type="text" class="form-control form-control-lg" name="tanggal_awal" id="date" />
                  <small id="helpId" class="form-text text-muted">Pilih tanggal awal</small>
                   
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                  <label for="">Sampai Tanggal</label>
-                 <input type="text" class="form-control" name="tanggal_akhir" id="date2" />
+                 <input type="text" class="form-control form-control-lg" name="tanggal_akhir" id="date2" />
                  <small id="helpId" class="form-text text-muted">Pilih tanggal akhir</small>
             </div>
 
@@ -130,17 +138,18 @@ table.table-bordered > tbody > tr > td{
             <td><?php echo aa('',($item->sertifikat_beratwanita - $item->produksi_beratwanita),'gr');?></td>
             <td><a href="<?php route('laba.detail',['id'=>$item->id]);?>" target="popup" onclick="window.open('<?php echo route('laba.detail',['id'=>$item->id]);?>','popup','width=600,height=800'); return false;">Detail</a></td>
         </tr>
+   
         <tr class="table-active">
            <td>DP</td>
            <td>Pelunasan</td>
            <td>Hrg Jual (P)</td>
-           <td>B Prod (P)</td> 
+           <td>Cost. Prod (P)</td> 
            <td>Ongkir</td>
            <td>Hrg Jual (W)</td>
-           <td>B. Prod(W)</td>
+           <td>Cost. Prod(W)</td>
            
-           <td>T.Produksi</td>
-           <td>T.Pembelian</td>
+           <td>Ttl.Produksi</td>
+           <td>Ttl.Pembelian</td>
            <td>Laba Bersih</td>
         </tr>
         <tr>

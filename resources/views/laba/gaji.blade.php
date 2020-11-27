@@ -58,14 +58,15 @@ table.table-bordered > tbody > tr > td{
             <select class="form-control form-control-lg" name="status_order">
                     <option value="done" <?php if ($status_order == 'done') echo 'selected';?>>Orderan Selesai</option>
                     <option value="not" <?php if ($status_order == 'not') echo 'selected';?>>Orderan Belum Selesai</option>
+                    <option value="all" <?php if ($status_order == 'all') echo 'selected';?>>Semua Orderan</option>
                 </select>
             </div>
 
             <div class="col-md-2">
             <label for="validationDefault05">Termasuk Reseller?</label>
             <select class="form-control form-control-lg" name="include_reseller">
-                    <option value="1" <?php if ($status_order == '1') echo 'selected';?>>Ya</option>
-                    <option value="0" <?php if ($status_order == '0') echo 'selected';?>>Tidak</option>
+                    <option value="1" <?php if ($include_reseller == '1') echo 'selected';?>>Ya</option>
+                    <option value="0" <?php if ($include_reseller == '0') echo 'selected';?>>Tidak</option>
                 </select>
             </div>
 

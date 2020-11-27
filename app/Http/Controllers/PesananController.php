@@ -536,7 +536,7 @@ Class PesananController extends Controller{
 
             }else{
                 $user_id = Auth::id();
-                $lead = \App\Lead::orderBy('created_at','asc')->where('user_id',$user_id)->simplePaginate(15);
+                $lead = \App\Lead::orderBy('created_at','desc')->where('user_id',$user_id)->simplePaginate(15);
                 return view('pesanan.lead',compact('lead'));
             } 
         }elseif($action == 'update'){

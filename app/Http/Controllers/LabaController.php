@@ -28,16 +28,21 @@ Class LabaController extends Controller{
         $showroom = \App\Asal::all()->pluck('id','title');
         
         if (empty($request->all())){
+            //$data = \App\Pesanan::where('sertifikat_done','>=',1)->orderBy('id','desc')->Simplepaginate(15);
             $data = \App\Pesanan::where('sertifikat_done','>=',1)->orderBy('id','desc')->Simplepaginate(15);
             //dd($data);
         }else{
             $asal = $request->input('asal_id');
             $awal = $request->input('tanggal_awal');
             $akhir = $request->input('tanggal_akhir');
+            $no_order = $request->input('no_order');
 
             if (!empty($asal)){
                 $data = \App\Pesanan::where('sertifikat_done','>=',1)->whereBetween('tglmasuk',[$awal,$akhir])->where('asal_id',$asal)->orderBy('id','desc')->Simplepaginate(15);
                 $keuangan = \App\Pesanan::where('sertifikat_done','>=',1)->whereBetween('tglmasuk',[$awal,$akhir])->where('asal_id',$asal)->orderBy('id','desc')->get();
+            }elseif (!empty($no_order)){
+                $data = \App\Pesanan::where('id',$no_order)->where('sertifikat_done','>=',1)->orderBy('id','desc')->Simplepaginate(15);
+                $keuangan = \App\Pesanan::where('id',$no_order)->where('sertifikat_done','>=',1)->orderBy('id','desc')->get();
             }else{
                 $data = \App\Pesanan::where('sertifikat_done','>=',1)->whereBetween('tglmasuk',[$awal,$akhir])->orderBy('id','desc')->Simplepaginate(15);
                 $keuangan = \App\Pesanan::where('sertifikat_done','>=',1)->whereBetween('tglmasuk',[$awal,$akhir])->orderBy('id','desc')->get();
@@ -155,22 +160,29 @@ Class LabaController extends Controller{
                     ->whereNotNull('modal_lapis')
                     ->whereNotNull('ongkir')
                     ->whereIn('asal_id',[5,6])
-                    ->where('user_id',$cs_id)->get();
+                    ->where('user_id',$cs_id)->where('arsipkan',0)->get();
             }elseif ($status_order == 'not' && $include_reseller == 0){
                 $data = \App\Pesanan::whereBetween('tglmasuk',[$awal,$akhir])
                     ->whereNotIn('asal_id',[5,6])
-                    ->where('user_id',$cs_id)->get();
+                    ->where('user_id',$cs_id)->where('arsipkan',0)->get();
             }elseif ($status_order == 'done' && $include_reseller == 0){
                 $data = \App\Pesanan::whereBetween('tglmasuk',[$awal,$akhir])
                     ->whereNotNull('modal_pengrajin')
                     ->whereNotNull('modal_lapis')
                     ->whereNotNull('ongkir')
                     ->whereNotIn('asal_id',[5,6])
-                    ->where('user_id',$cs_id)->get();
+                    ->where('user_id',$cs_id)->where('arsipkan',0)->get();
             }elseif ($status_order == 'not' && $include_reseller == 1){
                 $data = \App\Pesanan::whereBetween('tglmasuk',[$awal,$akhir])
                 ->whereIn('asal_id',[5,6])
                 ->where('user_id',$cs_id)->get();
+            }elseif ($status_order == 'all'){
+                $data = \App\Pesanan::whereBetween('tglmasuk',[$awal,$akhir])
+                ->where('user_id',$cs_id)->where('arsipkan',0)->get();
+            }elseif ($status_order == 'all' && $include_reseller == 0){
+                $data = \App\Pesanan::whereBetween('tglmasuk',[$awal,$akhir])
+                ->whereNotIn('asal_id',[5,6])
+                ->where('user_id',$cs_id)->where('arsipkan',0)->get();
             }
           
             

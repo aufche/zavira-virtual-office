@@ -72,7 +72,7 @@
                         }
                       ?>
                 </td>
-                <td>Keterangan :<br /><?php echo $data->keterangan;?>
+                <td>Keterangan Reparasi:<br /><?php echo $data->keterangan;?>
                 <br /><br />
                 Finising<br />
                 <?php echo $data->pesanan->keterangan;?>
@@ -87,12 +87,20 @@
               <td>Bahan Pria</td>
               <td><?php echo $data->pesanan->bahanpria()->first()['title'];?><br /><b>Grafir</b> : <?php echo $data->pesanan->grafirpria;?></td>
             </tr>
+            <tr>
+                <td>Finising Pria</td>
+                <td><?php echo $data->pesanan->finising_pria;?></td>
+            </tr>
               <?php }
               if ($data->ncincin == 'w' || $data->ncincin == 'c'){
               ?>
             <tr>
               <td>Bahan Wanita</td>
               <td><?php echo $data->pesanan->bahanwanita()->first()['title'];?><br /><b>Grafir</b> : <?php echo $data->pesanan->grafirwanita;?></td>
+            </tr>
+            <tr>
+                <td>Finising Wanita</td>
+                <td><?php echo $data->pesanan->finising_wanita;?></td>
             </tr>
               <?php } ?>
             <tr>
