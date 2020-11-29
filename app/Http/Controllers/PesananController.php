@@ -1038,6 +1038,17 @@ Class PesananController extends Controller{
         return view('pesanan.rekap',compact('data'));
     }
 
+    function pakbejo(){
+        $data = \App\Pesanan::where('pengrajin_id',1)
+            ->orderBy('urgent','desc')
+            ->orderBy('deadline','desc')
+            ->where('siap_cetak',1)
+            ->where('finising',null)
+            ->where('kirim_ke_pengrajin',1)
+            ->simplePaginate(30);
+        return view('pesanan.pakbejo',compact('data'));
+    }
+
 
     
 

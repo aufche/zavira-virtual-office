@@ -13,7 +13,7 @@
                 {{ session('status') }}
             </div>
         @endif
-        <form action="<?php echo route('buyback.insert');?>" method="post">
+        <form action="<?php echo route('buyback.edit');?>" method="post">
         <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
         <input type = "hidden" name = "id" value = "<?php echo $data->id; ?>">
             <div class="form-row">
@@ -48,7 +48,7 @@
                     <?php 
                         foreach ($namalogam as $title=>$id){
                             ?>
-                            <option <?php if ($data->jenis_logam == $id) echo 'selected';?> value="<?php echo $id;?>"><?php echo $title;?></option>
+                            <option <?php if ($data->namalogam_id == $id) echo 'selected';?> value="<?php echo $id;?>"><?php echo $title;?></option>
                             <?php
                         }
                     ?>

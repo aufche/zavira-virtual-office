@@ -34,18 +34,18 @@ class BuybackController extends Controller
             $id = $request->input('id');
             $neraca = \App\Buyback::find($id);
             $neraca->nominal = $request->input('nominal');
-            $neraca->keterangan = $request->input('keterangan');
+            
             $neraca->status = $request->input('status');
             
-            $neraca->nominal = $request->input('nominal');
+            
             $neraca->namalogam_id = $request->input('namalogam_id');
             $neraca->berat = $request->input('berat');
             $neraca->user_id = Auth::id();
             $neraca->pesanan_id = $request->input('pesanan_id');
-            $neraca->status = $request->input('status');
+            
 
             $neraca->save();
-            return redirect()->route('buyback.edit',['id'=>$id])->with('status','Data pesanan berhasil disimpan');
+            return redirect()->route('buyback.index')->with('status','Data pesanan berhasil disimpan');
             
         }else{
             $data = \App\Buyback::find($id);
@@ -61,7 +61,7 @@ class BuybackController extends Controller
     }
 
     function hapus($id){
-        \App\Neraca::where('id',$id)->delete();
-        return redirect()->route('neraca.index')->with('status','Data pesanan berhasil dihapus');
+        \App\Buyback::where('id',$id)->delete();
+        return redirect()->route('buyback.index')->with('status','Data berhasil dihapus');
     }
 }

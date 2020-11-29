@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+Route::get('/pakbejo','PesananController@pakbejo')->name('pesanan.pakbejo');
+
 Route::get('/pl/{package?}/{target?}','LogamController@pricelist')->name('logam.pricelist');
 Route::get('/ps/{bahan?}','LogamController@pricelist_single')->name('logam.pricelist.single');
 Route::get('/harga/{platinum?}','LogamController@harga_logam')->name('logam.hargalogam');
@@ -106,6 +108,8 @@ Route::prefix('pesanan')->group(function () {
     Route::get('/finish',function(){
         return view('pesanan.finish');
     })->name('pesanan.finish')->middleware('acl');
+
+    
 
     Route::post('/finising','PesananController@finising')->name('pesanan.finising')->middleware('auth');
 
@@ -325,6 +329,7 @@ Route::prefix('buyback')->group(function () {
     Route::any('/insert','BuybackController@insert')->name('buyback.insert')->middleware('auth');
     Route::any('/edit/{id?}','BuybackController@edit')->name('buyback.edit')->middleware('auth');
     Route::any('/','BuybackController@index')->name('buyback.index')->middleware('auth');
+    Route::any('/hapus/{id?}','BuybackController@hapus')->name('buyback.hapus')->middleware('auth');
 });
 
 

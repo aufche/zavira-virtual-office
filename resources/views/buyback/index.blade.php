@@ -22,6 +22,7 @@
             <td>Jenis Logam</td>
             <td>Status</td>
             <td>Buy Date</td>
+            <td>Action</td>
         </tr>
         <?php 
             foreach ($data as $item){
@@ -32,8 +33,9 @@
                     <td><?php echo rupiah($item->nominal);?></td>
                     <td><?php echo $item->berat;?>gr</td>
                     <td><?php echo $item->namalogam->title;?></td>
-                    <td><?php if ($item->status == 1) echo 'Belum Dilebur'; else echo 'Belum Dilebur'; ?></td>
+                    <td><?php if ($item->status == 1) echo 'Belum Dilebur'; else echo 'Sudah Dilebur <i class="fas fa-check-circle"></i>'; ?></td>
                     <td><?php echo date('d M Y', strtotime($item->created_at));?></td>
+                    <td><a href="<?php echo route('buyback.edit',['id'=>$item->id]);?>" class="btn btn-warning shadow">Action</a> <a href="<?php echo route('buyback.hapus',['id'=>$item->id]);?>" class="btn btn-danger shadow">Hapus</a></td>
                 </tr>
                 <?php
             }
