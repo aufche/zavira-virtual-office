@@ -184,6 +184,7 @@ Route::prefix('sertifikat')->group(function () {
     Route::get('/create/{id}', 'SertifikatController@sertifikatform')->name('sertifikatform')->middleware('acl');
     Route::post('/insert', 'SertifikatController@prosessertifikat')->name('prosessertifikat');
     Route::get('/print/{id}', 'SertifikatController@printsertifikat')->name('sertifikat.premium')->middleware('acl');
+    Route::get('/flashsale/{id}', 'SertifikatController@printsertifikat')->name('sertifikat.flashsale')->middleware('acl');
 
     Route::get('/printsilver/{id}', function($id){
         $data = \App\Pesanan::where('id',$id)->get();

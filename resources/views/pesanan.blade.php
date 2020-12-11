@@ -25,7 +25,9 @@
             }
           ?></p>
           <p id="man"></p>
-          <?php echo $selesai;?>
+          <?php 
+            //if (!isset($selesai)) echo $selesai;
+          ?>
         </div>
       </div>
 
@@ -193,6 +195,8 @@
                       <hr />
                       <?php echo 'Keterangan <br />'.$item->keterangan;?>
                     </div>
+                    <br />
+                    <?php if ($item->printed != null) echo '<small class="text-muted">Dicetak oleh '.$item->printed.'</small>';?>
                     </td>
                     <td><?php echo $item->kodecincin;?></td>
                     <td><?php echo $item->bahanpria()->first()['title'];?><br /><?php echo aa('Ukuran ',$item->ukuranpria);?><br /><?php echo aa('Grafir ',$item->grafirpria);?><br /><?php echo aa('Max ',$item->produksi_beratpria,'gr');?></td>
@@ -297,15 +301,25 @@
                           <a class="dropdown-item" href="<?php echo route('buktidp',['id'=>$item->id]);?>" target="_blank"><i class="fas fa-file-invoice-dollar"></i> Cetak Bukti Pembayaran DP</a>
                           <a class="dropdown-item" href="<?php echo route('take',['id'=>$item->id,'template'=>'print']);?>" target="popup" onclick="window.open('<?php echo route('take',['id'=>$item->id,'template'=>'print']);?>','popup','width=800,height=600'); return false;"><i class="fas fa-print"></i> Cetak Order Ini</a>
                           <div class="dropdown-divider"></div>
-                          <a class="dropdown-item" target="_blank" href="
-                            <?php if ($item->ispremium == 1){
-                                  echo route('sertifikat.single',['id'=>$item->id]);
-                                }elseif ($item->ispremium == 2){
-                                  echo route('sertifikat.premium',['id'=>$item->id]);
-                                }elseif($item->ispremium == 0){ 
-                                  echo route('sertifikat.silver',['id'=>$item->id]); 
-                                }
-                                ?>"><i class="fas fa-sticky-note"></i> Cetak Nota Pembelian</a>
+                                <?php
+                                  if ($item->promo_id == 8){
+                                    ?>
+                                    <a class="dropdown-item" target="_blank" href="<?php echo route('sertifikat.flashsale',['id'=>$item->id]);?>"><i class="fas fa-sticky-note"></i> Cetak Nota Pembelian Khusus Flashsale</a>
+                                    <?php
+                                  }else{
+                                    ?>
+                                    <a class="dropdown-item" target="_blank" href="
+                                      <?php if ($item->ispremium == 1){
+                                            echo route('sertifikat.single',['id'=>$item->id]);
+                                          }elseif ($item->ispremium == 2){
+                                            echo route('sertifikat.premium',['id'=>$item->id]);
+                                          }elseif($item->ispremium == 0){ 
+                                            echo route('sertifikat.silver',['id'=>$item->id]); 
+                                          }
+                                          ?>"><i class="fas fa-sticky-note"></i> Cetak Nota Pembelian</a>
+                                    <?php
+                                  }
+                                  ?>
                           </div>
                         </li>
                         <li class="nav-item dropdown active">

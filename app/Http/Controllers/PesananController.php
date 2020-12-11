@@ -873,6 +873,8 @@ Class PesananController extends Controller{
             $pesanan = \App\Pesanan::find($id);
             $pesanan->keterangan = $request->input('keterangan');
             $pesanan->kirim_ke_pengrajin = 1;
+            $pesanan->siap_cetak = 1;
+
             
             ///dd($pesanan);
             //-- kiirim via telegram 

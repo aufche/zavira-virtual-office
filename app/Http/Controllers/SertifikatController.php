@@ -201,9 +201,16 @@ class SertifikatController extends Controller
 
     function printsertifikat($id){
         $data = \App\Pesanan::where('id',$id)->first();
-        return view('sertifikat.premium')
-            ->with('data',$data);
+        if ($data->promo_id == 8){
+            return view('sertifikat.flashsale')->with('data',$data);
+        }else{
+            return view('sertifikat.premium')->with('data',$data);
+        }
+        
+            
     }
+
+    
 
     function searchsertificate(Request $request){
         $q = $request->input('q');

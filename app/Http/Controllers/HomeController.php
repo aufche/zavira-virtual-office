@@ -759,10 +759,14 @@ class HomeController extends Controller
     function take($id,$template){
         //$data = \App\Pesanan::orderBy('id','desc')->where('id',$id)->with('pengrajin','asal')->get();
         $data = \App\Pesanan::find($id);
-        if ($template=='print'){
+        if ($template == 'print'){
             //echo $data[0]->kirim_ke_pengrajin;
             //$item->siap_cetak == 0 && $item->finising == null && $item->kirim_ke_pengrajin == 0
             if ($data->siap_cetak != null){
+                if ($data->printed == null){
+                    $waktu = date('d M Y G:i', strtotime(\Carbon\Carbon::now()));
+                    \App\Pesanan::where('id',$id)->update(['printed' => Auth::user()->name.'<br />'.$waktu]);
+                }
                 return view('take',compact('data'));
             }else{
                return view('notfound')->with('status','Orderan ini belum siap untuk dicetak.');
