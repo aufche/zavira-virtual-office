@@ -13,21 +13,12 @@
       <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <?php
-                    if (!empty($data->gambar)){
-                        echo '<img src="'.$data->gambar.'" class="img-fluid" />';
-                    }
 
-                    if (!empty($data->gambargambar)){
-                        $pics = explode(',',$data->gambargambar);
-                        foreach ($pics as $pic){
-                            echo '<img src="'.$pic.'" class="img-fluid" /><br />';
-                        }
-
-                    }
-                ?>
-            </div>
-            <div class="col-md-12">
+            <div class="card">
+            <img src="<?php echo $data->gambar;?>" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">Ringkasan Order</h5>
+                <p class="card-text">
                 <?php
                     if (!empty($data->ukuranpria)){
                         echo 'Cincin pria : <strong>'.$data->ukuranpria.'</strong><br />';
@@ -49,7 +40,27 @@
                     echo 'Pengrajin '.$data->pengrajin->nama.'<br />';
                     echo 'Deadline <strong>'.date('d M Y', strtotime($data->deadline)).'</strong><br />';
                 ?>
+                </p>
+                
             </div>
+            </div>
+
+                <?php
+                   /* if (!empty($data->gambar)){
+                        echo '<img src="'.$data->gambar.'" class="img-fluid" />';
+                    }
+
+                    if (!empty($data->gambargambar)){
+                        $pics = explode(',',$data->gambargambar);
+                        foreach ($pics as $pic){
+                            echo '<img src="'.$pic.'" class="img-fluid" /><br />';
+                        }
+
+                    }
+                    */
+                ?>
+            </div>
+            
         </div>
       </div>
   </body>

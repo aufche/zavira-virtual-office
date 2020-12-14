@@ -776,6 +776,8 @@ Class PesananController extends Controller{
             $wanita_premium = null;
             $komisi_pria = 0;
             $komisi_wanita = 0;
+            $bpria_history_change = false;
+            $bwanita_history_change = false;
 
             $id = $request->input('id');
             $pesanan = \App\Pesanan::find($id);
@@ -789,6 +791,7 @@ Class PesananController extends Controller{
                 $pesanan->sertifikat_hargapria = $hargapria['hargapergram'];
                 $pesanan->produksi_hargapria = $hargapria['hargaproduksipergram'];
                 $pesanan->bahanpria = $pria[0];
+                $bpria_history_change = true;
 
                     //($hargapria['jenis'] == 'silver' ? $score_pria = 0 : $score_pria = 1);
 
@@ -817,6 +820,7 @@ Class PesananController extends Controller{
                     $pesanan->sertifikat_hargawanita = $hargawanita['hargapergram'];
                     $pesanan->produksi_hargawanita = $hargawanita['hargaproduksipergram'];
                     $pesanan->bahanwanita = $wanita[0];
+                    $bwanita_history_change = true;
 
                     //($hargawanita['jenis'] == 'silver' ? $score_wanita = 0 : $score_wanita = 1);
 
@@ -854,7 +858,25 @@ Class PesananController extends Controller{
             }
 
             $pesanan->save();
+            
+            if ($bpria_history_change){
+                $data_history = [
+                    ['pesanan_id' => $id,'user_id' => Auth::id(), 'keterangan' => 'Logam cincin pria telah diubah menjadi '.$hargapria['title'].' oleh '.Auth::user()->name.'','created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now() ],
+                ];
+    
+               \App\History::insert($data_history);
+    
+            }
 
+            if ($bwanita_history_change){
+                $data_history = [
+                    ['pesanan_id' => $id,'user_id' => Auth::id(), 'keterangan' => 'Logam cincin wanita telah diubah menjadi '.$hargawanita['title'].' oleh '.Auth::user()->name.'','created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now() ],
+                ];
+    
+               \App\History::insert($data_history);
+    
+            }
+            
             return redirect()->route('pesanan.edit.logam',['id'=>$id])->with('status','Logam no order '.$id.' berhasil di ubah');
 
         }elseif ($request->isMethod('get') && !empty($id)){

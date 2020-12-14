@@ -51,6 +51,9 @@ class HomeController extends Controller
 
     function insert(Request $request){
         
+        $bpria_history = '';
+        $bwanita_history = '';
+
         $validatedData = $request->validate([
             'asal_id' => 'required',
             'kurir_id' => 'required',
@@ -181,6 +184,7 @@ class HomeController extends Controller
             $hargapria = cariharga($request->input('bpria'));
             $data_pesanan = array_add($data_pesanan,'sertifikat_hargapria',$hargapria['hargapergram']);
             $data_pesanan = array_add($data_pesanan,'produksi_hargapria',$hargapria['hargaproduksipergram']);
+            $bpria_history = $hargapria['title'];
 
             //($hargapria['jenis'] == 'silver' ? $score_pria = 0 : $score_pria = 1);
 
@@ -202,6 +206,7 @@ class HomeController extends Controller
             $hargawanita = cariharga($request->input('bwanita'));
             $data_pesanan = array_add($data_pesanan,'sertifikat_hargawanita',$hargawanita['hargapergram']);
             $data_pesanan = array_add($data_pesanan,'produksi_hargawanita',$hargawanita['hargaproduksipergram']);
+            $bwanita_history = $hargawanita['title'];
 
             //($hargawanita['jenis'] == 'silver' ? $score_wanita = 0 : $score_wanita = 1);
 
@@ -303,6 +308,8 @@ class HomeController extends Controller
 */
             ///history_insert($id,Auth::id(),'Data pesanan berhasil diinput');
 
+
+            //-- input ke table susutan
             $susut = new \App\Susut;
             $susut->pria = $request->input('produksi_beratpria');
             $susut->wanita = $request->input('produksi_beratwanita');
@@ -311,9 +318,10 @@ class HomeController extends Controller
             $susut->user_id = Auth::id();
             $susut->save();
 
+            //-- input ke table history
             $data_history = [
                 ['pesanan_id' => $id,'user_id' => Auth::id(), 'keterangan' => 'Pesanan berhasil di input','created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now() ],
-                ['pesanan_id' => $id,'user_id' => Auth::id(), 'keterangan' => 'Berat awal cincin pria '.$request->input('produksi_beratpria').' gr dan  berat awal cincin wanita '.$request->input('produksi_beratwanita').' gr','created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now() ],
+                ['pesanan_id' => $id,'user_id' => Auth::id(), 'keterangan' => 'Berat awal cincin pria '.$request->input('produksi_beratpria').' gr dengan bahan '.$bpria_history.' ukuran '.$request->input('upria').' dan  berat awal cincin wanita '.$request->input('produksi_beratwanita').' gr dengan bahan '.$bwanita_history.' ukuran '.$request->input('uwanita').' CS '.Auth::user()->name.'','created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now() ],
             ];
 
            \App\History::insert($data_history);
@@ -324,7 +332,20 @@ class HomeController extends Controller
             
             
             //-- kirim notif via telegram
-            $text = 'Pesanan baru telah di masukkan ke database dengan no order '.$id;
+            //$text = 'Pesanan baru telah di masukkan ke database dengan no order '.$id;
+            $text = "Pesanan baru telah dimasukkan oleh ".Auth::user()->name."\n";
+            if (!empty($request->input('upria'))){
+                $text.= "Bahan cincin pria ".$bpria_history."\n";
+                $text.= "Ukuran cincin pria ".$request->input('upria')."\n";
+                $text.= "Grafir ".$request->input('gpria')."\n\n\n";
+            }
+
+            if (!empty($request->input('uwanita'))){
+                $text.= "Bahan cincin pria ".$bwanita_history."\n";
+                $text.= "Ukuran cincin pria ".$request->input('uwanita')."\n";
+                $text.= "Grafir ".$request->input('gwanita')."\n\n\n";
+            }
+
             Telegram::sendMessage([
                 'chat_id' => -1001386921740, // zavira virtual office
                 'parse_mode' => 'HTML',

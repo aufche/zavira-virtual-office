@@ -1,4 +1,4 @@
-@include('layouts.header');
+@include('layouts.header')
 <style type="text/css">
 
 .tracking-detail {
@@ -103,30 +103,7 @@
       
       <div class="col-md-12 col-lg-12">
 
-      <?php
-      if (isset($history_pesanan[0])){
-      ?>
-         <div class="card mb-3 border-warning">
-            <div class="card-header bg-warning">
-            <?php echo 'No Order '.$history_pesanan[0]->pesanan->id;?>
-            </div>
-            <div class="card-body">
-               <table class="table">
-                  <tr>
-                     <td>Nama</td>
-                     <td>Alamat</td>
-                     <td>No HP</td>
-                  </tr>
-                  <tr>
-                     <td><?php echo $history_pesanan[0]->pesanan->nama;?></td>
-                     <td><?php echo $history_pesanan[0]->pesanan->alamat;?></td>
-                     <td><?php echo $history_pesanan[0]->pesanan->nohp;?></td>
-                  </tr>
-               </table>
-            </div>
-         </div>
-
-            <?php } ?>
+     
 
 
          <div id="tracking-pre"></div>
@@ -147,7 +124,7 @@
                   <i class="fas fa-check"></i>
                   </div>
                   <div class="tracking-date"><?php echo date('d M Y h:i:s A', strtotime($item->created_at));?></div>
-                  <div class="tracking-content"><?php echo $item->keterangan;?></div>
+                  <div class="tracking-content"><?php echo $item->keterangan; ?></div>
                </div>
                 <?php
               }
@@ -161,4 +138,4 @@
 
    
     </main>
-@include('layouts.footer');
+@include('layouts.footer')
