@@ -19,6 +19,7 @@ class BuybackController extends Controller
             $neraca->user_id = Auth::id();
             $neraca->pesanan_id = $request->pesanan_id;
             $neraca->status = $request->status;
+            $neraca->catatan = $request->catatan;
             $neraca->save();
 
             return redirect()->route('buyback.edit',['id'=>$neraca->id])->with('status','Data pesanan berhasil disimpan');
@@ -42,6 +43,7 @@ class BuybackController extends Controller
             $neraca->berat = $request->input('berat');
             $neraca->user_id = Auth::id();
             $neraca->pesanan_id = $request->input('pesanan_id');
+            $neraca->catatan = $request->input('catatan');
             
 
             $neraca->save();

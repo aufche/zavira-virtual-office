@@ -64,6 +64,11 @@
                 </select>
                 </div>
 
+                <div class="col-md-12 mb-3">
+                    <label for="validationDefault04">Catatan</label>
+                    <textarea class="form-control" rows="5" name="catatan"><?php echo $data->catatan;?></textarea>
+                </div>
+
                 
 
             </div>
