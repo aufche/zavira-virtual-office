@@ -112,7 +112,7 @@
               <td><strong><u><?php echo $data->pesanan->pengrajin->nama;?></u></strong></td>
             </tr>
             <?php
-             if (!empty($data->plated_id)){
+             if (!empty($data->pesanan->plated_id)){
                ?>
             <tr>
               <td>Lapis</td>
