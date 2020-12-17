@@ -79,7 +79,7 @@
     </style>
   </head>
 
-  <body>
+  <body onload="window.print()">
   <table id="tableId" class="table table-bordered" width="100%">
         <tr>
             <td colspan="2">
@@ -102,7 +102,7 @@
             Keterangan : <?php echo $data->keterangan;?><br />
             <hr />
             Pengrajin : <?php echo $data->pengrajin->nama;?><br />
-            <?php if (!empty($item->plated_id)) echo '<strong>Lapis '.$item->plated->title.'</strong>';?>
+            <?php if (!empty($data->plated_id)) echo '<strong>Lapis :'.$data->plated->title.'</strong>';?>
             </td>
         </tr>
         <tr>
