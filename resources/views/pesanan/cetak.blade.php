@@ -82,7 +82,30 @@
   <body onload="window.print()">
   <table id="tableId" class="table table-bordered" width="100%">
         <tr>
-            <td colspan="2">
+            <td>CS</td>
+            <td><?php echo $data->user->name;?></td>
+        </tr>
+        <tr>
+            <td>No Order</td>
+            <td><?php echo $data->id;?> / Tanggal <?php echo date('d M Y', strtotime($data->tglmasuk));?></td>
+        </tr>
+        <tr>
+            <td>Pengrajin</td>
+            <td><?php echo $data->pengrajin->nama;?></td>
+        </tr>
+        <tr>
+            <td>Lapis</td>
+            <td><?php if (!empty($data->plated_id)) echo $data->plated->title;?></td>
+        </tr>
+        <tr>
+            <td>Deadline</td>
+            <td><?php echo date('d M Y', strtotime($data->deadline));?></td>
+        </tr>
+        
+    
+        
+        <tr>
+            <td>
             <?php
                 if (!empty($data->gambar)){
                     ?>
@@ -90,27 +113,9 @@
                     <?php
                   }
             ?>
-            
             </td>
-        </tr>
-        <tr>
-            <td>No Order <?php echo $data->id;?></td>
-            <td>Tanggal Order <?php echo date('d M Y');?> | <strong>Deadline <?php echo date('d M Y', strtotime($data->deadline));?></strong></td>
-        </tr>
-        <tr>
-            <td colspan="2">
-            Keterangan : <?php echo $data->keterangan;?><br />
-            <hr />
-            Pengrajin : <?php echo $data->pengrajin->nama;?><br />
-            <?php if (!empty($data->plated_id)) echo '<strong>Lapis :'.$data->plated->title.'</strong>';?>
-            </td>
-        </tr>
-        <tr>
-            <td><strong>CINCIN PRIA</strong></td>
-            <td><strong>CINCIN WANITA</strong></td>
-        </tr>
-        <tr>
-            <td>
+            <td style="line-height:200%">
+            KETERANGAN CINCIN COWOK<br />
             <?php
                 if (!empty($data->gambar_cincin_pria)){
                 ?>
@@ -123,8 +128,9 @@
             Grafir : <?php echo $data->grafirpria;?><br />
             Bahan : <?php echo $data->bahanpria()->first()['title'];?><br />
             <?php echo aa('Berat maksimal ',$data->produksi_beratpria,'gr');?>
-            </td>
-            <td>
+            <br />
+            <br />
+            <br />KETERANGAN CINCIN CEWEK<br />
             <?php
                 if (!empty($data->gambar_cincin_wanita)){
                 ?>
@@ -140,8 +146,13 @@
             </td>
         </tr>
         <tr>
-            <td>Berat Akhir :...............</td>
-            <td>Berat Akhir :...............</td>
+            <td>Berat Akhir Pria:...............</td>
+            <td>Berat Akhir Wanita :...............</td>
+        </tr>
+        <tr>
+            <td colspan="2" style="font-size:30px;">
+            <?php echo $data->keterangan;?><br />
+            </td>
         </tr>
   </table>
   </body>
