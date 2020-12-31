@@ -231,3 +231,7 @@ function notif_cs($id,$tipe_finising){
     $neraca->identitas = $identitas;
     $neraca->save();
  }
+
+ function nice_date($tgl){
+    return date('d M Y', strtotime($tgl));
+ }

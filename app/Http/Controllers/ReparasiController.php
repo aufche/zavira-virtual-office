@@ -18,7 +18,7 @@ Class ReparasiController extends Controller{
     }
     
     function reparasiform($id){
-        $data = \App\Pesanan::where('id',$id)->get();
+        $data = \App\Pesanan::where('id',$id)->first();
         return view('reparasi.reparasiform')->with('data',$data);
     }
 
@@ -40,7 +40,38 @@ Class ReparasiController extends Controller{
         $reparasi->pesanan_id = $request->input('id');
         $reparasi->tdeadline = $request->input('tdeadline');
         $reparasi->ncincin = $request->input('ncincin');
+        $reparasi->pj = Auth::user()->name;
+
         $reparasi->save();
+
+        if ($request->input('klaim_garansi_lapis') == 'y'){
+            //-- meng-klaim garansi
+            if ($request->input('ncincin') == 'c'){
+                //-- cincin couple
+                \App\Pesanan::where('id',$request->input('id'))->update(
+                    [
+                        'garansi_lapis_pria' => 1,
+                        'garansi_lapis_wanita' => 1,
+                        'tgl_klaim_pria' => \Carbon\Carbon::now(),
+                        'tgl_klaim_wanita' => \Carbon\Carbon::now(),
+                    ]
+                );
+            }elseif($request->input('ncincin') == 'w'){
+                \App\Pesanan::where('id',$request->input('id'))->update(
+                    [
+                        'garansi_lapis_wanita' => 1,
+                        'tgl_klaim_wanita' => \Carbon\Carbon::now(),
+                    ]
+                );
+            }elseif($request->input('ncincin') == 'p'){
+                \App\Pesanan::where('id',$request->input('id'))->update(
+                    [
+                        'garansi_lapis_pria' => 1,
+                        'tgl_klaim_pria' => \Carbon\Carbon::now(),
+                    ]
+                );
+            }
+        }
 
 
         //-- update finising menjadi finising=4
@@ -73,11 +104,11 @@ Class ReparasiController extends Controller{
 
         history_insert($request->input('id'),Auth::id(),'Pesanan masuk ke reparasi dengan '.$request->input('keterangan_reparasi'));
 
-        return redirect()->route('reparasi.index')->with('status','Data reparasi berhasil disimpan');
+        return redirect()->route('riwayat',['id' => $request->input('id')])->with('status','Data reparasi berhasil disimpan');
     }
 
     function riwayat($id){
-        $data = \App\Reparasi::where('pesanan_id',$id)->paginate(10);
+        $data = \App\Reparasi::where('pesanan_id',$id)->orderBy('id','desc')->paginate(10);
         /*$pdf = PDF::loadView('riwayat', ['data'=>$data]);
         return $pdf->download('invoice.pdf');
         */

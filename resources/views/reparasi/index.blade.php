@@ -1,4 +1,4 @@
-@include('layouts.header');
+@include('layouts.header')
 <main class="app-content">
       <div class="app-title">
         <div>
@@ -18,17 +18,19 @@
         @endif
         <?php echo $data->links();?>
             <table class="table">
+            <thead class="thead-dark">
                 <tr>
-                    <td>No. Reparasi</td>
-                    <td>No. Order</td>
-                    <td>Kelengkapan</td>
-                    <td>Keterangan</td>
-                    <td>Cincin yang direparasi</td>
-                    <td>Tanggal Input</td>
-                    <td>CS</td>
-                    <td>Options</td>
+                    <th>No. Reparasi</th>
+                    <th>No. Order</th>
+                    <th>Kelengkapan</th>
+                    <th>Keterangan</th>
+                    <th>Cincin yang direparasi</th>
+                    <th>Tanggal Input</th>
+                    <th>Customer Service</th>
+                    <th>Options</th>
                 </tr>
-            
+            </thead>
+            <tbody>
               <?php
                 foreach ($data as $item){
                     ?>
@@ -43,7 +45,7 @@
                           if ($item->ncincin == 'c') echo 'Couple';
                         ?></td>
                         <td><?php echo date('d M Y G:i A', strtotime($item->created_at));?></td>
-                        <td><?php echo $item->pesanan->user->name;?></td>
+                        <td><?php echo $item->pesanan->user->name;?><br /><small class="text-muted">Diproses oleh <?php echo $item->pj;?></small></td>
                         <td>
                         <div class="btn-group shadow" role="group">
                           <button id="btnGroupDrop1" type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -61,9 +63,10 @@
                 }
 
               ?>
+              </tbody>
               </table>
               <?php echo $data->links();?>
         </div>
     </main>
   
-@include('layouts.footer');
+@include('layouts.footer')
