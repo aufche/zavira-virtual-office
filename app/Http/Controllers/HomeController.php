@@ -788,8 +788,8 @@ class HomeController extends Controller
                     $waktu = date('d M Y G:i', strtotime(\Carbon\Carbon::now()));
                     \App\Pesanan::where('id',$id)->update(['printed' => Auth::user()->name.'<br />'.$waktu]);
                 }
-                //return view('take',compact('data'));
-                return view('pesanan.cetak',compact('data'));
+                return view('take',compact('data'));
+                //return view('pesanan.cetak',compact('data'));
             }else{
                return view('notfound')->with('status','Orderan ini belum siap untuk dicetak.');
             }

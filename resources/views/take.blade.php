@@ -93,7 +93,7 @@
 
         <table id="tableId" class="table table-bordered" width="100%">
         <tr>
-            <td rowspan="3" valign="top"><strong>CS <?php echo $item->user->name;?></strong><br />Catatan Khusus:</td>
+            <td rowspan="5" valign="top"><strong>CS <?php echo $item->user->name;?></strong><br />Catatan Khusus:</td>
             <td>Tanggal Order</td>
             <td><?php echo date('d M Y');?></td>
           </tr>
@@ -104,6 +104,14 @@
           <tr>
             <td>No Order</td>  
             <td><?php echo $item->id;?></td>
+          </tr>
+          <tr>
+            <td>Pengrajin</td>  
+            <td><?php echo $item->pengrajin->nama;?></td>
+          </tr>
+          <tr>
+            <td>Lapis</td>  
+            <td><?php if (!empty($item->plated_id)) echo $item->plated->title;?></td>
           </tr>
           <tr>
             <td rowspan="<?php echo $row_span;?>">
@@ -299,10 +307,7 @@
           
          
           <tr>
-            <td colspan="2">Keterangan<br /><?php echo $item->keterangan;?></td>
-            <td>Pengrajin <?php echo $item->pengrajin->nama;?><br />
-            <?php if (!empty($item->plated_id)) echo '<strong>Lapis '.$item->plated->title.'</strong>';?>
-            </td>
+            <td colspan="3" style="font-size:40px;font-weight:600">Keterangan<br /><?php echo $item->keterangan;?></td>
           </tr>
         </table>
         
