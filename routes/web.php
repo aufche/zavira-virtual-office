@@ -357,8 +357,10 @@ Route::prefix('pembukuan')->group(function () {
         }
     })->name('pembukuan.semua')->middleware('auth');
 
-    Route::get('/detail/{id}/{bulan?}','PembukuanController@detail')->name('pembukuan.detail')->middleware('acl');
+    Route::any('/detail/{id?}','PembukuanController@detail')->name('pembukuan.detail')->middleware('acl');
     Route::get('/edit/{id}','PembukuanController@edit')->name('pembukuan.edit')->middleware('acl');
+
+    Route::post('/detail2','PembukuanController@detail2')->name('pembukuan.detail2')->middleware('acl');
 
     Route::get('/add/{status}', function($status){
         

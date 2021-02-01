@@ -139,30 +139,38 @@ Class PembukuanController extends Controller{
         }
     }
     
-    public function detail($id,$bulan = null){
-        $user_id = Auth::user()->id;
-        if (\App\Buku::where('hak_akses','like','%'.$user_id.'%')->where('id','=',$id)->count() > 0){
-            $buku = \App\Buku::find($id);
-            if (empty($bulan)){
-                $bulan = date('F Y');
-                $data = \App\Pembukuan::where('buku_id','=',$id)
-                    ->where('bulantahun','=',$bulan)
-                    ->orderBy('tanggal','asc')
-                    ->get();
+    public function detail($id = null,Request $request){
+        if ($request->isMethod('get')){
+            $currentMonth = date('m');
+            $currentYear = date('Y');
+
+            $user_id = Auth::user()->id;
+            if (\App\Buku::where('hak_akses','like','%'.$user_id.'%')->where('id','=',$id)->count() > 0){
+                $buku = \App\Buku::find($id);
+                $data = \App\Pembukuan::where('buku_id',$id)->whereMonth('created_at',$currentMonth)->whereYear('created_at',$currentYear)->orderBy('id','asc')->get();
+                return view('pembukuan.semua',compact('data','buku','currentMonth','currentYear','id'));
             }else{
-                $data = \App\Pembukuan::where('buku_id','=',$id)
-                    ->where('bulantahun','=',urldecode($bulan))
-                    ->orderBy('tanggal','asc')
-                    ->get();
+                return view('notfound');
             }
-            
-
-            $old = \App\Pembukuan::selectRaw('bulantahun')->groupBy('bulantahun')->orderBy('bulantahun','desc')->get();
-
-            return view('pembukuan.semua',compact('data','buku','old','bulan'));
-        }else{
-            return view('notfound');
+        }elseif ($request->isMethod('post')){
+            $currentMonth = $request->input('bulan');
+            $currentYear = $request->input('tahun');
+            $id = $request->input('id_buku');
+            $buku = \App\Buku::find($id);
+            $data = \App\Pembukuan::where('buku_id',$id)->whereMonth('created_at',$currentMonth)->whereYear('created_at',$currentYear)->orderBy('id','asc')->get();
+            return view('pembukuan.semua',compact('data','currentMonth','currentYear','id','buku')); 
         }
+        
+    }
+
+    function detail2(Request $request){
+        $currentMonth = $request->input('bulan');
+        $currentYear = $request->input('tahun');
+        $id = $request->input('id_buku');
+        $buku = \App\Buku::find($id);
+        $data = \App\Pembukuan::where('buku_id',$id)->whereMonth('created_at',$currentMonth)->whereYear('created_at',$currentYear)->orderBy('id','asc')->get();
+        return view('pembukuan.semua',compact('data','currentMonth','currentYear','id','buku'));
+
     }
 
     function export_pembukuan($id,$bulan){
