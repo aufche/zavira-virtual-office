@@ -1073,7 +1073,10 @@ Class PesananController extends Controller{
         return view('pesanan.pakbejo',compact('data'));
     }
 
-
+    function tandaterima($id){
+        $data = \App\Pesanan::find($id);
+        return view('pesanan.tandaterima',compact('data'));
+    }
     
 
     
