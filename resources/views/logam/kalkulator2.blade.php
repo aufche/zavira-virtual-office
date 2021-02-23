@@ -20,98 +20,12 @@
     
   </head>
   <body>
-
   <?php
-    //include('vendor/autoload.php');
-    //$logam = \Httpful\Request::get('http://172.245.6.114/api/logam')->send();
-    //$hargapokok = \Httpful\Request::get('http://172.245.6.114/api/hargapokok')->send();
-     //dd($hargapokok);
-     $harga = [];
+    $harga = [];
     foreach ($hargapokok as $key => $value){
-        //echo $key;
-        //echo $value;
         $harga[$value->kunci] = $value->isi;
     }
-
-    $n = 0;
-    $materials = [];
-    foreach ($logam as $item){
-      
-      if ($item->jenis == 'palladium'){
-        /*if ($item->kadar > 50){
-          $markup =  $harga['markup_palladium_kadar_tinggi']; 
-        }else{
-          $markup =  $harga['markup_palladium_kadar_rendah']; 
-        }
-        */
-        $materials[$n]['harga'] = (int)$harga['harga_pokok_palladium'] * ($item->kadar/100) + $item->markup;
-    
-        $materials[$n]['title'] = $item->title;
-      }
-
-      if ($item->jenis == 'emas'){
-        /*
-        if ($item->kadar > 50){
-          $markup =  $harga['markup_emas_kadar_tinggi']; 
-        }else{
-          $markup =  $harga['markup_emas_kadar_rendah']; 
-        }
-        */
-
-        $materials[$n]['harga'] = $harga['harga_pokok_emas'] * ($item->kadar/100) + $item->markup;
-        $materials[$n]['title'] = $item->title;
-      }
-
-      if ($item->jenis == 'platinum'){
-        /*
-        if ($item->kadar > 50){
-          $markup =  $harga['markup_platinum_kadar_tinggi']; 
-        }else{
-          $markup =  $harga['markup_platinum_kadar_rendah']; 
-        }
-        */
-
-        $materials[$n]['harga'] = $harga['harga_pokok_platinum'] * ($item->kadar/100) + $item->markup;
-        $materials[$n]['title'] = $item->title;
-      }
-
-      if ($item->jenis == 'ep'){
-        /*
-        if ($item->kadar > 50){
-          $markup =  $harga['markup_platinum_kadar_tinggi']; 
-        }else{
-          $markup =  $harga['markup_platinum_kadar_rendah']; 
-        }
-        */
-
-        $materials[$n]['harga'] = $harga['harga_pokok_emas'] * ($item->kadar/100) + $item->markup;
-        $materials[$n]['title'] = $item->title;
-      }
-
-      if ($item->jenis == 'platidium'){
-        /*
-        if ($item->kadar > 50){
-          $markup =  $harga['markup_platinum_kadar_tinggi']; 
-        }else{
-          $markup =  $harga['markup_platinum_kadar_rendah']; 
-        }
-        */
-
-        $materials[$n]['harga'] = (($harga['harga_pokok_platinum'] + $harga['harga_pokok_palladium'])/2) * ($item->kadar/100) + $item->markup;
-        $materials[$n]['title'] = $item->title;
-      }
-
-      if ($item->jenis == 'silver'){
-        $materials[$n]['harga'] = 265000;
-        $materials[$n]['title'] = $item->title;
-      }
-
-      $n++;
-    }
-
-    //print_r($materials);
-
-    ?>
+  ?>
     <div class="container text-center mt-4 mb-4">
       
     </div>
@@ -138,10 +52,23 @@
                         <div class="col-md-6 col-xs-6">
                             <label for="jenis_logam_pria">Jenis logam pria</label>
                             <select  class="form-control" name="jenis_logam_pria" id="jenis_logam_pria">
-                                  <?php 
-                                    foreach ($materials as $material){
+                            <?php 
+                                    foreach ($logam as $item){
+                                      if ($item->jenis == 'palladium'){
+                                        $value = ($harga['harga_pokok_palladium'] * ($item->kadar/100) + $item->markup).'|'.($harga['harga_harian_palladium'] * ($item->kadar/100));
+                                      }elseif ($item->jenis == 'emas'){
+                                        $value = ($harga['harga_pokok_emas'] * ($item->kadar/100) + $item->markup).'|'.($harga['harga_harian_emas'] * ($item->kadar/100));
+                                      }elseif ($item->jenis == 'platinum'){
+                                        $value = ($harga['harga_pokok_platinum'] * ($item->kadar/100) + $item->markup).'|'.($harga['harga_harian_platinum'] * ($item->kadar/100));
+                                      }elseif ($item->jenis == 'ep'){
+                                        $value = ($harga['harga_pokok_emas'] * ($item->kadar/100) + $item->markup).'|'.($harga['harga_harian_emas'] * ($item->kadar/100));
+                                      }elseif ($item->jenis == 'platidium'){
+                                        $value = (($harga['harga_pokok_platinum'] + $harga['harga_pokok_palladium'])/2 * ($item->kadar/100) + $item->markup).'|'.(($harga['harga_harian_platinum'] + $harga['harga_harian_palladium'])/2 * ($item->kadar/100));
+                                      }elseif ($item->jenis == 'silver'){
+                                        $value = 265000;
+                                      }
                                       ?>
-                                       <option value="<?php echo $material['harga'];?>"><?php echo $material['title'];?></option>
+                                       <option value="<?php echo $value;?>"><?php echo $item->title;?></option>
                                       <?php
                                     }
                                   ?>
@@ -160,9 +87,22 @@
                               <label for="jenis_logam_pria">Jenis logam Wanita</label>
                               <select class="form-control" name="jenis_logam_wanita" id="jenis_logam_wanita">
                               <?php 
-                                    foreach ($materials as $material){
+                                    foreach ($logam as $item){
+                                      if ($item->jenis == 'palladium'){
+                                        $value = ($harga['harga_pokok_palladium'] * ($item->kadar/100) + $item->markup).'|'.($harga['harga_harian_palladium'] * ($item->kadar/100));
+                                      }elseif ($item->jenis == 'emas'){
+                                        $value = ($harga['harga_pokok_emas'] * ($item->kadar/100) + $item->markup).'|'.($harga['harga_harian_emas'] * ($item->kadar/100));
+                                      }elseif ($item->jenis == 'platinum'){
+                                        $value = ($harga['harga_pokok_platinum'] * ($item->kadar/100) + $item->markup).'|'.($harga['harga_harian_platinum'] * ($item->kadar/100));
+                                      }elseif ($item->jenis == 'ep'){
+                                        $value = ($harga['harga_pokok_emas'] * ($item->kadar/100) + $item->markup).'|'.($harga['harga_harian_emas'] * ($item->kadar/100));
+                                      }elseif ($item->jenis == 'platidium'){
+                                        $value = (($harga['harga_pokok_platinum'] + $harga['harga_pokok_palladium'])/2 * ($item->kadar/100) + $item->markup).'|'.(($harga['harga_harian_platinum'] + $harga['harga_harian_palladium'])/2 * ($item->kadar/100));
+                                      }elseif ($item->jenis == 'silver'){
+                                        $value = 265000;
+                                      }
                                       ?>
-                                       <option value="<?php echo $material['harga'];?>"><?php echo $material['title'];?></option>
+                                       <option value="<?php echo $value;?>"><?php echo $item->title;?></option>
                                       <?php
                                     }
                                   ?>
@@ -185,17 +125,7 @@
             </form>    
       </div>
       <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-      <ul class="list-group list-group-flush">
-      <?php 
-          foreach ($materials as $material){
-            ?>
-              
-              <li class="list-group-item clearfix"><span class="float-left"><?php echo $material['title'];?></span><span class="float-right"><?php echo ' Rp '.number_format($material['harga'],0,',','.').'/gr';?></span></li>
-              
-            <?php
-          }
-        ?>
-      </ul>
+      
       </div>
     </div>
              
@@ -245,13 +175,20 @@
    var harga_logam_wanita = parseFloat(document.getElementById('jenis_logam_wanita').value);
 
     var pria = document.getElementById('jenis_logam_pria');
-    var harga_pria = parseFloat(pria[pria.selectedIndex].value);
+    var cowok = pria[pria.selectedIndex].value.split("|");
+    var harga_pria = parseFloat(cowok[0]);
+    var dp_logam_pria = parseFloat(cowok[1]);
     var logam_pria = pria[pria.selectedIndex].text;
+    
+    
 
 
     var wanita = document.getElementById('jenis_logam_wanita');
-    var harga_wanita = parseFloat(wanita[wanita.selectedIndex].value);
+    var cewek = wanita[wanita.selectedIndex].value.split("|");
+    var harga_wanita = parseFloat(cewek[0]);
+    var dp_logam_wanita = parseFloat(cewek[1]);
     var logam_wanita = wanita[wanita.selectedIndex].text;
+    
 
     var ongkos = parseFloat(document.getElementById('ongkosbikin').value);
 
@@ -289,7 +226,7 @@
         var ongkos_bikin = ongkos;
         var total = (berat_pria * harga_pria) + ongkos_bikin + kotakkayu + freeongkir;
         var dp = total / 2;
-        var dp_75 = 0.75 * total;
+        var dp_75 = (berat_pria * dp_logam_pria);
       
         var rincian = "Cincin Pria "+logam_pria+" "+toRp(harga_pria)+" x "+berat_pria+" gram <br />ongkos bikin "+toRp(ongkos_bikin)+text_kkayu+"<br />Total "+toRp(total);
         var paket = "Cincin pria "+logam_pria+" berat "+berat_pria+"gr<br />- Free exclusive ring box<br />- Sertifikat keaslian logam<br />- Free Ukir nama pasangan<br />- Free souvenir cantik<br />"+toRp(total)+"<br /><br />Pembayaran bisa DP dulu 75% yaitu "+toRp(dp)+"<br />Dilunasi ketika barang sudah jadi";
@@ -304,7 +241,7 @@
         var ongkos_bikin = ongkos;
         var total = (berat_wanita * harga_wanita) + ongkos_bikin + kotakkayu + freeongkir;
         var dp = total / 2;
-        var dp_75 = 0.75 * total;
+        var dp_75 = (berat_wanita * dp_logam_wanita);
 
         var rincian = "Cincin Wanita "+logam_wanita+" "+toRp(harga_wanita)+" x "+berat_wanita+" gram <br />ongkos bikin "+toRp(ongkos_bikin)+text_kkayu+"<br />Total "+toRp(total)+"<br />Bonus tambahan <br />- Free exclusive ring box<br />- Sertifikat keaslian logam<br />- Free Ukir nama pasangan<br />- Free souvenir cantik<br />"+toRp(total)+"<br /><br />Pembayaran bisa DP dulu 75% yaitu "+toRp(dp)+"<br />Dilunasi ketika barang sudah jadi<br /><br />Harga diatas masih bisa kurang, tergantung dengan BERAT logam ketika cincin sudah jadi. Anda hanya membayar seberat logam cincin saja. Rincian harga lebih transparan dari toko sebelah";
       }else if (logam_wanita == "Silver 925"){
@@ -319,7 +256,7 @@
         var ongkos_bikin = ongkos;
         var total = (berat_pria * harga_pria) + (berat_wanita * harga_wanita) + ongkos_bikin + kotakkayu + freeongkir;
         var dp = total / 2;
-        var dp_75 = 0.75 * total;
+        var dp_75 = (berat_wanita * dp_logam_wanita) + (berat_pria * dp_logam_pria);
       
         var rincian = "Cincin Pria "+logam_pria+" "+toRp(harga_pria)+" x "+berat_pria+" gram <br />Cincin Wanita "+logam_wanita+" "+toRp(harga_wanita)+" x "+berat_wanita+" gram <br />ongkos bikin "+toRp(ongkos_bikin)+"<br />Bonus tambahan <br />- Free exclusive ring box<br />- Sertifikat keaslian logam<br />- Free Ukir nama pasangan<br />- Free souvenir cantik<br />"+toRp(total)+"<br /><br />Pembayaran bisa DP dulu 75% yaitu "+toRp(dp_75)+"<br />Dilunasi ketika barang sudah jadi<br /><br />Harga diatas masih bisa kurang, tergantung dengan BERAT logam ketika cincin sudah jadi. Anda hanya membayar seberat logam cincin saja. Rincian harga lebih transparan dari toko sebelah";
         
@@ -328,7 +265,7 @@
         var ongkos_bikin = ongkos;
         var total = harga_pria + (berat_wanita * harga_wanita) + ongkos_bikin + kotakkayu + freeongkir;
         var dp = total / 2;
-        var dp_75 = 0.75 * total;
+        var dp_75 = (berat_wanita * dp_logam_wanita) + harga_pria;
 
         var rincian = "Cincin Pria "+logam_pria+" "+toRp(harga_pria)+" berat "+berat_pria+" gram <br />Cincin Wanita "+logam_wanita+" "+toRp(harga_wanita)+" x "+berat_wanita+" gram <br />ongkos bikin "+toRp(ongkos_bikin)+"<br />Bonus tambahan <br />- Free exclusive ring box<br />- Sertifikat keaslian logam<br />- Free Ukir nama pasangan<br />- Free souvenir cantik<br />"+toRp(total)+"<br /><br />Pembayaran bisa DP dulu 75% yaitu "+toRp(dp_75)+"<br />Dilunasi ketika barang sudah jadi<br /><br />Harga diatas masih bisa kurang, tergantung dengan BERAT logam ketika cincin sudah jadi. Anda hanya membayar seberat logam cincin saja. Rincian harga lebih transparan dari toko sebelah";
       }else if (logam_pria != "Silver 925" && logam_wanita == "Silver 925"){
@@ -337,7 +274,7 @@
         var ongkos_bikin = ongkos;
         var total = (berat_pria * harga_pria) + harga_wanita + ongkos_bikin + kotakkayu + freeongkir;
         var dp = total / 2;
-        var dp_75 = 0.75 * total;
+        var dp_75 = (berat_pria * dp_logam_pria) + harga_wanita;
 
         var rincian = "Cincin Pria "+logam_pria+" "+toRp(harga_pria)+" x "+berat_pria+" gram <br />Cincin Wanita "+logam_wanita+" "+toRp(harga_wanita)+" berat "+berat_wanita+" gram <br />ongkos bikin "+toRp(ongkos_bikin)+"<br />Bonus tambahan <br />- Free exclusive ring box<br />- Sertifikat keaslian logam<br />- Free Ukir nama pasangan<br />- Free souvenir cantik<br />"+toRp(total)+"<br /><br />Pembayaran bisa DP dulu 75% yaitu "+toRp(dp_75)+"<br />Dilunasi ketika barang sudah jadi<br /><br />Harga diatas masih bisa kurang, tergantung dengan BERAT logam ketika cincin sudah jadi. Anda hanya membayar seberat logam cincin saja. Rincian harga lebih transparan dari toko sebelah";
       }else if (logam_pria == "Silver 925" && logam_wanita == "Silver 925"){

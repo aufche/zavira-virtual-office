@@ -125,7 +125,7 @@
       <br />
     Karayawan lapangan<br /><br /><br /><br />
 
-    Pras
+    Prasetyo Ardi Wicaksono
       </div>
 
       <div class="kanan mb-1">
@@ -133,7 +133,7 @@
       <br />
         Pengrajin<br /><br /><br /><br /><br />
 
-        Pak Bejo
+        Bejo Slamet
       </div>
       </div>
   </body>

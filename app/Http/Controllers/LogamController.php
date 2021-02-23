@@ -228,10 +228,11 @@ Class LogamController extends Controller{
 }
 
 function kalkulator($apa=null){
-    $hargapokok = \App\Setting::whereIn('kunci',['harga_pokok_emas','harga_pokok_palladium','ongkos_bikin','harga_pokok_silver','harga_pokok_platinum'])->get();
+    $hargapokok = \App\Setting::whereIn('kunci',['harga_pokok_emas','harga_pokok_palladium','ongkos_bikin','harga_pokok_silver','harga_pokok_platinum','harga_harian_emas','harga_harian_palladium','harga_harian_platinum'])->get();
+    //$harga_harian_logam = \App\Setting::whereIn('kunci',['harga_harian_emas','harga_harian_palladium','harga_harian_platinum'])->get();
     $logam = \App\Namalogam::orderBy('title','asc')->get();
     if ($apa == null){
-        return view('logam.kalkulator',compact('logam','hargapokok'));    
+        return view('logam.kalkulator2',compact('logam','hargapokok'));    
     }elseif ($apa == 'pricelist'){
         return view('logam.pricelist',compact('logam','hargapokok'));    
     }
