@@ -118,14 +118,35 @@
   
                       
 
-                      <button type="button" data-toggle="modal" data-target="#exampleModal" onclick="kalkulator();" class="btn btn-dark btn-lg btn-block mt-5">Hitung!</button>
+                      <button type="button" data-toggle="modal" data-target="#exampleModal" onclick="kalkulator();" class="btn btn-dark btn-lg btn-block mt-5 shadow">Hitung!</button>
                 </div>
                 
               </div>
             </form>    
       </div>
       <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-      
+      <?php 
+        foreach ($logam as $item){
+          if ($item->jenis == 'palladium'){
+            $value = ($harga['harga_pokok_palladium'] * ($item->kadar/100) + $item->markup);
+          }elseif ($item->jenis == 'emas'){
+            $value = ($harga['harga_pokok_emas'] * ($item->kadar/100) + $item->markup);
+          }elseif ($item->jenis == 'platinum'){
+            $value = ($harga['harga_pokok_platinum'] * ($item->kadar/100) + $item->markup);
+          }elseif ($item->jenis == 'ep'){
+            $value = ($harga['harga_pokok_emas'] * ($item->kadar/100) + $item->markup);
+          }elseif ($item->jenis == 'platidium'){
+            $value = (($harga['harga_pokok_platinum'] + $harga['harga_pokok_palladium'])/2 * ($item->kadar/100) + $item->markup);
+          }elseif ($item->jenis == 'silver'){
+            $value = 265000;
+          }
+          
+          if ($item->jenis != 'silver'){
+            echo $item->title.' '.rupiah($value).'/gram <br />';
+          }
+          
+        }
+       ?>                
       </div>
     </div>
              
@@ -229,7 +250,7 @@
         var dp_75 = (berat_pria * dp_logam_pria);
       
         var rincian = "Cincin Pria "+logam_pria+" "+toRp(harga_pria)+" x "+berat_pria+" gram <br />ongkos bikin "+toRp(ongkos_bikin)+text_kkayu+"<br />Total "+toRp(total);
-        var paket = "Cincin pria "+logam_pria+" berat "+berat_pria+"gr<br />- Free exclusive ring box<br />- Sertifikat keaslian logam<br />- Free Ukir nama pasangan<br />- Free souvenir cantik<br />"+toRp(total)+"<br /><br />Pembayaran bisa DP dulu 75% yaitu "+toRp(dp)+"<br />Dilunasi ketika barang sudah jadi";
+        var paket = "Cincin pria "+logam_pria+" berat "+berat_pria+"gr<br />- Free exclusive ring box<br />- Sertifikat keaslian logam<br />- Free Ukir nama pasangan<br />- Free souvenir cantik<br />"+toRp(total)+"<br /><br />Jumlah DP 50% yaitu "+toRp(dp)+"<br />Jumlah DP untuk transaksi COD "+toRp(dp_75)+"<br /><br /><br />Dilunasi ketika barang sudah jadi";
       }else if (logam_pria == "Silver 925"){
         var rincian = 'Mohon maaf, harga untuk cincin bahan silver 925 (perak) single silahkan hubungi customer service kami. Karena harga cincin perak tidak dihitung per gram, tetapi per model<br />Harga mulai dari Rp 265.000 s/d Rp 450.000 tergantung tingkat kerumitan<br /><a href="https://zavirajewelry.com/chat" target="_blank">Chat dengan CS kami</a></a>';
       }
@@ -243,12 +264,12 @@
         var dp = total / 2;
         var dp_75 = (berat_wanita * dp_logam_wanita);
 
-        var rincian = "Cincin Wanita "+logam_wanita+" "+toRp(harga_wanita)+" x "+berat_wanita+" gram <br />ongkos bikin "+toRp(ongkos_bikin)+text_kkayu+"<br />Total "+toRp(total)+"<br />Bonus tambahan <br />- Free exclusive ring box<br />- Sertifikat keaslian logam<br />- Free Ukir nama pasangan<br />- Free souvenir cantik<br />"+toRp(total)+"<br /><br />Pembayaran bisa DP dulu 75% yaitu "+toRp(dp)+"<br />Dilunasi ketika barang sudah jadi<br /><br />Harga diatas masih bisa kurang, tergantung dengan BERAT logam ketika cincin sudah jadi. Anda hanya membayar seberat logam cincin saja. Rincian harga lebih transparan dari toko sebelah";
+        var rincian = "Cincin Wanita "+logam_wanita+" "+toRp(harga_wanita)+" x "+berat_wanita+" gram <br />ongkos bikin "+toRp(ongkos_bikin)+text_kkayu+"<br />Total "+toRp(total)+"<br />Bonus tambahan <br />- Free exclusive ring box<br />- Sertifikat keaslian logam<br />- Free Ukir nama pasangan<br />- Free souvenir cantik<br />"+toRp(total)+"<br /><br />Jumlah DP 50% yaitu "+toRp(dp)+"<br />Jumlah DP untuk transaksi COD "+toRp(dp_75)+"<br /><br />Harga diatas masih bisa kurang, tergantung dengan BERAT logam ketika cincin sudah jadi. Anda hanya membayar seberat logam cincin saja. Rincian harga lebih transparan dari toko sebelah";
       }else if (logam_wanita == "Silver 925"){
         var rincian = 'Mohon maaf, harga untuk cincin bahan silver 925 (perak) single silahkan hubungi customer service kami. Karena harga cincin perak tidak dihitung per gram, tetapi per model<br />Harga mulai dari Rp 265.000 s/d Rp 450.000 tergantung tingkat kerumitan<br /><a href="https://zavirajewelry.com/chat" target="_blank">Chat dengan CS kami</a></a>';
       }
       
-      //var paket = "Cincin wanita "+logam_wanita+" berat "+berat_wanita+"gr<br />- Free exclusive ring box<br />- Sertifikat keaslian logam<br />- Free Ukir nama pasangan<br />- Free souvenir cantik<br />"+toRp(total)+"<br /><br />Pembayaran bisa DP dulu 75% yaitu "+toRp(dp)+"<br />Dilunasi ketika barang sudah jadi";
+      //var paket = "Cincin wanita "+logam_wanita+" berat "+berat_wanita+"gr<br />- Free exclusive ring box<br />- Sertifikat keaslian logam<br />- Free Ukir nama pasangan<br />- Free souvenir cantik<br />"+toRp(total)+"<br /><br />Pembayaran bisa DP dulu 75% yaitu "+toRp(dp)+"<br /><br />Dilunasi ketika barang sudah jadi";
 
     }else if (document.getElementById('berat_pria').value != '' && document.getElementById('berat_wanita').value != ''){
       //-- cincin couple
@@ -258,7 +279,7 @@
         var dp = total / 2;
         var dp_75 = (berat_wanita * dp_logam_wanita) + (berat_pria * dp_logam_pria);
       
-        var rincian = "Cincin Pria "+logam_pria+" "+toRp(harga_pria)+" x "+berat_pria+" gram <br />Cincin Wanita "+logam_wanita+" "+toRp(harga_wanita)+" x "+berat_wanita+" gram <br />ongkos bikin "+toRp(ongkos_bikin)+"<br />Bonus tambahan <br />- Free exclusive ring box<br />- Sertifikat keaslian logam<br />- Free Ukir nama pasangan<br />- Free souvenir cantik<br />"+toRp(total)+"<br /><br />Pembayaran bisa DP dulu 75% yaitu "+toRp(dp_75)+"<br />Dilunasi ketika barang sudah jadi<br /><br />Harga diatas masih bisa kurang, tergantung dengan BERAT logam ketika cincin sudah jadi. Anda hanya membayar seberat logam cincin saja. Rincian harga lebih transparan dari toko sebelah";
+        var rincian = "Cincin Pria "+logam_pria+" "+toRp(harga_pria)+" x "+berat_pria+" gram <br />Cincin Wanita "+logam_wanita+" "+toRp(harga_wanita)+" x "+berat_wanita+" gram <br />ongkos bikin "+toRp(ongkos_bikin)+"<br />Bonus tambahan <br />- Free exclusive ring box<br />- Sertifikat keaslian logam<br />- Free Ukir nama pasangan<br />- Free souvenir cantik<br />"+toRp(total)+"<br /><br />Jumlah DP 50% yaitu "+toRp(dp)+"<br />Jumlah DP untuk transaksi COD "+toRp(dp_75)+"<br /><br />Dilunasi ketika barang sudah jadi<br /><br />Harga diatas masih bisa kurang, tergantung dengan BERAT logam ketika cincin sudah jadi. Anda hanya membayar seberat logam cincin saja. Rincian harga lebih transparan dari toko sebelah";
         
       }else if (logam_pria == "Silver 925" && logam_wanita != "Silver 925"){
         //-- cincin pria menggunakan perak. 
@@ -267,7 +288,7 @@
         var dp = total / 2;
         var dp_75 = (berat_wanita * dp_logam_wanita) + harga_pria;
 
-        var rincian = "Cincin Pria "+logam_pria+" "+toRp(harga_pria)+" berat "+berat_pria+" gram <br />Cincin Wanita "+logam_wanita+" "+toRp(harga_wanita)+" x "+berat_wanita+" gram <br />ongkos bikin "+toRp(ongkos_bikin)+"<br />Bonus tambahan <br />- Free exclusive ring box<br />- Sertifikat keaslian logam<br />- Free Ukir nama pasangan<br />- Free souvenir cantik<br />"+toRp(total)+"<br /><br />Pembayaran bisa DP dulu 75% yaitu "+toRp(dp_75)+"<br />Dilunasi ketika barang sudah jadi<br /><br />Harga diatas masih bisa kurang, tergantung dengan BERAT logam ketika cincin sudah jadi. Anda hanya membayar seberat logam cincin saja. Rincian harga lebih transparan dari toko sebelah";
+        var rincian = "Cincin Pria "+logam_pria+" "+toRp(harga_pria)+" berat "+berat_pria+" gram <br />Cincin Wanita "+logam_wanita+" "+toRp(harga_wanita)+" x "+berat_wanita+" gram <br />ongkos bikin "+toRp(ongkos_bikin)+"<br />Bonus tambahan <br />- Free exclusive ring box<br />- Sertifikat keaslian logam<br />- Free Ukir nama pasangan<br />- Free souvenir cantik<br />"+toRp(total)+"<br /><br />Jumlah DP 50% yaitu "+toRp(dp)+"<br />Jumlah DP untuk transaksi COD "+toRp(dp_75)+"<br /><br />Dilunasi ketika barang sudah jadi<br /><br />Harga diatas masih bisa kurang, tergantung dengan BERAT logam ketika cincin sudah jadi. Anda hanya membayar seberat logam cincin saja. Rincian harga lebih transparan dari toko sebelah";
       }else if (logam_pria != "Silver 925" && logam_wanita == "Silver 925"){
         //-- cincin wanita perak
 
@@ -276,7 +297,7 @@
         var dp = total / 2;
         var dp_75 = (berat_pria * dp_logam_pria) + harga_wanita;
 
-        var rincian = "Cincin Pria "+logam_pria+" "+toRp(harga_pria)+" x "+berat_pria+" gram <br />Cincin Wanita "+logam_wanita+" "+toRp(harga_wanita)+" berat "+berat_wanita+" gram <br />ongkos bikin "+toRp(ongkos_bikin)+"<br />Bonus tambahan <br />- Free exclusive ring box<br />- Sertifikat keaslian logam<br />- Free Ukir nama pasangan<br />- Free souvenir cantik<br />"+toRp(total)+"<br /><br />Pembayaran bisa DP dulu 75% yaitu "+toRp(dp_75)+"<br />Dilunasi ketika barang sudah jadi<br /><br />Harga diatas masih bisa kurang, tergantung dengan BERAT logam ketika cincin sudah jadi. Anda hanya membayar seberat logam cincin saja. Rincian harga lebih transparan dari toko sebelah";
+        var rincian = "Cincin Pria "+logam_pria+" "+toRp(harga_pria)+" x "+berat_pria+" gram <br />Cincin Wanita "+logam_wanita+" "+toRp(harga_wanita)+" berat "+berat_wanita+" gram <br />ongkos bikin "+toRp(ongkos_bikin)+"<br />Bonus tambahan <br />- Free exclusive ring box<br />- Sertifikat keaslian logam<br />- Free Ukir nama pasangan<br />- Free souvenir cantik<br />"+toRp(total)+"<br /><br />Jumlah DP 50% yaitu "+toRp(dp)+"<br />Jumlah DP untuk transaksi COD "+toRp(dp_75)+"<br /><br />Dilunasi ketika barang sudah jadi<br /><br />Harga diatas masih bisa kurang, tergantung dengan BERAT logam ketika cincin sudah jadi. Anda hanya membayar seberat logam cincin saja. Rincian harga lebih transparan dari toko sebelah";
       }else if (logam_pria == "Silver 925" && logam_wanita == "Silver 925"){
         var rincian = 'Mohon maaf, harga untuk cincin bahan silver 925 (perak) couple silahkan hubungi customer service kami. Karena harga cincin perak tidak dihitung per gram, tetapi per model.<br />Harga mulai dari Rp 450.000 s/d Rp 800.000 tergantung tingkat kerumitan<br /><a href="https://zavirajewelry.com/chat" target="_blank">Chat dengan CS kami</a></a>';
       }

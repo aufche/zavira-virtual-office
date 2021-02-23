@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/pakbejo','PesananController@pakbejo')->name('pesanan.pakbejo');
+Route::get('/calc','LogamController@kalkulator')->name('kalkulator.backend');
 
 Route::get('/pl/{package?}/{target?}','LogamController@pricelist')->name('logam.pricelist');
 Route::get('/ps/{bahan?}','LogamController@pricelist_single')->name('logam.pricelist.single');
