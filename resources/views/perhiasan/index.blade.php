@@ -16,7 +16,7 @@
 <main class="app-content">
       <div class="app-title">
         <div>
-          <h1 class="h3"><i class="fas fa-tachometer-alt"></i> All Orders</h1>
+          <h1 class="h3"><i class="fas fa-tachometer-alt"></i> Pesanan Bukan Cincin Kawin</h1>
           <p><?php 
             if (!isset($cs)){
               echo 'Semua Orderan';
@@ -112,8 +112,7 @@
                         <!--<th>Option</th>-->
                         <th>Nama Pemesan</th>
                         <th>Kode</th>
-                        <th>Bahan Cincin Pria</th>
-                        <th>Bahan Cincin Wanita</th>
+                        <th>Jenis Perhiasan</th>
                         <th>Tgl Masuk</th>
                         <th>Tgl Selesai</th>
                         <th>Asal & CS</th>
@@ -134,40 +133,17 @@
                       Alamat pengiriman : <?php echo $item->alamat;?>, <?php echo $item->nohp;?><br />
                       <hr />
                       <?php
-                        if (!empty($item->gambar_cincin_pria)){
+                        
+
+                      
+
+                        if (!empty($item->gambar_perhiasan)){
                           ?>
-                          <fieldset>
-                            <legend>Cincin Pria</legend>
-                            <img src="<?php echo $item->gambar_cincin_pria;?>" class="img-thumbnail img-fluid" alt="cincin" /><br />
-                            <?php echo $item->finising_pria;?>
-                          </fieldset>
+                          <img src="<?php echo $item->gambar_perhiasan;?>" class="img-thumbnail" alt="cincin" /><br />
                           <?php
                         }
 
-                        if (!empty($item->gambar_cincin_wanita)){
-                          ?>
-                          <fieldset>
-                            <legend>Cincin Wanita</legend>
-                            <img src="<?php echo $item->gambar_cincin_wanita;?>" class="img-thumbnail img-fluid" alt="cincin" /><br />
-                            <?php echo $item->finising_pria;?>
-                          </fieldset>
-                          <?php
-                        }
-
-                        if (!empty($item->gambar)){
-                          ?>
-                          <img src="<?php echo $item->gambar;?>" class="img-thumbnail" alt="cincin" /><br />
-                          <?php
-                        }
-
-                        if (!empty($item->gambargambar)){
-                          $gambar = explode(',',$item->gambargambar);
-                            foreach($gambar as $gbr){
-                            ?>
-                            <img src="<?php echo $gbr;?>" alt="" class="img-thumbnail" width="200px" /><br />
-                            <?php
-                        }
-                        }
+                        
 
                         if (!empty($item->finising_pria) && (empty($item->gambar_cincin_pria)) ){
                           echo 'Finising Cincin Pria<br />';
@@ -199,8 +175,8 @@
                     <?php if ($item->printed != null) echo '<small class="text-muted">Dicetak oleh '.$item->printed.'</small>';?>
                     </td>
                     <td><?php echo $item->kodecincin;?></td>
-                    <td><?php echo $item->bahanpria()->first()['title'];?><br /><?php echo aa('Ukuran ',$item->ukuranpria);?><br /><?php echo aa('Grafir ',$item->grafirpria);?><br /><?php echo aa('Max ',$item->produksi_beratpria,'gr');?></td>
-                    <td><?php echo $item->bahanwanita()->first()['title'];?><br /><?php echo aa('Ukuran ',$item->ukuranwanita);?><br /><?php echo aa('Grafir ',$item->grafirwanita);?><br /><?php echo aa('Max ',$item->produksi_beratwanita,'gr');?></td>
+                    <td><?php echo $item->bahan_perhiasan()->first()['title'];?><br /><?php echo $item->jenis_perhiasan?><br /><?php echo aa('Max ',$item->berat_produksi_perhiasan,'gr');?></td>
+                    
                     <td><?php echo date('d M Y', strtotime($item->tglmasuk));?></td>
                     <td><?php echo date('d M Y', strtotime($item->tglselesai));?><br /><span class="badge badge-pill badge-warning">Deadline pengrajin <?php echo date('d M Y', strtotime($item->deadline));?></span></td>
                     <td><?php echo $item->asal->title;?><br />By <?php echo $item->user->name;?></td>
@@ -209,7 +185,6 @@
                         if ($item->produksi_dibayar != 0) echo ' <span class="badge badge-success"><i class="fas fa-check"></i></span>'; else echo '<span class="badge badge-danger"><i class="fas fa-times"></i></span>';
 
                         if (!empty($item->plated_id)) echo '<br />Lapis di '.$item->plated->title;
-                        echo '<br />Digrafir oleh '.$item->grafir;
                     ?>
                     
                     </td>
@@ -244,7 +219,7 @@
                         ?>
                     </td>
                     <td colspan="2">Free kotak exclusive <?php echo $item->finising;?></td>
-                    <td colspan="2"><?php if (!empty($item->free_woodbox)) {
+                    <td><?php if (!empty($item->free_woodbox)) {
                       echo '<span class="badge badge-danger">Ya</span>';
                       echo $item->free_woodbox;
                       if ($item->woodbox_ok == 1){
@@ -258,7 +233,7 @@
                 </tr>
                 <tr class="bg-dark text-white">
                     
-                    <td colspan="3" class="border border-bottom border-dark border-top-0 border-right-0 border-left-0"><?php echo aa('Harga<br />',rupiah($item->hargabarang));?></td>
+                    <td colspan="2" class="border border-bottom border-dark border-top-0 border-right-0 border-left-0"><?php echo aa('Harga<br />',rupiah($item->hargabarang));?></td>
                     <td colspan="2" class="border border-bottom border-dark border-top-0 border-right-0 border-left-0"><?php echo aa('DP<br />',rupiah($item->dp));?></td>
                     <td colspan="2" class="border border-bottom border-dark border-top-0 border-right-0 border-left-0"><?php echo aa('Ongkir<br />',rupiah($item->ongkir));?></td>
                     <td colspan="2" class="border border-bottom border-dark border-top-0 border-right-0 border-left-0"><?php echo aa('Pelunasan<br />',rupiah($item->pelunasan));?></td>
@@ -271,7 +246,7 @@
                     <td colspan="5">kirim ke pak bejo <?php echo $item->kirim_ke_pengrajin;?></td>
                 </tr>-->
                 <tr>
-                  <td colspan="11">
+                  <td colspan="10">
                   
                   <nav class="navbar navbar-expand-lg navbar-light text-dark bg-light ">
                   

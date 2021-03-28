@@ -13,4 +13,8 @@ class Plated extends Model
         return $this->hasMany('App\Pesanan');
     }
 
+    public function perhiasan(){
+        return $this->hasMany('App\Perhiasan');
+    }
+
 }

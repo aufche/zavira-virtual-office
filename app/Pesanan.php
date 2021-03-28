@@ -47,6 +47,10 @@ Class Pesanan extends Model{
         return $this->hasOne('App\Namalogam','id','bahanwanita');
     }
 
+    public function bahan_perhiasan(){
+        return $this->hasOne('App\Namalogam','id','bahan_perhiasan');
+    }
+
     public function history(){
         return $this->hasMany('App\History');
     }

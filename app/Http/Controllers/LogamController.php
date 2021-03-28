@@ -230,7 +230,7 @@ Class LogamController extends Controller{
 function kalkulator($apa=null){
     $hargapokok = \App\Setting::whereIn('kunci',['harga_pokok_emas','harga_pokok_palladium','ongkos_bikin','harga_pokok_silver','harga_pokok_platinum','harga_harian_emas','harga_harian_palladium','harga_harian_platinum'])->get();
     //$harga_harian_logam = \App\Setting::whereIn('kunci',['harga_harian_emas','harga_harian_palladium','harga_harian_platinum'])->get();
-    $logam = \App\Namalogam::orderBy('title','asc')->get();
+    $logam = \App\Namalogam::whereNotNull('active')->orderBy('title','asc')->get();
     if ($apa == null){
         return view('logam.kalkulator2',compact('logam','hargapokok'));    
     }elseif ($apa == 'pricelist'){
@@ -266,42 +266,26 @@ function pricelist_single($bahan=null){
     if ($bahan == 'emas'){
         $hargapokok = \App\Setting::where('kunci','=','harga_pokok_emas')->first();
         $ongkos_bikin = \App\Setting::where('kunci','=','ongkos_bikin')->first();
-        $data_logam_emas = \App\Namalogam::where('jenis','emas')->whereIn('kadar',['50','75','80','85','90'])->orderBy('kadar','asc')->get();
-        $data_logam_emas_ekonomis = \App\Namalogam::where('jenis','emas')->whereIn('kadar',['10','20','25','30','40'])->orderBy('kadar','asc')->get();
-        $data_logam_emas_putih = \App\Namalogam::where('jenis','ep')->orderBy('kadar','asc')->get();
+        $data_logam_emas = \App\Namalogam::where('jenis','emas')->whereIn('kadar',['50','54','58','75','83','91','23','95'])->whereNotNull('active')->orderBy('kadar','asc')->get();
+        $data_logam_emas_ekonomis = \App\Namalogam::where('jenis','emas')->whereIn('kadar',['12','16','20','25','29'])->whereNotNull('active')->orderBy('kadar','asc')->get();
+        $data_logam_emas_mid = \App\Namalogam::where('jenis','emas')->whereIn('kadar',['33','37','41'])->whereNotNull('active')->orderBy('kadar','asc')->get();
+        
         $logam = 'Emas';
 
-        return view('pricelist.single',compact('hargapokok','ongkos_bikin','data_logam_emas','logam','data_logam_emas_ekonomis','data_logam_emas_putih'));
+        return view('pricelist.single',compact('hargapokok','ongkos_bikin','data_logam_emas','logam','data_logam_emas_ekonomis','data_logam_emas_mid'));
     }
-
-    /*if ($bahan == 'emas-ekonomis'){
-        $hargapokok = \App\Setting::where('kunci','=','harga_pokok_emas')->first();
-        $ongkos_bikin = \App\Setting::where('kunci','=','ongkos_bikin')->first();
-        $data_logam = \App\Namalogam::where('jenis','emas')->whereIn('kadar',['10','20','25','30','40'])->orderBy('kadar','asc')->get();
-        $logam = 'Emas Putih/Kuning';
-
-        return view('pricelist.single',compact('hargapokok','ongkos_bikin','data_logam','logam'));
-    }
-
 
     if ($bahan == 'ep'){
         $hargapokok = \App\Setting::where('kunci','=','harga_pokok_emas')->first();
         $ongkos_bikin = \App\Setting::where('kunci','=','ongkos_bikin')->first();
-        $data_logam = \App\Namalogam::where('jenis','ep')->orderBy('kadar','asc')->get();
-        $logam = 'Emas Putih';
 
-        return view('pricelist.single',compact('hargapokok','ongkos_bikin','data_logam','logam'));
-    }
-    */
-    /*if ($bahan == 'platidium'){
-        $hargapokok = \App\Setting::where('kunci','=','harga_pokok_emas')->first();
-        $ongkos_bikin = \App\Setting::where('kunci','=','ongkos_bikin')->first();
-        $data_logam = \App\Namalogam::where('jenis','ep')->orderBy('kadar','asc')->get();
-        $logam = 'Emas Putih';
+        $data_logam_emas_putih = \App\Namalogam::where('jenis','ep')->orderBy('kadar','asc')->get();
+        $logam = 'Emas';
 
-        return view('pricelist.single',compact('hargapokok','ongkos_bikin','data_logam','logam'));
+        return view('pricelist.single_emas_putih',compact('hargapokok','ongkos_bikin','logam','data_logam_emas_putih'));
     }
-    */
+
+    
 }
 
 function harga_logam($platinum=null){

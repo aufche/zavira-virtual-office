@@ -228,12 +228,12 @@
                         <div class="card-header bg-dark text-white">Pengaturan Orderan</div>
                         <div class="card-body">
                             <div class="form-row">
-                                    <div class="col-md-3 mb-3">
+                                    <div class="col-md-2 mb-3">
                                     <label for="validationDefault03">Tanggal Masuk</label>
                                     <input type="text" name="tmasuk" id="date" value="<?php echo old('tmasuk');?>" class="form-control" >
                                     </div>
 
-                                    <div class="col-md-3 mb-3">
+                                    <div class="col-md-2 mb-3">
                                     <label for="validationDefault04">Tanggal Selesai</label>
                                     <input  type="text" name="tselesai" id="date2" value="<?php echo old('tselesai');?>" class="form-control" id="datepicker" />
                                     </div>
@@ -275,6 +275,15 @@
                                     
                                     </div>
 
+
+                                    <div class="col-md-2 mb-3">
+                                    <label for="validationDefault05">Grafir <span class="badge badge-pill badge-danger">New</span></label>
+                                    <select class="form-control" name="grafir" required>
+                                        <option value="Pak Bejo">Pak Bejo</option>
+                                        <option value="Mbak Ani">Mbak Ani</option>
+                                    </select>
+                                    </div>
+
                                     <div class="col-md-2 mb-3">
                                     <label for="validationDefault05">Asal Orderan</label>
                                     <select class="form-control" name="asal_id" required>
@@ -298,7 +307,7 @@
                                     </div>
 
                                     <div class="col-md-2 mb-3">
-                                    <label for="alamat">Kelengkapan <span class="badge badge-pill badge-primary">New</span></label>
+                                    <label for="alamat">Kelengkapan</label>
                                     <select class="form-control" name="stock_id" required>
                                         <option value="" selected="selected">Pilih kelengkapan produk</option>
                                         <?php 
@@ -355,9 +364,10 @@
                                     </div>
                                     
                                     <div class="col mb-3 ">
-                                    <label for="validationDefault05">Jumlah DP</label>
+                                    <label for="validationDefault05">Jumlah DP/Lunas</label>
                                     <input type="text" name="dp" class="form-control dp" value="<?php echo old('dp');?>" required v-model="dp">
                                     <small class="form-text text-muted">@{{ dp | rp }}</small>
+                                    <input type="checkbox" name="is_lunas" /> Centang jika lunas
                                     </div>
 
                                     <div class="col mb-3 ">

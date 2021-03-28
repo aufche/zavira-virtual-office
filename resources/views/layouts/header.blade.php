@@ -35,7 +35,8 @@
           <a class="dropdown-item" href="<?php echo route('pesanan.aku');?>"><i class=" fa fa-user"></i> My Client</span> <span class="badge badge-danger">New</span></a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="<?php echo route('pesanan.finish');?>"><i class=" fa fa-wrench"></i> Update Finising</span></a>
-          <a class="dropdown-item" href="<?php echo route('semua');?>"><i class=" fa fa-shopping-bag"></i> Data Pesanan</span></a>
+          <a class="dropdown-item" href="<?php echo route('semua');?>"><i class=" fa fa-shopping-bag"></i> Orderan Cincin Kawin</span></a>
+          <a class="dropdown-item" href="<?php echo route('perhiasan.index');?>"><i class="fas fa-chart-line"></i> Orderan Bukan Cincin Kawin</span></a>
           <a class="dropdown-item" href="<?php echo route('pesanan.lead');?>"><i class="fas fa-comments"></i> Update Chat</span></a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="<?php echo route('pesanan.chart');?>"><i class="fas fa-chart-line"></i> Grafik Orderan</span></a>

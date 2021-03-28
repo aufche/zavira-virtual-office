@@ -31,6 +31,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 
+Route::prefix('perhiasan')->group(function (){
+    Route::get('/', 'PerhiasanController@index')->name('perhiasan.index')->middleware('acl');
+    Route::any('/add', 'PerhiasanController@insert')->name('perhiasan.add')->middleware('acl');
+    Route::any('/edit/{id?}', 'PerhiasanController@edit')->name('perhiasan.edit')->middleware('acl');
+});
+
 
 Route::prefix('pesanan')->group(function () {
     Route::any('/stat', 'PesananController@statistik_perbandingan')->name('pesanan.stat')->middleware('acl');
@@ -355,7 +361,7 @@ Route::prefix('pembukuan')->group(function () {
                 ->where('bulantahun','=',date('F Y'))
                 ->get();
             //return view('pembukuan.semua',compact('data'));
-            return redirect()->route('pembukuan.detail',['id'=>1]);
+            return redirect()->route('pembukuan.detail',['id'=>4]);
         }
     })->name('pembukuan.semua')->middleware('auth');
 

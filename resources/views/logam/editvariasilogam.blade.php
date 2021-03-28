@@ -47,6 +47,14 @@
                 <input type="text" name="markup" class="form-control" value="<?php echo $data->markup; ?>" required>
                 </div>
             </div>
+
+            <div class="form-row">
+            <div class="col-md-3 mb-3">
+                <label for="validationDefault04">Kadar</label>
+                <input type="text" name="kadar" class="form-control" value="<?php echo $data->kadar; ?>" required>
+            </div>
+            <input type="checkbox" name="active" <?php  if ($data->active == 'on') echo 'checked="checked"';?> /> Aktif ?
+            </div>
             <button type="submit" class="btn btn-primary btn-block">Simpan</button>
         </form>
       </div>

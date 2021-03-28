@@ -26,6 +26,7 @@
             <td>Harga Pokok</td>
             <td>Markup</td>
             <td>Harga Jual</td>
+            <td>Status</td>
             <td>Opsi</td>
         </tr>
     <?php
@@ -42,7 +43,7 @@
             $hp = ($harga_pokok[1]->isi + $harga_pokok[2]->isi) / 2;
         }
         ?>
-        <tr>
+        <tr <?php if ($item->active == null) echo 'class="text-muted"';?>>
             <td><?php echo $item->id;?></td>
             <td><?php echo $item->kode;?></td>
             <td><?php echo $item->title;?></td>
@@ -51,7 +52,8 @@
             <td><?php echo rupiah(($item->kadar/100) * $hp);?></td>
             <td><?php echo rupiah($item->markup);?></td>
             <td><?php echo rupiah(($item->kadar/100) * $hp + $item->markup);?></td>
-            <td><a class="btn btn-info" href="<?php echo route('logam.edit',['id'=>$item->id]);?>">Edit</a> <a class="btn btn-danger" href="<?php echo route('logam.del',['id'=>$item->id]);?>">Hapus</a></td>
+            <td><?php if ($item->active != null ) echo 'Active <i class="fas fa-check-circle"></i>'; else echo 'Tidak Aktif';?></td>
+            <td><a class="btn btn-info shadow" href="<?php echo route('logam.edit',['id'=>$item->id]);?>">Edit</a> <a class="btn btn-danger shadow" href="<?php echo route('logam.del',['id'=>$item->id]);?>">Hapus</a></td>
         </tr>
         <?php
     }

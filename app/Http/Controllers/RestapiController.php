@@ -11,7 +11,7 @@ use Illuminate\Support\Arr;
 Class RestapiController extends Controller{
 
     function logam(){
-        $data = \App\Namalogam::orderBy('title','asc')->get();
+        $data = \App\Namalogam::whereNotNull('active')->orderBy('title','asc')->get();
 
         return response()->json($data, 201);
     }
@@ -24,7 +24,7 @@ Class RestapiController extends Controller{
 
     function kalkulator(){
 
-        $nama_logam = \App\Namalogam::orderBy('title','asc')->get();
+        $nama_logam = \App\Namalogam::whereNotNull('active')->orderBy('title','asc')->get();
         //$harga_pokok = \App\Setting::whereIn('kunci',['harga_pokok_emas','harga_pokok_palladium','ongkos_bikin','harga_pokok_silver','harga_pokok_platinum'])->get();
 
         $emas = DB::table('setting')->select('isi')->where('kunci','harga_pokok_emas')->first();
@@ -238,8 +238,98 @@ Class RestapiController extends Controller{
        return response()->json($cs, 201);
     }
 
+    function chat_langsung($id = null, $message = null){
+        $cs = \App\User::find($id);
+        //dd($cs);
+        $message = rawurlencode($message);
+        return redirect()->away('https://api.whatsapp.com/send?phone='.$cs->wa.'&text='.$message);
+        //return redirect()->away('http://google.com');
+
+    }
+
+    function pricelist_single($bahan=null){
+        if ($bahan == 'palladium'){
+            $hargapokok_pall = \App\Setting::where('kunci','=','harga_pokok_palladium')->first();
+            $hargapokok_pt = \App\Setting::where('kunci','=','harga_pokok_platinum')->first();
+    
+            $ongkos_bikin = \App\Setting::where('kunci','=','ongkos_bikin')->first();
+            
+            $data_logam_pall = \App\Namalogam::where('jenis','palladium')->orderBy('kadar','asc')->get();
+            $data_logam_pt = \App\Namalogam::where('jenis','platinum')->orderBy('kadar','asc')->get();
+    
+            $logam = 'Palladium & Platinum';
+    
+            
+
+            return response()->json([
+                'hargapokok_pall' => $hargapokok_pall,
+                'hargapokok_pt' => $hargapokok_pt,
+                'ongkos_bikin' => $ongkos_bikin,
+                'data_logam_pall' => $data_logam_pall,
+                'logam' => $logam,
+                'data_logam_pt' => $data_logam_pt,
+            ],201);
+        }
+    
+        if ($bahan == 'platinum'){
+            $hargapokok = \App\Setting::where('kunci','=','harga_pokok_platinum')->first();
+            $ongkos_bikin = \App\Setting::where('kunci','=','ongkos_bikin')->first();
+            $data_logam = \App\Namalogam::where('jenis','platinum')->orderBy('kadar','asc')->get();
+            $logam = 'Platinum';
+    
+           
+
+            return response()->json([
+                'hargapokok' => $hargapokok,
+                'ongkos_bikin' => $ongkos_bikin,
+                'data_logam' => $data_logam,
+                'logam' => $logam,
+            ],201);
+        }
+    
+        if ($bahan == 'emas'){
+            $hargapokok = \App\Setting::where('kunci','=','harga_pokok_emas')->first();
+            $ongkos_bikin = \App\Setting::where('kunci','=','ongkos_bikin')->first();
+            $data_logam_emas = \App\Namalogam::where('jenis','emas')->whereIn('kadar',['50','54','58','75','83','91','23','95'])->whereNotNull('active')->orderBy('kadar','asc')->get();
+            $data_logam_emas_ekonomis = \App\Namalogam::where('jenis','emas')->whereIn('kadar',['12','16','20','25','29'])->whereNotNull('active')->orderBy('kadar','asc')->get();
+            $data_logam_emas_mid = \App\Namalogam::where('jenis','emas')->whereIn('kadar',['33','37','41'])->whereNotNull('active')->orderBy('kadar','asc')->get();
+            
+            $logam = 'Emas';
+    
+        }
+    
+        if ($bahan == 'ep'){
+            $hargapokok = \App\Setting::where('kunci','=','harga_pokok_emas')->first();
+            $ongkos_bikin = \App\Setting::where('kunci','=','ongkos_bikin')->first();
+    
+            $data_logam_emas_putih = \App\Namalogam::where('jenis','ep')->orderBy('kadar','asc')->get();
+            $logam = 'Emas';
+    
+            
+
+            return response()->json([
+                'hargapokok' => $hargapokok,
+                'ongkos_bikin' => $ongkos_bikin,
+                'logam' => $logam,
+                'data_logam_emas_putih' => $data_logam_emas_putih,
+            ],201);
+        }
+
+
+        return response()->json([
+            'hargapokok' => $hargapokok,
+            'ongkos_bikin' => $ongkos_bikin,
+            'data_logam_emas' => $data_logam_emas,
+            'logam' => $logam,
+            'data_logam_emas_ekonomis' => $data_logam_emas_ekonomis,
+            'data_logam_emas_mid' => $data_logam_emas_mid,
+        ],201);
+    
+        
+    }
+
     function couple_pricelist(){
-        $data_logam = \App\Namalogam::orderBy('title','asc')->get()->toArray();
+        $data_logam = \App\Namalogam::whereNotNull('active')->orderBy('title','asc')->get()->toArray();
         $data_harga = \App\Setting::whereIn('kunci',['harga_pokok_emas','harga_pokok_palladium','ongkos_bikin','harga_pokok_silver','harga_pokok_platinum'])->get()->toArray();
         
 
@@ -307,5 +397,51 @@ Class RestapiController extends Controller{
                 'ongkir' => 0,
                 'box_kayu' => 0
             ],201);
+    }
+
+    function ai_pricelist(){
+        $hargapokok = \App\Setting::whereIn('kunci',['harga_pokok_emas','harga_pokok_palladium','harga_pokok_platinum','ongkos_bikin'])->get();
+        
+        $data_logam_pria = \App\Namalogam::whereIn('jenis',['palladium','platinum','platidium'])->whereNotNull('active')->orderBy('kadar','asc')->get();
+        $data_logam_wanita = \App\Namalogam::whereIn('jenis',['emas','palladium','platinum','platidium'])->whereNotNull('active')->orderBy('kadar','asc')->get();
+
+        return response()->json([
+            'logam_pria' => $data_logam_pria,
+            'logam_wanita' => $data_logam_wanita,
+            'harga_pokok' => $hargapokok,
+        ], 201);
+    }
+
+    function ai_pricelist_search(Request $request){
+        $logam_pria = $request->input('logam_pria');
+        $logam_wanita = $request->input('logam_wanita');
+        $min = $request->input('min');
+        $max = $request->input('max');
+
+        $hargapokok = \App\Setting::whereIn('kunci',['harga_pokok_emas','harga_pokok_palladium','harga_pokok_platinum','ongkos_bikin'])->get();
+
+        $data_logam_pria = \App\Namalogam::where('jenis',$logam_pria)->whereNotNull('active')->orderBy('kadar','asc')->get();
+        $data_logam_wanita = \App\Namalogam::where('jenis',$logam_wanita)->whereNotNull('active')->orderBy('kadar','asc')->get();
+
+        return response()->json([
+            'logam_pria' => $data_logam_pria,
+            'logam_wanita' => $data_logam_wanita,
+            'harga_pokok' => $hargapokok,
+            'min' => $min,
+            'max' => $max,
+        ], 201);
+    }
+
+    function pricelist_single_2(){
+        
+        $hargapokok = \App\Setting::whereIn('kunci',['harga_pokok_emas','harga_pokok_palladium','harga_pokok_platinum','ongkos_bikin'])->get();
+
+        $emas = \App\Namalogam::where('jenis','emas')->whereIn('kadar',['50','54','58','75','83','91','95'])->whereNotNull('active')->orderBy('kadar','asc')->get();
+
+        return response()->json([
+            'emas' => $emas,
+            'harga_pokok' => $hargapokok,
+        ], 201);
+
     }
 }

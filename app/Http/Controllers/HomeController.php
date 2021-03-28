@@ -31,7 +31,7 @@ class HomeController extends Controller
     public function index()
     {
         $pengrajin = DB::table('pengrajin')->pluck('id','nama');
-        $namalogam = DB::table('namalogam')->pluck('id','title');
+        $namalogam = DB::table('namalogam')->whereNotNull('active')->orderBy('jenis','asc')->pluck('id','title');
         $asal = DB::table('asal')->pluck('id','title');
         $kurir = DB::table('kurir')->pluck('id','title');
         $plated = DB::table('plated')->pluck('id','title');
@@ -124,6 +124,8 @@ class HomeController extends Controller
             'updated_at' => \Carbon\Carbon::now(),
             'finising_pria' => $request->input('finising_pria'),
             'finising_wanita' => $request->input('finising_wanita'),
+            'is_lunas' => $request->input('is_lunas'),
+            'grafir' => $request->input('grafir'),
         ];
 
         if (!empty($request->file('gambar'))){
@@ -374,7 +376,7 @@ class HomeController extends Controller
 
     function edit($id){
         $pengrajin = DB::table('pengrajin')->pluck('id','nama');
-        $namalogam = DB::table('namalogam')->pluck('id','title');
+        $namalogam = DB::table('namalogam')->whereNotNull('active')->orderBy('jenis','asc')->pluck('id','title');
         $asal = DB::table('asal')->pluck('id','title');
         $kurir = DB::table('kurir')->pluck('id','title');
         $plated = DB::table('plated')->pluck('id','title');
@@ -585,6 +587,8 @@ class HomeController extends Controller
         $pesanan->finising_pria = $request->input('finising_pria');
         $pesanan->finising_wanita = $request->input('finising_wanita');
         $pesanan->promo_id = $request->input('promo_id');
+        $pesanan->is_lunas = $request->input('is_lunas');
+        $pesanan->grafir = $request->input('grafir');
         $pesanan->save();
 
 
@@ -680,7 +684,7 @@ class HomeController extends Controller
         $user = DB::table('users')->pluck('id','name');
         */
 
-        $data = \App\Pesanan::orderBy('id','desc')->where('arsipkan',0)->simplePaginate(15);
+        $data = \App\Pesanan::orderBy('id','desc')->where('arsipkan',0)->whereNull('jenis_perhiasan')->simplePaginate(15);
 
         $user_id = Auth::id();
         $selesai = \App\Pesanan::where('user_id',$user_id)->where('finising',3)->whereNotNull('resi')->count();

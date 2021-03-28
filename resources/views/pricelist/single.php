@@ -69,7 +69,7 @@ background-position:center;
             <h1 class="display-3" style="font-weight:700"><span class="bg-warning p-2"><?php echo 'Pricelist Cincin Single'; ?></span></h1>
             <p class="display-5"><span class="bg-warning p-2">Material <?php echo $logam;?></span></p>
     </div>
-    <span class="p-3 bg-warning shadow font-weight-bold border border-secondary"><i class="far fa-gem"></i> Emas Kuning</span>
+    <span class="p-3 bg-warning shadow font-weight-bold border border-secondary"><i class="far fa-gem"></i> Emas Tua</span>
     <table class="table mb-5 table-bordered">
         <tr>
 			<td rowspan="2" class="align-middle bg-warning text-dark">No</td>
@@ -106,7 +106,7 @@ background-position:center;
         ?>
     </table>
 
-    <span class="p-3 bg-warning shadow font-weight-bold border border-secondary"><i class="far fa-gem"></i> Emas Putih Premium</span>
+    <span class="p-3 bg-warning shadow font-weight-bold border border-secondary"><i class="far fa-gem"></i> Emas Kadar Sedang</span>
     <table class="table mb-5 table-bordered">
         <tr>
 			<td rowspan="2" class="align-middle bg-warning text-dark">No</td>
@@ -123,7 +123,7 @@ background-position:center;
         
         <?php 
            
-            foreach ($data_logam_emas_putih as $item){
+            foreach ($data_logam_emas_mid as $item){
                 $hrg_pergram = ($item->kadar/100) * $hargapokok->isi + $item->markup;
                 $seni = ($ongkos_bikin->isi/2);
                ?>
@@ -143,7 +143,7 @@ background-position:center;
         ?>
     </table>
 
-    <span class="p-3 bg-warning shadow font-weight-bold border border-secondary"><i class="far fa-gem"></i> Emas Putih/Kuning Standar</span>
+    <span class="p-3 bg-warning shadow font-weight-bold border border-secondary"><i class="far fa-gem"></i> Emas Muda</span>
     <table class="table table-bordered">
         <tr>
 			<td rowspan="2" class="align-middle bg-warning text-dark">No</td>
@@ -194,12 +194,7 @@ background-position:center;
         <img src="<?php echo asset('images/logo-pl.png');?>" class="img-fluid" width="200px" />
         </div>
     </div>
-    <div class="row mt-5 text-center">
-        <div class="col"><i class="fas fa-check-circle"></i> Free Exclusive Ring Box (couple ring)</div>
-        <div class="col"><i class="fas fa-check-circle"></i> Free Engrave Name</div>
-        <div class="col"><i class="fas fa-check-circle"></i> Sertifikat Logam</div>
-        
-    </div>
+    
 
   </div>
 

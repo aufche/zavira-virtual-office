@@ -260,12 +260,12 @@
         <div class="card-header bg-dark text-white">Pengaturan Orderan</div>
         <div class="card-body">
             <div class="form-row">
-                    <div class="col-md-3 mb-3">
+                    <div class="col-md-2 mb-3">
                     <label for="validationDefault03">Tanggal Masuk</label>
                     <input type="text" name="tmasuk" value="<?php echo old('tglmasuk',$data->tglmasuk);?>" id="date" class="form-control" >
                     </div>
 
-                    <div class="col-md-3 mb-3">
+                    <div class="col-md-2 mb-3">
                     <label for="validationDefault04">Tanggal Selesai</label>
                     <input type="text" name="tselesai" value="<?php echo old('tglselesai',$data->tglselesai);?>" id="date2" class="form-control" id="datepicker" />
                     </div>
@@ -301,6 +301,14 @@
                         ?>
                       </select>
                     </div>
+
+                    <div class="col-md-2 mb-3">
+                        <label for="validationDefault05">Grafir <span class="badge badge-pill badge-danger">New</span></label>
+                        <select class="form-control" name="grafir" required>
+                            <option value="Pak Bejo" <?php if ($data->grafir == 'Pak Bejo') echo 'selected';?>>Pak Bejo</option>
+                            <option value="Mbak Ani" <?php if ($data->grafir == 'Mbak Ani') echo 'selected';?>>Mbak Ani</option>
+                        </select>
+                   </div>
 
                     <div class="col-md-3 mb-3">
                     <label for="validationDefault05">Asal Orderan</label>
@@ -360,8 +368,9 @@
                     </div>
                     
                     <div class="col mb-3">
-                    <label for="validationDefault05">Jumlah DP</label>
+                    <label for="validationDefault05">Jumlah DP / Lunas</label>
                     <input type="text" name="dp" value="<?php echo old('dp',$data->dp);?>" class="form-control dp" >
+                    <input type="checkbox" name="is_lunas" <?php  if ($data->is_lunas == 'on') echo 'checked="checked"';?> /> Centang jika lunas
                     </div>
 
                     <div class="col mb-3">

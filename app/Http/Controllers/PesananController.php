@@ -882,7 +882,7 @@ Class PesananController extends Controller{
         }elseif ($request->isMethod('get') && !empty($id)){
             //-- get, fill form 
             $data = DB::table('pesanan')->where('id',$id)->first();
-            $namalogam = DB::table('namalogam')->pluck('id','title');
+            $namalogam = DB::table('namalogam')->whereNotNull('active')->orderBy('jenis','asc')->pluck('id','title');
             return view('pesanan.edit_logam',compact('data','namalogam'));
         }
     }

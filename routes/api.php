@@ -28,6 +28,11 @@ Route::post('/orderweb','RestapiController@orderweb');
 Route::post('/ordercustom','RestapiController@ordercustom');
 Route::get('/resi/{id}','RestapiController@resi');
 Route::get('/pricelist','RestapiController@couple_pricelist');
+Route::get('/pl/{what}','RestapiController@pricelist_single');
 Route::post('/joingiveaway','RestapiController@joingiveaway');
 
 Route::get('/chat','RestapiController@chat');
+
+Route::get('/ai/{logam_pria?}/{logam_wanita?}','RestapiController@ai_pricelist');
+Route::get('/cl/{id}/{message?}','RestapiController@chat_langsung');
+Route::post('/search','RestapiController@ai_pricelist_search');

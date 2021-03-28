@@ -121,6 +121,10 @@
             <?php
               }
              ?>
+             <tr>
+              <td>Digrafir oleh </td>
+              <td><strong><u><?php echo $data->pesanan->grafir;?></u></strong></td>
+            </tr>
         </table>
   </div>
   
