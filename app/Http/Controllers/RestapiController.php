@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 use DB;
 use Illuminate\Http\Request;
-use JD\Cloudder\Facades\Cloudder;
 use Telegram\Bot\Laravel\Facades\Telegram;
 use Telegram\Bot\FileUpload\InputFile;
 use Illuminate\Support\Arr;
@@ -147,9 +146,8 @@ Class RestapiController extends Controller{
      
             $image_name = $request->file('upload_cincin')->getRealPath();
      
-            Cloudder::upload($image_name, null);
-            $res = Cloudder::getResult();
-            $orderan = array_add($orderan,'upload_cincin',$res['url']);
+            
+            $orderan = array_add($orderan,'upload_cincin',upload_gambar($image_name));
         }
 
         if (!empty($request->file('model_cincin_pria'))){
@@ -160,9 +158,7 @@ Class RestapiController extends Controller{
      
             $image_name = $request->file('model_cincin_pria')->getRealPath();
      
-            Cloudder::upload($image_name, null);
-            $res = Cloudder::getResult();
-            $orderan = array_add($orderan,'model_cincin_pria',$res['url']);
+            $orderan = array_add($orderan,'model_cincin_pria',upload_gambar($image_name));
         }
 
         if (!empty($request->file('model_cincin_wanita'))){
@@ -173,9 +169,8 @@ Class RestapiController extends Controller{
      
             $image_name = $request->file('model_cincin_wanita')->getRealPath();
      
-            Cloudder::upload($image_name, null);
-            $res = Cloudder::getResult();
-            $orderan = array_add($orderan,'model_cincin_wanita',$res['url']);
+           
+            $orderan = array_add($orderan,'model_cincin_wanita',upload_gambar($image_name));
         }
         
        

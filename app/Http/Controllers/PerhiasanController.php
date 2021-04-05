@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 use Telegram\Bot\Laravel\Facades\Telegram;
 use Telegram\Bot\FileUpload\InputFile;
 use DB;
-use JD\Cloudder\Facades\Cloudder;
 
 class PerhiasanController extends Controller
 {
@@ -83,10 +82,8 @@ class PerhiasanController extends Controller
          
                 $image_name = $request->file('gambar_perhiasan')->getRealPath();
          
-                Cloudder::upload($image_name, null);
-                $res = Cloudder::getResult();
-                //$gbr = $res['url'];
-                $data_pesanan = array_add($data_pesanan,'gambar_perhiasan',$res['url']);
+              
+                $data_pesanan = array_add($data_pesanan,'gambar_perhiasan',upload_gambar($image_name));
             }
 
             if (!empty($request->input('bahan_perhiasan'))){

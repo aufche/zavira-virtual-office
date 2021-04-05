@@ -161,7 +161,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         
-        'JD\Cloudder\CloudderServiceProvider',
+        
         //Mavinoo\LaravelBatch\LaravelBatchServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         //rizalafani\rajaongkirlaravel\RajaOngkirServiceProvider::class,
@@ -218,7 +218,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         //'Imgur' => Yish\Imgur\Facades\Upload::class,
-        'Cloudder' => 'JD\Cloudder\Facades\Cloudder',
+        ///'Cloudder' => 'JD\Cloudder\Facades\Cloudder',
         //'Batch' => Mavinoo\LaravelBatch\LaravelBatchFacade::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         //'RajaOngkir' => rizalafani\rajaongkirlaravel\RajaOngkirFacade::class,

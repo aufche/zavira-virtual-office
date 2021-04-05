@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9bfd14cd60f1463fc4ce3532355e48a2",
+    "content-hash": "940e1a4ea5b286edb6cb2bb9937310e6",
     "packages": [
         {
             "name": "balping/json-raw-encoder",
@@ -1120,6 +1120,60 @@
                 "url"
             ],
             "time": "2020-09-30T07:37:11+00:00"
+        },
+        {
+            "name": "imagekit/imagekit",
+            "version": "1.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/imagekit-developer/imagekit-php.git",
+                "reference": "7102c2ecf62624c57e07ec82be763b3799815e8c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/imagekit-developer/imagekit-php/zipball/7102c2ecf62624c57e07ec82be763b3799815e8c",
+                "reference": "7102c2ecf62624c57e07ec82be763b3799815e8c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "~6.0 || ~7.0",
+                "php": "^5.3.3 || ^7.0 || ^8.0"
+            },
+            "require-dev": {
+                "ext-json": "*",
+                "phpunit/phpunit": "^9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ImageKit\\": "src/ImageKit/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Imagekit",
+                    "homepage": "https://github.com/imagekit-developer/imagekit-php/graphs/contributors"
+                }
+            ],
+            "description": "PHP library for Imagekit",
+            "homepage": "https://github.com/imagekit-developer/imagekit-php",
+            "keywords": [
+                "image management",
+                "imagekit",
+                "library"
+            ],
+            "support": {
+                "email": "support@imagekit.io",
+                "issues": "https://github.com/imagekit-developer/imagekit-php/issues",
+                "source": "https://github.com/imagekit-developer/imagekit-php/tree/1.2.2"
+            },
+            "time": "2021-01-12T06:32:57+00:00"
         },
         {
             "name": "irazasyed/telegram-bot-sdk",
@@ -7362,5 +7416,6 @@
     "platform": {
         "php": "^7.2"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "2.0.0"
 }

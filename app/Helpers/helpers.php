@@ -235,3 +235,23 @@ function notif_cs($id,$tipe_finising){
  function nice_date($tgl){
     return date('d M Y', strtotime($tgl));
  }
+
+ function upload_gambar($file_name){
+
+    $imageKit = new ImageKit\ImageKit(
+        "public_QGjMcmRVUHL3bqGZJyz9VOFckLg=",
+        "private_ufGJBwcPeHMwZCZ8CoN9g9Cw7jI=",
+        "https://ik.imagekit.io/rxghkuxrj"
+    );  
+
+    $uploadFile = $imageKit->uploadFiles(array(
+        "file" => fopen($file_name,'r'), // required
+        "fileName" => 'zavira_jewelry', // required
+        "folder" => date('Y').'/'.date('m'), // optional
+        "useUniqueFileName" => true // optional
+        
+    ));
+    $response = json_decode(json_encode($uploadFile), true);
+    
+    return $response["success"]["url"];
+ }

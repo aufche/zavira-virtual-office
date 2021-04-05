@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Http\UploadedFile;
-use JD\Cloudder\Facades\Cloudder;
 use Telegram\Bot\Laravel\Facades\Telegram;
 use Telegram\Bot\FileUpload\InputFile;
 use Illuminate\Support\Facades\Auth;
@@ -41,9 +40,8 @@ class SertifikatController extends Controller
      
             $image_name = $request->file('sertifikat_gambarcincin')->getRealPath();
      
-            Cloudder::upload($image_name, null);
-            $res = Cloudder::getResult();
-            $pesanan->sertifikat_gambarcincin = $res['url'];
+           
+            $pesanan->sertifikat_gambarcincin = upload_gambar($image_name);
         }else{
 
         }

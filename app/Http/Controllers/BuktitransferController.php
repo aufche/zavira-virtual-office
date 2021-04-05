@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use DB;
 use Illuminate\Http\Request;
-use JD\Cloudder\Facades\Cloudder;
 use Illuminate\Support\Facades\Auth;
 
 class BuktitransferController extends Controller
@@ -18,10 +17,8 @@ class BuktitransferController extends Controller
 
         //-- upload bukti transfer
         foreach ($bukti_ss as $image){
-                Cloudder::upload($image, null);
-                $result = Cloudder::getResult();
                 
-                $screenshot = $screenshot.','.$result['url'];
+                $screenshot = $screenshot.','.upload_gambar($image);
             }
         //-- mencari pesanan_id di table biaya_produksi berdasarkan identitas
 

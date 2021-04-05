@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Http\UploadedFile;
-use JD\Cloudder\Facades\Cloudder;
 use Illuminate\Support\Facades\Auth;
 use Telegram\Bot\Laravel\Facades\Telegram;
 use Telegram\Bot\FileUpload\InputFile;
@@ -137,10 +136,8 @@ class HomeController extends Controller
      
             $image_name = $request->file('gambar')->getRealPath();
      
-            Cloudder::upload($image_name, null);
-            $res = Cloudder::getResult();
-            //$gbr = $res['url'];
-            $data_pesanan = array_add($data_pesanan,'gambar',$res['url']);
+            
+            $data_pesanan = array_add($data_pesanan,'gambar',upload_gambar($image_name));
         }
 
         if (!empty($request->file('gambar_cincin_pria'))){
@@ -151,10 +148,8 @@ class HomeController extends Controller
      
             $image_name = $request->file('gambar_cincin_pria')->getRealPath();
      
-            Cloudder::upload($image_name, null);
-            $res = Cloudder::getResult();
-            //$gbr = $res['url'];
-            $data_pesanan = array_add($data_pesanan,'gambar_cincin_pria',$res['url']);
+           
+            $data_pesanan = array_add($data_pesanan,'gambar_cincin_pria',upload_gambar($image_name));
         }
 
         if (!empty($request->file('gambar_cincin_wanita'))){
@@ -165,19 +160,15 @@ class HomeController extends Controller
      
             $image_name = $request->file('gambar_cincin_wanita')->getRealPath();
      
-            Cloudder::upload($image_name, null);
-            $res = Cloudder::getResult();
-            //$gbr = $res['url'];
-            $data_pesanan = array_add($data_pesanan,'gambar_cincin_wanita',$res['url']);
+            
+            $data_pesanan = array_add($data_pesanan,'gambar_cincin_wanita',upload_gambar($image_name));
         }
 
         if (!empty($request->input('gambargambar'))){
             $gambar = [];
             $images = explode(',',$request->input('gambargambar'));
             foreach ($images as $image){
-                Cloudder::upload($image, null);
-                $result = Cloudder::getResult();
-                array_push($gambar,$result['url']);
+                array_push($gambar,upload_gambar($image));
             }
             $data_pesanan = array_add($data_pesanan,'gambargambar',implode(',',$gambar));
         }
@@ -497,9 +488,7 @@ class HomeController extends Controller
      
             $image_name = $request->file('gambar')->getRealPath();
      
-            Cloudder::upload($image_name, null);
-            $res = Cloudder::getResult();
-            $pesanan->gambar=$res['url'];
+            $pesanan->gambar = upload_gambar($image_name);
 
         }
 
@@ -507,19 +496,16 @@ class HomeController extends Controller
       
              $image_name = $request->file('gambar_cincin_pria')->getRealPath();
       
-             Cloudder::upload($image_name, null);
-             $res = Cloudder::getResult();
-             $pesanan->gambar_cincin_pria = $res['url'];
+             
+             $pesanan->gambar_cincin_pria = upload_gambar($image_name);
  
          }
 
          if (!empty($request->file('gambar_cincin_wanita'))){
       
             $image_name = $request->file('gambar_cincin_wanita')->getRealPath();
-     
-            Cloudder::upload($image_name, null);
-            $res = Cloudder::getResult();
-            $pesanan->gambar_cincin_wanita = $res['url'];
+            
+            $pesanan->gambar_cincin_wanita = upload_gambar($image_name);
 
         }
 
@@ -529,9 +515,7 @@ class HomeController extends Controller
             $gambar = [];
             $images = explode(',',$request->input('gambargambar'));
             foreach ($images as $image){
-                Cloudder::upload($image, null);
-                $result = Cloudder::getResult();
-                array_push($gambar,$result['url']);
+                array_push($gambar,upload_gambar($image));
             }
             
             $pesanan->gambargambar = implode(',',$gambar);
