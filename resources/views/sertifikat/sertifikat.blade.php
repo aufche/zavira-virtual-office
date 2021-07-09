@@ -34,8 +34,8 @@
               <tr>
                   <td><a href="<?php route('pesanan.detail',['id'=>$item->id]);?>" target="popup" onclick="window.open('<?php echo route('pesanan.detail',['id'=>$item->id]);?>','popup','width=600,height=800'); return false;"><?php echo $item->id;?></a></td>
                   <td><?php echo $item->kodecincin;?></td>
-                  <td><?php echo $item->bahanpria()->first()['title'];?> <span class="badge badge-dark"><?php echo aa('',$item->sertifikat_beratpria,'gr');?></span><br /><?php echo rupiah($item->sertifikat_beratpria*$item->sertifikat_hargapria);?></td>
-                  <td><?php echo $item->bahanwanita()->first()['title'];?> <span class="badge badge-dark"><?php echo aa('',$item->sertifikat_beratwanita,'gr');?></span><br /><?php echo rupiah($item->sertifikat_beratwanita*$item->sertifikat_hargawanita);?></td>
+                  <td><?php echo title_logam($item->bahanpria()->first(),'title');?> <span class="badge badge-dark"><?php echo aa('',$item->sertifikat_beratpria,'gr');?></span><br /><?php echo rupiah($item->sertifikat_beratpria*$item->sertifikat_hargapria);?></td>
+                  <td><?php echo title_logam($item->bahanwanita()->first(),'title');?> <span class="badge badge-dark"><?php echo aa('',$item->sertifikat_beratwanita,'gr');?></span><br /><?php echo rupiah($item->sertifikat_beratwanita*$item->sertifikat_hargawanita);?></td>
                   <td><?php echo $item->resi;?></td>
                   <td><?php echo rupiah(($item->sertifikat_beratpria*$item->sertifikat_hargapria)+($item->sertifikat_beratwanita*$item->sertifikat_hargawanita)+$item->ongkos_bikin);?></td>
                   <td><a class="btn btn-info" href="<?php if ($item->ispremium == 1){

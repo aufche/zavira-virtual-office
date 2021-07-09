@@ -201,5 +201,33 @@ Class LabaController extends Controller{
         return view('laba.gaji',compact('cs','awal','akhir','cs_id','status_order','include_reseller'));
     }
 
+
+    function perhitungan(){
+        $data = \App\Pesanan::orderBy('id','desc')->where('ispremium','>=','1')->simplePaginate(15);
+        return view('laba.perhitungan',compact('data'));
+    }
+
+    function update_perhitungan(Request $request){
+        if ($request->isMethod('post')){
+            
+            $id = $request->input('id');
+            $harga_final = $request->input('harga_final');
+            \App\Pesanan::where('id',$id)->update([
+                'harga_final' => $harga_final,
+                'produksi_dibayar' => 1,
+            ]);
+
+            //-- menghapus DP sehingga jumlah DP yg tersimpan di bank menjadi efektif
+
+            DB::table('dp')->where('pesanan_id',$id)->delete();
+
+            return redirect()->route('perhitungan.update')->with('status','Data berhasil disimpan');
+
+        }else{
+            return view('laba.updateperhitungan');
+        }
+    }
+
+
     
 }

@@ -148,8 +148,8 @@ table.table-bordered > tbody > tr > td{
                         ?>
                     
                     </td>
-                    <td><?php echo $item->bahanpria()->first()['title'];?></td>
-                    <td><?php echo $item->bahanwanita()->first()['title'];?></td>
+                    <td><?php echo title_logam($item->bahanpria()->first(),'title');?></td>
+                    <td><?php echo title_logam($item->bahanwanita()->first(),'title');?></td>
                     <td>
                       <?php echo aa('DP ',rupiah($item->dp,'<br />'));?><br />
                       <?php echo aa('Pelunasan ',rupiah((int)$item->pelunasan,'<br />'));?><br />

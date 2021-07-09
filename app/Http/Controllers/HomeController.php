@@ -30,7 +30,7 @@ class HomeController extends Controller
     public function index()
     {
         $pengrajin = DB::table('pengrajin')->pluck('id','nama');
-        $namalogam = DB::table('namalogam')->whereNotNull('active')->orderBy('jenis','asc')->pluck('id','title');
+        $namalogam = DB::table('namalogam')->whereNotNull('active')->whereNotNull('persentase_markup')->orderBy('jenis','asc')->pluck('id','title');
         $asal = DB::table('asal')->pluck('id','title');
         $kurir = DB::table('kurir')->pluck('id','title');
         $plated = DB::table('plated')->pluck('id','title');
@@ -125,6 +125,7 @@ class HomeController extends Controller
             'finising_wanita' => $request->input('finising_wanita'),
             'is_lunas' => $request->input('is_lunas'),
             'grafir' => $request->input('grafir'),
+            'skema_baru' => 1,
         ];
 
         if (!empty($request->file('gambar'))){
@@ -177,6 +178,7 @@ class HomeController extends Controller
             $hargapria = cariharga($request->input('bpria'));
             $data_pesanan = array_add($data_pesanan,'sertifikat_hargapria',$hargapria['hargapergram']);
             $data_pesanan = array_add($data_pesanan,'produksi_hargapria',$hargapria['hargaproduksipergram']);
+            $data_pesanan = array_add($data_pesanan,'biaya_produksi_pria',$hargapria['biaya_produksi']);
             $bpria_history = $hargapria['title'];
 
             //($hargapria['jenis'] == 'silver' ? $score_pria = 0 : $score_pria = 1);
@@ -199,6 +201,7 @@ class HomeController extends Controller
             $hargawanita = cariharga($request->input('bwanita'));
             $data_pesanan = array_add($data_pesanan,'sertifikat_hargawanita',$hargawanita['hargapergram']);
             $data_pesanan = array_add($data_pesanan,'produksi_hargawanita',$hargawanita['hargaproduksipergram']);
+            $data_pesanan = array_add($data_pesanan,'biaya_produksi_wanita',$hargawanita['biaya_produksi']);
             $bwanita_history = $hargawanita['title'];
 
             //($hargawanita['jenis'] == 'silver' ? $score_wanita = 0 : $score_wanita = 1);
@@ -226,7 +229,13 @@ class HomeController extends Controller
         $data_pesanan = array_add($data_pesanan,'ispremium',$score_pria+$score_wanita);
         $data_pesanan = array_add($data_pesanan,'yang_premium',$pria_premium.$wanita_premium);
 
-        if (($score_pria+$score_wanita)==2){
+        
+
+        /**
+         * update biaya ongkos per cincin
+         */
+
+        /*if (($score_pria + $score_wanita)==2){
             //-- couple emas/pall/pl
             $ongkos = \App\Setting::where('kunci','ongkos_bikin')->first();
             $data_pesanan = array_add($data_pesanan,'ongkos_bikin',$ongkos->isi);
@@ -238,27 +247,32 @@ class HomeController extends Controller
             // perak
             $data_pesanan = array_add($data_pesanan,'ongkos_bikin',0);
         }
+        */
 
+        
         //dd($data_pesanan);
         $id = DB::table('pesanan')->insertGetId($data_pesanan);
         if (!empty($id)){
 
             //-- update voucher dan no undian 
-            $voucher = strtoupper($id.str_random(7));
+            /*$voucher = strtoupper($id.str_random(7));
             $undian = strtoupper($id.str_random(7));
             DB::table('pesanan')->where('id', $id)->update(['voucher' => $voucher, 'undian'=>$undian]);
+            */
 
             /*
             masukkan data ke tabel DP sesuai dengan no pesanan / no order
             ==============================
             */
-
-            /*$data_dp = [
-                'pesanan_id'=>$id,
-                'nominal'=>$request->input('dp'),
-                'created_at'=>\Carbon\Carbon::now(),
-            ];
-            DB::table('dp')->insert($data_dp);
+            if ($score_pria + $score_wanita != 0){
+                $data_dp = [
+                    'pesanan_id'=>$id,
+                    'nominal'=>$request->input('dp'),
+                    'created_at'=>\Carbon\Carbon::now(),
+                ];
+                DB::table('dp')->insert($data_dp);
+            }
+            
 
             /*
             ====================
@@ -650,7 +664,7 @@ class HomeController extends Controller
         /*
         update table DP
         */
-        //\App\Dp::where('pesanan_id',$id)->update(['nominal'=>raw($request->input('dp'))]);
+        \App\Dp::where('pesanan_id',$id)->update(['nominal'=>raw($request->input('dp'))]);
         
         // update 
         \App\Neraca::where('pesanan_id',$id)->where('identitas','DP')->update(['nominal'=>$request->input('dp')+$request->input('ongkir')]);

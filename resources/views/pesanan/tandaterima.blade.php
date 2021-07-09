@@ -101,11 +101,11 @@
         </tr>
         <tr>
             <td>Cincin Pria</td>
-            <td><?php echo $data->bahanpria()->first()['title'];?><br />Berat ± <?php echo $data->produksi_beratpria;?> gram</td>
+            <td><?php echo title_logam($data->bahanpria()->first(),'title');?><br />Berat ± <?php echo $data->produksi_beratpria;?> gram</td>
         </tr>
         <tr>
             <td>Cincin Wanita</td>
-            <td><?php echo $data->bahanwanita()->first()['title'];?><br />Berat ± <?php echo $data->produksi_beratwanita;?> gram</td>
+            <td><?php echo title_logam($data->bahanwanita()->first(),'title');?><br />Berat ± <?php echo $data->produksi_beratwanita;?> gram</td>
         </tr>
         <tr>
             <td valign="top">Foto Cincin</td>

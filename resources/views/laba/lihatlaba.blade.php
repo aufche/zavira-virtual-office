@@ -128,10 +128,10 @@ table.table-bordered > tbody > tr > td{
       
         <tr>
             <td><?php echo $item->id;?></td> <!-- no order -->
-            <td><?php echo $item->bahanpria()->first()['title'];?></td> <!-- bahan cincin pria -->
+            <td><?php echo title_logam($item->bahanpria()->first(),'title');?></td> <!-- bahan cincin pria -->
             <td><?php echo aa('',$item->sertifikat_beratpria,'gr');?></td> <!-- berat akhir pria -->
             <td><?php echo aa('',$item->produksi_beratpria,'gr');?></td> <!-- berat awal pria -->
-            <td><?php echo $item->bahanwanita()->first()['title'];?></td> <!-- bahan wanita -->
+            <td><?php echo title_logam($item->bahanwanita()->first(),'title');?></td> <!-- bahan wanita -->
             <td><?php echo aa('',$item->sertifikat_beratwanita,'gr');?></td> <!-- berat akhir wanita -->
             <td><?php echo aa('',$item->produksi_beratwanita,'gr');?></td> <!-- berat awal wanita -->
             <td><?php echo aa('',($item->sertifikat_beratpria - $item->produksi_beratpria),'gr');?></td>

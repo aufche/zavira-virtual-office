@@ -18,7 +18,7 @@ function text_urgent($id){
     return $urgent[$id];
 }
 
-function cariharga($id_logam){
+/*function cariharga($id_logam){
     $logam = \App\Namalogam::where('id',$id_logam)->first();
     $jenis = $logam->jenis;
     $kadar = $logam->kadar;
@@ -57,6 +57,28 @@ function cariharga($id_logam){
     $datalogam['kadar'] = $kadar;
     $datalogam['hargaproduksipergram'] = $hargaproduksipergram;
     $datalogam['title'] = $logam->title;
+
+    $datalogam['biaya_produksi'] = $logam->biaya_produksi;
+
+    return $datalogam;
+}
+*/
+
+function cariharga($id_logam){
+    $logam = \App\Namalogam::where('id',$id_logam)->first();
+    $jenis = $logam->jenis;
+    $kadar = $logam->kadar;
+    $markup = $logam->markup;
+    $harga_final = $logam->harga_final;
+
+    $datalogam['hargapergram'] = $harga_final;
+    $datalogam['jenis'] = $jenis;
+    $datalogam['kadar'] = $kadar;
+    $datalogam['hargaproduksipergram'] = $harga_final - $markup;
+    $datalogam['title'] = $logam->title;
+
+    $datalogam['biaya_produksi'] = $logam->biaya_produksi;
+
     return $datalogam;
 }
 
@@ -254,4 +276,24 @@ function notif_cs($id,$tipe_finising){
     $response = json_decode(json_encode($uploadFile), true);
     
     return $response["success"]["url"];
+ }
+
+ function title_logam($objLogam,$what){
+    $c = json_decode($objLogam,true);
+    if (isset($c)){
+      if ($what == 'title') return $c['title'];
+      if ($what == 'kode') return $c['kode'];
+      if ($what == 'kadar') return $c['kadar'];
+      if ($what == 'jenis') return $c['jenis'];
+    }else{
+        return '';
+    }
+ }
+
+ function get_hargapokok($hargapokok,$what){
+    if ($what == 'emas') $x = $hargapokok[0]->isi;
+    if ($what == 'palladium') $x = $hargapokok[1]->isi;
+    if ($what == 'platinum') $x = $hargapokok[2]->isi;
+
+    return $x;
  }

@@ -226,11 +226,11 @@ Class RestapiController extends Controller{
             ]);
         */
  
-        //return redirect()->away('https://api.whatsapp.com/send?phone='.$cs[0]->wa.'&text=Hallo%20kak%20'.$cs[0]->nama_cs.'%20Saya%20ingin%20bertanya%20mengenai%20cincin%20kawin');
+        return redirect()->away('https://api.whatsapp.com/send?phone='.$cs[0]->wa.'&text=Hallo%20kak%20'.$cs[0]->nama_cs.'%20Saya%20ingin%20bertanya%20mengenai%20cincin%20kawin');
         //dd($cs);
        // echo $cs[0]->wa;
 
-       return response()->json($cs, 201);
+       //return response()->json($cs, 201);
     }
 
     function chat_langsung($id = null, $message = null){
@@ -397,8 +397,8 @@ Class RestapiController extends Controller{
     function ai_pricelist(){
         $hargapokok = \App\Setting::whereIn('kunci',['harga_pokok_emas','harga_pokok_palladium','harga_pokok_platinum','ongkos_bikin'])->get();
         
-        $data_logam_pria = \App\Namalogam::whereIn('jenis',['palladium','platinum','platidium'])->whereNotNull('active')->orderBy('kadar','asc')->get();
-        $data_logam_wanita = \App\Namalogam::whereIn('jenis',['emas','palladium','platinum','platidium'])->whereNotNull('active')->orderBy('kadar','asc')->get();
+        $data_logam_pria = \App\Namalogam::whereIn('jenis',['palladium','platinum'])->whereNotNull('active')->whereNotNull('persentase_markup')->orderBy('kadar','asc')->get();
+        $data_logam_wanita = \App\Namalogam::whereIn('jenis',['emas','palladium','platinum'])->whereNotNull('active')->whereNotNull('persentase_markup')->orderBy('kadar','asc')->get();
 
         return response()->json([
             'logam_pria' => $data_logam_pria,
@@ -415,8 +415,8 @@ Class RestapiController extends Controller{
 
         $hargapokok = \App\Setting::whereIn('kunci',['harga_pokok_emas','harga_pokok_palladium','harga_pokok_platinum','ongkos_bikin'])->get();
 
-        $data_logam_pria = \App\Namalogam::where('jenis',$logam_pria)->whereNotNull('active')->orderBy('kadar','asc')->get();
-        $data_logam_wanita = \App\Namalogam::where('jenis',$logam_wanita)->whereNotNull('active')->orderBy('kadar','asc')->get();
+        $data_logam_pria = \App\Namalogam::where('jenis',$logam_pria)->whereNotNull('active')->whereNotNull('persentase_markup')->orderBy('kadar','asc')->get();
+        $data_logam_wanita = \App\Namalogam::where('jenis',$logam_wanita)->whereNotNull('active')->whereNotNull('persentase_markup')->orderBy('kadar','asc')->get();
 
         return response()->json([
             'logam_pria' => $data_logam_pria,
@@ -438,5 +438,156 @@ Class RestapiController extends Controller{
             'harga_pokok' => $hargapokok,
         ], 201);
 
+    }
+
+    function pricelist_depan($logam = 'emas'){
+        $data_logam = DB::table('namalogam')->where('jenis',$logam)->whereNotNull('active')->whereNotNull('persentase_markup')->orderBy('kadar','asc')->get();
+
+        return response()->json([
+            'data_logam' => $data_logam,
+        ], 201);
+    }
+
+    function calc(Request $request){
+        //$hargapokok = \App\Setting::whereIn('kunci',['harga_pokok_emas','harga_pokok_palladium','ongkos_bikin','harga_pokok_silver','harga_pokok_platinum','harga_harian_emas','harga_harian_palladium','harga_harian_platinum'])->get();
+        $logam = \App\Namalogam::whereNotNull('active')->whereNotNull('persentase_markup')->orderBy('jenis','asc')->orderBy('kadar','asc')->get();    
+
+        if ($request->isMethod('post')){
+
+            
+            $harga_pria = 0;
+            $harga_wanita = 0;
+            $kalkulasi = [];
+            $kadar_pria = 0;
+            $kadar_wanita = 0;
+            $biaya_produksi_pria = 0;
+            $biaya_produksi_wanita = 0;
+    
+            /*$hp_emas = $hargapokok[0]->isi;
+            $hp_palladium = $hargapokok[1]->isi;
+            $ongkos_bikin = $hargapokok[2]->isi;
+            //$ongkos_bikin = $request->input('ongkos_bikin');
+            $hp_platinum = $hargapokok[4]->isi;
+            */
+    
+            
+    
+            $id_pria = $request->input('pria');
+            $id_wanita = $request->input('wanita');
+            $berat_pria = $request->input('berat_pria');
+            $berat_wanita = $request->input('berat_wanita');
+    
+            $kalkulasi['id_pria'] = $id_pria;
+            $kalkulasi['id_wanita'] = $id_wanita;
+            $kalkulasi['berat_pria'] = $berat_pria;
+            $kalkulasi['berat_wanita'] = $berat_wanita;
+    
+            
+    
+            if ($berat_pria != null ){
+                $pria = \App\Namalogam::find($id_pria);
+                //$pria = DB::table('namalogam')->find($id_pria);
+                
+                if ($pria->jenis != 'silver'){
+    
+                    /*if ($pria->jenis == 'emas') $x = $hp_emas;
+                    if ($pria->jenis == 'ep') $x = $hp_emas;
+                    if ($pria->jenis == 'palladium') $x = $hp_palladium;
+                    if ($pria->jenis == 'platinum') $x = $hp_platinum;
+                    if ($pria->jenis == 'platidium') $x = (($hp_platinum + $hp_palladium) / 2);
+                    */
+    
+                    $harga_pria = ($pria->harga_final * $berat_pria) + $pria->biaya_produksi;
+                    $kadar_pria = $pria->kadar;
+                    $harga_pria_pergram = $pria->harga_final;
+    
+                }elseif ($pria->jenis == 'silver'){
+                    
+                    $harga_pria = 265000;
+                    $kadar_pria = 20;
+                    $harga_pria_pergram = 0;
+                    
+                }
+    
+                $kalkulasi['jenis_pria'] = $pria->jenis;
+                $kalkulasi['logam_pria'] = $pria->title;
+                $kalkulasi['berat_pria'] = $berat_pria;
+                $kalkulasi['harga_pria'] = $harga_pria;
+                $kalkulasi['harga_pria_pergram'] = $harga_pria_pergram;
+                $kalkulasi['biaya_produksi_pria'] = $pria->biaya_produksi;
+                
+            }else{
+                $kalkulasi['berat_pria']  = null;
+            }
+    
+            if ($berat_wanita != null){
+                $wanita = \App\Namalogam::find($id_wanita);
+                //$wanita = DB::table('namalogam')->find($id_wanita);
+    
+                if ($wanita->jenis !='silver'){
+                    /*if ($wanita->jenis == 'emas') $x = $hp_emas;
+                    if ($wanita->jenis == 'ep') $x = $hp_emas;
+                    if ($wanita->jenis == 'palladium') $x = $hp_palladium;
+                    if ($wanita->jenis == 'platinum') $x = $hp_platinum;
+                    if ($wanita->jenis == 'platidium') $x = (($hp_platinum + $hp_palladium) / 2);
+                    */
+                
+                    $harga_wanita = ($wanita->harga_final * $berat_wanita) + $wanita->biaya_produksi;
+                    $harga_wanita_pergram = $wanita->harga_final;
+    
+    
+                    $kadar_wanita = $wanita->kadar;
+                }elseif ($wanita->jenis == 'silver'){
+                    
+                    $harga_wanita = 265000;
+                    $kadar_wanita = 20;
+                    $harga_wanita_pergram = 0;
+    
+                }
+    
+                $kalkulasi['jenis_wanita'] = $wanita->jenis;
+                $kalkulasi['logam_wanita'] = $wanita->title;
+                $kalkulasi['berat_wanita'] = $berat_wanita;
+                $kalkulasi['harga_wanita'] = $harga_wanita;
+                $kalkulasi['harga_wanita_pergram'] = $harga_wanita_pergram;
+                $kalkulasi['biaya_produksi_wanita'] = $wanita->biaya_produksi;
+                
+            }else{
+                $kalkulasi['berat_wanita']  = null;
+                
+            }
+        
+    
+            $total = $harga_pria + $harga_wanita;
+            $kalkulasi['total'] = $total;
+    
+            if ($kadar_pria >= 50 || $kadar_wanita >= 50){
+                $kalkulasi['dp'] = 70;
+            }else {
+                $kalkulasi['dp'] = 50;
+            }
+    
+            /*if ($berat_pria != null && $berat_wanita != null){
+                $kalkulasi['ongkos_bikin'] = $ongkos_bikin;
+            }  else {
+                $kalkulasi['ongkos_bikin'] = ($ongkos_bikin/2);
+            }
+            */
+    
+            $kalkulasi['detail'] = 1;
+    
+            //return view('logam.kalkulator3',compact('logam','hargapokok','kalkulasi'));
+            return response()->json([
+                'kalkulasi' => $kalkulasi,
+            ], 201);
+            
+        }elseif ($request->isMethod('get')){
+            return response()->json([
+                'logam' => $logam,
+            ], 201);
+        }
+            
+        
+        
     }
 }

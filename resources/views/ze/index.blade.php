@@ -27,8 +27,8 @@
                ?>
                 <tr>
                     <td><?php echo $item->kode_paket;?></td>
-                    <td><?php echo $item->bahanpria()->first()['title'];?><br /><?php echo aa('',$item->berat_pria,'gr');?></td>
-                    <td><?php echo $item->bahanwanita()->first()['title'];?><br /><?php echo aa('',$item->berat_wanita,'gr');?></td>
+                    <td><?php echo title_logam($item->bahanpria()->first(),'title');?><br /><?php echo aa('',$item->berat_pria,'gr');?></td>
+                    <td><?php echo title_logam($item->bahanwanita()->first(),'title');?><br /><?php echo aa('',$item->berat_wanita,'gr');?></td>
                     <td><?php echo rupiah($item->harga_paket);?></td>
                     <td><a href="<?php echo route('ze.detail',['id'=>$item->id]);?>">Lihat Caption</a></td>
                 </tr>

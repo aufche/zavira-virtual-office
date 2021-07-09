@@ -16,7 +16,12 @@ Route::get('/', function () {
 });
 
 Route::get('/pakbejo','PesananController@pakbejo')->name('pesanan.pakbejo');
-Route::get('/calc','LogamController@kalkulator')->name('kalkulator.backend');
+
+Route::prefix('calc')->group(function (){
+    Route::any('/','LogamController@calc')->name('kalkulator.backend');
+    Route::get('/pricelist','LogamController@pergram')->name('pergram.backend');
+    Route::get('/paket/{no?}','LogamController@paket')->name('paket.backend');
+});
 
 Route::get('/pl/{package?}/{target?}','LogamController@pricelist')->name('logam.pricelist');
 Route::get('/ps/{bahan?}','LogamController@pricelist_single')->name('logam.pricelist.single');
@@ -183,7 +188,7 @@ Route::prefix('pesanan')->group(function () {
     Route::get('/rekap/{id}','PesananController@rekap')->name('pesanan.rekap')->middleware('acl');
     Route::get('/tandaterima/{id}','PesananController@tandaterima')->name('pesanan.tandaterima')->middleware('acl');
     
-
+    Route::any('/ujixrf/{id?}','PesananController@uji_xrf')->name('pesanan.ujixrf')->middleware('acl');
     
 
 });
@@ -195,7 +200,7 @@ Route::prefix('sertifikat')->group(function () {
     Route::get('/flashsale/{id}', 'SertifikatController@printsertifikat')->name('sertifikat.flashsale')->middleware('acl');
 
     Route::get('/printsilver/{id}', function($id){
-        $data = \App\Pesanan::where('id',$id)->get();
+        $data = \App\Pesanan::where('id',$id)->first();
         return view('sertifikat.silver')
             ->with('data',$data);
     })->name('sertifikat.silver')->middleware('auth');
@@ -223,6 +228,8 @@ Route::prefix('sertifikat')->group(function () {
     })->name('sertifikat.belum')->middleware('auth');
 
     Route::post('/search', 'SertifikatController@searchsertificate')->name('searchsertificate');
+
+    Route::get('/nota/{id}/{material}','SertifikatController@nota')->name('nota');
 });
 
 Route::prefix('reparasi')->group(function () {
@@ -297,11 +304,7 @@ Route::prefix('logam')->group(function () {
     
     Route::post('/editingvariasi', 'LogamController@editingvariasi')->name('logam.edit.save')->middleware('auth');
     
-    Route::get('/logam',function(){
-        $data = \App\Namalogam::orderBy('title','asc')->get();
-        $harga_pokok = \App\Setting::whereIn('kunci',['harga_pokok_emas','harga_pokok_palladium','harga_pokok_platinum'])->orderBy('kunci','asc')->get();
-        return view('logam.logam',compact('data','harga_pokok'));
-    })->name('logam.all')->middleware('auth');
+    Route::get('/','LogamController@index')->name('logam.all')->middleware('auth');
     
     Route::get('/dellogam/{id}',function($id){
         $data = \App\Namalogam::where('id',$id)->delete();
@@ -314,6 +317,8 @@ Route::prefix('logam')->group(function () {
     })->name('logam.konversi')->middleware('auth');
 
     Route::any('/em','LogamController@edit_markup')->name('logam.em')->middleware('auth');
+
+    Route::get('/export','LogamController@export')->name('logam.export')->middleware('auth');
     
 
 
@@ -327,6 +332,8 @@ Route::prefix('laba')->group(function () {
     Route::any('/', 'LabaController@index')->name('laba.semua')->middleware('auth');
     Route::get('/detail/{id}','LabaController@detail')->name('laba.detail')->middleware('auth');
     Route::any('/gaji','LabaController@gaji')->name('gaji')->middleware('auth');
+    Route::get('/perhitungan','LabaController@perhitungan')->name('perhitungan')->middleware('auth');
+    Route::any('/update','LabaController@update_perhitungan')->name('perhitungan.update')->middleware('auth');
 });
 
 Route::prefix('dp')->group(function () {
@@ -641,8 +648,8 @@ Route::get('/sh',function(){
     );  
 
     $uploadFile = $imageKit->uploadFiles(array(
-        "file" => "https://avatars.githubusercontent.com/u/20744689?s=400&v=4", // required
-        "fileName" => "your_file_name.jpg", // required
+        "file" => "http://www.africau.edu/images/default/sample.pdf", // required
+        "fileName" => "your_file_name.pdf", // required
         "useUniqueFileName" => true // optional
         
     ));
@@ -650,3 +657,4 @@ Route::get('/sh',function(){
     
     echo $binaryFileUploadURL = $response["success"]["url"];
 });
+

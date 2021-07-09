@@ -107,11 +107,11 @@
             </tr>
             <tr>
                 <td>Bahan Pria</td>
-                <td><?php echo $data->bahanpria()->first()['title'];?><br />Berat akhir <?php echo $data->sertifikat_beratpria;?></td>
+                <td><?php echo title_logam($data->bahanpria()->first(),'title');?><br />Berat akhir <?php echo $data->sertifikat_beratpria;?></td>
             </tr>
             <tr>
                 <td>Bahan Wanita</td>
-                <td><?php echo $data->bahanwanita()->first()['title'];?><br />Berat akhir <?php echo $data->sertifikat_beratwanita;?></td>   
+                <td><?php echo title_logam($data->bahanwanita()->first(),'title');?><br />Berat akhir <?php echo $data->sertifikat_beratwanita;?></td>   
             </tr>
             <?php if (!empty($data->keterangan_orderan)){
               ?>

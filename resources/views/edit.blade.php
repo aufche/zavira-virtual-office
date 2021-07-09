@@ -173,7 +173,7 @@
                     </div>
                     
                     <div class="col-md-3 mb-3">
-                    <label>Cincin pria menggunakan bahan <strong><?php echo $data->bahanpria()->first()['title'];?></strong></label>
+                    <label>Cincin pria menggunakan bahan <strong><?php echo title_logam($data->bahanpria()->first(),'title');?></strong></label>
                     <a class="btn btn-warning  btn-block" href="<?php echo route('pesanan.edit.logam',['id'=>$data->id]);?>">Klik disini untuk mengubah</a>
                     
                     
@@ -227,7 +227,7 @@
                     </div>
                     
                     <div class="col-md-3 mb-3">
-                    <label>Cincin wanita menggunakan bahan <strong><?php echo $data->bahanwanita()->first()['title'];?></strong></label>
+                    <label>Cincin wanita menggunakan bahan <strong><?php echo title_logam($data->bahanwanita()->first(),'title');?></strong></label>
                     <a class="btn btn-warning  btn-block" href="<?php echo route('pesanan.edit.logam',['id'=>$data->id]);?>">Klik disini untuk mengubah</a>
                     </div>
 

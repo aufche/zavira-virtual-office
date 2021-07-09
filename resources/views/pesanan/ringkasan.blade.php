@@ -22,7 +22,7 @@
                 <?php
                     if (!empty($data->ukuranpria)){
                         echo 'Cincin pria : <strong>'.$data->ukuranpria.'</strong><br />';
-                        echo 'Bahan : <strong>'.$data->bahanpria()->first()['title'].'</strong><br />';
+                        echo 'Bahan : <strong>'.title_logam($data->bahanpria()->first(),'title').'</strong><br />';
                         echo 'Grafir : '.$data->grafirpria.'<br />';
                         echo 'Berat maksimal : '.$data->produksi_beratpria.' gram <br /><br /><br />';
                     }
@@ -31,7 +31,7 @@
 
                      if (!empty($data->ukuranwanita)){
                         echo 'Cincin Wanita : <strong>'.$data->ukuranwanita.'</strong><br />';
-                        echo 'Bahan : <strong>'.$data->bahanwanita()->first()['title'].'</strong><br />';
+                        echo 'Bahan : <strong>'.title_logam($data->bahanwanita()->first(),'title').'</strong><br />';
                         echo 'Grafir : '.$data->grafirwanita.'<br />';
                         echo 'Berat maksimal : '.$data->produksi_beratwanita.' gram<br /><br /><br />';
                     }    

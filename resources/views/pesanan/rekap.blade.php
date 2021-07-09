@@ -35,8 +35,8 @@
                         <td>{{ $item->id }}</td>
                         <td>{{ $item->nama }}</td>
                         <td>{{ date('d M Y', strtotime($item->tglmasuk)) }} </td>
-                        <td><?php echo $item->bahanpria()->first()['title'];?></td>
-                        <td><?php echo $item->bahanwanita()->first()['title'];?></td>
+                        <td><?php echo title_logam($item->bahanpria()->first(),'title');?></td>
+                        <td><?php echo title_logam($item->bahanwanita()->first(),'title');?></td>
                     </tr>
                     @endforeach
                     

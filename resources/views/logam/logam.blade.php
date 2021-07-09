@@ -9,6 +9,7 @@
 
       <div class="tile">
         <a name="addvariasilogam" id="addvariasilogam" class="btn btn-success" href="<?php echo route('logam.add');?>" role="button">Tambah Variasi Logam</a>    
+        <a  class="btn btn-danger" href="<?php echo route('logam.export');?>" role="button" target="_blank">Export</a>    
       </div>
     <div class="tile">
     @if (session('status'))
@@ -51,7 +52,7 @@
             <td><?php echo $item->kadar;?> %</td>
             <td><?php echo rupiah(($item->kadar/100) * $hp);?></td>
             <td><?php echo rupiah($item->markup);?></td>
-            <td><?php echo rupiah(($item->kadar/100) * $hp + $item->markup);?></td>
+            <td><?php echo rupiah($item->harga_final);?></td>
             <td><?php if ($item->active != null ) echo 'Active <i class="fas fa-check-circle"></i>'; else echo 'Tidak Aktif';?></td>
             <td><a class="btn btn-info shadow" href="<?php echo route('logam.edit',['id'=>$item->id]);?>">Edit</a> <a class="btn btn-danger shadow" href="<?php echo route('logam.del',['id'=>$item->id]);?>">Hapus</a></td>
         </tr>

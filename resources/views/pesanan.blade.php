@@ -15,20 +15,7 @@
 </style>
 <main class="app-content">
       <div class="app-title">
-        <div>
-          <h1 class="h3"><i class="fas fa-tachometer-alt"></i> All Orders</h1>
-          <p><?php 
-            if (!isset($cs)){
-              echo 'Semua Orderan';
-            }else{
-              echo $cs;
-            }
-          ?></p>
-          <p id="man"></p>
-          <?php 
-            //if (!isset($selesai)) echo $selesai;
-          ?>
-        </div>
+        
       </div>
 
     
@@ -73,16 +60,7 @@
                     
     </div>
 
-    <?php
-      if (!empty($data_count)){
-        ?>
-        <div class="tile">
-          Total Orderan <?php echo $data_count;?>
-        </div>
-        <?php
-      }
-    ?>
-
+    
       <div class="tile">
        @if (session('status'))
             <div class="alert alert-success">
@@ -125,7 +103,9 @@
 
 
                 <tr class="<?php echo $trclass;?>">
-                  <td><?php echo $item->id;?> <br /> <?php if ($item->siap_cetak == 1) echo '<i class="fa fa-check-circle-o text-success" aria-hidden="true"></i>';?> <?php if ($item->kirim_ke_pengrajin == 1) echo '<i class="fa fa-share" aria-hidden="true"></i>';?></td>
+                  <td><?php echo $item->id;?> <?php if ($item->siap_cetak == 1) echo '<i class="fa fa-check-circle-o text-success" aria-hidden="true"></i>';?> <?php if ($item->kirim_ke_pengrajin == 1) echo '<i class="fa fa-share" aria-hidden="true"></i>';?>
+                    <?php if (!empty($item->pdf_hasiluji)) echo '<br /><a href="'.$item->pdf_hasiluji.'" target="_blank">Hasil Uji XRF</a>';?>
+                  </td>
                     
                     <td>
                     <?php //echo $item->finising.'<br /';?>
@@ -134,7 +114,7 @@
                       Alamat pengiriman : <?php echo $item->alamat;?>, <?php echo $item->nohp;?><br />
                       <hr />
                       <?php
-                        if (!empty($item->gambar_cincin_pria)){
+                        if (isset($item->gambar_cincin_pria)){
                           ?>
                           <fieldset>
                             <legend>Cincin Pria</legend>
@@ -144,23 +124,23 @@
                           <?php
                         }
 
-                        if (!empty($item->gambar_cincin_wanita)){
+                        if (isset($item->gambar_cincin_wanita)){
                           ?>
                           <fieldset>
                             <legend>Cincin Wanita</legend>
                             <img src="<?php echo $item->gambar_cincin_wanita;?>" class="img-thumbnail img-fluid" alt="cincin" /><br />
-                            <?php echo $item->finising_pria;?>
+                            <?php echo $item->finising_wanita;?>
                           </fieldset>
                           <?php
                         }
 
-                        if (!empty($item->gambar)){
+                        if (isset($item->gambar)){
                           ?>
                           <img src="<?php echo $item->gambar;?>" class="img-thumbnail" alt="cincin" /><br />
                           <?php
                         }
 
-                        if (!empty($item->gambargambar)){
+                        if (isset($item->gambargambar)){
                           $gambar = explode(',',$item->gambargambar);
                             foreach($gambar as $gbr){
                             ?>
@@ -169,7 +149,7 @@
                         }
                         }
 
-                        if (!empty($item->finising_pria) && (empty($item->gambar_cincin_pria)) ){
+                        if (isset($item->finising_pria) && (isset($item->gambar_cincin_pria)) ){
                           echo 'Finising Cincin Pria<br />';
                           echo $item->finising_pria;
                           echo '<br />';
@@ -177,7 +157,7 @@
               
                           echo '<hr />';
               
-                          if (!empty($item->finising_wanita) && (empty($item->gambar_cincin_wanita))){
+                          if (isset($item->finising_wanita) && (isset($item->gambar_cincin_wanita))){
                               echo 'Finising Cincin Wanita<br />';
                               echo $item->finising_wanita;
                               echo '<br />';
@@ -188,7 +168,7 @@
                       <?php echo aa('Ongkir ',rupiah($item->ongkir,'<br />'));?><br />
                       <?php echo aa('Pelunasan ',rupiah($item->pelunasan,'<br />'));?><br />
                       <?php 
-                        if (!empty($item->free_woodbox)){
+                        if (isset($item->free_woodbox)){
                           echo aa('Grafir ',$item->free_woodbox);
                         }
                       ?>
@@ -199,8 +179,8 @@
                     <?php if ($item->printed != null) echo '<small class="text-muted">Dicetak oleh '.$item->printed.'</small>';?>
                     </td>
                     <td><?php echo $item->kodecincin;?></td>
-                    <td><?php echo $item->bahanpria()->first()['title'];?><br /><?php echo aa('Ukuran ',$item->ukuranpria);?><br /><?php echo aa('Grafir ',$item->grafirpria);?><br /><?php echo aa('Max ',$item->produksi_beratpria,'gr');?></td>
-                    <td><?php echo $item->bahanwanita()->first()['title'];?><br /><?php echo aa('Ukuran ',$item->ukuranwanita);?><br /><?php echo aa('Grafir ',$item->grafirwanita);?><br /><?php echo aa('Max ',$item->produksi_beratwanita,'gr');?></td>
+                    <td><?php echo title_logam($item->bahanpria()->first(),'title');?><br /><?php echo aa('Ukuran ',$item->ukuranpria);?><br /><?php echo aa('Grafir ',$item->grafirpria);?><br /><?php echo aa('Max ',$item->produksi_beratpria,'gr');?></td>
+                    <td><?php echo title_logam($item->bahanwanita()->first(),'title');?><br /><?php echo aa('Ukuran ',$item->ukuranwanita);?><br /><?php echo aa('Grafir ',$item->grafirwanita);?><br /><?php echo aa('Max ',$item->produksi_beratwanita,'gr');?></td>
                     <td><?php echo date('d M Y', strtotime($item->tglmasuk));?></td>
                     <td><?php echo date('d M Y', strtotime($item->tglselesai));?><br /><span class="badge badge-pill badge-warning">Deadline pengrajin <?php echo date('d M Y', strtotime($item->deadline));?></span></td>
                     <td><?php echo $item->asal->title;?><br />By <?php echo $item->user->name;?></td>
@@ -208,7 +188,7 @@
                         echo $item->pengrajin->nama;
                         if ($item->produksi_dibayar != 0) echo ' <span class="badge badge-success"><i class="fas fa-check"></i></span>'; else echo '<span class="badge badge-danger"><i class="fas fa-times"></i></span>';
 
-                        if (!empty($item->plated_id)) echo '<br />Lapis di '.$item->plated->title;
+                        if (isset($item->plated_id)) echo '<br />Lapis di '.$item->plated->title;
                         echo '<br />Digrafir oleh '.$item->grafir;
                     ?>
                     
@@ -244,7 +224,7 @@
                         ?>
                     </td>
                     <td colspan="2">Free kotak exclusive <?php echo $item->finising;?></td>
-                    <td colspan="2"><?php if (!empty($item->free_woodbox)) {
+                    <td colspan="2"><?php if (isset($item->free_woodbox)) {
                       echo '<span class="badge badge-danger">Ya</span>';
                       echo $item->free_woodbox;
                       if ($item->woodbox_ok == 1){
@@ -293,7 +273,7 @@
                           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cetak</a>
                           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                           <a class="dropdown-item" href="<?php 
-                            if (!empty($item->pelunasan)){
+                            if (isset($item->pelunasan)){
                               echo route('cetak.amplop',['id'=>$item->id]);
                             }else{
                               echo route('pelunasan',['id'=>$item->id,'re'=>'cetak.amplop']);
@@ -311,13 +291,15 @@
                                   }else{
                                     ?>
                                     <a class="dropdown-item" target="_blank" href="
-                                      <?php if ($item->ispremium == 1){
-                                            echo route('sertifikat.single',['id'=>$item->id]);
-                                          }elseif ($item->ispremium == 2){
-                                            echo route('sertifikat.premium',['id'=>$item->id]);
-                                          }elseif($item->ispremium == 0){ 
-                                            echo route('sertifikat.silver',['id'=>$item->id]); 
-                                          }
+                                      <?php 
+                                          if ($item->ispremium == 1 && $item->skema_baru == null) echo route('sertifikat.single',['id'=>$item->id]);
+                                          if ($item->ispremium == 2 && $item->skema_baru == null) echo route('sertifikat.premium',['id'=>$item->id]);
+                                          if ($item->ispremium == 0 && $item->skema_baru == null) echo route('sertifikat.silver',['id'=>$item->id]);
+                                          if ($item->ispremium == 2 && $item->skema_baru == 1) echo route('nota',['id'=>$item->id, 'material' => 'premium']);
+                                          if ($item->ispremium == 1 && $item->skema_baru == 1) echo route('nota',['id'=>$item->id, 'material' => 'halfpremium']);
+                                          if ($item->ispremium == 0 && $item->skema_baru == 1) echo route('sertifikat.silver',['id'=>$item->id]);
+                                          
+                                          
                                           ?>"><i class="fas fa-sticky-note"></i> Cetak Nota Pembelian</a>
                                     <?php
                                   }
@@ -330,6 +312,9 @@
                           <a href="#" class="dropdown-item" target="popup" onclick="window.open('<?php echo route('pesanan.pembayaran.pelunasan',['id'=>$item->id]);?>','popup','width=600,height=500,location=no'); return false;" ><i class="fas fa-scroll"></i> Update Pelunasan  Non Tunai</a>
                           <a href="<?php echo route('pembukuan.add',['status'=>1,'id'=>$item->id]);?>" class="dropdown-item"><i class="fas fa-scroll"></i> Update Pelunasan Tunai</a>
                           <a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal_lunas" data-whatever="<?php echo $item->id;?>" data-jenis="resi"><i class="fas fa-scroll"></i> Update Resi</a>
+                          <div class="dropdown-divider"></div>
+                          <a href="<?php echo route('pesanan.ujixrf',['id'=>$item->id]);?>" class="dropdown-item"><i class="fas fa-scroll"></i> Update Hasil Uji XRF</a>
+
                           </div>
                         </li>
                         <li class="nav-item dropdown active">
@@ -373,7 +358,7 @@
           <div class="row">
             <div class="col-md-6">
             <?php
-                if (!empty($bahanpria)){
+                if (isset($bahanpria)){
                  echo '<table class="table table-bordered table-hover">';
                  echo '<tr>
                     <td colspan="2">Komposisi Pesanan Logam Pria</td>
@@ -393,7 +378,7 @@
 
             <div class="col-md-6">
             <?php
-                if (!empty($bahanwanita)){
+                if (isset($bahanwanita)){
                  echo '<table class="table table-bordered table-hover">';
                  echo '<tr>
                     <td colspan="2">Komposisi Pesanan Logam Wanita</td>
@@ -413,7 +398,7 @@
 
             <div class="col-md-12">
                 <?php 
-                  if (!empty($finising)){
+                  if (isset($finising)){
                     echo '<table class="table table-bordered table-hover">';
                     echo '<tr>
                         <td>Status</td>

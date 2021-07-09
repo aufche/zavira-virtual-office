@@ -7,6 +7,12 @@ use DB;
 
 Class LogamController extends Controller{
 
+    function index(){
+        $data = \App\Namalogam::orderBy('active','desc')->orderBy('title','asc')->get();
+        $harga_pokok = \App\Setting::whereIn('kunci',['harga_pokok_emas','harga_pokok_palladium','harga_pokok_platinum'])->orderBy('kunci','asc')->get();
+        return view('logam.logam',compact('data','harga_pokok'));
+    }
+
     
     function simpanvariasilogam(Request $request){
         if ($request->input('jenis')=='emas') $kode = 'ek'.$request->input('kadar');
@@ -22,6 +28,8 @@ Class LogamController extends Controller{
             'jenis'=>$request->input('jenis'),
             'markup'=>$request->input('markup'),
             'kode'=>$kode,
+            'persentase_markup' => $request->input('persentase_markup'),
+            'biaya_produksi' => $request->input('biaya_produksi'),
         ];
         $id = DB::table('namalogam')->insertGetId($data);
 
@@ -34,7 +42,10 @@ Class LogamController extends Controller{
         $namalogam->title = $request->input('title');
         $namalogam->kadar = $request->input('kadar');
         $namalogam->jenis = $request->input('jenis');
-        $namalogam->markup = $request->input('markup');
+        
+        $namalogam->active = $request->input('active');
+        $namalogam->persentase_markup = $request->input('persentase_markup');
+        $namalogam->biaya_produksi = $request->input('biaya_produksi');
 
         if ($request->input('jenis')=='emas') $kode = 'ek'.$request->input('kadar');
         if ($request->input('jenis')=='palladium') $kode = 'p'.$request->input('kadar');
@@ -44,6 +55,13 @@ Class LogamController extends Controller{
         if ($request->input('jenis')=='platidium') $kode = 'plpall'.$request->input('kadar');
 
         $namalogam->kode = $kode;
+
+        if ($namalogam->jenis == 'emas') {
+            
+        }
+
+        $harga_pokok = \App\Setting::where('kunci','harga_pokok_'.$namalogam->jenis)->first();
+        $namalogam->markup = ($request->input('persentase_markup') / 100) * $harga_pokok['isi'];
 
         $namalogam->save();
 
@@ -239,6 +257,235 @@ function kalkulator($apa=null){
     
 }
 
+/**
+ * blok program untuk kalkulator backend tanpa login
+ * 
+ */
+
+function calc(Request $request){
+    $hargapokok = \App\Setting::whereIn('kunci',['harga_pokok_emas','harga_pokok_palladium','ongkos_bikin','harga_pokok_silver','harga_pokok_platinum','harga_harian_emas','harga_harian_palladium','harga_harian_platinum'])->get();
+    $logam = \App\Namalogam::whereNotNull('active')->whereNotNull('persentase_markup')->orderBy('jenis','asc')->orderBy('kadar','asc')->get();
+    //$logam = DB::table('namalogam')->whereNotNull('active')->whereNotNull('persentase_markup')->orderBy('jenis','asc')->orderBy('kadar','asc')->get();
+    if ($request->isMethod('post')){
+        
+        $harga_pria = 0;
+        $harga_wanita = 0;
+        $kalkulasi = [];
+        $kadar_pria = 0;
+        $kadar_wanita = 0;
+        $biaya_produksi_pria = 0;
+        $biaya_produksi_wanita = 0;
+
+        $hp_emas = $hargapokok[0]->isi;
+        $hp_palladium = $hargapokok[1]->isi;
+        $ongkos_bikin = $hargapokok[2]->isi;
+        //$ongkos_bikin = $request->input('ongkos_bikin');
+        $hp_platinum = $hargapokok[4]->isi;
+
+        
+
+        $id_pria = $request->input('pria');
+        $id_wanita = $request->input('wanita');
+        $berat_pria = $request->input('berat_pria');
+        $berat_wanita = $request->input('berat_wanita');
+
+        $kalkulasi['id_pria'] = $id_pria;
+        $kalkulasi['id_wanita'] = $id_wanita;
+        $kalkulasi['berat_pria'] = $berat_pria;
+        $kalkulasi['berat_wanita'] = $berat_wanita;
+
+        
+
+        if ($berat_pria != null ){
+            $pria = \App\Namalogam::find($id_pria);
+            //$pria = DB::table('namalogam')->find($id_pria);
+            
+            if ($pria->jenis != 'silver'){
+
+                /*if ($pria->jenis == 'emas') $x = $hp_emas;
+                if ($pria->jenis == 'ep') $x = $hp_emas;
+                if ($pria->jenis == 'palladium') $x = $hp_palladium;
+                if ($pria->jenis == 'platinum') $x = $hp_platinum;
+                if ($pria->jenis == 'platidium') $x = (($hp_platinum + $hp_palladium) / 2);
+                */
+
+                $harga_pria = ($pria->harga_final * $berat_pria) + $pria->biaya_produksi;
+                $kadar_pria = $pria->kadar;
+                $harga_pria_pergram = $pria->harga_final;
+
+            }elseif ($pria->jenis == 'silver'){
+                
+                $harga_pria = 265000;
+                $kadar_pria = 20;
+                $harga_pria_pergram = 0;
+                
+            }
+
+            $kalkulasi['jenis_pria'] = $pria->jenis;
+            $kalkulasi['logam_pria'] = $pria->title;
+            $kalkulasi['berat_pria'] = $berat_pria;
+            $kalkulasi['harga_pria'] = $harga_pria;
+            $kalkulasi['harga_pria_pergram'] = $harga_pria_pergram;
+            $kalkulasi['biaya_produksi_pria'] = $pria->biaya_produksi;
+            
+        }else{
+            $kalkulasi['berat_pria']  = null;
+        }
+
+        if ($berat_wanita != null){
+            $wanita = \App\Namalogam::find($id_wanita);
+            //$wanita = DB::table('namalogam')->find($id_wanita);
+
+            if ($wanita->jenis !='silver'){
+                /*if ($wanita->jenis == 'emas') $x = $hp_emas;
+                if ($wanita->jenis == 'ep') $x = $hp_emas;
+                if ($wanita->jenis == 'palladium') $x = $hp_palladium;
+                if ($wanita->jenis == 'platinum') $x = $hp_platinum;
+                if ($wanita->jenis == 'platidium') $x = (($hp_platinum + $hp_palladium) / 2);
+                */
+            
+                $harga_wanita = ($wanita->harga_final * $berat_wanita) + $wanita->biaya_produksi;
+                $harga_wanita_pergram = $wanita->harga_final;
+
+
+                $kadar_wanita = $wanita->kadar;
+            }elseif ($wanita->jenis == 'silver'){
+                
+                $harga_wanita = 265000;
+                $kadar_wanita = 20;
+                $harga_wanita_pergram = 0;
+
+            }
+
+            $kalkulasi['jenis_wanita'] = $wanita->jenis;
+            $kalkulasi['logam_wanita'] = $wanita->title;
+            $kalkulasi['berat_wanita'] = $berat_wanita;
+            $kalkulasi['harga_wanita'] = $harga_wanita;
+            $kalkulasi['harga_wanita_pergram'] = $harga_wanita_pergram;
+            $kalkulasi['biaya_produksi_wanita'] = $wanita->biaya_produksi;
+            
+        }else{
+            $kalkulasi['berat_wanita']  = null;
+            
+        }
+    
+
+        $total = $harga_pria + $harga_wanita;
+        $kalkulasi['total'] = $total;
+
+        if ($kadar_pria >= 50 || $kadar_wanita >= 50){
+            $kalkulasi['dp'] = 70;
+        }else {
+            $kalkulasi['dp'] = 50;
+        }
+
+        /*if ($berat_pria != null && $berat_wanita != null){
+            $kalkulasi['ongkos_bikin'] = $ongkos_bikin;
+        }  else {
+            $kalkulasi['ongkos_bikin'] = ($ongkos_bikin/2);
+        }
+        */
+
+        $kalkulasi['detail'] = 1;
+
+        return view('logam.kalkulator3',compact('logam','hargapokok','kalkulasi'));
+    }else{
+        return view('logam.kalkulator3',compact('logam','hargapokok'));
+    }
+    
+}
+
+function pergram(){
+    $hargapokok = \App\Setting::whereIn('kunci',['harga_pokok_emas','harga_pokok_palladium','harga_pokok_platinum'])->get();
+    //dd($hargapokok);
+    
+    $emas = DB::table('namalogam')->where('jenis','emas')->whereNotNull('active')->whereNotNull('persentase_markup')->orderBy('kadar','desc')->get();
+    $palladium = DB::table('namalogam')->where('jenis','palladium')->whereNotNull('active')->whereNotNull('persentase_markup')->orderBy('kadar','desc')->get();
+    $platinum = DB::table('namalogam')->where('jenis','platinum')->whereNotNull('active')->whereNotNull('persentase_markup')->orderBy('kadar','desc')->get();
+    $ep = DB::table('namalogam')->where('jenis','ep')->whereNotNull('active')->whereNotNull('persentase_markup')->orderBy('kadar','desc')->get();
+
+    return view('logam.hargapergram',compact('emas','palladium','platinum','hargapokok','ep'));
+
+}
+
+function paket($paket){
+    $hargapokok = \App\Setting::whereIn('kunci',['harga_pokok_emas','harga_pokok_palladium','harga_pokok_platinum'])->get();
+
+    /**
+     * Paket 1 = 2 - 3 juta
+     * Paket 2 = 3 - 4 juta
+     * 
+     */
+    /*if ($paket == 1){
+        $pair = [
+            'A' => 's100*pl10',
+            'B' => 's100*pl20',
+            'C' => 's100*pl30',
+            'D' => 's100*pl40',
+        ];
+'A' => 'p10*ek33',
+            'B' => 'pl10*ek33',
+            'C' => 'pl20*ek33',
+            'D' => 'pl40*ek33',
+            'E' => 'p25*ek33',
+    } 
+    */
+
+    if ($paket == 1){
+        $pair = [
+            'A' => 'p10*ek33',
+            'C' => 'p10*epaudp40',
+            'D' => 'p10*epaudp50',
+            
+        ];
+
+    }
+
+
+    if ($paket == 2){
+        $pair = [
+            'A' => 'p25*ek50',
+            'C' => 'p25*ek75',
+            'D' => 'p25*p25',
+            'E' => 'pl40*ek40',
+            'F' => 'p50*ek50',
+            'G' => 'p50*ek75',
+            
+        ];
+
+    }
+
+    if ($paket == 3){
+        $pair = [
+            'A' => 'p75*ek75',
+            'C' => 'p75*ek92',
+            'D' => 'p50*epaudp50',
+            'E' => 'p75*epaudp75',
+           
+            
+        ];
+
+    }
+
+    if ($paket == 'ps'){ // platinum series
+        $pair = [
+            'A' => 'pl10*pl10',
+            'B' => 'pl20*pl20',
+            'C' => 'pl30*pl30',
+            'D' => 'pl40*pl40',
+        ];
+        
+    }
+
+    $data_paket = DB::table('namalogam')->orderBy('kadar','asc')->get()->toArray();
+    
+
+    return view('logam.paket',compact('hargapokok','data_paket','pair'));
+}
+/**
+ * end prrogram kalkulator backend
+ */
+
 function pricelist_single($bahan=null){
     if ($bahan == 'palladium'){
         $hargapokok_pall = \App\Setting::where('kunci','=','harga_pokok_palladium')->first();
@@ -343,6 +590,13 @@ function edit_markup(Request $request){
         return view('logam.editmarkup');
     }
 }
+
+    function export(){
+
+        $data = \App\Namalogam::orderBy('jenis','asc')->whereNotNull('active')->get();
+        $harga_pokok = \App\Setting::whereIn('kunci',['harga_pokok_emas','harga_pokok_palladium','harga_pokok_platinum'])->orderBy('kunci','asc')->get();
+        return view('logam.export',compact('data','harga_pokok'));
+    }
     
 
 

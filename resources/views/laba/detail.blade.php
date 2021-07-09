@@ -39,7 +39,7 @@
                         ?>
                          <tr>
                             <td>Detail Cincin Pria<br />
-                            <?php echo $data->bahanpria()->first()['title'];?>
+                            <?php echo title_logam($data->bahanpria()->first(),'title');?>
                             </td>
                             <td><?php 
                                 $produksi_pria = $data->produksi_beratpria * $data->produksi_hargapria;
@@ -60,7 +60,7 @@
                         ?>
                          <tr>
                             <td>Detail Cincin Wanita<br />
-                            <?php echo $data->bahanwanita()->first()['title'];?>
+                            <?php echo title_logam($data->bahanwanita()->first(),'title');?>
                             </td>
                             <td><?php 
                                 $produksi_wanita = $data->produksi_beratwanita * $data->produksi_hargawanita;

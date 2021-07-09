@@ -39,23 +39,40 @@
 
                 <div class="col-md-3 mb-3">
                 <label for="validationDefault04">Kadar</label>
-                <input type="text" name="kadar" class="form-control" value="<?php echo $data->kadar; ?>" required>
+                <input type="number" name="kadar" class="form-control" value="<?php echo $data->kadar; ?>" required>
                 </div>
 
                 <div class="col-md-3 mb-3">
                 <label for="validationDefault04">Markup</label>
-                <input type="text" name="markup" class="form-control" value="<?php echo $data->markup; ?>" required>
+                <input type="number" name="markup" class="form-control" value="<?php echo $data->markup; ?>" required>
                 </div>
             </div>
 
             <div class="form-row">
             <div class="col-md-3 mb-3">
-                <label for="validationDefault04">Kadar</label>
-                <input type="text" name="kadar" class="form-control" value="<?php echo $data->kadar; ?>" required>
+                <label for="validationDefault04">Persentase Markup</label>
+                <input type="number" name="persentase_markup" class="form-control" value="<?php echo $data->persentase_markup; ?>" required>
             </div>
-            <input type="checkbox" name="active" <?php  if ($data->active == 'on') echo 'checked="checked"';?> /> Aktif ?
+
+            <div class="col-md-3 mb-3">
+                <label for="validationDefault04">Biaya Produksi</label>
+                <input type="number" name="biaya_produksi" class="form-control" value="<?php echo $data->biaya_produksi; ?>" required>
             </div>
-            <button type="submit" class="btn btn-primary btn-block">Simpan</button>
+
+            
+            
+            </div>
+
+            
+            <div class="form-check">
+              
+              <input class="form-check-input" type="checkbox" name="active" <?php  if ($data->active == 'on') echo 'checked="checked"';?> /> 
+              <label class="form-check-label" for="defaultCheck1">
+              Apakah aktif ?
+              </label>
+          </div>
+
+            <button type="submit" class="btn btn-primary btn-block mt-3">Simpan</button>
         </form>
       </div>
     </main>

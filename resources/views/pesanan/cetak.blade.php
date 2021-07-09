@@ -126,7 +126,7 @@
                 ?>
             Ukuran : <?php echo $data->ukuranpria;?><br />
             Grafir : <?php echo $data->grafirpria;?><br />
-            Bahan : <?php echo $data->bahanpria()->first()['title'];?><br />
+            Bahan : <?php echo title_logam($data->bahanpria()->first(),'title');?><br />
             <?php echo aa('Berat maksimal ',$data->produksi_beratpria,'gr');?>
             <br />
             <br />
@@ -141,7 +141,7 @@
                 ?>
             Ukuran : <?php echo $data->ukuranwanita;?><br />
             Grafir : <?php echo $data->grafirwanita;?><br />
-            Bahan : <?php echo $data->bahanwanita()->first()['title'];?><br />
+            Bahan : <?php echo title_logam($data->bahanwanita()->first(),'title');?><br />
             <?php echo aa('Berat maksimal ',$data->produksi_beratwanita,'gr');?>
             </td>
         </tr>

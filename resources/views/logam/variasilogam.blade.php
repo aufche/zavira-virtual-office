@@ -3,7 +3,7 @@
       <div class="app-title">
         <div>
           <h1><i class="fa fa-dashboard"></i> Variasi Logam</h1>
-          <p>Pada halaman ini, kamu bisa menambah data orderan</p>
+          <p></p>
         </div>
       </div>
 

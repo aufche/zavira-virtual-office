@@ -93,10 +93,10 @@ Class ZexclusiveController extends Controller{
             $caption = array_add($caption,'harga_paket',$data->harga_paket);
             $caption = array_add($caption,'kode_paket',$data->kode_paket);
 
-            $caption = array_add($caption,'caption_logam_wanita',$data->bahanwanita()->first()['title']);
+            $caption = array_add($caption,'caption_logam_wanita',title_logam($data->bahanwanita()->first(),'title'));
             $caption = array_add($caption,'caption_berat_logam_wanita',$data->berat_wanita);
 
-            $caption = array_add($caption,'caption_logam_pria',$data->bahanpria()->first()['title']);
+            $caption = array_add($caption,'caption_logam_pria',title_logam($data->bahanpria()->first(),'title'));
             $caption = array_add($caption,'caption_berat_logam_pria',$data->berat_pria);
 
             return view('ze.insert',compact('caption'));

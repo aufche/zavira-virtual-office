@@ -17,23 +17,23 @@
             <div class="form-row">
             <div class="col-md-4 mb-3">
             <label for="validationDefault03">Nama Pemesan</label>
-            <input type="text" value="<?php echo old('nama',$data->nama);?>" name="nama" class="form-control" >
+            <input type="text" value="<?php echo old('nama',$data->nama);?>" name="nama" class="form-control form-control-lg" >
             </div>
 
             <div class="col-md-4 mb-3">
             <label for="validationDefault04">No. HP</label>
-            <input type="text" value="<?php echo $data->nohp;?>" name="nohp" class="form-control" >
+            <input type="text" value="<?php echo $data->nohp;?>" name="nohp" class="form-control form-control-lg" >
             </div>
             
             <div class="col-md-4 mb-3">
             <label for="validationDefault05">Email</label>
-            <input type="text" name="email" value="<?php echo $data->email;?>" class="form-control" >
+            <input type="text" name="email" value="<?php echo $data->email;?>" class="form-control form-control-lg" >
             </div>
             </div>
             <!-- form-row--->        
             <div class="form-group">
             <label for="alamat">Alamat Pengiriman</label>
-            <textarea class="form-control" name="alamat" id="alamat" rows="3"><?php echo $data->alamat;?></textarea>
+            <textarea class="form-control form-control-lg" name="alamat" id="alamat" rows="3"><?php echo $data->alamat;?></textarea>
             </div>
             </div>
 
@@ -56,29 +56,37 @@
        <div class="card-header bg-dark text-white">Detail Cincin Pria</div>
             <div class="card-body">
                 <div class="form-row">
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-3 mb-3">
                     <label for="validationDefault03">Berat akhir cincin pria (Berat maksimal <?php echo $data->produksi_beratpria;?> gr)</label>
-                    <input type="text" value="<?php echo old('sertifikat_beratpria',$data->sertifikat_beratpria);?>" name="sertifikat_beratpria" class="form-control" >
+                    <input type="text" value="<?php echo old('sertifikat_beratpria',$data->sertifikat_beratpria);?>" name="sertifikat_beratpria" class="form-control form-control-lg" >
                     <?php
-                    if ($data->bahanpria()->first()['kode']=='s100'){
+                    if (title_logam($data->bahanpria()->first(),'kode') == 's100'){
                       //--- silve 
                       ?>
                       <label for="validationDefault03">Harga untuk cincin pria karena terbuat dari silver</label>
-                      <input type="text" value="<?php echo old('harga_cincin_jika_perak_pria',$data->sertifikat_hargapria);?>" name="harga_cincin_jika_perak_pria" class="form-control" >
+                      <input type="text" value="<?php echo old('harga_cincin_jika_perak_pria',$data->sertifikat_hargapria);?>" name="harga_cincin_jika_perak_pria" class="form-control form-control-lg" >
                       <?php
                     }
                     ?>
                     </div>
+                    <?php
+                      if ($data->skema_baru == 1){
+                    ?>
+                    <div class="col-md-3 mb-3">
+                    <label for="validationDefault03">Biaya Produksi Cincin Pria</label>
+                    <input type="number" value="<?php echo old('sertifikat_beratpria',$data->biaya_produksi_pria);?>" name="biaya_produksi_pria" class="form-control form-control-lg" >
+                    </div>
+                    <?php } ?>
 
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-3 mb-3">
                     <label for="validationDefault04">Harga per gram</label>
-                    <input type="text" name="sertifikat_hargapria" disabled="disabled" value="<?php echo old('sertifikat_hargapria',$data->sertifikat_hargapria);?>" class="form-control" >
+                    <input type="number" name="sertifikat_hargapria" disabled="disabled" value="<?php echo old('sertifikat_hargapria',$data->sertifikat_hargapria);?>" class="form-control form-control-lg" >
                     </div>
                     
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-3 mb-3">
                     <div class="form-group">
                       <label for="bpria">Bahan</label>
-                      <input type="text" name="bahanpria" disabled="disabled" value="<?php echo $data->bahanpria()->first()['title'];?>" class="form-control" >
+                      <input type="text" name="bahanpria" disabled="disabled" value="<?php echo title_logam($data->bahanpria()->first(),'title');?>" class="form-control form-control-lg" >
                     </div>
                     </div>
                 </div>
@@ -99,29 +107,37 @@
         <div class="card-header bg-info text-white">Cincin Wanita</div> 
             <div class="card-body"> 
                 <div class="form-row">
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-3 mb-3">
                     <label for="validationDefault03">Berat akhir cincin wanita (Berat maksimal <?php echo $data->produksi_beratwanita;?> gr)</label>
-                    <input type="text" name="sertifikat_beratwanita" value="<?php echo old('sertifikat_beratwanita',$data->sertifikat_beratwanita);?>" class="form-control" >
+                    <input type="text" name="sertifikat_beratwanita" value="<?php echo old('sertifikat_beratwanita',$data->sertifikat_beratwanita);?>" class="form-control form-control-lg" >
 
                     <?php
-                    if ($data->bahanwanita()->first()['kode']=='s100'){
+                    if (title_logam($data->bahanwanita()->first(),'kode') == 's100'){
                       //--- silve 
                       ?>
                       <label for="validationDefault03">Harga untuk cincin wanita karena terbuat dari silver</label>
-                      <input type="text" value="<?php echo old('harga_cincin_jika_perak_wanita',$data->sertifikat_hargawanita);?>" name="harga_cincin_jika_perak_wanita" class="form-control" >
+                      <input type="text" value="<?php echo old('harga_cincin_jika_perak_wanita',$data->sertifikat_hargawanita);?>" name="harga_cincin_jika_perak_wanita" class="form-control form-control-lg" >
                       <?php
                     }
                     ?>
                     </div>
+                    <?php
+                      if ($data->skema_baru == 1){
+                    ?>
+                    <div class="col-md-3 mb-3">
+                    <label for="validationDefault03">Biaya Produksi Cincin Wanita</label>
+                    <input type="number" value="<?php echo old('sertifikat_beratwanita',$data->biaya_produksi_wanita);?>" name="biaya_produksi_wanita" class="form-control form-control-lg" >
+                    </div>
+                    <?php } ?>
 
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-3 mb-3">
                     <label for="validationDefault04">Harga per gram</label>
-                    <input type="text" name="sertifikat_hargawanita" disabled="disabled" value="<?php echo old('sertifikat_hargawanita',$data->sertifikat_hargawanita);?>" class="form-control" >
+                    <input type="text" name="sertifikat_hargawanita" disabled="disabled" value="<?php echo old('sertifikat_hargawanita',$data->sertifikat_hargawanita);?>" class="form-control form-control-lg" >
                     </div>
                     
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-3 mb-3">
                     <label for="validationDefault05">Bahan</label>
-                    <input type="text" name="bahanwanita" disabled="disabled" value="<?php echo $data->bahanwanita()->first()['title'];?>" class="form-control" >
+                    <input type="text" name="bahanwanita" disabled="disabled" value="<?php echo title_logam($data->bahanwanita()->first(),'title');?>" class="form-control form-control-lg" >
                     </div>
                 </div>
                 <!-- form-row--->
@@ -135,17 +151,17 @@
                 <div class="form-row">
                     <div class="col-md-4 mb-3">
                     <label for="validationDefault03">Ongkos Bikin</label>
-                    <input type="text" name="ongkos_bikin" value="<?php echo old('ongkos_bikin',$data->ongkos_bikin);?>" class="form-control" >
+                    <input type="text" name="ongkos_bikin" value="<?php echo old('ongkos_bikin',$data->ongkos_bikin);?>" class="form-control form-control-lg" >
                     </div>
 
                     <div class="col-md-4 mb-3">
                     <label for="validationDefault04">Item Tambahan (Misal : berlian)</label>
-                    <input type="text" name="sertifikat_berlian"  class="form-control" value="<?php echo old('sertifikat_berlian',$data->sertifikat_berlian);?>" >
+                    <input type="text" name="sertifikat_berlian"  class="form-control form-control-lg" value="<?php echo old('sertifikat_berlian',$data->sertifikat_berlian);?>" >
                     </div>
                     
                     <div class="col-md-4 mb-3">
                     <label for="validationDefault05">Harga</label>
-                    <input type="text" name="sertifikat_harga_berlian"  class="form-control" value="<?php echo old('sertifikat_harga_berlian',$data->sertifikat_harga_berlian);?>" >
+                    <input type="text" name="sertifikat_harga_berlian"  class="form-control form-control-lg" value="<?php echo old('sertifikat_harga_berlian',$data->sertifikat_harga_berlian);?>" >
                     </div>
                 </div>
                 <!-- form-row--->
@@ -155,7 +171,7 @@
 
         <div class="form-group">
           <label for="sertifikat_gambarcincin">Gambar Cincin Jadi</label>
-          <input type="file" class="form-control-file" name="sertifikat_gambarcincin" id="sertifikat_gambarcincin" placeholder="" aria-describedby="sertifikat_gambarcincin">
+          <input type="file" class="form-control form-control-lg-file" name="sertifikat_gambarcincin" id="sertifikat_gambarcincin" placeholder="" aria-describedby="sertifikat_gambarcincin">
           <small id="sertifikat_gambarcincin" class="form-text text-muted">Silahkan upload gambar hasil jadi cincin</small>
         </div>
 

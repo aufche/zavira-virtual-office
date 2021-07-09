@@ -25,8 +25,8 @@
               <tr>
               <td><a href="<?php route('pesanan.detail',['id'=>$item->id]);?>" target="popup" onclick="window.open('<?php echo route('pesanan.detail',['id'=>$item->id]);?>','popup','width=600,height=800'); return false;"><?php echo $item->id;?></a></td>
                   <td><?php echo $item->kodecincin;?></td>
-                  <td><?php echo $item->bahanpria()->first()['title'];?> </td>
-                  <td><?php echo $item->bahanwanita()->first()['title'];?> </td>
+                  <td><?php echo title_logam($item->bahanpria()->first(),'title');?> </td>
+                  <td><?php echo title_logam($item->bahanwanita()->first(),'title');?> </td>
                   <td><?php echo $item->resi;?></td>
               </tr>
               <?php

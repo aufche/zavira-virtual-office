@@ -36,3 +36,7 @@ Route::get('/chat','RestapiController@chat');
 Route::get('/ai/{logam_pria?}/{logam_wanita?}','RestapiController@ai_pricelist');
 Route::get('/cl/{id}/{message?}','RestapiController@chat_langsung');
 Route::post('/search','RestapiController@ai_pricelist_search');
+
+
+Route::any('/calc','RestapiController@calc');
+Route::get('/pl_depan/{logam}','RestapiController@pricelist_depan');

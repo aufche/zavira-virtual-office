@@ -791,6 +791,7 @@ Class PesananController extends Controller{
                 $pesanan->sertifikat_hargapria = $hargapria['hargapergram'];
                 $pesanan->produksi_hargapria = $hargapria['hargaproduksipergram'];
                 $pesanan->bahanpria = $pria[0];
+                $pesanan->biaya_produksi_pria = $hargapria['biaya_produksi'];
                 $bpria_history_change = true;
 
                     //($hargapria['jenis'] == 'silver' ? $score_pria = 0 : $score_pria = 1);
@@ -820,6 +821,7 @@ Class PesananController extends Controller{
                     $pesanan->sertifikat_hargawanita = $hargawanita['hargapergram'];
                     $pesanan->produksi_hargawanita = $hargawanita['hargaproduksipergram'];
                     $pesanan->bahanwanita = $wanita[0];
+                    $pesanan->biaya_produksi_wanita = $hargawanita['biaya_produksi'];
                     $bwanita_history_change = true;
 
                     //($hargawanita['jenis'] == 'silver' ? $score_wanita = 0 : $score_wanita = 1);
@@ -846,7 +848,7 @@ Class PesananController extends Controller{
             $pesanan->ispremium = $score_pria+$score_wanita;
             $pesanan->yang_premium = $pria_premium.$wanita_premium;
 */
-            if (($score_pria+$score_wanita)==2){
+            /*if (($score_pria+$score_wanita)==2){
             //-- couple
                 $ongkos = \App\Setting::where('kunci','ongkos_bikin')->first();
                 $pesanan->ongkos_bikin = $ongkos->isi;
@@ -856,7 +858,9 @@ Class PesananController extends Controller{
             }elseif (($score_pria+$score_wanita)==0){
                 $pesanan->ongkos_bikin = 0;
             }
-
+            */
+            //$pesanan->ongkos_bikin = 0;
+            
             $pesanan->save();
             
             if ($bpria_history_change){
@@ -882,7 +886,7 @@ Class PesananController extends Controller{
         }elseif ($request->isMethod('get') && !empty($id)){
             //-- get, fill form 
             $data = DB::table('pesanan')->where('id',$id)->first();
-            $namalogam = DB::table('namalogam')->whereNotNull('active')->orderBy('jenis','asc')->pluck('id','title');
+            $namalogam = DB::table('namalogam')->whereNotNull('active')->whereNotNull('persentase_markup')->orderBy('jenis','asc')->pluck('id','title');
             return view('pesanan.edit_logam',compact('data','namalogam'));
         }
     }
@@ -904,8 +908,8 @@ Class PesananController extends Controller{
             if (!empty($pesanan->ukuranpria)){
                   $text .= "Pria ".$pesanan->ukuranpria."\n".
                   "Grafir ".$pesanan->grafirpria."\n".
-                  "Bahan ".$pesanan->bahanpria()->first()['title']."\n".
-                  "Berat maksimal ".$pesanan->produksi_beratpria."\n";
+                  "Bahan ".title_logam($pesanan->bahanpria()->first(),'title')."\n".
+                  "Berat maksimal ".$pesanan->produksi_beratpria." gr \n";
                   if (!empty($pesanan->finising_pria) && (empty($pesanan->gambar_cincin_pria)) ){
                     $text .= "Finising cincin pria \n ".$pesanan->finising_pria;
                   }
@@ -915,8 +919,8 @@ Class PesananController extends Controller{
             if (!empty($pesanan->ukuranwanita)){
                 $text .= "Wanita ".$pesanan->ukuranwanita."\n".
                 "Grafir ".$pesanan->grafirwanita."\n".
-                "Bahan ".$pesanan->bahanwanita()->first()['title']."\n".
-                "Berat maksimal ".$pesanan->produksi_beratwanita."\n";
+                "Bahan ".title_logam($pesanan->bahanwanita()->first(),'title')."\n".
+                "Berat maksimal ".$pesanan->produksi_beratwanita."gr \n";
 
                 if (!empty($pesanan->finising_wanita) && (empty($pesanan->gambar_cincin_wanita)) ){
                     $text .= "Finising cincin wanita \n ".$pesanan->finising_wanita;
@@ -1077,7 +1081,36 @@ Class PesananController extends Controller{
         $data = \App\Pesanan::find($id);
         return view('pesanan.tandaterima',compact('data'));
     }
-    
+
+    function uji_xrf(Request $request, $id = null){
+        if ($request->isMethod('post')){
+
+            
+            if (!empty($request->file('hasiluji'))){
+                $id = $request->input('id');
+
+                $pdf_hasiluji = $request->file('hasiluji')->getRealPath();
+                
+
+                $pesanan =  \App\Pesanan::find($id);
+                $pesanan->pdf_hasiluji = upload_gambar($pdf_hasiluji);
+                $pesanan->save();
+                
+                return redirect()->route('pesanan.ujixrf')->with('status','File hasil uji XRF berhasil ditambahkan');
+                
+            
+            }else{
+                return redirect()->back()->with('status','Gagal meng update');
+            }
+
+
+
+        }elseif ($request->isMethod('get')){
+            $id = $id;
+            return view('pesanan.uji_xrf',compact('id'));
+        }
+    }
+
 
     
 

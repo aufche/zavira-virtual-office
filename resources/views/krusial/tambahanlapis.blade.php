@@ -26,8 +26,8 @@
               </tr>
               <tr>
                 <td><?php echo $data->nama;?></td>
-                <td><?php echo $data->bahanpria()->first()['title'];?><br /><?php echo aa('Ukuran ',$data->ukuranpria);?><br /><?php echo aa('Grafir ',$data->grafirpria);?></td>
-                <td><?php echo $data->bahanwanita()->first()['title'];?><br /><?php echo aa('Ukuran ',$data->ukuranwanita);?><br /><?php echo aa('Grafir ',$data->grafirwanita);?></td>
+                <td><?php echo title_logam($data->bahanpria()->first(),'title');?><br /><?php echo aa('Ukuran ',$data->ukuranpria);?><br /><?php echo aa('Grafir ',$data->grafirpria);?></td>
+                <td><?php echo title_logam($data->bahanwanita()->first(),'title');?><br /><?php echo aa('Ukuran ',$data->ukuranwanita);?><br /><?php echo aa('Grafir ',$data->grafirwanita);?></td>
                 <td><?php echo $data->pengrajin->nama;?></td>
                 <td>
                 <?php

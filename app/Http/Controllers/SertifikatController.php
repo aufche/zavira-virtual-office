@@ -184,16 +184,25 @@ class SertifikatController extends Controller
         $susut->save();
 
 
+       /* if ($item->ispremium == 1 && $item->skema_baru == null) echo route('sertifikat.single',['id'=>$item->id]);
+        if ($item->ispremium == 2 && $item->skema_baru == null) echo route('sertifikat.premium',['id'=>$item->id]);
+        if ($item->ispremium == 0 && $item->skema_baru == null) echo route('sertifikat.silver',['id'=>$item->id]);
+        if ($item->ispremium == 2 && $item->skema_baru == 1) echo route('nota',['id'=>$item->id, 'material' => 'premium']);
+        if ($item->ispremium == 1 && $item->skema_baru == 1) echo route('nota',['id'=>$item->id, 'material' => 'halfpremium']);
+        if ($item->ispremium == 0 && $item->skema_baru == 1) echo route('sertifikat.silver',['id'=>$item->id]);
+        */
 
 
-        if ($pesanan->ispremium == 2){
-            return redirect()->route('sertifikat.premium',['id'=>$id]);
-        }elseif ($pesanan->ispremium == 1){
-            return redirect()->route('sertifikat.single',['id'=>$id]);
-        }else{
-            return redirect()->route('sertifikat.silver',['id'=>$id]);
-        }
+        if ($pesanan->ispremium == 2 && $pesanan->skema_baru == null) return redirect()->route('sertifikat.premium',['id'=>$id]);
+        if ($pesanan->ispremium == 1 && $pesanan->skema_baru == null) return redirect()->route('sertifikat.single',['id'=>$id]);
+        if ($pesanan->ispremium == 0 && $pesanan->skema_baru == null ) return redirect()->route('sertifikat.silver',['id'=>$id]);
 
+        if ($pesanan->ispremium == 2 && $pesanan->skema_baru == 1) return redirect()->route('nota',['id'=>$pesanan->id, 'material' => 'premium']);
+        if ($pesanan->ispremium == 1 && $pesanan->skema_baru == 1) return redirect()->route('nota',['id'=>$pesanan->id, 'material' => 'halfpremium']);
+        if ($pesanan->ispremium == 0 && $pesanan->skema_baru == 1) return redirect()->route('sertifikat.silver',['id'=>$pesanan->id]);
+
+            
+       
         
     }
 
@@ -219,5 +228,12 @@ class SertifikatController extends Controller
     }
 
 
-    //--- end sertifikat blok--//
+    function nota($id,$material){
+        
+        $data = \App\Pesanan::where('id',$id)->first();
+        if ($material == 'premium') return view('sertifikat.skemabaru.premium',compact('data'));
+        if ($material == 'halfpremium' && $data->couple == 1) return view('sertifikat.skemabaru.halfpremiumplus',compact('data')); // ada tambahan cinci perak
+        if ($material == 'halfpremium' && $data->couple == 0) return view('sertifikat.skemabaru.halfpremium',compact('data'));
+        if ($material == 'silver') return view('sertifikat.silver',compact('data'));
+    }
 }

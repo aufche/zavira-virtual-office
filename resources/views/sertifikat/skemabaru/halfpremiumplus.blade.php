@@ -112,10 +112,6 @@
                 .d-right{
                     text-align:right;
                 }
-                .img-thumbnail{
-                    border:1px solid #ccc;
-                    padding:2px;
-                }
   
         }
     </style>
@@ -127,7 +123,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body p-0">
-                <div class="row p-3">
+                    <div class="row p-3">
                     <div class="col-md-6 kiri">
                     Nota Pembelian<br />
                     No. <?php echo $data->id;?>
@@ -135,17 +131,14 @@
                     <div class="col-md-6 kanan d-right">
                             <img class="img-fluid logo" src="<?php echo asset('images/logo-zavira-gargone.png');?>">
                         </div>
-                        
                         <br class="bersih" />
 
 
                     </div>
 
-                    
-
                     <div class="row pb-5 p-5 main">
                         <div class="col-md-6 kiri">
-                        <p class="font-weight-bold"><?php echo aa('Kepada Yth ',$data->nama,'');?></p>
+                        <p class="font-weight-bold"><?php echo aa('Kepada Yth<br />',$data->nama,'');?></p>
                             <p class="mb-1"><?php echo $data->alamat;?><br /><?php echo $data->nohp;?></p>
                         </div>
 
@@ -167,83 +160,122 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th class="text-uppercase small font-weight-bold">No</th>
-                                        <th class="text-uppercase small font-weight-bold">Item</th>
-                                        <th class="text-uppercase small font-weight-bold">Berat</th>
+                                        <th class="font-weight-bold">No</th>
+                                        <th class="font-weight-bold">Item</th>
+                                        <th class="font-weight-bold">Berat</th>
+                                        <th class="font-weight-bold">Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php 
-                                    if (!empty($data->bahanpria) && !empty($data->bahanwanita)){
-                                    ?>
-                                    
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Cincin Pria<br /><?php echo title_logam($data->bahanpria()->first(),'title');?></td>
-                                        <td><?php echo aa('',$data->sertifikat_beratpria,'gr');?></td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Cincin Wanita<br /><?php echo title_logam($data->bahanwanita()->first(),'title');?></td>
-                                        <td><?php echo aa('',$data->sertifikat_beratwanita,'gr');?></td>
-                                    </tr>
-                                    
+                                <?php
+                                    $number = 0;
+                                    if ($data->yang_premium == 'P'){
+                                       ?>
+                                            <tr>
+                                                <td><?php echo $number = $number+1;?></td>
+                                                <td>Cincin Pria<?php echo title_logam($data->bahanpria()->first(),'title');?></td>
+                                                <td><?php echo aa('',$data->sertifikat_beratpria,'gr');?></td>
+                                                <td><?php echo (rupiah($data->sertifikat_beratpria * $data->sertifikat_hargapria));?></td>
+                                            </tr>
+                                            <tr>
+                                                <td><?php echo $number = $number+1;?></td>
+                                                <td>Biaya Pembuatan Cincin Pria</td>
+                                                <td>1 Unit</td>
+                                                <td><?php echo rupiah($data->biaya_produksi_pria);?></td>
+                                            </tr>
+                                            <tr>
+                                                <td><?php echo $number = $number+1;?></td>
+                                                <td>Cincin Perak<?php echo title_logam($data->bahanwanita()->first(),'title');?></td>
+                                                <td><?php echo aa('',$data->sertifikat_beratwanita,'gr');?></td>
+                                                <td><?php echo rupiah($data->sertifikat_hargawanita);?></td>
+                                            </tr>
+                                            
+                                       <?php
 
-                                    <tr>
-                                        <td colspan="2" align="right">Harga</td>
-                                        <td>
-                                        <?php 
-                                        echo rupiah($data->hargabarang);
-                                        ?>
-                                        </td>
-                                    </tr>
-                                    <?php
-                                    }elseif (empty($data->bahanpria) && !empty($data->bahanwanita)){
-                                    ?>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Cincin Wanita<br /><?php echo title_logam($data->bahanwanita()->first(),'title');?></td>
-                                        <td><?php echo aa('',$data->sertifikat_beratwanita,'gr');?></td>
-                                    </tr>
+                                       $total = $data->sertifikat_beratpria * $data->sertifikat_hargapria + $data->biaya_produksi_pria + $data->sertifikat_hargawanita;
+                                    }
+                                    elseif ($data->yang_premium == 'W'){
                                     
-
-                                    <tr>
-                                        <td colspan="2" align="right">Harga</td>
-                                        <td>
-                                        <?php 
-                                        echo rupiah($data->hargabarang);
                                         ?>
-                                        </td>
-                                    </tr>
-                                        <?php
-
-                                    }elseif (!empty($data->bahanpria) && empty($data->bahanwanita)){
-                                        ?>
-                                         <tr>
-                                        <td>1</td>
-                                        <td>Cincin Pria<br /><?php echo title_logam($data->bahanpria()->first(),'title');?></td>
-                                        <td><?php echo aa('',$data->sertifikat_beratpria,'gr');?></td>
-                                    </tr>
-                                        
-    
                                         <tr>
-                                            <td colspan="2" align="right">Harga</td>
-                                            <td>
-                                            <?php 
-                                            echo rupiah($data->hargabarang);
-                                            ?>
-                                            </td>
+                                            <td><?php echo $number = $number+1;?></td>
+                                            <td>Cincin Wanita <?php echo title_logam($data->bahanwanita()->first(),'title');?></td>
+                                            <td><?php echo aa('',$data->sertifikat_beratwanita,'gr');?></td>
+                                            <td><?php echo (rupiah($data->sertifikat_beratwanita * $data->sertifikat_hargawanita));?></td>
                                         </tr>
-                                            <?php
-    
-                                        }
+
+                                        <tr>
+                                            <td><?php echo $number = $number+1;?></td>
+                                            <td>Biaya Pembuatan Cincin Wanita</td>
+                                            <td>1 Unit</td>
+                                            <td><?php echo rupiah($data->biaya_produksi_wanita);?></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td><?php echo $number = $number+1;?></td>
+                                            <td>Cincin Perak <?php echo title_logam($data->bahanpria()->first(),'title');?></td>
+                                            <td><?php echo aa('',$data->sertifikat_beratpria,'gr');?></td>
+                                            <td><?php echo rupiah($data->sertifikat_hargapria);?></td>
+                                        </tr>
+                                        
+                                       <?php
+                                        
+                                        $total = $data->sertifikat_beratwanita * $data->sertifikat_hargawanita + $data->biaya_produksi_wanita +  $data->sertifikat_hargapria;
+
+                                    }    
                                     ?>
+                                    
+
+                                    <?php
+                                    if (!empty($data->sertifikat_berlian) && !empty($data->sertifikat_harga_berlian)){
+                                        ?>
+                                        <tr>
+                                            <td>3</td>
+                                            <td><?php echo $data->sertifikat_berlian;?></td>
+                                            <td>Tertera pada memo/sertifikat berlian</td>
+                                            <td>-</td>
+                                            <td><?php echo rupiah($data->sertifikat_harga_berlian);?></td>
+                                        </tr>
+                                        <?php
+                                    } 
+                                    ?>
+
+                                    <?php
+                                    if (!empty($data->promo_id)){
+                                        ?>
+                                            <tr>
+                                                <td>-</td>
+                                                <td colspan="2"><?php echo $data->promo->title;?></td>
+                                                <td><?php if ($data->promo->nominal != 0 || $data->promo->nominal != null) echo rupiah($data->promo->nominal); else echo '-';?></td>
+                                            </tr>
+                                        <?php
+                                    } 
+                                    ?>
+
+                                    <tr>
+                                        <td colspan="3" align="right">Total</td>
+                                        <td >
+                                        <?php
+                                            if (!empty($data->sertifikat_berlian) && !empty($data->sertifikat_harga_berlian)){
+                                                $total = $total + $data->sertifikat_harga_berlian;
+                                            }
+
+                                            if (!empty($data->promo_id)){
+                                                if ($data->promo->nominal != 0 || $data->promo->nominal != null){
+                                                    $total = $total - $data->promo->nominal;
+                                                }
+                                                
+                                            }
+                                            echo rupiah($total);
+                                        ?>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
 
-                  
+                    
 
                     <div class="kanan">
                         <div class="d-flex p-4 main">

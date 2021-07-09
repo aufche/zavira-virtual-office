@@ -250,4 +250,6 @@ Class PembukuanController extends Controller{
         \App\Neraca::where('pembukuan_id',$id)->delete();
         return redirect()->route('pembukuan.detail',['buku'=>$buku]);
     }
+
+    
 }

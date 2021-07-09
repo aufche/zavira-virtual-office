@@ -90,7 +90,7 @@
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="<?php echo route('updateform',['action'=>1]);?>" target="popup" onclick="window.open('<?php echo route('updateform',['action'=>1]);?>','popup','width=1200,height=500'); return false;"><i class="fas fa-wrench"></i> Update Biaya Produksi</a>
             <a class="dropdown-item" href="<?php echo route('updateform',['action'=>2]);?>" target="popup" onclick="window.open('<?php echo route('updateform',['action'=>2]);?>','popup','width=1200,height=500'); return false;"><i class="fab fa-pagelines"></i> Update Biaya Lapis</a>
-            <a class="dropdown-item" href="<?php echo route('updateform',['action'=>3]);?>" target="popup" onclick="window.open('<?php echo route('updateform',['action'=>3]);?>','popup','width=1200,height=500'); return false;"><i class="fas fa-chalkboard-teacher"></i> Update Biaya Lapis & Produksi</a>
+            <a class="dropdown-item" href="<?php echo route('perhitungan.update');?>" target="popup" onclick="window.open('<?php echo route('perhitungan.update');?>','popup','width=500,height=500'); return false;"><i class="fas fa-chalkboard-teacher"></i> Update Harga Final <span class="badge badge-pill badge-primary">New</span></a>
             <div class="dropdown-divider"></div>
             <!--<a class="dropdown-item" href="<?php echo route('pesanan.woodbox');?>" target="popup" onclick="window.open('<?php echo route('pesanan.woodbox');?>','popup','width=600,height=300'); return false;"><i class=" fa fa-edit"></i> Update Woodbox</a>
             <div class="dropdown-divider"></div>-->
@@ -110,6 +110,8 @@
           -->
         </div>
       </li>
+
+      
 
       <!--<li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle text-white" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Paket Penjualan</a>

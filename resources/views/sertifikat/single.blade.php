@@ -173,7 +173,7 @@
                                        ?>
                                             <tr>
                                                 <td><?php echo $number = $number+1;?></td>
-                                                <td>Cincin Pria<br /><?php echo $data->bahanpria()->first()['title'];?></td>
+                                                <td>Cincin Pria<br /><?php echo title_logam($data->bahanpria()->first(),'title');?></td>
                                                 <td><?php echo aa('',$data->sertifikat_beratpria,'gr');?></td>
                                                 <td><?php echo (rupiah($data->sertifikat_beratpria * $data->sertifikat_hargapria));?></td>
                                             </tr>
@@ -183,7 +183,7 @@
                                             ?>
                                             <tr>
                                                 <td><?php echo $number = $number+1;?></td>
-                                                <td>Cincin Wanita<br /><?php echo $data->bahanwanita()->first()['title'];?></td>
+                                                <td>Cincin Wanita<br /><?php echo title_logam($data->bahanwanita()->first(),'title');?></td>
                                                 <td><?php echo aa('',$data->sertifikat_beratwanita,'gr');?></td>
                                                 <td><?php echo rupiah($data->sertifikat_hargawanita);?></td>
                                             </tr>
@@ -201,7 +201,7 @@
                                             ?>
                                             <tr>
                                                 <td><?php echo $number = $number+1;?></td>
-                                                <td>Cincin Pria<br /><?php echo $data->bahanpria()->first()['title'];?></td>
+                                                <td>Cincin Pria<br /><?php echo title_logam($data->bahanpria()->first(),'title');?></td>
                                                 <td><?php echo aa('',$data->sertifikat_beratpria,'gr');?></td>
                                                 <td><?php echo rupiah($data->sertifikat_hargapria);?></td>
                                             </tr>
@@ -214,7 +214,7 @@
                                         ?>
                                         <tr>
                                             <td><?php echo $number = $number+1;?></td>
-                                            <td>Cincin Wanita<br /><?php echo $data->bahanwanita()->first()['title'];?></td>
+                                            <td>Cincin Wanita<br /><?php echo title_logam($data->bahanwanita()->first(),'title');?></td>
                                             <td><?php echo aa('',$data->sertifikat_beratwanita,'gr');?></td>
                                             <td><?php echo (rupiah($data->sertifikat_beratwanita * $data->sertifikat_hargawanita));?></td>
                                         </tr>
