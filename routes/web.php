@@ -320,6 +320,12 @@ Route::prefix('logam')->group(function () {
 
     Route::get('/export','LogamController@export')->name('logam.export')->middleware('auth');
     
+    Route::get('/down/{jenis}',function($jenis){
+        $logam = \App\Namalogam::where('jenis',$jenis)->whereNotNull('active')->whereNotNull('persentase_markup')->get();
+        foreach ($logam as $item){  
+            DB::table('namalogam')->where('id',$item->id)->decrement('persentase_markup',5);
+        }
+    })->middleware('auth');
 
 
 });
@@ -657,4 +663,6 @@ Route::get('/sh',function(){
     
     echo $binaryFileUploadURL = $response["success"]["url"];
 });
+
+
 
