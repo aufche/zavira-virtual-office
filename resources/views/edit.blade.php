@@ -348,16 +348,10 @@
             <div class="form-row">
                     <div class="col mb-3">
                     <label for="validationDefault03">Tujuan Rekening <span class="badge badge-pill badge-warning">Penting</span></label> 
-                    <select name="rekening" class="form-control" required>
-                        <option value="BCA" <?php if ($data->rekening == 'BCA') echo 'selected="selected"';?>>BCA</option>
-                        <option value="MANDIRI" <?php if ($data->rekening == 'MANDIRI') echo 'selected="selected"';?>>Mandiri</option>
-                        <option value="BNI" <?php if ($data->rekening == 'BNI') echo 'selected="selected"';?>>BNI</option>
-                        <option value="BRI" <?php if ($data->rekening == 'BRI') echo 'selected="selected"';?>>BRI</option>
-                        <option value="NIAGA" <?php if ($data->rekening == 'NIAGA') echo 'selected="selected"';?>>NIAGA</option>
-                        <option value="EDC-BCA" <?php if ($data->rekening == 'EDC-BCA') echo 'selected="selected"';?>>EDC-BCA</option>
-                        <option value="EDC-BNI" <?php if ($data->rekening == 'EDC-BNI') echo 'selected="selected"';?>>EDC-BNI</option>
-                        <option value="CASH" <?php if ($data->rekening == 'CASH') echo 'selected="selected"';?>>CASH</option>
-                        <option value="SHOPEE" <?php if ($data->rekening == 'SHOPEE') echo 'selected="selected"';?>>SHOPEE</option>
+                    <select name="account_id" class="form-control" required>
+                    @foreach ($account as $title => $id)
+                        <option value="{{$id}}" <?php if ($data->account_id == $id ) echo 'selected'; ?>>{{$title}}</option>
+                    @endforeach
                     </select>
                     <small class="text-muted">Harus dipilih sesuai dengan keadaan sebenarnya</small>
                     </div>

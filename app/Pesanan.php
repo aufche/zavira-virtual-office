@@ -59,6 +59,10 @@ Class Pesanan extends Model{
         return $this->belongsTo('App\Plated');
     }
 
+    public function account(){
+        return $this->belongsTo('App\Account');
+    }
+
    
 
 }

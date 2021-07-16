@@ -344,16 +344,10 @@
                             <div class="form-row">
                                     <div class="col mb-3 ">
                                     <label for="validationDefault03">Tujuan Rekening <span class="badge badge-pill badge-warning">Penting</span></label>
-                                    <select name="rekening" class="form-control" required v-on:change="ubah($event,'rekening')">
-                                        <option value="BCA">BCA</option>
-                                        <option value="MANDIRI">Mandiri</option>
-                                        <option value="BNI">BNI</option>
-                                        <option value="BRI">BRI</option>
-                                        <option value="NIAGA">NIAGA</option>
-                                        <option value="EDC-BCA">EDC-BCA</option>
-                                        <option value="EDC-BNI">EDC-BNI</option>
-                                        <option value="CASH">CASH</option>
-                                        <option value="SHOPEE">SHOPEE</option>
+                                    <select name="account_id" class="form-control" required v-on:change="ubah($event,'rekening')">
+                                        @foreach ($account as $title => $id)
+                                            <option value="{{$id}}">{{$title}}</option>
+                                        @endforeach
                                     </select>
                                     <small class="text-muted">Harus dipilih sesuai dengan keadaan sebenarnya</small>
                                     </div>

@@ -664,5 +664,23 @@ Route::get('/sh',function(){
     echo $binaryFileUploadURL = $response["success"]["url"];
 });
 
+Route::get('/das',function(){
+    $client = new \GuzzleHttp\Client();
+    $url = 'http://akuntansi.test/api/invoice';
+    $request = $client->post($url,['form_params'=> [
+            'nama' => 'dono',
+            'nohp' => '23432432',
+            'alamat' => 'Yogya',
+            'harga' => '90000',
+            'pesanan_id' => 12304,
+            'title' => 'cincin kawin ',
+            'deskripsi' => 'cowok emas cewk pall',
+            'harga' => '90000',
+
+        ]
+    ]);
+});
+
+
 
 

@@ -36,6 +36,7 @@ class HomeController extends Controller
         $plated = DB::table('plated')->pluck('id','title');
         $promo = DB::table('promo')->where('aktif',1)->pluck('id','title');
         $stock = DB::table('stock')->where('status',1)->pluck('id','title');
+        $account = DB::table('account')->pluck('id','title');
 
         //print_r($namalogam);
         return view('add')
@@ -45,6 +46,7 @@ class HomeController extends Controller
             ->with('promo',$promo)
             ->with('plated',$plated)
             ->with('stock',$stock)
+            ->with('account',$account)
             ->with('namalogam',$namalogam);
     }
 
@@ -101,7 +103,7 @@ class HomeController extends Controller
             'tglmasuk'=>$request->input('tmasuk'),
             'tglselesai'=>$request->input('tselesai'),
             'deadline'=>$request->input('tdeadline'),
-            'rekening'=>$request->input('rekening'),
+            //'rekening'=>$request->input('rekening'),
             'hargabarang'=>raw($request->input('hargabarang')),
             'dp'=>raw($request->input('dp')),
             'ongkir'=>raw($request->input('ongkir')),
@@ -126,6 +128,7 @@ class HomeController extends Controller
             'is_lunas' => $request->input('is_lunas'),
             'grafir' => $request->input('grafir'),
             'skema_baru' => 1,
+            'account_id' => $request->input('account_id'),
         ];
 
         if (!empty($request->file('gambar'))){
@@ -289,23 +292,23 @@ class HomeController extends Controller
 
             */
 
-            neraca_insert(($request->input('dp')+$request->input('ongkir')),'DP dan ongkir no order '.$id.' rekening '.$request->input('rekening'),1,Auth::id(),$id,'DP');
+            //neraca_insert(($request->input('dp')+$request->input('ongkir')),'DP dan ongkir no order '.$id.' rekening '.$request->input('rekening'),1,Auth::id(),$id,'DP');
 
             
 
-            if ($request->input('rekening') == 'CASH'){
-                //** add ke pembukuan jika transaksi cash*/
-                $pembukuan = new \App\Pembukuan;
-                $pembukuan->keterangan = 'DP dan ongkir no order '.$id.' rekening '.$request->input('rekening');
-                $pembukuan->buku_id = Auth::user()->buku;
-                $pembukuan->user_id = Auth::user()->id;
-                $pembukuan->bulantahun = date('F Y');
-                $pembukuan->tanggal = $request->input('tmasuk');
-                $pembukuan->jenis_transaksi = 1;
-                $pembukuan->masuk = $request->input('dp')+$request->input('ongkir');
-                $pembukuan->keluar = 0;
-                $pembukuan->save();
-            }
+            // if ($request->input('rekening') == 'CASH'){
+            //     //** add ke pembukuan jika transaksi cash*/
+            //     $pembukuan = new \App\Pembukuan;
+            //     $pembukuan->keterangan = 'DP dan ongkir no order '.$id.' rekening '.$request->input('rekening');
+            //     $pembukuan->buku_id = Auth::user()->buku;
+            //     $pembukuan->user_id = Auth::user()->id;
+            //     $pembukuan->bulantahun = date('F Y');
+            //     $pembukuan->tanggal = $request->input('tmasuk');
+            //     $pembukuan->jenis_transaksi = 1;
+            //     $pembukuan->masuk = $request->input('dp')+$request->input('ongkir');
+            //     $pembukuan->keluar = 0;
+            //     $pembukuan->save();
+            // }
 
             /*$history = new \App\History;
             $history->pesanan_id = $id;
@@ -373,6 +376,24 @@ class HomeController extends Controller
         }
             */
 
+            //-- buat catatan invoice
+            $client = new \GuzzleHttp\Client();
+            $url = 'http://akuntansi.zavirajewelry.com/api/invoice';
+            $request = $client->post($url,['form_params'=> [
+                    'nama' => $request->input('nama'),
+                    'nohp' => number_international($request->input('nohp')),
+                    'alamat' => $request->input('alamat'),
+                    'harga' => raw($request->input('hargabarang')),
+                    'pesanan_id' => $id,
+                    'title' => 'Pesanan no order '.$id,
+                    'deskripsi' => 'Cincin pria '.$bpria_history.' cincin wanita '.$bwanita_history,
+                    'harga' => raw($request->input('hargabarang')),
+                    'dp' => raw($request->input('dp')),
+                    'account_id' => $request->input('account_id'),
+
+                ]
+            ]);
+
             return redirect()->route('edit',['id'=>$id])->with('status','Data pesanan berhasil disimpan');		
         }
        
@@ -385,10 +406,11 @@ class HomeController extends Controller
         $asal = DB::table('asal')->pluck('id','title');
         $kurir = DB::table('kurir')->pluck('id','title');
         $plated = DB::table('plated')->pluck('id','title');
+        $account = DB::table('account')->pluck('id','title');
         $promo = DB::table('promo')->where('aktif',1)->pluck('id','title');
         
         $data = \App\Pesanan::where('id',$id)->with('user','pengrajin')->first();
-        return view('edit',compact('pengrajin','namalogam','data','asal','kurir','promo','plated'));
+        return view('edit',compact('pengrajin','namalogam','data','asal','kurir','promo','plated','account'));
     }
 
     function editing(Request $request){
@@ -415,83 +437,6 @@ class HomeController extends Controller
 
        
 
-        //-- cari harga
-        /*if (!empty($request->input('bpria')) && !empty($request->input('upria'))){
-            $pria = explode('|',$request->input('bpria'));
-            if ($pria[0] != $request->input('bahanpria_old')){
-                $hargapria = cariharga($pria[0]);
-                $pesanan->sertifikat_hargapria = $hargapria['hargapergram'];
-                $pesanan->produksi_hargapria = $hargapria['hargaproduksipergram'];
-                $pesanan->bahanpria = $pria[0];
-
-                //($hargapria['jenis'] == 'silver' ? $score_pria = 0 : $score_pria = 1);
-
-                if ($hargapria['jenis'] == 'silver'){
-                    $score_pria = 0;
-                    $pria_premium = null;
-                    if ($request->input('asal_id') == 1) $komisi_pria = 5000; else $komisi_pria = 0;
-                }else{
-                    $score_pria = 1;
-                    $pria_premium = 'P';
-                    if ($request->input('asal_id') == 1) $komisi_pria = 15000; else $komisi_pria = 0;
-                }
-            }else{
-                $data_pria = cariharga($pria[0]);
-                $data_pria_lama = data_lama($data_pria,'P');
-                $score_pria = $data_pria_lama['score'];
-                $pria_premium = $data_pria_lama['premium'];
-            }
-            
-        }
-
-        if (!empty($request->input('bwanita')) && !empty($request->input('uwanita'))){
-            $wanita = explode('|',$request->input('bwanita'));
-            if ($wanita[0] != $request->input('bahanwanita_old')){
-                $hargawanita = cariharga($wanita[0]);
-                $pesanan->sertifikat_hargawanita = $hargawanita['hargapergram'];
-                $pesanan->produksi_hargawanita = $hargawanita['hargaproduksipergram'];
-                $pesanan->bahanwanita = $wanita[0];
-
-                //($hargawanita['jenis'] == 'silver' ? $score_wanita = 0 : $score_wanita = 1);
-
-                if ($hargawanita['jenis'] == 'silver'){
-                    $score_wanita = 0;
-                    $wanita_premium = null;
-                    if ($request->input('asal_id') == 1) $komisi_wanita = 5000; else $komisi_wanita = 0;
-                }else{
-                    $score_wanita = 1;
-                    $wanita_premium = 'W';
-                    if ($request->input('asal_id') == 1) $komisi_wanita = 15000; else $komisi_wanita = 0;
-                }
-            }else{
-                $data_wanita = cariharga($wanita[0]);
-                $data_wanita_lama = data_lama($data_wanita,'W');
-                $score_wanita = $data_wanita_lama['score'];
-                $wanita_premium = $data_wanita_lama['premium'];
-            }
-            
-        }
-
-        //(($score_pria+$score_wanita) == 2 ? $pesanan->ispremium = 1 : $pesanan->ispremium = 0);
-
-        
-        $pesanan->komisi = $komisi_pria+$komisi_wanita;
-        $pesanan->ispremium = $score_pria+$score_wanita;
-        $pesanan->yang_premium = $pria_premium.$wanita_premium;
-        
-
-
-        if (($score_pria+$score_wanita)==2){
-            //-- couple
-            $ongkos = \App\Setting::where('kunci','ongkos_bikin')->first();
-            $pesanan->ongkos_bikin = $ongkos->isi;
-        }elseif (($score_pria+$score_wanita)==1){
-            $ongkos = \App\Setting::where('kunci','ongkos_bikin')->first();
-            $pesanan->ongkos_bikin = ($ongkos->isi/2)+12500;
-        }elseif (($score_pria+$score_wanita)==0){
-            $pesanan->ongkos_bikin = 0;
-        }
-    */
 
         if (!empty($request->file('gambar'))){
         
@@ -565,7 +510,7 @@ class HomeController extends Controller
         $pesanan->tglmasuk=$request->input('tmasuk');
         $pesanan->tglselesai=$request->input('tselesai');
         $pesanan->deadline=$request->input('tdeadline');
-        $pesanan->rekening=$request->input('rekening');
+        //$pesanan->rekening=$request->input('rekening');
         $pesanan->hargabarang=raw($request->input('hargabarang'));
         $pesanan->dp=raw($request->input('dp'));
         $pesanan->ongkir=raw($request->input('ongkir'));
@@ -587,78 +532,12 @@ class HomeController extends Controller
         $pesanan->promo_id = $request->input('promo_id');
         $pesanan->is_lunas = $request->input('is_lunas');
         $pesanan->grafir = $request->input('grafir');
+        $pesanan->account_id = $request->input('account_id');
         $pesanan->save();
 
 
          
-        /*if (!empty($request->input('kirim_ke_pengrajin'))){
-            
-            if ($pesanan->kirim_ke_pengrajin == 0){
-                $pesanan->kirim_ke_pengrajin = $request->input('kirim_ke_pengrajin');
-                $text = "No order ".$request->input('id')."\n";
-
-                if (!empty($request->input('upria'))){
-                  $text .= "Pria ".$request->input('upria')."\n".
-                  "Grafir ".$request->input('gpria')."\n".
-                  "Bahan ".$pria[1]."\n".
-                  "Berat maksimal ".$request->input('produksi_beratpria')."\n".
-                  "\n".
-                  "\n";      
-                }
-
-                if (!empty($request->input('uwanita'))){
-                    $text .= "Wanita ".$request->input('uwanita')."\n".
-                    "Grafir ".$request->input('gwanita')."\n".
-                    "Bahan ".$wanita[1]."\n".
-                    "Berat maksimal ".$request->input('produksi_beratwanita')."\n".
-                    "\n".
-                    "\n";
-                }
-                        
-                        $text .= "Pengrajin ".$pesanan->pengrajin->nama."\n";   
-                        $text .= "<b>Keterangan</b> \n".$request->input('keterangan')."\n \n \n".
-                                "<b>Deadline</b> ".date('d M Y', strtotime($request->input('tdeadline')))."\n".
-                                "\n \n".
-                                "Pengrajin ".$pesanan->pengrajin->nama."\n".
-                                "Matur nuwun \n \n".
-                                "Ttd \n".Auth::user()->name;
-
-                if (!empty($pesanan->gambar)){
-                   Telegram::setAccessToken($pesanan->pengrajin->token);
-                   Telegram::sendPhoto([
-                            'chat_id' => $pesanan->pengrajin->id_chat, // zavira virtual office
-                            'parse_mode' => 'HTML',
-                            'photo'=>InputFile::create($pesanan->gambar, "photo.jpg"),
-                             'caption' => "Gambar untuk no order ".$id
-                        ]); 
-                }
-                        
-                
-                if (!empty($request->input('gambargambar'))){
-                    $pics = explode(',',$request->input('gambargambar'));
-                    foreach ($pics as $pic){
-                        Telegram::setAccessToken($pesanan->pengrajin->token);
-                        Telegram::sendPhoto([
-                            'chat_id' => $pesanan->pengrajin->id_chat, // zavira virtual office
-                            'parse_mode' => 'HTML',
-                            'photo'=>InputFile::create($pic, "photo.jpg"),
-                            'caption' => "Gambar untuk no order ".$id
-                        ]);   
-                    }
-                }
-                Telegram::setAccessToken($pesanan->pengrajin->token);
-                Telegram::sendMessage([
-                    'chat_id' => $pesanan->pengrajin->id_chat, // zavira virtual office
-                    'parse_mode' => 'HTML',
-                    'text' => $text
-                ]);
-
-                history_insert($id,Auth::id(),'Data pesanan telah masuk ke bengkel pengrajin');
-
-                }
-            
-        }
-        */
+        
         
         
         /*
