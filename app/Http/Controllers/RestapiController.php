@@ -10,7 +10,8 @@ use Illuminate\Support\Arr;
 Class RestapiController extends Controller{
 
     function logam(){
-        $data = \App\Namalogam::whereNotNull('active')->orderBy('title','asc')->get();
+        //$data = \App\Namalogam::whereNotNull('active')->whereNotNull('persentase_markup')->orderBy('title','asc')->get();
+        $data = DB::table('namalogam')->whereNotNull('active')->whereNotNull('persentase_markup')->orderBy('title','asc')->get();
 
         return response()->json($data, 201);
     }
@@ -587,7 +588,6 @@ Class RestapiController extends Controller{
             ], 201);
         }
             
-        
-        
     }
+
 }

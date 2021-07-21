@@ -40,3 +40,4 @@ Route::post('/search','RestapiController@ai_pricelist_search');
 
 Route::any('/calc','RestapiController@calc');
 Route::get('/pl_depan/{logam}','RestapiController@pricelist_depan');
+Route::post('/update/{apa?}','API\RestfullController@update');
