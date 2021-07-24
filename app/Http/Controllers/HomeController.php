@@ -267,14 +267,14 @@ class HomeController extends Controller
             masukkan data ke tabel DP sesuai dengan no pesanan / no order
             ==============================
             */
-            if ($score_pria + $score_wanita != 0){
-                $data_dp = [
-                    'pesanan_id'=>$id,
-                    'nominal'=>$request->input('dp'),
-                    'created_at'=>\Carbon\Carbon::now(),
-                ];
-                DB::table('dp')->insert($data_dp);
-            }
+            // if ($score_pria + $score_wanita != 0){
+            //     $data_dp = [
+            //         'pesanan_id'=>$id,
+            //         'nominal'=>$request->input('dp'),
+            //         'created_at'=>\Carbon\Carbon::now(),
+            //     ];
+            //     DB::table('dp')->insert($data_dp);
+            // }
             
 
             /*
@@ -375,24 +375,26 @@ class HomeController extends Controller
             
         }
             */
+            if ($request->add_invoice == 'on'){
+                //-- buat catatan invoice
+                $client = new \GuzzleHttp\Client();
+                $url = 'http://akuntansi.zavirajewelry.com/api/invoice';
+                $request = $client->post($url,['form_params'=> [
+                        'nama' => $request->input('nama'),
+                        'nohp' => number_international($request->input('nohp')),
+                        'alamat' => $request->input('alamat'),
+                        'harga' => raw($request->input('hargabarang')),
+                        'pesanan_id' => $id,
+                        'title' => 'Pesanan no order '.$id,
+                        'deskripsi' => 'Cincin pria '.$bpria_history.' cincin wanita '.$bwanita_history,
+                        'harga' => raw($request->input('hargabarang')),
+                        'dp' => raw($request->input('dp')),
+                        'account_id' => $request->input('account_id'),
 
-            //-- buat catatan invoice
-            $client = new \GuzzleHttp\Client();
-            $url = 'http://akuntansi.zavirajewelry.com/api/invoice';
-            $request = $client->post($url,['form_params'=> [
-                    'nama' => $request->input('nama'),
-                    'nohp' => number_international($request->input('nohp')),
-                    'alamat' => $request->input('alamat'),
-                    'harga' => raw($request->input('hargabarang')),
-                    'pesanan_id' => $id,
-                    'title' => 'Pesanan no order '.$id,
-                    'deskripsi' => 'Cincin pria '.$bpria_history.' cincin wanita '.$bwanita_history,
-                    'harga' => raw($request->input('hargabarang')),
-                    'dp' => raw($request->input('dp')),
-                    'account_id' => $request->input('account_id'),
-
-                ]
-            ]);
+                    ]
+                ]);
+            }
+            
 
             return redirect()->route('edit',['id'=>$id])->with('status','Data pesanan berhasil disimpan');		
         }

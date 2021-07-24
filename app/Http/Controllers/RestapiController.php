@@ -325,8 +325,8 @@ Class RestapiController extends Controller{
     }
 
     function couple_pricelist(){
-        $data_logam = \App\Namalogam::whereNotNull('active')->orderBy('title','asc')->get()->toArray();
-        $data_harga = \App\Setting::whereIn('kunci',['harga_pokok_emas','harga_pokok_palladium','ongkos_bikin','harga_pokok_silver','harga_pokok_platinum'])->get()->toArray();
+        $data_logam = \App\Namalogam::whereNotNull('active')->orderBy('title','asc')->whereNotNull('persentase_markup')->get()->toArray();
+        //$data_harga = \App\Setting::whereIn('kunci',['harga_pokok_emas','harga_pokok_palladium','ongkos_bikin','harga_pokok_silver','harga_pokok_platinum'])->get()->toArray();
         
 
         $pair = [
@@ -386,7 +386,6 @@ Class RestapiController extends Controller{
 
             return response()->json([
                 'data_logam' => $data_logam,
-                'data_harga' => $data_harga,
                 'pair' => $pair,
                 'berat_pria' => 4,
                 'berat_wanita' => 4,
