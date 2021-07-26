@@ -2,6 +2,7 @@
 <div class="container mt-3">
   <div class="row">
   <div class="col-md-12">
+    <div class="fs-2 judul text-end">{{$title}}</div>
   <table class="table table-bordered border-warning border-dark">
  
 
@@ -16,8 +17,10 @@
         //dd($data_paket);
         $n = 1;
 
-        foreach ($pair as $key => $value){
-            $kode = explode('*',$value); //'pria*wanita',
+        foreach ($pair as $item){
+            
+
+            $kode = explode('*',$item); //'pria*wanita',
             $pria = array_search($kode[0], array_column($data_paket, 'kode'));
             $wanita = array_search($kode[1], array_column($data_paket, 'kode'));
 
@@ -33,7 +36,7 @@
                 
                 $male = $data_paket[$pria]->harga_final * 4 + $data_paket[$pria]->biaya_produksi;
                 $female = $data_paket[$wanita]->harga_final * 4 + $data_paket[$wanita]->biaya_produksi;
-                
+            //    echo $data_paket[$wanita]->harga_final;
 
 
             echo rupiah($male+$female); ?></td>
@@ -43,7 +46,7 @@
         }
   ?>
    <tr>
-    <td colspan="4" class="text-center bg-warning">Berat masing-masing cincin 4 gram</td>
+    <td colspan="4" class="text-center bg-warning berat fs-4">Berat masing-masing cincin 4 gram</td>
   </tr>
     </table>
   </div>

@@ -152,7 +152,6 @@ class HomeController extends Controller
      
             $image_name = $request->file('gambar_cincin_pria')->getRealPath();
      
-           
             $data_pesanan = array_add($data_pesanan,'gambar_cincin_pria',upload_gambar($image_name));
         }
 

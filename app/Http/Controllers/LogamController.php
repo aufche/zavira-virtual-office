@@ -409,61 +409,36 @@ function pergram(){
 }
 
 function paket($paket){
-    $hargapokok = \App\Setting::whereIn('kunci',['harga_pokok_emas','harga_pokok_palladium','harga_pokok_platinum'])->get();
+    
 
-    /**
-     * Paket 1 = 2 - 3 juta
-     * Paket 2 = 3 - 4 juta
-     * 
-     */
-    /*if ($paket == 1){
-        $pair = [
-            'A' => 's100*pl10',
-            'B' => 's100*pl20',
-            'C' => 's100*pl30',
-            'D' => 's100*pl40',
-        ];
-'A' => 'p10*ek33',
-            'B' => 'pl10*ek33',
-            'C' => 'pl20*ek33',
-            'D' => 'pl40*ek33',
-            'E' => 'p25*ek33',
-    } 
-    */
+   
 
     if ($paket == 1){
-        $pair = [
-            'A' => 'p10*ek33',
-            'C' => 'p10*epaudp40',
-            'D' => 'p10*epaudp50',
-            
-        ];
-
+        $pair = ['s100*ek12', 's100*ek20'];
+        $title = 'Paket Harga 1 jt-an';
     }
 
 
     if ($paket == 2){
-        $pair = [
-            'A' => 'p25*ek50',
-            'C' => 'p25*ek75',
-            'D' => 'p25*p25',
-            'E' => 'pl40*ek40',
-            'F' => 'p50*ek50',
-            'G' => 'p50*ek75',
-            
-        ];
-
+        $pair = ['p10*ek12', 'p25*ek12', 'p25*ek20', 'p25*ek12', 's100*ek40', 'p30*ek20', 's100*ek33', 's100*ek40'];
+        $title = 'Paket Harga  2 - 3 jt-an';
     }
 
     if ($paket == 3){
-        $pair = [
-            'A' => 'p75*ek75',
-            'C' => 'p75*ek92',
-            'D' => 'p50*epaudp50',
-            'E' => 'p75*epaudp75',
-           
-            
-        ];
+        $pair = ['p25*ek33', 'p25*ek40', 'pl20*ek40', 'pl30*ek40', 'pl40*ek50', 'pl40*epaudp40', 's100*ek75', 's100*epaudp75'];
+        $title = 'Paket  Harga 4 - 5 jt-an';
+
+    }
+
+    if ($paket == 4){
+        $pair = ['p50*ek50', 'p50*ek75', 'pl40*ek75', 'p50*epaudp50', 'p40*epaudp75', 'p25*ek92'];
+        $title = 'Paket Harga 6 - 7 jt-an';
+
+    }
+
+    if ($paket == 5){
+        $pair = ['p50*epaudp75', 'p75*ek75', 'p75*ek92', 'p75*epaudp75', 'p75*ek95'];
+        $title = 'Paket Harga 8 jt-an keatas';
 
     }
 
@@ -477,10 +452,10 @@ function paket($paket){
         
     }
 
-    $data_paket = DB::table('namalogam')->orderBy('kadar','asc')->get()->toArray();
+    $data_paket = DB::table('namalogam')->orderBy('kadar','asc')->whereNotNull('active')->whereNotNull('persentase_markup')->get()->toArray();
     
 
-    return view('logam.paket',compact('hargapokok','data_paket','pair'));
+    return view('logam.paket',compact('data_paket','pair','title'));
 }
 /**
  * end prrogram kalkulator backend

@@ -53,12 +53,7 @@
             </div>
         </div>
 
-        <!-- <div class="col-md-12 col-xs-2 mt-3">
-        <div class="form-floating">
-            <input type="text" name="ongkos_bikin" class="form-control" id="floatingInputGrid" placeholder="940000" <?php if (isset($kalkulasi)){ echo 'value='.$kalkulasi['ongkos_bikin'].'';} else {echo 'value="940000"';  }  ?>>
-            <label for="floatingInputGrid">Biaya Produksi</label>
-            </div>
-        </div> -->
+        
         </div>
         <div class="d-grid gap-2">
         <input class="btn btn-primary btn-lg mt-3 btn-block" type="submit" value="Hitung">
