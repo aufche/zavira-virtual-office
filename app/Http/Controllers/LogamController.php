@@ -315,7 +315,7 @@ function calc(Request $request){
 
             }elseif ($pria->jenis == 'silver'){
                 
-                $harga_pria = 265000;
+                $harga_pria = 285000;
                 $kadar_pria = 20;
                 $harga_pria_pergram = 0;
                 
@@ -351,7 +351,7 @@ function calc(Request $request){
                 $kadar_wanita = $wanita->kadar;
             }elseif ($wanita->jenis == 'silver'){
                 
-                $harga_wanita = 265000;
+                $harga_wanita = 285000;
                 $kadar_wanita = 20;
                 $harga_wanita_pergram = 0;
 
