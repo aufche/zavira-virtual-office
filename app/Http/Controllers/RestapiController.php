@@ -227,11 +227,11 @@ Class RestapiController extends Controller{
             ]);
         */
  
-        return redirect()->away('https://api.whatsapp.com/send?phone='.$cs[0]->wa.'&text=Hallo%20kak%20'.$cs[0]->nama_cs.'%20Saya%20ingin%20bertanya%20mengenai%20cincin%20kawin');
+       // return redirect()->away('https://api.whatsapp.com/send?phone='.$cs[0]->wa.'&text=Hallo%20kak%20'.$cs[0]->nama_cs.'%20Saya%20ingin%20bertanya%20mengenai%20cincin%20kawin');
         //dd($cs);
        // echo $cs[0]->wa;
 
-       //return response()->json($cs, 201);
+       return response()->json($cs, 201);
     }
 
     function chat_langsung($id = null, $message = null){
