@@ -263,7 +263,7 @@ function kalkulator($apa=null){
  */
 
 function calc(Request $request){
-    $hargapokok = \App\Setting::whereIn('kunci',['harga_pokok_emas','harga_pokok_palladium','ongkos_bikin','harga_pokok_silver','harga_pokok_platinum','harga_harian_emas','harga_harian_palladium','harga_harian_platinum'])->get();
+    //$hargapokok = \App\Setting::whereIn('kunci',['harga_pokok_emas','harga_pokok_palladium','ongkos_bikin','harga_pokok_silver','harga_pokok_platinum','harga_harian_emas','harga_harian_palladium','harga_harian_platinum'])->get();
     $logam = \App\Namalogam::whereNotNull('active')->whereNotNull('persentase_markup')->orderBy('jenis','asc')->orderBy('kadar','asc')->get();
     //$logam = DB::table('namalogam')->whereNotNull('active')->whereNotNull('persentase_markup')->orderBy('jenis','asc')->orderBy('kadar','asc')->get();
     if ($request->isMethod('post')){
@@ -276,11 +276,11 @@ function calc(Request $request){
         $biaya_produksi_pria = 0;
         $biaya_produksi_wanita = 0;
 
-        $hp_emas = $hargapokok[0]->isi;
-        $hp_palladium = $hargapokok[1]->isi;
-        $ongkos_bikin = $hargapokok[2]->isi;
-        //$ongkos_bikin = $request->input('ongkos_bikin');
-        $hp_platinum = $hargapokok[4]->isi;
+        // $hp_emas = $hargapokok[0]->isi;
+        // $hp_palladium = $hargapokok[1]->isi;
+        // $ongkos_bikin = $hargapokok[2]->isi;
+        // //$ongkos_bikin = $request->input('ongkos_bikin');
+        // $hp_platinum = $hargapokok[4]->isi;
 
         
 
@@ -386,11 +386,17 @@ function calc(Request $request){
         }
         */
 
-        $kalkulasi['detail'] = 1;
+        if ($request->detail == 'on'){
+            $kalkulasi['detail'] = 1;
+        }else{
+            $kalkulasi['detail'] = 0;
+        }
 
-        return view('logam.kalkulator3',compact('logam','hargapokok','kalkulasi'));
+       
+
+        return view('logam.kalkulator3',compact('logam','kalkulasi'));
     }else{
-        return view('logam.kalkulator3',compact('logam','hargapokok'));
+        return view('logam.kalkulator3',compact('logam'));
     }
     
 }

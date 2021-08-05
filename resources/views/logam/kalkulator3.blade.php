@@ -52,10 +52,21 @@
             <label for="floatingSelectGrid">Pilih logam cincin wanita</label>
             </div>
         </div>
-
+        <div class="form-check">
+  <input class="form-check-input" type="checkbox" value="on" name="detail" <?php if (isset($kalkulasi)){
+      if ($kalkulasi['detail'] == 1)
+      echo 'checked';
+  } 
+  ?>>
+  <label class="form-check-label" for="flexCheckDefault">
+    Centang jika ingin menampilkan detail harga
+  </label>
+</div>
         
         </div>
+        
         <div class="d-grid gap-2">
+        
         <input class="btn btn-primary btn-lg mt-3 btn-block" type="submit" value="Hitung">
         </div>
     </div>
