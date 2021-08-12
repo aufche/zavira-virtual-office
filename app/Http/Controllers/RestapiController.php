@@ -503,8 +503,8 @@ Class RestapiController extends Controller{
     
                 }elseif ($pria->jenis == 'silver'){
                     
-                    $harga_pria = 285000;
-                    $kadar_pria = 20;
+                    $harga_pria = $pria->biaya_produksi;
+                    $kadar_pria = 100;
                     $harga_pria_pergram = 0;
                     
                 }
@@ -539,8 +539,8 @@ Class RestapiController extends Controller{
                     $kadar_wanita = $wanita->kadar;
                 }elseif ($wanita->jenis == 'silver'){
                     
-                    $harga_wanita = 285000;
-                    $kadar_wanita = 20;
+                    $harga_wanita = $wanita->biaya_produksi;
+                    $kadar_wanita = 100;
                     $harga_wanita_pergram = 0;
     
                 }
@@ -561,11 +561,12 @@ Class RestapiController extends Controller{
             $total = $harga_pria + $harga_wanita;
             $kalkulasi['total'] = $total;
     
-            if ($kadar_pria >= 50 || $kadar_wanita >= 50){
-                $kalkulasi['dp'] = 70;
-            }else {
-                $kalkulasi['dp'] = 50;
-            }
+            // if ($kadar_pria >= 50 || $kadar_wanita >= 50){
+            //     $kalkulasi['dp'] = 70;
+            // }else {
+            //     $kalkulasi['dp'] = 50;
+            // }
+            $kalkulasi['dp'] = 50;
     
             /*if ($berat_pria != null && $berat_wanita != null){
                 $kalkulasi['ongkos_bikin'] = $ongkos_bikin;
