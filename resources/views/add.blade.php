@@ -401,12 +401,12 @@
                                 <!-- form-row--->
                         </div>
                         </div>
-                        <div class="form-check mb-3">
+                        <!--<div class="form-check mb-3">
                             <input class="form-check-input" type="checkbox" value="on" name="add_invoice" checked>
                             <label class="form-check-label" for="defaultCheck1">
                                Centang jika sekaligus membuat invoice untuk orderan ini. Jika sebelumnya sudah membuat invoice, maka hilangkan centang disamping.
                             </label>
-                        </div>
+                        </div> -->
                         <button type="submit" class="btn btn-primary btn-lg btn-block">Simpan</button>
                     </form>
                 </div>
