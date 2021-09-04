@@ -1,4 +1,4 @@
-@include('layouts.header');
+@include('layouts.header')
 <main class="app-content">
       <div class="app-title">
         <div>
@@ -29,4 +29,4 @@
        </table>
       </div>
     </main>
-@include('layouts.footer');
+@include('layouts.footer')

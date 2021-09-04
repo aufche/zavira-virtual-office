@@ -1,4 +1,4 @@
-@include('layouts.header');
+@include('layouts.header')
 <style type="text/css">
     table.table-bordered{
     border:1px solid #000;
@@ -71,4 +71,4 @@ table.table-bordered > tbody > tr > td{
         </table> 
       </div>     
     </main>
-@include('layouts.footer');
+@include('layouts.footer')

@@ -1,4 +1,4 @@
-@include('layouts.header');
+@include('layouts.header')
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 <main class="app-content">
       <div class="app-title">
@@ -79,4 +79,4 @@
   theme: 'snow'  // or 'bubble'
 });
 </script>
-@include('layouts.footer');
+@include('layouts.footer')

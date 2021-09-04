@@ -1,3 +1,3 @@
-@include('layouts.header');
+@include('layouts.header')
 @include('layouts.main');
-@include('layouts.footer');
+@include('layouts.footer')

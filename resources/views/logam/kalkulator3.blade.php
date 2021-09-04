@@ -144,7 +144,7 @@
                     }
                     
                     ?>
-                    <a role="button" id="terkopi" class="mt-1 mb-3 btn btn-success btn-sm  animate__animated animate__fadeInUp animate__delay-1s" href="#" onclick="CopyToClipboard('sample2');return false;">Salin harga paket</a>
+                    <a role="button" id="terkopi" class="mt-1 mb-3 btn btn-success btn-sm  animate__animated animate__fadeInUp animate__delay-1s" href="#" onclick="CopyToClipboard('sample');return false;">Salin harga paket</a>
                     <?php
                     
                 }

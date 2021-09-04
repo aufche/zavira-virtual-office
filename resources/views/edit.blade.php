@@ -1,4 +1,4 @@
-@include('layouts.header');
+@include('layouts.header')
 <main class="app-content">
       <div class="app-title">
         <div>
@@ -501,4 +501,4 @@
     }
 </script>
 
-@include('layouts.footer');
+@include('layouts.footer')

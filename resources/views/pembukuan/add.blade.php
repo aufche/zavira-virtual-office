@@ -1,4 +1,4 @@
-@include('layouts.header');
+@include('layouts.header')
 <main class="app-content">
 <?php
         if ($jenis_transaksi == 1){
@@ -98,4 +98,4 @@
 
      
     </main>
-@include('layouts.footer');
+@include('layouts.footer')

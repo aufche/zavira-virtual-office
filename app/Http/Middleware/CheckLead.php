@@ -17,7 +17,7 @@ class CheckLead
     public function handle($request, Closure $next)
     {
         
-        if (Auth::user()->email == 'donokasinoindro85@yahoo.com' || Auth::user()->email == 'endar@gmail.com'){
+        if (Auth::user()->email == 'donokasinoindro85@yahoo.com'){
             return $next($request);
         }
 

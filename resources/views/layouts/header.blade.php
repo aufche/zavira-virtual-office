@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css?family=Livvic&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href=" <?php echo asset('css/zavira.css');?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo asset('css/zavira.css');?>">
     <link rel="stylesheet" type="text/css" href="<?php echo asset('css/daterangepicker.css');?>" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha256-rByPlHULObEjJ6XQxW/flG2r+22R5dKiAoef+aXWfik=" crossorigin="anonymous" />
 
@@ -133,5 +133,3 @@
 </nav>
 
 <div class="container-fluid mt-4">
-
-    
