@@ -75,47 +75,132 @@ class RestfullController extends Controller
         */
         //$text = '<a href="https://wa.me/'.number_international($request->input('nohp')).'/?text=Selamat+siang%2C+kami+dari+Zavira+Jewelry.+Pesanan+Anda+sudah+kami+terima%2C+sebentar+kami+hitungkan+dulu+total+belanjanya">'.number_international($request->input('nohp')).'</a>';
         
-            $image_name = $request->file('file')->getRealPath();
-     
-             $gbr = upload_gambar($image_name);
-
-
-
-            $pria = explode('|',$request->pria);
-            $wanita = explode('|',$request->wanita);
+            $total = 0;
+            $deskripsi = '';
+            $gambar = array();
+            if ($request->hasFile('file')){
+                if (count($request->file('file')) >= 2){
+                    //-- upload lebih dari 1 gambar
+                    foreach ($request->file('file') as $item){
+                        $image_name = $item->getRealPath();
+                        //$gbr = upload_gambar($image_name);
+                        array_push($gambar,upload_gambar($image_name));
+                     }
+                }else{
+                    //-- upload single 
+                    $image_name = $request->file('file')[0]->getRealPath();
+                    $gbr = upload_gambar($image_name);
+                }
+            }else{
+                $gbr = null;
+            }
+            
+            
             $text = "Nama ".$request->nama."\n";
             $text .= "Alamat ".$request->alamat."\n";
             $text .= "No WA ".$request->nohp."\n";
             $text .= "Email ".$request->email."\n";
-            $text .= "==============="."\n";
-            $text .= "Bahan pria ".$pria[2]."\n";
-            $text .= "Berat Pria ".$request->berat_pria."gr \n";
-            $text .= "Grafir pria ".$request->grafir_pria."\n";
-            $text .= "Biaya Cincin Pria ".rupiah((($pria[0] * $request->berat_pria) + $pria[1]))."\n";
 
+            if ($request->check_pria == 'on' && !empty($request->pria)){
+                $pria = explode('|',$request->pria);
+                if (!empty($pria[0])){
+                    $biaya_pria = (($pria[0] * $request->berat_pria) + $pria[1]);
+                }else{
+                    $biaya_pria = $pria[1];
+                }
+                $text .= "==============="."\n";
+                $text .= "Bahan pria ".$pria[2]."\n";
+                $text .= "Berat Pria ".$request->berat_pria."gr \n";
+                $text .= "Ukuran Jari Pria ".$request->size_pria."\n";
+                $text .= "Grafir pria ".$request->grafir_pria."\n";
+                $text .= "Biaya Cincin Pria ".rupiah($biaya_pria)."\n";
+                //$biaya_pria = (($pria[0] * $request->berat_pria) + $pria[1]);
+                $total = $total + $biaya_pria;
+                $deskripsi .= "Cincin pria ".$pria[2]." berat ".$request->berat_pria."gr<br /> ";
+            }
+            
+            if ($request->check_wanita == 'on' && !empty($request->wanita)){
+                $wanita = explode('|',$request->wanita);
+                
+                if (!empty($wanita[0])){
+                    $biaya_wanita = (($wanita[0] * $request->berat_wanita) + $wanita[1]);
+                }else{
+                    $biaya_wanita = $wanita[1];
+                }
+
+                $text .= "==============="."\n";
+                $text .= "Bahan Wanita ".$wanita[2]."\n";
+                $text .= "Berat Wanita ".$request->berat_wanita."\n";
+                $text .= "Ukuran Jari Wanita ".$request->size_wanita."\n";
+                $text .= "Grafir Wanita ".$request->grafir_wanita."\n";
+                $text .= "Biaya Cincin Wanita ".rupiah($biaya_wanita)."\n";
+                //$biaya_wanita = (($wanita[0] * $request->berat_wanita) + $wanita[1]);
+                $total = $total + $biaya_wanita;
+                $deskripsi .= "Cincin wanita ".$wanita[2]." berat ".$request->berat_wanita."gr ";
+            }
+
+            if ($request->check_pria == 'on' && $request->check_wanita == 'on'){
+                $title = 'Cincin Kawin Couple';
+            }else{
+                $title = 'Cincin Single';
+            }
+            
             $text .= "==============="."\n";
-            $text .= "Bahan Wanita ".$wanita[2]."\n";
-            $text .= "Berat Wanita ".$request->berat_wanita."\n";
-            $text .= "Grafir Wanita ".$request->grafir_wanita."\n";
-            $text .= "Biaya Cincin Wanita ".rupiah((($wanita[0] * $request->berat_wanita) + $wanita[1]))."\n";
-            $text .= "==============="."\n";
-            $text .= "Total ".rupiah(((($pria[0] * $request->berat_pria) + $pria[1]) + (($wanita[0] * $request->berat_wanita) + $wanita[1])));
+            $text .= "Kode Promo ".$request->kode_promo."\n";
+            $text .= "Total ".rupiah($total);
            
-            // Telegram::sendMessage([
-            //     'chat_id' => -1001386921740, // zavira virtual office
-            //     'parse_mode' => 'HTML',
-            //     'text' => $text, 
-            //     'photo' => 'https://laravelquestions.com/wp-content/uploads/2020/10/GP6a1.png',
-            // ]);
+            
 
-            Telegram::sendPhoto([
-                'chat_id' =>-1001386921740, // zavira virtual office
-                'parse_mode' => 'HTML',
-                'photo'=>InputFile::create($gbr, "photo.jpg"),
-                 'caption' => $text,
-            ]);
+            if (!empty($gambar)){
+                foreach ($gambar as $pic){
+                    Telegram::sendPhoto([
+                        'chat_id' =>-1001386921740, // zavira virtual office
+                        'parse_mode' => 'HTML',
+                        'photo'=>InputFile::create($pic, "photo.jpg"),
+                    ]);  
+                }
+                
+                Telegram::sendMessage([
+                    'chat_id' => -1001386921740, // zavira virtual office
+                    'parse_mode' => 'HTML',
+                    'text' => $text, 
+                ]);
 
-       return redirect()->away('https://zavirajewelry.com/terimakasih');
+            }else{
+                Telegram::sendPhoto([
+                    'chat_id' =>-1001386921740, // zavira virtual office
+                    'parse_mode' => 'HTML',
+                    'photo'=>InputFile::create($gbr, "photo.jpg"),
+                    'caption' => $text,
+                ]);
+            }
+            
+            
+
+
+            //-- bikin invoice
+            //if ($request->add_invoice == 'on'){
+                //-- buat catatan invoice
+                $client = new \GuzzleHttp\Client();
+                $url = 'https://akuntansi.zavirajewelry.com/api/front-invoice';
+                $response = $client->post($url,['form_params'=> [
+                        'nama' => $request->input('nama'),
+                        'nohp' => number_international($request->input('nohp')),
+                        'alamat' => $request->input('alamat'),
+                        'title' => $title,
+                        'deskripsi' => $deskripsi,
+                        'harga' => $total,
+                       
+
+                    ]
+                ]);
+           // }
+            //--- end bikin invoice
+        //dd($response->);
+        $res = json_decode($response->getBody(),false);
+        //dd($res->link);
+        //return redirect()->away($res->link);
+        return redirect()->away('https://zavirajewelry.com/terimakasih');
  }
 }
 
