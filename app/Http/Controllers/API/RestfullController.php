@@ -202,5 +202,12 @@ class RestfullController extends Controller
         //return redirect()->away($res->link);
         return redirect()->away('https://zavirajewelry.com/terimakasih');
  }
-}
 
+ function detail($id){
+    $pesanan = \App\Pesanan::find($id);
+
+    return response()->json([
+        'pesanan' => $pesanan,
+    ], 201);
+ }
+}

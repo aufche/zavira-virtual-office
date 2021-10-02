@@ -43,3 +43,4 @@ Route::get('/pl_depan/{logam}','RestapiController@pricelist_depan');
 Route::post('/update/{apa?}','API\RestfullController@update');
 Route::get('/daftar_harga','API\RestfullController@daftar_harga');
 Route::post('/order','API\RestfullController@order');
+Route::get('/detail/{id?}','API\RestfullController@detail');
