@@ -421,29 +421,34 @@ function paket($paket){
 
     if ($paket == 1){
         $pair = ['s100*ek12', 's100*ek20'];
+        $berat = [3,4];
         $title = 'Paket Harga 1 jt-an';
     }
 
 
     if ($paket == 2){
         $pair = ['p10*ek12', 'p25*ek12', 'p25*ek20', 'p25*ek12', 's100*ek40', 'p30*ek20', 's100*ek33', 's100*ek40'];
+        $berat = [3,4];
         $title = 'Paket Harga  2 - 3 jt-an';
     }
 
     if ($paket == 3){
         $pair = ['p25*ek33', 'p25*ek40', 'pl20*ek40', 'pl30*ek40', 'pl40*ek50', 'pl40*epaudp40', 's100*ek75', 's100*epaudp75'];
+        $berat = [3,4];
         $title = 'Paket  Harga 4 - 5 jt-an';
 
     }
 
     if ($paket == 4){
         $pair = ['p50*ek50', 'p50*ek75', 'pl40*ek75', 'p50*epaudp50', 'p40*epaudp75', 'p25*ek92'];
+        $berat = [3,4];
         $title = 'Paket Harga 6 - 7 jt-an';
 
     }
 
     if ($paket == 5){
         $pair = ['p50*epaudp75', 'p75*ek75', 'p75*ek92', 'p75*epaudp75', 'p75*ek95'];
+        $berat = [3,4];
         $title = 'Paket Harga 8 jt-an keatas';
 
     }
@@ -455,13 +460,34 @@ function paket($paket){
             'C' => 'pl30*pl30',
             'D' => 'pl40*pl40',
         ];
-        
+        $berat = [3,4];
+        $title = 'Paket Platinum';
     }
 
     $data_paket = DB::table('namalogam')->orderBy('kadar','asc')->whereNotNull('active')->whereNotNull('persentase_markup')->get()->toArray();
+
+    foreach ($pair as $item){
+        
+            $kode = explode('*',$item); //'pria*wanita',
+            $pria = array_search($kode[0], array_column($data_paket, 'kode'));
+            $wanita = array_search($kode[1], array_column($data_paket, 'kode'));
+            $x[$item]['logam_pria'] = $data_paket[$pria]->title;
+            $x[$item]['logam_wanita'] = $data_paket[$wanita]->title;
+            $x[$item]['harga'] = (($data_paket[$pria]->harga_final * 4) + $data_paket[$pria]->biaya_produksi)  + (($data_paket[$wanita]->harga_final * 4) + $data_paket[$wanita]->biaya_produksi);
+        
+        
+        
+        
+    }
+
+    $columns = array_column($x, 'harga');
+    array_multisort($columns, SORT_ASC, $x);
+
+    
+    //dd($x);
     
 
-    return view('logam.paket',compact('data_paket','pair','title'));
+    return view('logam.paket',compact('x','title'));
 }
 /**
  * end prrogram kalkulator backend

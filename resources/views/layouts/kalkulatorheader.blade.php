@@ -26,7 +26,7 @@
     padding:10px;
   }
 
-  .judul, .berat{
+  .judul{
     font-family: 'Lobster', cursive;
   }
 
@@ -52,17 +52,18 @@
         <a class="nav-link" href="<?php echo route('kalkulator.backend');?>">Kalkulator</a>
         </li>
         <li class="nav-item">
-        <a class="nav-link" href="<?php echo route('pergram.backend');?>">Pricelist</a>
+        <a class="nav-link" href="<?php echo route('pergram.backend');?>">Harga Logam</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Rentang Harga Cincin Sepasang
+            Pricelist Couple
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">200rb - 700rb</a></li>
-            <li><a class="dropdown-item" href="<?php echo route('paket.backend',['no'=>1]);?>">2jt an - 4 jt an</a></li>
-            <li><a class="dropdown-item" href="<?php echo route('paket.backend',['no'=>2]);?>">5 jt an - 7 jt an </a></li>
-            <li><a class="dropdown-item" href="<?php echo route('paket.backend',['no'=>3]);?>">Lebih dari 7jt </a></li>
+            <li><a class="dropdown-item" href="<?php echo route('paket.backend',['no'=>1]);?>">Paket 1jt-an</a></li>
+            <li><a class="dropdown-item" href="<?php echo route('paket.backend',['no'=>2]);?>">Paket 2 - 3jt-an </a></li>
+            <li><a class="dropdown-item" href="<?php echo route('paket.backend',['no'=>3]);?>">Paket 4 - 5jt-an </a></li>
+            <li><a class="dropdown-item" href="<?php echo route('paket.backend',['no'=>4]);?>">Paket 6 - 7jt-an </a></li>
+            <li><a class="dropdown-item" href="<?php echo route('paket.backend',['no'=>5]);?>">Paket 8jt keatas </a></li>
             <li><a class="dropdown-item" href="<?php echo route('paket.backend',['no'=>'ps']);?>">Platinum Series </a></li>
             
             
