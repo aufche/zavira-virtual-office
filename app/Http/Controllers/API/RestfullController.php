@@ -76,7 +76,10 @@ class RestfullController extends Controller
         //$text = '<a href="https://wa.me/'.number_international($request->input('nohp')).'/?text=Selamat+siang%2C+kami+dari+Zavira+Jewelry.+Pesanan+Anda+sudah+kami+terima%2C+sebentar+kami+hitungkan+dulu+total+belanjanya">'.number_international($request->input('nohp')).'</a>';
         
             $total = 0;
-            $deskripsi = '';
+            $deskripsi_pria = null;
+            $deskripsi_wanita = null;
+            $cincin_pria = 0;
+            $cincin_wanita = 0;
             $gambar = array();
             if ($request->hasFile('file')){
                 if (count($request->file('file')) >= 2){
@@ -100,6 +103,7 @@ class RestfullController extends Controller
             $text .= "Alamat ".$request->alamat."\n";
             $text .= "No WA ".$request->nohp."\n";
             $text .= "Email ".$request->email."\n";
+            $text .= "Kode cincin ".$request->kode_cincin."\n";
 
             if ($request->check_pria == 'on' && !empty($request->pria)){
                 $pria = explode('|',$request->pria);
@@ -116,7 +120,9 @@ class RestfullController extends Controller
                 $text .= "Biaya Cincin Pria ".rupiah($biaya_pria)."\n";
                 //$biaya_pria = (($pria[0] * $request->berat_pria) + $pria[1]);
                 $total = $total + $biaya_pria;
-                $deskripsi .= "Cincin pria ".$pria[2]." berat ".$request->berat_pria."gr<br /> ";
+                $deskripsi_pria = "Cincin pria ".$pria[2]." berat ".$request->berat_pria."gr";
+                $cincin_pria = 1;
+                
             }
             
             if ($request->check_wanita == 'on' && !empty($request->wanita)){
@@ -136,7 +142,8 @@ class RestfullController extends Controller
                 $text .= "Biaya Cincin Wanita ".rupiah($biaya_wanita)."\n";
                 //$biaya_wanita = (($wanita[0] * $request->berat_wanita) + $wanita[1]);
                 $total = $total + $biaya_wanita;
-                $deskripsi .= "Cincin wanita ".$wanita[2]." berat ".$request->berat_wanita."gr ";
+                $deskripsi_wanita = "Cincin wanita ".$wanita[2]." berat ".$request->berat_wanita."gr ";
+                $cincin_wanita = 1;
             }
 
             if ($request->check_pria == 'on' && $request->check_wanita == 'on'){
@@ -154,25 +161,34 @@ class RestfullController extends Controller
             if (!empty($gambar)){
                 foreach ($gambar as $pic){
                     Telegram::sendPhoto([
-                        'chat_id' =>-1001386921740, // zavira virtual office
+                        'chat_id' => -730265436, // zavira virtual office
                         'parse_mode' => 'HTML',
                         'photo'=>InputFile::create($pic, "photo.jpg"),
                     ]);  
                 }
                 
                 Telegram::sendMessage([
-                    'chat_id' => -1001386921740, // zavira virtual office
+                    'chat_id' => -730265436, // zavira virtual office
                     'parse_mode' => 'HTML',
                     'text' => $text, 
                 ]);
 
             }else{
-                Telegram::sendPhoto([
-                    'chat_id' =>-1001386921740, // zavira virtual office
-                    'parse_mode' => 'HTML',
-                    'photo'=>InputFile::create($gbr, "photo.jpg"),
-                    'caption' => $text,
-                ]);
+                if ($gbr != null){
+                    Telegram::sendPhoto([
+                        'chat_id' => -730265436, // zavira virtual office
+                        'parse_mode' => 'HTML',
+                        'photo'=>InputFile::create($gbr, "photo.jpg"),
+                        'caption' => $text,
+                    ]);
+                }else{
+                    Telegram::sendMessage([
+                        'chat_id' => -730265436, // zavira virtual office
+                        'parse_mode' => 'HTML',
+                        'text' => $text, 
+                    ]);
+                }
+                
             }
             
             
@@ -187,10 +203,13 @@ class RestfullController extends Controller
                         'nama' => $request->input('nama'),
                         'nohp' => number_international($request->input('nohp')),
                         'alamat' => $request->input('alamat'),
-                        'title' => $title,
-                        'deskripsi' => $deskripsi,
                         'harga' => $total,
-                       
+                        'cincin_pria' => $cincin_pria,
+                        'cincin_wanita' => $cincin_wanita,
+                        'deskripsi_pria' => $deskripsi_pria,
+                        'deskripsi_wanita' => $deskripsi_wanita,
+                        'biaya_pria' => $biaya_pria,
+                        'biaya_wanita' => $biaya_wanita,
 
                     ]
                 ]);
