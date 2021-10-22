@@ -503,7 +503,8 @@ Class RestapiController extends Controller{
     
                 }elseif ($pria->jenis == 'silver'){
                     
-                    $harga_pria = $pria->biaya_produksi;
+                    $harga_pria = $pria->biaya_produksi + (0.1 * $pria->biaya_produksi);
+                    ///$harga_pria = $pria->biaya_produksi;
                     $kadar_pria = 100;
                     $harga_pria_pergram = 0;
                     
@@ -539,7 +540,8 @@ Class RestapiController extends Controller{
                     $kadar_wanita = $wanita->kadar;
                 }elseif ($wanita->jenis == 'silver'){
                     
-                    $harga_wanita = $wanita->biaya_produksi;
+                    $harga_wanita = $wanita->biaya_produksi + (0.1 * $wanita->biaya_produksi);
+                    //$harga_wanita = $wanita->biaya_produksi;
                     $kadar_wanita = 100;
                     $harga_wanita_pergram = 0;
     
