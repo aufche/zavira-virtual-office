@@ -80,6 +80,8 @@ class RestfullController extends Controller
             $deskripsi_wanita = null;
             $cincin_pria = 0;
             $cincin_wanita = 0;
+            $biaya_wanita = 0;
+            $biaya_pria = 0;
             $gambar = array();
             if ($request->hasFile('file')){
                 if (count($request->file('file')) >= 2){
