@@ -119,6 +119,7 @@ class RestfullController extends Controller
                 $text .= "Berat Pria ".$request->berat_pria."gr \n";
                 $text .= "Ukuran Jari Pria ".$request->size_pria."\n";
                 $text .= "Grafir pria ".$request->grafir_pria."\n";
+                $text .= "Keterangan tambahan ".$request->keterangan_pria."\n";
                 $text .= "Biaya Cincin Pria ".rupiah($biaya_pria)."\n";
                 //$biaya_pria = (($pria[0] * $request->berat_pria) + $pria[1]);
                 $total = $total + $biaya_pria;
@@ -143,6 +144,7 @@ class RestfullController extends Controller
                 $text .= "Grafir Wanita ".$request->grafir_wanita."\n";
                 $text .= "Biaya Cincin Wanita ".rupiah($biaya_wanita)."\n";
                 //$biaya_wanita = (($wanita[0] * $request->berat_wanita) + $wanita[1]);
+                $text .= "Keterangan tambahan ".$request->keterangan_wanita."\n";
                 $total = $total + $biaya_wanita;
                 $deskripsi_wanita = "Cincin wanita ".$wanita[2]." berat ".$request->berat_wanita."gr ";
                 $cincin_wanita = 1;
