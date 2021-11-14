@@ -462,10 +462,9 @@ Route::prefix('penting')->group(function () {
 
 
 Route::prefix('ze')->group(function () {
-    Route::get('/detail/{id}','ZexclusiveController@detail')->name('ze.detail')->middleware('auth');
-    Route::get('/','ZexclusiveController@index')->name('ze.index')->middleware('auth');
     Route::get('/add','ZexclusiveController@add')->name('ze.add')->middleware('auth');
     Route::post('/insert','ZexclusiveController@insert')->name('ze.insert')->middleware('auth');
+    Route::get('/{action?}/{id?}','ZexclusiveController@index')->name('ze.index')->middleware('auth');
 });
 
 Route::prefix('ga')->group(function () {

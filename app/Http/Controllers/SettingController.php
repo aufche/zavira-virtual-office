@@ -77,6 +77,25 @@ Class SettingController extends Controller{
                 ]);
             }
         }
+
+
+        ///-- simpan paket adsad
+
+        $paket = DB::table('zepaket')->get();
+        foreach ($paket as $item){
+            $pria = cariharga($item->kode_bahan_pria);
+            $wanita = cariharga($item->kode_bahan_wanita);
+
+            $berat_pria = $item->berat_pria;
+            $berat_wanita = $item->berat_wanita;
+            $harga = (($berat_pria * (int)$pria['hargapergram']) + $pria['biaya_produksi']) + (($berat_wanita * (int)$wanita['hargapergram']) + $wanita['biaya_produksi']);
+            DB::table('zepaket')->where('id',$item->id)->update([
+                 'pria' => $pria['title'],
+                'wanita' => $wanita['title'],
+                'harga_paket' => $harga, 
+
+            ]);
+        }
         
         
 

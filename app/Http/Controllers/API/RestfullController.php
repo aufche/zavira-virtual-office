@@ -233,4 +233,12 @@ class RestfullController extends Controller
         'pesanan' => $pesanan,
     ], 201);
  }
+
+ function paket(){
+     $paket = DB::table('zepaket')->select('id','berat_pria','berat_wanita','pria','wanita','harga_paket')->where('status',1)->orderBy('harga_paket','asc')->get();
+    
+     return response()->json([
+        'paket' => $paket,
+    ], 201);
+ }
 }

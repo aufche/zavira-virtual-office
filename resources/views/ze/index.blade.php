@@ -19,8 +19,9 @@
                 <td>Kode Paket</td>
                 <td>Bahan Pria</td>
                 <td>Bahan Wanita</td>
+                <td>Status</td>
                 <td>Harga</td>
-                <td>Caption</td>
+                <td>Tindakan</td>
             </tr>
         <?php
            foreach ($data as $item){
@@ -29,8 +30,9 @@
                     <td><?php echo $item->kode_paket;?></td>
                     <td><?php echo title_logam($item->bahanpria()->first(),'title');?><br /><?php echo aa('',$item->berat_pria,'gr');?></td>
                     <td><?php echo title_logam($item->bahanwanita()->first(),'title');?><br /><?php echo aa('',$item->berat_wanita,'gr');?></td>
+                    <td><?php echo $item->status ?></td>
                     <td><?php echo rupiah($item->harga_paket);?></td>
-                    <td><a href="<?php echo route('ze.detail',['id'=>$item->id]);?>">Lihat Caption</a></td>
+                    <td><a href="{{route('ze.index',['action'=>'delete','id'=>$item->id])}}">Hapus</a></td>
                 </tr>
                <?php
            }

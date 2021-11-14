@@ -71,7 +71,12 @@ function cariharga($id_logam){
     $markup = $logam->markup;
     $harga_final = $logam->harga_final;
 
-    $datalogam['hargapergram'] = $harga_final;
+    if ($jenis != 'silver'){
+        $datalogam['hargapergram'] = $harga_final;
+    }elseif ($jenis == 'silver'){
+        $datalogam['hargapergram'] = $logam->biaya_produksi;
+    }
+    
     $datalogam['jenis'] = $jenis;
     $datalogam['kadar'] = $kadar;
     $datalogam['hargaproduksipergram'] = $harga_final - $markup;
