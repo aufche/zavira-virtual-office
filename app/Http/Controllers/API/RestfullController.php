@@ -54,6 +54,28 @@ class RestfullController extends Controller
         ], 201);
     }
 
+    function logam(){
+        $mentah = \App\Namalogam::whereNotNull('active')->whereNotNull('persentase_markup')->orderBy('jenis','asc')->orderBy('kadar','asc')->get();    
+        $logam = [];
+        $i = 0;
+        foreach ($mentah as $item){
+            $logam[$i]['title'] = $item->title;
+            $logam[$i]['biaya_produksi'] = $item->biaya_produksi;
+            if ($item->jenis != 'silver'){
+                $logam[$i]['harga_final'] = $item->harga_final;
+            }elseif ($item->jenis == 'silver'){
+                $logam[$i]['harga_final'] = $item->biaya_produksi + ($item->biaya_produksi * 0.1);
+            }
+            
+            $i++;
+        }
+
+        return response()->json([
+            'logam' => $logam,
+            
+        ], 201);
+    }
+
     function order(Request $request){
         // $orderan = [
         //     'nama'=>$request->input('nama'),
@@ -235,7 +257,7 @@ class RestfullController extends Controller
  }
 
  function paket(){
-     $paket = DB::table('zepaket')->select('id','berat_pria','berat_wanita','pria','wanita','harga_paket')->where('status',1)->orderBy('harga_paket','asc')->get();
+     $paket = DB::table('zepaket')->where('status',1)->orderBy('harga_paket','asc')->get();
     
      return response()->json([
         'paket' => $paket,

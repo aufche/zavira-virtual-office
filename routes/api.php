@@ -46,3 +46,5 @@ Route::post('/order','API\RestfullController@order');
 Route::get('/detail/{id?}','API\RestfullController@detail');
 
 Route::get('/paket','API\RestfullController@paket');
+
+Route::get('/log','API\RestfullController@logam');

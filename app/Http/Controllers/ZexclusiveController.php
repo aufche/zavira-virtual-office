@@ -27,6 +27,14 @@ Class ZexclusiveController extends Controller{
         $paket->wanita = $wanita['title'];
         $harga_wanita =  ($wanita['hargapergram'] * $request->berat_wanita) + $wanita['biaya_produksi'];
 
+        // $paket->pria_per_gram = $pria['hargapergram'];
+        // $paket->pria_biaya_produksi = $pria['biaya_produksi'];
+
+        // $paket->wanita_per_gram = $wanita['hargapergram'];
+        // $paket->wanita_biaya_produksi = $wanita['biaya_produksi'];
+        // his.harga_final+"|"+this.biaya_produksi+"|"+this.title
+        $paket->set_pria = $pria['hargapergram'].'|'.$pria['biaya_produksi'].'|'.$pria['title'];
+        $paket->set_wanita = $wanita['hargapergram'].'|'.$wanita['biaya_produksi'].'|'.$wanita['title'];
 
         $paket->harga_paket = ($harga_pria + $harga_wanita);
 
