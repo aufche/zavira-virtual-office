@@ -55,6 +55,11 @@ class RestfullController extends Controller
     }
 
     function logam(){
+        // awal mula perhitungan logam untuk 
+        // 1. formulir pemesanan 
+        // 2. dsb 
+        // disini tempat untuk mensetting harga + pajaknya 
+
         $mentah = \App\Namalogam::whereNotNull('active')->whereNotNull('persentase_markup')->orderBy('jenis','asc')->orderBy('kadar','asc')->get();    
         $logam = [];
         $i = 0;
@@ -64,6 +69,7 @@ class RestfullController extends Controller
             if ($item->jenis != 'silver'){
                 $logam[$i]['harga_final'] = $item->harga_final;
             }elseif ($item->jenis == 'silver'){
+                //-- pajak utk logam perak
                 $logam[$i]['harga_final'] = $item->biaya_produksi + ($item->biaya_produksi * 0.1);
             }
             
@@ -131,10 +137,10 @@ class RestfullController extends Controller
 
             if ($request->check_pria == 'on' && !empty($request->pria)){
                 $pria = explode('|',$request->pria);
-                if (!empty($pria[0])){
+                if ($pria[2] == 'Silver 925'){
                     $biaya_pria = (($pria[0] * $request->berat_pria) + $pria[1]);
                 }else{
-                    $biaya_pria = $pria[1];
+                    $biaya_pria = $pria[0];
                 }
                 $text .= "==============="."\n";
                 $text .= "Bahan pria ".$pria[2]."\n";
@@ -153,10 +159,10 @@ class RestfullController extends Controller
             if ($request->check_wanita == 'on' && !empty($request->wanita)){
                 $wanita = explode('|',$request->wanita);
                 
-                if (!empty($wanita[0])){
+                if ($wanita[2] == 'Silver 925'){
                     $biaya_wanita = (($wanita[0] * $request->berat_wanita) + $wanita[1]);
                 }else{
-                    $biaya_wanita = $wanita[1];
+                    $biaya_wanita = $wanita[0];
                 }
 
                 $text .= "==============="."\n";
