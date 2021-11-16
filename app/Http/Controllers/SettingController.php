@@ -90,9 +90,12 @@ Class SettingController extends Controller{
             $berat_wanita = $item->berat_wanita;
             $harga = (($berat_pria * (int)$pria['hargapergram']) + $pria['biaya_produksi']) + (($berat_wanita * (int)$wanita['hargapergram']) + $wanita['biaya_produksi']);
             DB::table('zepaket')->where('id',$item->id)->update([
-                 'pria' => $pria['title'],
+                'pria' => $pria['title'],
                 'wanita' => $wanita['title'],
                 'harga_paket' => $harga, 
+                'set_pria' => $pria['hargapergram'].'|'.$pria['biaya_produksi'].'|'.$pria['title'],
+                'set_wanita' => $wanita['hargapergram'].'|'.$wanita['biaya_produksi'].'|'.$wanita['title'],
+                
 
             ]);
         }
