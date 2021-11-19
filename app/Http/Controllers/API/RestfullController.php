@@ -83,25 +83,6 @@ class RestfullController extends Controller
     }
 
     function order(Request $request){
-        // $orderan = [
-        //     'nama'=>$request->input('nama'),
-        //     'ukuranpria'=>$request->input('ukuranpria'),
-        //     'grafirpria'=>$request->input('grafirpria'),
-        //     'ukuranwanita'=>$request->input('ukuranwanita'),
-        //     'grafirwanita'=>$request->input('grafirwanita'),
-        //     'nohp'=>number_international($request->input('nohp')),
-        //     'instagram'=>$request->input('ig'),
-        //     'email'=>$request->input('email'),
-        //     'alamat'=>$request->input('alamat'),
-        // ];
-
-        // $id = DB::table('orderweb')->insertGetId($orderan);
-
-        /*$text = "Horaaayyy....!!! ada pesanan masuk dari toko online. No order".$id."\n";
-        $text .= $request->input('nohp')."\n";
-        $text .= "Selamat siang, kami dari Zavira Jewelry. Pesanan Anda sudah kami terima, sebentar kami hitungkan dulu total belanjanya";
-        */
-        //$text = '<a href="https://wa.me/'.number_international($request->input('nohp')).'/?text=Selamat+siang%2C+kami+dari+Zavira+Jewelry.+Pesanan+Anda+sudah+kami+terima%2C+sebentar+kami+hitungkan+dulu+total+belanjanya">'.number_international($request->input('nohp')).'</a>';
         
             $total = 0;
             $deskripsi_pria = null;
@@ -137,9 +118,11 @@ class RestfullController extends Controller
 
             if ($request->check_pria == 'on' && !empty($request->pria)){
                 $pria = explode('|',$request->pria);
-                if ($pria[2] == 'Silver 925'){
+                if ($pria[2] != 'Silver 925'){
+                    // cincin pria bukan silver
                     $biaya_pria = (($pria[0] * $request->berat_pria) + $pria[1]);
                 }else{
+                    //- cincin pria silver
                     $biaya_pria = $pria[0];
                 }
                 $text .= "==============="."\n";
@@ -159,7 +142,7 @@ class RestfullController extends Controller
             if ($request->check_wanita == 'on' && !empty($request->wanita)){
                 $wanita = explode('|',$request->wanita);
                 
-                if ($wanita[2] == 'Silver 925'){
+                if ($wanita[2] != 'Silver 925'){
                     $biaya_wanita = (($wanita[0] * $request->berat_wanita) + $wanita[1]);
                 }else{
                     $biaya_wanita = $wanita[0];
