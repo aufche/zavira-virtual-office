@@ -28,9 +28,6 @@ Class ZexclusiveController extends Controller{
             $harga_pria =  ($pria['hargapergram'] * $request->berat_pria) + $pria['biaya_produksi'];
         }
 
-
-        
-
         $wanita = cariharga($request->kode_bahan_wanita);
         if ($wanita['jenis'] == 'silver'){
             $harga_wanita = $wanita['hargapergram'] + (0.1 * $wanita['hargapergram']);
