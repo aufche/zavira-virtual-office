@@ -21,11 +21,24 @@ Class ZexclusiveController extends Controller{
 
         $pria = cariharga($request->kode_bahan_pria);
         $paket->pria = $pria['title'];
-        $harga_pria =  ($pria['hargapergram'] * $request->berat_pria) + $pria['biaya_produksi'];
+        
+        if ($pria['jenis'] == 'silver'){
+            $harga_pria = $pria['hargapergram'] + (0.1 * $pria['hargapergram']);
+        }else{
+            $harga_pria =  ($pria['hargapergram'] * $request->berat_pria) + $pria['biaya_produksi'];
+        }
+
+
+        
 
         $wanita = cariharga($request->kode_bahan_wanita);
+        if ($wanita['jenis'] == 'silver'){
+            $harga_wanita = $wanita['hargapergram'] + (0.1 * $wanita['hargapergram']);
+        }else{
+            $harga_wanita =  ($wanita['hargapergram'] * $request->berat_wanita) + $wanita['biaya_produksi'];
+        }
         $paket->wanita = $wanita['title'];
-        $harga_wanita =  ($wanita['hargapergram'] * $request->berat_wanita) + $wanita['biaya_produksi'];
+        
 
         // $paket->pria_per_gram = $pria['hargapergram'];
         // $paket->pria_biaya_produksi = $pria['biaya_produksi'];
