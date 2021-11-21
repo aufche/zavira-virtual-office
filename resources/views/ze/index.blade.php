@@ -32,7 +32,7 @@
                     <td><?php echo title_logam($item->bahanwanita()->first(),'title');?><br /><?php echo aa('',$item->berat_wanita,'gr');?></td>
                     <td><?php echo $item->status ?></td>
                     <td><?php echo rupiah($item->harga_paket);?></td>
-                    <td><a href="{{route('ze.index',['action'=>'delete','id'=>$item->id])}}">Hapus</a></td>
+                    <td><a href="{{route('ze.index',['action'=>'delete','id'=>$item->id])}}">Hapus</a> <a href="{{route('ze.index',['action'=>'edit','id'=>$item->id])}}">Edit</a></td>
                 </tr>
                <?php
            }
