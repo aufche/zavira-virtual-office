@@ -123,9 +123,9 @@
       <div class="kiri mb-1">
       <br />
       <br />
-    Karayawan lapangan<br /><br /><br /><br />
+    Karayawan<br /><br /><br /><br />
 
-    Prasetyo Ardi Wicaksono
+    Yuni Wijayanti
       </div>
 
       <div class="kanan mb-1">
