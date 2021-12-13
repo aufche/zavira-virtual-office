@@ -21,6 +21,11 @@ Route::prefix('calc')->group(function (){
     Route::any('/','LogamController@calc')->name('kalkulator.backend');
     Route::get('/pricelist','LogamController@pergram')->name('pergram.backend');
     Route::get('/paket/{no?}','LogamController@paket')->name('paket.backend');
+    Route::get('/simple-package',function(){
+        $paket = DB::table('zepaket')->where('status',1)->orderBy('harga_paket','asc')->get();
+        //dd($paket);
+        return view('logam.pricelist.paket',compact('paket'));
+    })->name('simple-package.backend');
 });
 
 Route::get('/pl/{package?}/{target?}','LogamController@pricelist')->name('logam.pricelist');
