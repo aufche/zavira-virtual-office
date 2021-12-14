@@ -169,7 +169,10 @@ class RestfullController extends Controller
             
             $text .= "==============="."\n";
             $text .= "Kode Promo ".$request->kode_promo."\n";
-            $text .= "Total ".rupiah($total);
+            $text .= "Total ".rupiah($total)."\n";
+            $text .= "==============="."\n";
+            $text .= "Klik link WhatsApp konsumen -> https://wa.me/".number_international($request->nohp)."\n";
+
            
             
 
@@ -232,6 +235,17 @@ class RestfullController extends Controller
             //--- end bikin invoice
         //dd($response->);
         $res = json_decode($response->getBody(),false);
+
+        $text = "Hallo kak, ".$request->nama.", berikut ini kami sertakan invoice untuk pembelian cincin\n\n";
+        $text .= "Silahkan mengakses tautan ini ".$res->link."\n\n";
+        $text .= "Terimakasih";
+
+        Telegram::sendMessage([
+            'chat_id' => -730265436, // zavira virtual office
+            'parse_mode' => 'HTML',
+            'text' => $text, 
+        ]);
+
         //dd($res->link);
         //return redirect()->away($res->link);
         return redirect()->away('https://zavirajewelry.com/terimakasih');
