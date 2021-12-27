@@ -266,6 +266,8 @@ function calc(Request $request){
     //$hargapokok = \App\Setting::whereIn('kunci',['harga_pokok_emas','harga_pokok_palladium','ongkos_bikin','harga_pokok_silver','harga_pokok_platinum','harga_harian_emas','harga_harian_palladium','harga_harian_platinum'])->get();
     $logam = \App\Namalogam::whereNotNull('active')->whereNotNull('persentase_markup')->orderBy('jenis','asc')->orderBy('kadar','asc')->get();
     //$logam = DB::table('namalogam')->whereNotNull('active')->whereNotNull('persentase_markup')->orderBy('jenis','asc')->orderBy('kadar','asc')->get();
+    $setting = DB::table('setting')->where('kunci','ongkir_perak')->first();
+    //dd($setting);
     if ($request->isMethod('post')){
         
         $harga_pria = 0;
@@ -275,6 +277,8 @@ function calc(Request $request){
         $kadar_wanita = 0;
         $biaya_produksi_pria = 0;
         $biaya_produksi_wanita = 0;
+        $silver_couple = 0;
+        $premium_couple = 0;
 
         // $hp_emas = $hargapokok[0]->isi;
         // $hp_palladium = $hargapokok[1]->isi;
@@ -312,6 +316,7 @@ function calc(Request $request){
                 $harga_pria = ($pria->harga_final * $berat_pria) + $pria->biaya_produksi;
                 $kadar_pria = $pria->kadar;
                 $harga_pria_pergram = $pria->harga_final;
+                $premium_couple = $premium_couple + 1;
 
             }elseif ($pria->jenis == 'silver'){
                 
@@ -319,6 +324,7 @@ function calc(Request $request){
                 //$harga_pria = $pria->biaya_produksi;
                 $kadar_pria = 100;
                 $harga_pria_pergram = 0;
+                $silver_couple = $silver_couple + 1;
                 
             }
 
@@ -347,15 +353,16 @@ function calc(Request $request){
             
                 $harga_wanita = ($wanita->harga_final * $berat_wanita) + $wanita->biaya_produksi;
                 $harga_wanita_pergram = $wanita->harga_final;
-
-
                 $kadar_wanita = $wanita->kadar;
+                $premium_couple = $premium_couple + 1;
+
             }elseif ($wanita->jenis == 'silver'){
                 //-- pajak
                 $harga_wanita = $wanita->biaya_produksi + (0.1 * $wanita->biaya_produksi);
                 //$harga_wanita = $wanita->biaya_produksi;
                 $kadar_wanita = 100;
                 $harga_wanita_pergram = 0;
+                $silver_couple = $silver_couple + 1;
 
             }
 
@@ -370,9 +377,14 @@ function calc(Request $request){
             $kalkulasi['berat_wanita']  = null;
             
         }
-    
+        
+        if ($silver_couple >= 1 && $premium_couple == 0){
+            $total = $harga_pria + $harga_wanita + $setting->isi;    
+        }else{
+            $total = $harga_pria + $harga_wanita;
+        }
 
-        $total = $harga_pria + $harga_wanita;
+        //$total = $harga_pria + $harga_wanita;
         $kalkulasi['total'] = $total;
 
         // if ($kadar_pria >= 50 || $kadar_wanita >= 50){
@@ -380,7 +392,7 @@ function calc(Request $request){
         // }else {
         //     $kalkulasi['dp'] = 50;
         // }
-        $kalkulasi['dp'] = 50;
+        $kalkulasi['dp'] = $total / 2;
         /*if ($berat_pria != null && $berat_wanita != null){
             $kalkulasi['ongkos_bikin'] = $ongkos_bikin;
         }  else {

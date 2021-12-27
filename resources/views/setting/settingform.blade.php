@@ -18,7 +18,9 @@
         <div class="card-header bg-dark text-white">Setting dan Konfigurasi Sistem</div>
             <div class="card-body">
                 <?php
+                //dd($data);
                 /* $i=0;
+
                 foreach ($data as $item){
                   echo $i.' '.$item->kunci.'<br />';
                   $i++;
@@ -64,9 +66,18 @@
                 </div>
 
                 <div class="form-row mb-3">
-                  <label for="ongkos_bikin">Ongkos Pembuatan</label>
-                  <input type="text"  value="<?php echo $data[7]->isi;?>" class="form-control form-control-lg" name="ongkos_bikin" id="harga_pokok_palladium" aria-describedby="" placeholder="">
-                  <small id="" class="form-text text-muted">Isikan ongkos pembuatan sepasang</small>
+                  <div class="col-md-6">
+                    <label for="ongkos_bikin">Ongkos Pembuatan</label>
+                    <input type="text"  value="<?php echo $data[8]->isi;?>" class="form-control form-control-lg" name="ongkos_bikin" id="harga_pokok_palladium" aria-describedby="" placeholder="">
+                    <small id="" class="form-text text-muted">Isikan ongkos pembuatan sepasang</small>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label for="ongkos_bikin">Ongkir</label>
+                    <input type="text"  value="<?php echo $data[7]->isi;?>" class="form-control form-control-lg" name="ongkir_perak" id="ongkir_perak" aria-describedby="" placeholder="">
+                    <small id="" class="form-text text-muted">Ongkir khusus untuk cincin perak saja (sepasang / couple)</small>
+                  </div>
+                  
                 </div>
 
 <hr />

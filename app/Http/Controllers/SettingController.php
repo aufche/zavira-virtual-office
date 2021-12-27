@@ -8,7 +8,7 @@ use DB;
 Class SettingController extends Controller{
     
     function settingform(){
-        $data = \App\Setting::whereIn('kunci',['harga_pokok_emas','harga_pokok_palladium','harga_pokok_silver','harga_pokok_platinum','ongkos_bikin','harga_harian_emas','harga_harian_platinum','harga_harian_palladium'])
+        $data = \App\Setting::whereIn('kunci',['harga_pokok_emas','harga_pokok_palladium','harga_pokok_silver','harga_pokok_platinum','ongkos_bikin','harga_harian_emas','harga_harian_platinum','harga_harian_palladium','ongkir_perak'])
             ->orderBy('kunci')
             ->get();
         return view('setting.settingform',compact('data'));
@@ -28,6 +28,7 @@ Class SettingController extends Controller{
         \App\Setting::where('kunci','harga_harian_platinum')->update(['isi'=>$request->input('harga_harian_platinum')]);
 
         \App\Setting::where('kunci','ongkos_bikin')->update(['isi'=>$request->input('ongkos_bikin')]);
+        \App\Setting::where('kunci','ongkir_perak')->update(['isi'=>$request->input('ongkir_perak')]);
 
         $namalogam = \App\Namalogam::whereNotNull('persentase_markup')->whereNotNull('active')->get();
 

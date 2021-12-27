@@ -88,7 +88,7 @@
                         }
                         
                         echo 'Total biaya '.rupiah($kalkulasi['total']).'<br /><br />';
-                        echo 'Pembayaran DP minimal '.rupiah(($kalkulasi['dp']/100) * $kalkulasi['total']);
+                        echo 'Pembayaran DP minimal '.rupiah($kalkulasi['dp']);
                         echo '</div>';
                     }elseif ($kalkulasi['detail'] == 1){
                         echo '<div class="alert alert-info mt-1 shadow animate__animated animate__bounce small" role="alert" id="sample">';
@@ -109,7 +109,7 @@
                         if ($kalkulasi['berat_pria'] != null || $kalkulasi['berat_wanita'] != null ){
                             //echo 'Biaya Produksi '.rupiah($kalkulasi['ongkos_bikin']).'<br />';
                             echo 'Total biaya '.rupiah($kalkulasi['total']).'<br /><br />';
-                            echo 'Pembayaran DP minimal '.rupiah(($kalkulasi['dp']/100) * $kalkulasi['total']);
+                            echo 'Pembayaran DP minimal '.rupiah($kalkulasi['dp']);
                         }else{
                             
                         }
@@ -136,7 +136,7 @@
                         if ($kalkulasi['berat_pria'] != null || $kalkulasi['berat_wanita'] != null ){
                             //echo 'Biaya Produksi '.rupiah($kalkulasi['ongkos_bikin']).'<br />';
                             echo 'Total biaya '.rupiah($kalkulasi['total']).'<br /><br />';
-                            echo 'Pembayaran DP minimal '.rupiah(($kalkulasi['dp']/100) * $kalkulasi['total']);
+                            echo 'Pembayaran DP minimal '.rupiah($kalkulasi['dp']);
                         }else{
                             
                         }
