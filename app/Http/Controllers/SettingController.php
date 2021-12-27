@@ -88,7 +88,19 @@ Class SettingController extends Controller{
 
             $berat_pria = $item->berat_pria;
             $berat_wanita = $item->berat_wanita;
-            $harga = (($berat_pria * (int)$pria['hargapergram']) + $pria['biaya_produksi']) + (($berat_wanita * (int)$wanita['hargapergram']) + $wanita['biaya_produksi']);
+            if ($pria['jenis'] == 'silver'){
+                // + pajak
+                $harga_pria = $pria['hargapergram'] + (0.1 * $pria['hargapergram']);
+                $harga = $harga_pria + (($berat_wanita * (int)$wanita['hargapergram']) + $wanita['biaya_produksi']);
+            }elseif ($wanita['jenis'] == 'silver'){
+                $harga_wanita = $wanita['hargapergram'] + (0.1 * $wanita['hargapergram']);
+                $harga = (($berat_pria * (int)$pria['hargapergram']) + $pria['biaya_produksi']) + $harga_wanita;    
+            }else{
+                $harga = (($berat_pria * (int)$pria['hargapergram']) + $pria['biaya_produksi']) + (($berat_wanita * (int)$wanita['hargapergram']) + $wanita['biaya_produksi']);
+            }
+
+            
+            
             DB::table('zepaket')->where('id',$item->id)->update([
                 'pria' => $pria['title'],
                 'wanita' => $wanita['title'],
