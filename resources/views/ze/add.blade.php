@@ -17,11 +17,16 @@
         <form action="<?php echo route('ze.insert');?>" method="post" enctype="multipart/form-data" autocomplete="off">
             <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
             <div class="form-row">
-            <div class="col-md-12 mb-3">
+            <div class="col-md-6 mb-3">
             <label for="berat_pria">Kode Paket</label>
                 <input type="text" class="form-control" name="kode_paket" id="kode_paket" aria-describedby="helpId" placeholder="">
                 <small id="helpId" class="form-text text-muted">Kode Paket / Nama Paket</small>
             </div>  
+            <div class="col-md-6 mb-3">
+            <label for="berat_pria">Type</label>
+                <input type="text" class="form-control" name="type" id="type" aria-describedby="helpId" placeholder="">
+                <small id="helpId" class="form-text text-muted">Tipe</small>
+            </div> 
               <div class="col-md-6">
                 <label for="berat_pria">Berat cincin pria</label>
                 <input type="text" class="form-control" name="berat_pria" id="berat_pria" aria-describedby="helpId" placeholder="">

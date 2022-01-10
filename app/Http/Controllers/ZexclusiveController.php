@@ -47,6 +47,7 @@ Class ZexclusiveController extends Controller{
         $paket->set_wanita = $wanita['hargapergram'].'|'.$wanita['biaya_produksi'].'|'.$wanita['title'];
 
         $paket->harga_paket = ($harga_pria + $harga_wanita);
+        $paket->type = $request->type;
 
 
         $paket->save();
@@ -91,9 +92,11 @@ Class ZexclusiveController extends Controller{
         $paket->set_wanita = $wanita['hargapergram'].'|'.$wanita['biaya_produksi'].'|'.$wanita['title'];
 
         $paket->harga_paket = ($harga_pria + $harga_wanita);
-
+        $paket->type = $request->type;
 
         $paket->save();
+
+        return redirect()->route('ze.index')->with('status','Data pesanan berhasil disimpan');
 
     }
 

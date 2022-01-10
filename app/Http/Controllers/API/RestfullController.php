@@ -260,7 +260,7 @@ class RestfullController extends Controller
  }
 
  function paket(){
-     $paket = DB::table('zepaket')->where('status',1)->orderBy('harga_paket','asc')->get();
+     $paket = DB::table('zepaket')->where('status',1)->where('type',1)->orderBy('harga_paket','asc')->get();
     
      return response()->json([
         'paket' => $paket,

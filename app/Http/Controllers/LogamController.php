@@ -266,7 +266,7 @@ function calc(Request $request){
     //$hargapokok = \App\Setting::whereIn('kunci',['harga_pokok_emas','harga_pokok_palladium','ongkos_bikin','harga_pokok_silver','harga_pokok_platinum','harga_harian_emas','harga_harian_palladium','harga_harian_platinum'])->get();
     $logam = \App\Namalogam::whereNotNull('active')->whereNotNull('persentase_markup')->orderBy('jenis','asc')->orderBy('kadar','asc')->get();
     //$logam = DB::table('namalogam')->whereNotNull('active')->whereNotNull('persentase_markup')->orderBy('jenis','asc')->orderBy('kadar','asc')->get();
-    $setting = DB::table('setting')->where('kunci','ongkir_perak')->first();
+    //$setting = DB::table('setting')->where('kunci','ongkir_perak')->first();
     //dd($setting);
     if ($request->isMethod('post')){
         
@@ -378,11 +378,13 @@ function calc(Request $request){
             
         }
         
-        if ($silver_couple >= 1 && $premium_couple == 0){
-            $total = $harga_pria + $harga_wanita + $setting->isi;    
-        }else{
-            $total = $harga_pria + $harga_wanita;
-        }
+        // if ($silver_couple >= 1 && $premium_couple == 0){
+        //     $total = $harga_pria + $harga_wanita + $setting->isi;    
+        // }else{
+        //     $total = $harga_pria + $harga_wanita;
+        // }
+
+        $total = $harga_pria + $harga_wanita;
 
         //$total = $harga_pria + $harga_wanita;
         $kalkulasi['total'] = $total;
