@@ -48,3 +48,4 @@ Route::get('/detail/{id?}','API\RestfullController@detail');
 Route::get('/paket','API\RestfullController@paket');
 
 Route::get('/log','API\RestfullController@logam');
+Route::get('/get_certificate/{kode}/{item}','API\RestfullController@get_certificate');

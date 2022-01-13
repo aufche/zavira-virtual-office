@@ -279,7 +279,10 @@
                               echo route('pelunasan',['id'=>$item->id,'re'=>'cetak.amplop']);
                             }
                           ?>" target="_blank"><i class="fas fa-envelope-open-text"></i> Cetak Amplop</a>
-                          <a class="dropdown-item" href="<?php echo route('buktidp',['id'=>$item->id]);?>" target="_blank"><i class="fas fa-file-invoice-dollar"></i> Cetak Bukti Pembayaran DP</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="<?php echo route('pesanan.cetak_qr',['id'=>$item->id,'item'=>'pria']);?>" target="_blank" target="popup" onclick="window.open('<?php echo route('pesanan.cetak_qr',['id'=>$item->id,'item'=>'pria']);?>','popup','width=800,height=600'); return false;"><i class="fas fa-file-invoice-dollar"></i> CetakQR Code Pria</a>
+                          <a class="dropdown-item" href="<?php echo route('pesanan.cetak_qr',['id'=>$item->id,'item'=>'wanita']);?>" target="_blank" target="popup" onclick="window.open('<?php echo route('pesanan.cetak_qr',['id'=>$item->id,'item'=>'wanita']);?>','popup','width=800,height=600'); return false;"><i class="fas fa-file-invoice-dollar"></i> CetakQR Code Wanita</a>
+                          <div class="dropdown-divider"></div>
                           <a class="dropdown-item" href="<?php echo route('take',['id'=>$item->id,'template'=>'print']);?>" target="popup" onclick="window.open('<?php echo route('take',['id'=>$item->id,'template'=>'print']);?>','popup','width=800,height=600'); return false;"><i class="fas fa-print"></i> Cetak Kertas Order</a>
                           <a class="dropdown-item" href="<?php echo route('pesanan.tandaterima',['id'=>$item->id]);?>" target="popup" onclick="window.open('<?php echo route('pesanan.tandaterima',['id'=>$item->id]);?>','popup','width=800,height=600'); return false;"><i class="fas fa-print"></i> Cetak Tanda Terima Orderan</a>
                           <div class="dropdown-divider"></div>

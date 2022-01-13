@@ -1111,6 +1111,37 @@ Class PesananController extends Controller{
         }
     }
 
+    function cetak_qr($id, $item){
+        $pesanan = \App\Pesanan::find($id);
+
+        if ($item == 'pria'){
+        
+            $response ['id'] = $pesanan->id;
+            $response ['nama'] = $pesanan->nama;
+            $response ['alamat'] = $pesanan->alamat;
+            $response ['bahan_cincin'] = title_logam($pesanan->bahanpria()->first(),'title');
+            $response ['berat'] = $pesanan->sertifikat_beratpria;
+            $response ['undian'] = $pesanan->undian;
+            $response ['item'] = 'pria';
+            
+         } 
+    
+         if ($item == 'wanita'){
+            
+            $response ['id'] = $pesanan->id;
+            $response ['nama'] = $pesanan->nama;
+            $response ['alamat'] = $pesanan->alamat;
+            $response ['bahan_cincin'] = title_logam($pesanan->bahanwanita()->first(),'title');
+            $response ['berat'] = $pesanan->sertifikat_beratwanita;
+            $response ['undian'] = $pesanan->undian;
+            $response ['item'] = 'wanita';
+            
+         }
+
+        
+        return view('pesanan.cetak_qr',compact('response'));
+    }
+
 
     
 

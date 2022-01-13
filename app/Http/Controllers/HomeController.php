@@ -129,6 +129,7 @@ class HomeController extends Controller
             'grafir' => $request->input('grafir'),
             'skema_baru' => 1,
             'account_id' => $request->input('account_id'),
+            'undian' => str_random(40),
         ];
 
         if (!empty($request->file('gambar'))){

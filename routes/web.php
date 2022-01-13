@@ -71,38 +71,7 @@ Route::prefix('pesanan')->group(function () {
     Route::any('/editlogam/{id?}', 'PesananController@edit_logam')->name('pesanan.edit.logam')->middleware('auth');
     Route::any('/distribusi/{id?}', 'PesananController@distribusi')->name('pesanan.distribusi')->middleware('acl');
    
-    /*Route::get('/take/{id}/{template}', function($id,$template){
-        $data = \App\Pesanan::orderBy('id','desc')->where('id',$id)->with('pengrajin','asal')->get();
-        if ($template=='print'){
-            return view('take',compact('data'));
-        }elseif($template=='ambil'){
-            //return view('ambil',compact('data'));
-
-           // $pdf = PDF::loadView('ambil', ['data'=>$data]);
-            //return $pdf->download('invoice.pdf');
-            
-
-            $x = ['tes'=>'siap'];
-
-            
     
-            Mail::send('emails.welcome', $x, function ($message) use($data) {
-                
-                
-                $pdf = PDF::loadView('ambil', ['data'=>$data]);
-                
-                $message->from('zavirajewelry@gmail.com', 'Zavira Jewelry');
-                $message->replyTo('zavirajewelry@gmail.com', 'Zavira Jewelry');
-                $message->to('bimo.hery@gmail.com','Konsumen')->subject('Bukti Pembayaran DP dari Zavira Jewelry');
-                $message->attachData($pdf->output(), 'filename.pdf');
-            });
-
-            return $pdf->download('invoice.pdf');
-            
-        }
-        
-    })->name('take')->middleware('auth');
-    */
     Route::get('/take/{id}/{template}','HomeController@take')->name('take')->middleware('acl');
 
     Route::get('/pelunasan/{id}/{re}', function($id,$re){
@@ -194,6 +163,7 @@ Route::prefix('pesanan')->group(function () {
     Route::get('/tandaterima/{id}','PesananController@tandaterima')->name('pesanan.tandaterima')->middleware('acl');
     
     Route::any('/ujixrf/{id?}','PesananController@uji_xrf')->name('pesanan.ujixrf')->middleware('acl');
+    Route::get('/cetak_qr/{id}/{item}','PesananController@cetak_qr')->name('pesanan.cetak_qr')->middleware('acl');
     
 
 });
@@ -670,20 +640,22 @@ Route::get('/sh',function(){
 });
 
 Route::get('/das',function(){
-    $client = new \GuzzleHttp\Client();
-    $url = 'http://akuntansi.test/api/invoice';
-    $request = $client->post($url,['form_params'=> [
-            'nama' => 'dono',
-            'nohp' => '23432432',
-            'alamat' => 'Yogya',
-            'harga' => '90000',
-            'pesanan_id' => 12304,
-            'title' => 'cincin kawin ',
-            'deskripsi' => 'cowok emas cewk pall',
-            'harga' => '90000',
+    // $client = new \GuzzleHttp\Client();
+    // $url = 'http://akuntansi.test/api/invoice';
+    // $request = $client->post($url,['form_params'=> [
+    //         'nama' => 'dono',
+    //         'nohp' => '23432432',
+    //         'alamat' => 'Yogya',
+    //         'harga' => '90000',
+    //         'pesanan_id' => 12304,
+    //         'title' => 'cincin kawin ',
+    //         'deskripsi' => 'cowok emas cewk pall',
+    //         'harga' => '90000',
 
-        ]
-    ]);
+    //     ]
+    // ]);
+
+    echo str_random(40);
 });
 
 

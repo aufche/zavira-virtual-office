@@ -266,4 +266,41 @@ class RestfullController extends Controller
         'paket' => $paket,
     ], 201);
  }
+
+ function get_certificate($kode, $item){
+     if ($item == 'pria'){
+        $pesanan = \App\Pesanan::where('undian',$kode)->first();
+       // $response = array();
+       
+        $response ['nama'] = $pesanan->nama;
+        $response ['alamat'] = $pesanan->alamat;
+        $response ['bahan_cincin'] = title_logam($pesanan->bahanpria()->first(),'title');
+        $response ['berat'] = $pesanan->sertifikat_beratpria;
+        
+     } 
+
+     if ($item == 'wanita'){
+        $pesanan = \App\Pesanan::where('undian',$kode)->first();
+       // $response = array();
+       
+        $response ['nama'] = $pesanan->nama;
+        $response ['alamat'] = $pesanan->alamat;
+        $response ['bahan_cincin'] = title_logam($pesanan->bahanwanita()->first(),'title');
+        $response ['berat'] = $pesanan->sertifikat_beratwanita;
+        
+     }
+
+    //  $pesanan = DB::table('pesanan')->select('')where('undian',$kode)->first();
+    //  if ($item == 'wanita') $pesanan = DB::table('pesanan')->select()where('undian',$kode)->first();
+     
+     if (!empty($pesanan)){
+
+        return response()->json([
+            'response' => $response,
+        ], 201);
+
+     }
+     
+     
+ }
 }
