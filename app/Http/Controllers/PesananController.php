@@ -488,19 +488,26 @@ Class PesananController extends Controller{
 
 
     function buyback(Request $request){
+        $namalogam = \App\Namalogam::where('jenis','emas')->orderby('kadar','asc')->whereNotNull('active')->whereNotNull('persentase_markup')->pluck('title','harga_final');
         if ($request->isMethod('post')){
             //-- posted
             $berat = $request->input('berat');
-            $kadar = $request->input('kadar')/100;
-            $potongan = 150000;
+            $harga_final = $request->input('kadar');  // harga jual
+            
             $harga_harian_emas = \App\Setting::where('kunci','harga_harian_emas')->first();
+            //dd($harga_harian_emas);
 
-            $harga_buyback = ($berat * ($kadar * $harga_harian_emas->isi)) - 150000;
+            //$harga_buyback = ($berat * ($kadar * $harga_harian_emas->isi)) - 150000;
+            //$harga_buyback = (($kadar / 100 ) * $harga_harian_emas->isi) * $berat;
+            //$harga_buyback = ($harga_final * $berat) - (0.3 * $harga_final);
+            $harga_buyback = ($harga_final * ($berat - 0.3));
+            //dd($harga_buyback);
             $data = [];
-            array_push($data,['berat'=>$berat,'harga_buyback'=>$harga_buyback,'kadar'=>$kadar]);
-            return view('logam.buyback',compact('data'));
+            array_push($data,['berat'=>$berat,'harga_buyback'=>$harga_buyback]);
+            return view('logam.buyback',compact('data','namalogam'));
         }
-        return view('logam.buyback');
+        
+        return view('logam.buyback', compact('namalogam'));
     }
 
     function hapus($id){

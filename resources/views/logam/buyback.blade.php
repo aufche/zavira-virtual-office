@@ -20,11 +20,14 @@
                 </div>
 
                 <div class="col-md-6 mb-3">
-                <label for="validationDefault04">Kadar</label>
-                <input type="text" name="kadar" class="form-control-lg form-control" required>
-                <p class="form-text text-muted">
-                    Untuk kadar, misal yang dijual kadar 75%, cukup tuliskan 75 saja
-                </p>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Pilihan:</label>
+                    <select class="form-control form-control-lg" id="book" name="kadar">
+                    @foreach ($namalogam as $harga_final => $title)
+                        <option value="{{$harga_final}}">{{$title}}</option>
+                    @endforeach
+                    </select>
+                </div>
                 </div>
 
             </div>
@@ -34,7 +37,7 @@
         <?php
             if (isset($data)){
                 echo 'Berat cincin '.$data[0]['berat'].'gr<br />';
-                echo 'Kadar logam '.($data[0]['kadar']*100).'%<br />';
+                //echo 'Kadar logam '.($data[0]['kadar']*100).'%<br />';
                 echo 'Harga jual kembali '.rupiah($data[0]['harga_buyback']);
                 
             }

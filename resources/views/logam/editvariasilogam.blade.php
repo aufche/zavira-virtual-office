@@ -51,12 +51,12 @@
             <div class="form-row">
             <div class="col-md-3 mb-3">
                 <label for="validationDefault04">Persentase Markup</label>
-                <input type="number" name="persentase_markup" class="form-control" value="<?php echo $data->persentase_markup; ?>" required>
+                <input type="number" name="persentase_markup" class="form-control" value="<?php echo $data->persentase_markup; ?>" >
             </div>
 
             <div class="col-md-3 mb-3">
                 <label for="validationDefault04">Biaya Produksi</label>
-                <input type="number" name="biaya_produksi" class="form-control" value="<?php echo $data->biaya_produksi; ?>" required>
+                <input type="number" name="biaya_produksi" class="form-control" value="<?php echo $data->biaya_produksi; ?>" >
             </div>
 
             
