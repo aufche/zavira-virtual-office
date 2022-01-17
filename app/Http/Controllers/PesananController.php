@@ -488,23 +488,102 @@ Class PesananController extends Controller{
 
 
     function buyback(Request $request){
-        $namalogam = \App\Namalogam::where('jenis','emas')->orderby('kadar','asc')->whereNotNull('active')->whereNotNull('persentase_markup')->pluck('title','harga_final');
-        if ($request->isMethod('post')){
-            //-- posted
-            $berat = $request->input('berat');
-            $harga_final = $request->input('kadar');  // harga jual
-            
-            $harga_harian_emas = \App\Setting::where('kunci','harga_harian_emas')->first();
-            //dd($harga_harian_emas);
+        //$namalogam = \App\Namalogam::where('jenis','emas')->orderby('kadar','asc')->whereNotNull('active')->whereNotNull('persentase_markup')->pluck('title','harga_final');
+        $namalogam = null;
+        $harga_harian_emas = \App\Setting::where('kunci','harga_harian_emas')->first();
+        $emas_pergram = $harga_harian_emas->isi;
 
-            //$harga_buyback = ($berat * ($kadar * $harga_harian_emas->isi)) - 150000;
-            //$harga_buyback = (($kadar / 100 ) * $harga_harian_emas->isi) * $berat;
-            //$harga_buyback = ($harga_final * $berat) - (0.3 * $harga_final);
-            $harga_buyback = ($harga_final * ($berat - 0.3));
-            //dd($harga_buyback);
-            $data = [];
-            array_push($data,['berat'=>$berat,'harga_buyback'=>$harga_buyback]);
-            return view('logam.buyback',compact('data','namalogam'));
+        if ($request->isMethod('post')){
+            $id = $request->no_order;
+            $berat = $request->berat;
+            $item = $request->item;
+
+            $pesanan = \App\Pesanan::find($id);
+            if ($pesanan){
+                if ($item == 'wanita'){
+                    //    // $harga_pergram = $pesanan->sertifikat_hargawanita;
+                    //     $harga_total = ($pesanan->sertifikat_hargawanita * $berat);
+                    //     $potongan = $harga_total * 0.15;
+                    //     //$potongan = 0;
+                    //     $harga_buyback = $harga_total - $potongan;
+                    //     $harga_beli = $harga_total + $pesanan->biaya_produksi_wanita;
+                    if (!empty($pesanan->biaya_produksi_wanita)){
+                            $harga_pergram = (($pesanan->sertifikat_hargawanita *  $pesanan->sertifikat_beratwanita) + $pesanan->biaya_produksi_wanita) / $pesanan->sertifikat_beratwanita;
+                            $harga_total =  ($harga_pergram * $berat);
+                            $potongan = $harga_total * 0.35;
+                            $harga_buyback = $harga_total - $potongan;
+                            $harga_beli = ($pesanan->sertifikat_hargawanita *  $pesanan->sertifikat_beratwanita) + $pesanan->biaya_produksi_wanita;
+                            $bahan = title_logam($pesanan->bahanwanita()->first(),'title');
+
+                            $kode_logam = title_logam($pesanan->bahanwanita()->first(),'kode');
+                            $harga_pergram_update = \App\Namalogam::where('kode',$kode_logam)->first();
+
+                            $harga_total_update = $harga_pergram_update->harga_final * $berat + $pesanan->biaya_produksi_wanita;
+                            $potongan_update = $harga_total_update * 0.35;
+                            $harga_buyback_update = $harga_total_update - $potongan_update;
+
+                        }else{
+                            return redirect()->back()->with('status','Orderan lama, silahkan hitung manual');
+                        }
+                        
+                    }
+        
+                    if ($item == 'pria'){
+                       
+                        if (!empty($pesanan->biaya_produksi_pria)){
+                            $harga_pergram = (($pesanan->sertifikat_hargapria *  $pesanan->sertifikat_beratpria) + $pesanan->biaya_produksi_pria) / $pesanan->sertifikat_beratpria;
+                            $harga_total =  ($harga_pergram * $berat);
+                            $potongan = $harga_total * 0.35;
+                            $harga_buyback = $harga_total - $potongan;
+                            $harga_beli = ($pesanan->sertifikat_hargapria *  $pesanan->sertifikat_beratpria) + $pesanan->biaya_produksi_pria;
+                            $bahan = title_logam($pesanan->bahanpria()->first(),'title');
+
+                            $kode_logam = title_logam($pesanan->bahanpria()->first(),'kode');
+                            $harga_pergram_update = \App\Namalogam::where('kode',$kode_logam)->first();
+
+                            $harga_total_update = $harga_pergram_update->harga_final * $berat + $pesanan->biaya_produksi_pria;
+                            $potongan_update = $harga_total_update * 0.35;
+                            $harga_buyback_update = $harga_total_update - $potongan_update;
+                            
+                        }else{
+                            return redirect()->back()->with('status','Orderan lama, silahkan hitung manual');
+                        }
+                            
+                    }
+                    
+                    // //-- posted
+                    // $berat = $request->input('berat');
+                    // $harga_final = $request->input('kadar');  // harga jual
+        
+                    // $harga_jual_pg = $harga_final / $berat; 
+                    // $potongan = $harga_jual_pg * 0.3;
+        
+                    // $harga_buyback = ($harga_jual_pg * $berat) - $potongan;
+                    
+                    //$harga_harian_emas = \App\Setting::where('kunci','harga_harian_emas')->first();
+                    //dd($harga_harian_emas);
+        
+                    //$harga_buyback = ($berat * ($kadar * $harga_harian_emas->isi)) - 150000;
+                    //$harga_buyback = (($kadar / 100 ) * $harga_harian_emas->isi) * $berat;
+                    //$harga_buyback = ($harga_final * $berat) - (0.3 * $harga_final);
+                    //$harga_buyback = ($harga_final * ($berat - 0.3));
+                    //dd($harga_buyback);
+                    
+                    $data = [];
+                    array_push($data,[
+                            'berat'=>$berat, 
+                            'harga_buyback'=>$harga_buyback, 
+                            'harga_beli' => $harga_beli, 
+                            'pergram' => $harga_pergram,
+                            'bahan' => $bahan,
+                            'harga_buyback_update' => $harga_buyback_update,
+                         ]
+                        );
+                    return view('logam.buyback',compact('data','namalogam'));
+            }else{
+                return redirect()->back()->with('status','No order tidak ditemukan');
+            }
+            
         }
         
         return view('logam.buyback', compact('namalogam'));
