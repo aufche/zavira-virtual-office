@@ -51,13 +51,18 @@
         
         @if (!empty($data))
             <div class="alert alert-warning p-4 mt-3">
+            Prioritas 1 :<br />
+            Jika dihitung berdasarkan harga pada nota pembelian<br />
             Bahan {{$data[0]['bahan']}}<br />
             Berat {{$data[0]['berat']}}gr <br />
             Harga buyback {{rupiah($data[0]['harga_buyback'])}}<br />
             </div>
 
             <div class="alert alert-danger p-4 mt-3">
+            Prioritas 2 :<br />
             Jika dihitung menggunakan harga emas pada hari ini.<br />
+            Bahan {{$data[0]['bahan']}}<br />
+            Berat {{$data[0]['berat']}}gr <br />
             Harga buyback {{rupiah($data[0]['harga_buyback_update'])}}<br />
             </div>
             
