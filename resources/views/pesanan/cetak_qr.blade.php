@@ -12,8 +12,8 @@
                <td valign="top">
                    No. Seri <?php echo $response['id'] ?><br />
                    <?php echo $response['nama'] ?><br />
-                   <?php echo $response['alamat'] ?><br /><br />
-                   <?php echo $response['bahan_cincin'] ?> <?php echo $response['berat'] ?>gr 
+                   +<?php echo $response['nohp'] ?><br /><br />
+                   <?php echo $response['bahan_cincin'] ?><br /> <?php echo $response['berat'] ?>gr 
                </td>
                <td>
                

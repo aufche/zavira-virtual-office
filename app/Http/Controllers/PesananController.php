@@ -1209,6 +1209,7 @@ Class PesananController extends Controller{
             $response ['berat'] = $pesanan->sertifikat_beratpria;
             $response ['undian'] = $pesanan->undian;
             $response ['item'] = 'pria';
+            $response ['nohp'] = $pesanan->nohp;
             
          } 
     
@@ -1221,6 +1222,7 @@ Class PesananController extends Controller{
             $response ['berat'] = $pesanan->sertifikat_beratwanita;
             $response ['undian'] = $pesanan->undian;
             $response ['item'] = 'wanita';
+            $response ['nohp'] = $pesanan->nohp;
             
          }
 
