@@ -279,6 +279,7 @@ function calc(Request $request){
         $biaya_produksi_wanita = 0;
         $silver_couple = 0;
         $premium_couple = 0;
+        
 
         // $hp_emas = $hargapokok[0]->isi;
         // $hp_palladium = $hargapokok[1]->isi;
@@ -306,17 +307,16 @@ function calc(Request $request){
             
             if ($pria->jenis != 'silver'){
 
-                /*if ($pria->jenis == 'emas') $x = $hp_emas;
-                if ($pria->jenis == 'ep') $x = $hp_emas;
-                if ($pria->jenis == 'palladium') $x = $hp_palladium;
-                if ($pria->jenis == 'platinum') $x = $hp_platinum;
-                if ($pria->jenis == 'platidium') $x = (($hp_platinum + $hp_palladium) / 2);
-                */
-
                 $harga_pria = ($pria->harga_final * $berat_pria) + $pria->biaya_produksi;
                 $kadar_pria = $pria->kadar;
                 $harga_pria_pergram = $pria->harga_final;
                 $premium_couple = $premium_couple + 1;
+                if (!empty($request->diskon_pria)){
+                    $diskon = $request->diskon_pria / 100;
+                    $harga_diskon_pria = $harga_pria - ($harga_pria * $diskon);
+                    $kalkulasi['diskon_pria'] = $request->diskon_pria;
+                    $kalkulasi['harga_diskon_pria'] = $harga_diskon_pria;
+                }
 
             }elseif ($pria->jenis == 'silver'){
                 
@@ -335,6 +335,8 @@ function calc(Request $request){
             $kalkulasi['harga_pria_pergram'] = $harga_pria_pergram;
             $kalkulasi['biaya_produksi_pria'] = $pria->biaya_produksi;
             
+            
+            
         }else{
             $kalkulasi['berat_pria']  = null;
         }
@@ -344,17 +346,19 @@ function calc(Request $request){
             //$wanita = DB::table('namalogam')->find($id_wanita);
 
             if ($wanita->jenis !='silver'){
-                /*if ($wanita->jenis == 'emas') $x = $hp_emas;
-                if ($wanita->jenis == 'ep') $x = $hp_emas;
-                if ($wanita->jenis == 'palladium') $x = $hp_palladium;
-                if ($wanita->jenis == 'platinum') $x = $hp_platinum;
-                if ($wanita->jenis == 'platidium') $x = (($hp_platinum + $hp_palladium) / 2);
-                */
-            
+                
                 $harga_wanita = ($wanita->harga_final * $berat_wanita) + $wanita->biaya_produksi;
                 $harga_wanita_pergram = $wanita->harga_final;
                 $kadar_wanita = $wanita->kadar;
                 $premium_couple = $premium_couple + 1;
+
+                if (!empty($request->diskon_wanita)){
+                    $diskon = $request->diskon_wanita / 100;
+                    $harga_diskon_wanita = $harga_wanita - ($harga_wanita * $diskon);
+                    $kalkulasi['diskon_wanita'] = $request->diskon_wanita;
+                    $kalkulasi['harga_diskon_wanita'] = $harga_diskon_wanita;
+                }
+
 
             }elseif ($wanita->jenis == 'silver'){
                 //-- pajak
@@ -385,6 +389,17 @@ function calc(Request $request){
         // }
 
         $total = $harga_pria + $harga_wanita;
+        if (!empty($request->diskon_pria) && !empty($request->diskon_wanita)){
+            $total_coret = $kalkulasi['harga_diskon_pria'] + $kalkulasi['harga_diskon_wanita'];
+            $kalkulasi['total_coret'] = $total_coret;
+        }elseif (empty($request->diskon_pria) && !empty($request->diskon_wanita)){
+            $total_coret = $kalkulasi['harga_pria'] + $kalkulasi['harga_diskon_wanita'];
+            $kalkulasi['total_coret'] = $total_coret;
+        }elseif (!empty($request->diskon_pria) && empty($request->diskon_wanita)){
+            $total_coret = $kalkulasi['harga_diskon_pria'] + $kalkulasi['harga_wanita'];
+            $kalkulasi['total_coret'] = $total_coret;
+        }
+        
 
         //$total = $harga_pria + $harga_wanita;
         $kalkulasi['total'] = $total;

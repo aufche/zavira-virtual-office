@@ -22,6 +22,7 @@
             <td>Berat</td>
             <td>Jenis Logam</td>
             <td>Status</td>
+            <td>Antrian</td>
             <td>Buy Date</td>
             <td>Action</td>
         </tr>
@@ -37,6 +38,12 @@
                     <td><?php echo $item->namalogam->title;?></td>
                     <td><?php if ($item->status == 1) echo 'Belum Dilebur'; else echo 'Sudah Dilebur <i class="fas fa-check-circle"></i>'; ?>
                     <small class="text-muted"><?php echo '<br />'.$item->catatan;?></small></td>
+                    <td><?php
+                        if ($item->antrian == 1)
+                        echo 'Dalam Antrian';
+                        else echo 'Selesai';
+                    ?>
+                    </td>
                     <td><?php echo date('d M Y', strtotime($item->created_at));?></td>
                     <td><a href="<?php echo route('buyback.edit',['id'=>$item->id]);?>" class="btn btn-warning shadow">Action</a> <a href="<?php echo route('buyback.hapus',['id'=>$item->id]);?>" class="btn btn-danger shadow">Hapus</a></td>
                 </tr>

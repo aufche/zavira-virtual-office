@@ -12,17 +12,18 @@ class BuybackController extends Controller
     function insert(Request $request){
         if ($request->isMethod('post')){
             //-- post submited
-            $neraca = new \App\Buyback;
-            $neraca->nominal = $request->nominal;
-            $neraca->namalogam_id = $request->namalogam_id;
-            $neraca->berat = $request->berat;
-            $neraca->user_id = Auth::id();
-            $neraca->pesanan_id = $request->pesanan_id;
-            $neraca->status = $request->status;
-            $neraca->catatan = $request->catatan;
-            $neraca->save();
+            $buyback = new \App\Buyback;
+            $buyback->nominal = $request->nominal;
+            $buyback->namalogam_id = $request->namalogam_id;
+            $buyback->berat = $request->berat;
+            $buyback->user_id = Auth::id();
+            $buyback->pesanan_id = $request->pesanan_id;
+            $buyback->status = $request->status;
+            $buyback->antrian = $request->antrian;
+            $buyback->catatan = $request->catatan;
+            $buyback->save();
 
-            return redirect()->route('buyback.edit',['id'=>$neraca->id])->with('status','Data pesanan berhasil disimpan');
+            return redirect()->route('buyback.edit',['id'=>$buyback->id])->with('status','Data pesanan berhasil disimpan');
 
         }elseif ($request->isMethod('get')){
             $namalogam = DB::table('namalogam')->where('jenis','emas')->orWhere('jenis','ep')->pluck('id','title');
@@ -33,20 +34,21 @@ class BuybackController extends Controller
     function edit(Request $request,$id = null){
         if ($request->isMethod('post')){
             $id = $request->input('id');
-            $neraca = \App\Buyback::find($id);
-            $neraca->nominal = $request->input('nominal');
+            $buyback = \App\Buyback::find($id);
+            $buyback->nominal = $request->input('nominal');
             
-            $neraca->status = $request->input('status');
+            $buyback->status = $request->input('status');
+            $buyback->antrian = $request->antrian;
             
             
-            $neraca->namalogam_id = $request->input('namalogam_id');
-            $neraca->berat = $request->input('berat');
-            $neraca->user_id = Auth::id();
-            $neraca->pesanan_id = $request->input('pesanan_id');
-            $neraca->catatan = $request->input('catatan');
+            $buyback->namalogam_id = $request->input('namalogam_id');
+            $buyback->berat = $request->input('berat');
+            $buyback->user_id = Auth::id();
+            $buyback->pesanan_id = $request->input('pesanan_id');
+            $buyback->catatan = $request->input('catatan');
             
 
-            $neraca->save();
+            $buyback->save();
             return redirect()->route('buyback.index')->with('status','Data pesanan berhasil disimpan');
             
         }else{
@@ -57,7 +59,7 @@ class BuybackController extends Controller
     }
 
     function index(){
-       $data = \App\Buyback::orderBy('id','desc')->simplePaginate(10);
+       $data = \App\Buyback::orderBy('status','desc')->orderBy('antrian','desc')->simplePaginate(10);
        return view('buyback.index',compact('data'));
         
     }

@@ -16,7 +16,7 @@
         <form action="<?php echo route('buyback.insert');?>" method="post">
         <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
             <div class="form-row">
-                <div class="col-md-3 mb-3">
+                <div class="col-md-4 mb-3">
                 <label for="validationDefault03">No Order</label>
                 <input type="text" name="pesanan_id" class="form-control-lg form-control">
                 <p class="form-text text-muted">
@@ -24,7 +24,7 @@
                 </p>
                 </div>
 
-                <div class="col-md-3 mb-3">
+                <div class="col-md-4 mb-3">
                 <label for="validationDefault03">Nominal</label>
                 <input type="text" name="nominal" class="form-control-lg form-control" required>
                 <p class="form-text text-muted">
@@ -32,15 +32,17 @@
                 </p>
                 </div>
 
-                <div class="col-md-1 mb-3">
+                <div class="col-md-4 mb-3">
                 <label for="validationDefault03">Berat</label>
                 <input type="text" name="berat" class="form-control-lg form-control" required>
                 <p class="form-text text-muted">
                     Berat logam 
                 </p>
                 </div>
+            </div>
 
-                <div class="col-md-3 mb-3">
+            <div class="form-row">
+            <div class="col-md-4 mb-3">
                 <label for="validationDefault04">Jenis Logam</label>
                 <select class="form-control form-control-lg mb-3" name="namalogam_id">
                     <option value="" selected="selected">Pilih logam</option>
@@ -54,7 +56,7 @@
                 </select>
                 </div>
 
-                <div class="col-md-2 mb-3">
+                <div class="col-md-4 mb-3">
                 <label for="validationDefault04">Status</label>
                 <select class="form-control form-control-lg mb-3" name="status" required>
                     <option value="1">Belum Dilebur</option>
@@ -63,13 +65,19 @@
                 </select>
                 </div>
 
+                <div class="col-md-4 mb-3">
+                <label for="validationDefault04">Antrian</label>
+                <select class="form-control form-control-lg mb-3" name="antrian" required>
+                    <option value="1">Dalam Antrian</option>
+                    <option value="0">Selesai</option>
+                    
+                </select>
+                </div>
+
                 <div class="col-md-12 mb-3">
                     <label for="validationDefault04">Catatan</label>
                     <textarea class="form-control" rows="5" name="catatan"></textarea>
                 </div>
-
-                
-
             </div>
             <button type="submit" class="btn btn-lg btn-primary btn-block">Submit</button>
         </form>

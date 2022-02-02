@@ -5,7 +5,7 @@
   <div class="container mt-3">
     <div class="col-12">
     <div class="row g-2">
-        <div class="col-md-6 col-xs-2">
+        <div class="col-md-3 col-xs-2">
             <div class="form-floating">
             <input type="number" step="0.1" name="berat_pria" class="form-control" id="floatingInputGrid" placeholder="4" <?php if (isset($kalkulasi)){ echo 'value='.$kalkulasi['berat_pria'].'';} else {echo 'value="4"';  }  ?>>
             <label for="floatingInputGrid">Berat Cincin Pria</label>
@@ -26,12 +26,21 @@
             <label for="floatingSelectGrid">Pilih logam cincin pria</label>
             </div>
         </div>
+
+        <div class="col-md-3 col-xs-2">
+            <div class="form-floating">
+            <input type="number" step="0.1" name="diskon_pria" class="form-control" id="floatingInputGrid"  <?php if (isset($kalkulasi['diskon_pria'])){ echo 'value='.$kalkulasi['diskon_pria'].'';}  ?>>
+            <label for="floatingInputGrid">Diskon(%)</label>
+            </div>
+            <small class="text-muted">Kosongkan jika tidak ada diskon</small>
+        </div>
+
         </div>
     </div>
 
     <div class="col-12 mt-3">
     <div class="row g-2">
-        <div class="col-md-6 col-xs-2">
+        <div class="col-md-3 col-xs-2">
             <div class="form-floating">
             <input type="number" step="0.1" class="form-control" name="berat_wanita" id="floatingInputGrid" placeholder="4" <?php if (isset($kalkulasi)){ echo 'value='.$kalkulasi['berat_wanita'].'';} else {echo 'value="4"';  }  ?>>
             <label for="floatingInputGrid">Berat cincin wanita</label>
@@ -52,6 +61,15 @@
             <label for="floatingSelectGrid">Pilih logam cincin wanita</label>
             </div>
         </div>
+
+        <div class="col-md-3 col-xs-2">
+            <div class="form-floating">
+            <input type="number" step="0.1" name="diskon_wanita" class="form-control" id="floatingInputGrid"  <?php if (isset($kalkulasi['diskon_wanita'])){ echo 'value='.$kalkulasi['diskon_wanita'].'';}  ?>>
+            <label for="floatingInputGrid">Diskon(%)</label>
+            </div>
+            <small class="text-muted">Kosongkan jika tidak ada diskon</small>
+        </div>
+
         <div class="form-check">
   <input class="form-check-input" type="checkbox" value="on" name="detail" <?php if (isset($kalkulasi)){
       if ($kalkulasi['detail'] == 1)
@@ -146,7 +164,39 @@
                     ?>
                     <a role="button" id="terkopi" class="mt-1 mb-3 btn btn-success btn-sm  animate__animated animate__fadeInUp animate__delay-1s" href="#" onclick="CopyToClipboard('sample');return false;">Salin harga paket</a>
                     <?php
-                    
+                    if (!empty($kalkulasi['harga_diskon_pria'])){
+                        ?>
+                        <div class="alert alert-success animate__animated animate__fadeInUp animate__delay-1s">
+                        Pria<br />
+                        Harga coret <del><?php echo rupiah($kalkulasi['harga_pria']);?></del><br />
+                        Harga <?php echo rupiah($kalkulasi['harga_diskon_pria']);?>
+                        </div>
+                        
+                        <?php
+                    }
+
+                    if (!empty($kalkulasi['harga_diskon_wanita'])){
+                        ?>
+                        <div class="alert alert-success animate__animated animate__fadeInUp animate__delay-1s">
+                        Wanita<br />
+                        Harga coret <del><?php echo rupiah($kalkulasi['harga_wanita']);?></del><br />
+                        Harga <?php echo rupiah($kalkulasi['harga_diskon_wanita']);?><br />
+                        </div>
+                        
+                        <?php
+                    }
+
+                    if (!empty($kalkulasi['total_coret'])){
+                        ?>
+                        <div class="alert alert-success animate__animated animate__fadeInUp animate__delay-1s">
+                        Total<br />
+                        Harga coret <del><?php echo rupiah($kalkulasi['total']);?></del><br />
+                        Harga <?php echo rupiah($kalkulasi['total_coret']);?><br />
+                       
+                        </div>
+                        
+                        <?php
+                    }
                 }
             ?>
   </div>

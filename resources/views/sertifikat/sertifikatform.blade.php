@@ -171,7 +171,7 @@
 
         <div class="form-group">
           <label for="sertifikat_gambarcincin">Gambar Cincin Jadi</label>
-          <input type="file" class="form-control form-control-lg-file" name="sertifikat_gambarcincin" id="sertifikat_gambarcincin" placeholder="" aria-describedby="sertifikat_gambarcincin">
+          <input type="file" class="form-control-file form-control-lg-file" name="sertifikat_gambarcincin" id="sertifikat_gambarcincin" placeholder="" aria-describedby="sertifikat_gambarcincin">
           <small id="sertifikat_gambarcincin" class="form-text text-muted">Silahkan upload gambar hasil jadi cincin</small>
         </div>
 

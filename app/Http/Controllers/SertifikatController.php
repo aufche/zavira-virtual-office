@@ -192,6 +192,21 @@ class SertifikatController extends Controller
         if ($item->ispremium == 0 && $item->skema_baru == 1) echo route('sertifikat.silver',['id'=>$item->id]);
         */
 
+        //-- update ke aplikasi akuntasi
+        
+        $nominal_update = ($pesanan->sertifikat_hargapria * $request->input('sertifikat_beratpria')) + $request->input('biaya_produksi_pria') +  ($pesanan->sertifikat_hargawanita * $request->sertifikat_beratwanita) + $request->biaya_produksi_wanita;
+        //$wanita = ($pesanan->sertifikat_hargawanita * $request->sertifikat_beratwanita) + $request->biaya_produksi_wanita;
+
+        //dd($request->all());
+
+        $client = new \GuzzleHttp\Client();
+        $url = 'https://akuntansi.zavirajewelry.com/api/sync';
+        $request = $client->post($url,['form_params'=> [
+                'nominal_update' => $nominal_update,
+                'pesanan_id' => $id,
+            ]
+        ]);
+
 
         if ($pesanan->ispremium == 2 && $pesanan->skema_baru == null) return redirect()->route('sertifikat.premium',['id'=>$id]);
         if ($pesanan->ispremium == 1 && $pesanan->skema_baru == null) return redirect()->route('sertifikat.single',['id'=>$id]);

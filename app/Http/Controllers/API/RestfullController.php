@@ -303,4 +303,12 @@ class RestfullController extends Controller
      
      
  }
+
+ function antrian(){
+     $antrian = DB::table('buyback')->where('antrian',1)->get();
+
+     return response()->json([
+        'response' => $antrian,
+    ], 201);
+ }
 }
