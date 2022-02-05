@@ -26,6 +26,9 @@ class SertifikatController extends Controller
         $toleransi_susut = -0.3; 
         $toleransi_pria = 0;
         $toleransi_wanita = 0;
+        $men = 0;
+        $women = 0;
+        $url_foto = 0;
 
 
 
@@ -39,9 +42,10 @@ class SertifikatController extends Controller
             ]);
      
             $image_name = $request->file('sertifikat_gambarcincin')->getRealPath();
-     
+            
+            $url_foto = upload_gambar($image_name);
+            $pesanan->sertifikat_gambarcincin = $url_foto;
            
-            $pesanan->sertifikat_gambarcincin = upload_gambar($image_name);
         }else{
 
         }
@@ -55,11 +59,19 @@ class SertifikatController extends Controller
 
         if (!empty($request->input('harga_cincin_jika_perak_pria'))){
             $pesanan->sertifikat_hargapria = $request->input('harga_cincin_jika_perak_pria');
+            $men = $request->input('harga_cincin_jika_perak_pria');
+        }else{
+            $men = ($pesanan->sertifikat_hargapria * $request->input('sertifikat_beratpria')) + $request->input('biaya_produksi_pria');
         }
 
         if (!empty($request->input('harga_cincin_jika_perak_wanita'))){
             $pesanan->sertifikat_hargawanita = $request->input('harga_cincin_jika_perak_wanita');
+            $women = $request->input('harga_cincin_jika_perak_wanita');
+        }else{
+            $women = ($pesanan->sertifikat_hargawanita * $request->sertifikat_beratwanita) + $request->biaya_produksi_wanita;
         }
+
+        
         
         if (!empty($request->input('sertifikat_beratpria')) && !empty($request->input('sertifikat_beratwanita')) && $pesanan->ispremium != 0){
             //-- couple
@@ -67,6 +79,8 @@ class SertifikatController extends Controller
             $Produksi_wanita = $pesanan->produksi_beratwanita * $pesanan->produksi_hargawanita;
             $total_produksi = $produksi_pria + $Produksi_wanita + $pesanan->modal_pengrajin + $pesanan->modal_lapis;
             */
+
+            ///$nominal_update = ($pesanan->sertifikat_hargapria * $request->input('sertifikat_beratpria')) + $request->input('biaya_produksi_pria') +  ($pesanan->sertifikat_hargawanita * $request->sertifikat_beratwanita) + $request->biaya_produksi_wanita;
 
             $selisih_pria = $request->input('sertifikat_beratpria') - $pesanan->produksi_beratpria;
            
@@ -194,18 +208,31 @@ class SertifikatController extends Controller
 
         //-- update ke aplikasi akuntasi
         
-        $nominal_update = ($pesanan->sertifikat_hargapria * $request->input('sertifikat_beratpria')) + $request->input('biaya_produksi_pria') +  ($pesanan->sertifikat_hargawanita * $request->sertifikat_beratwanita) + $request->biaya_produksi_wanita;
+        //$nominal_update = ($pesanan->sertifikat_hargapria * $request->input('sertifikat_beratpria')) + $request->input('biaya_produksi_pria') +  ($pesanan->sertifikat_hargawanita * $request->sertifikat_beratwanita) + $request->biaya_produksi_wanita;
         //$wanita = ($pesanan->sertifikat_hargawanita * $request->sertifikat_beratwanita) + $request->biaya_produksi_wanita;
+        $nominal_update = $men + $women;
 
         //dd($request->all());
 
         $client = new \GuzzleHttp\Client();
         $url = 'https://akuntansi.zavirajewelry.com/api/sync';
-        $request = $client->post($url,['form_params'=> [
+        if ($url_foto != 0){
+            $request = $client->post($url,['form_params'=> 
+                [
+                    'nominal_update' => $nominal_update,
+                    'pesanan_id' => $id,
+                    'foto' => $url_foto,
+                ]
+            ]);
+        }else{
+            $request = $client->post($url,['form_params'=> 
+            [
                 'nominal_update' => $nominal_update,
                 'pesanan_id' => $id,
             ]
         ]);
+        }
+        
 
 
         if ($pesanan->ispremium == 2 && $pesanan->skema_baru == null) return redirect()->route('sertifikat.premium',['id'=>$id]);

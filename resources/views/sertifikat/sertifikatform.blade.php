@@ -64,7 +64,7 @@
                       //--- silve 
                       ?>
                       <label for="validationDefault03">Harga untuk cincin pria karena terbuat dari silver</label>
-                      <input type="text" value="<?php echo old('harga_cincin_jika_perak_pria',$data->sertifikat_hargapria);?>" name="harga_cincin_jika_perak_pria" class="form-control form-control-lg" >
+                      <input type="text" value="<?php echo old('harga_cincin_jika_perak_pria',$data->sertifikat_hargapria + ($data->sertifikat_hargapria * 0.1));?>" name="harga_cincin_jika_perak_pria" class="form-control form-control-lg" >
                       <?php
                     }
                     ?>
@@ -116,7 +116,7 @@
                       //--- silve 
                       ?>
                       <label for="validationDefault03">Harga untuk cincin wanita karena terbuat dari silver</label>
-                      <input type="text" value="<?php echo old('harga_cincin_jika_perak_wanita',$data->sertifikat_hargawanita);?>" name="harga_cincin_jika_perak_wanita" class="form-control form-control-lg" >
+                      <input type="text" value="<?php echo old('harga_cincin_jika_perak_wanita',$data->sertifikat_hargawanita + ($data->sertifikat_hargawanita * 0.1));?>" name="harga_cincin_jika_perak_wanita" class="form-control form-control-lg" >
                       <?php
                     }
                     ?>
