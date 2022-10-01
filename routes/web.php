@@ -18,6 +18,7 @@ Route::get('/', function () {
 Route::get('/pakbejo','PesananController@pakbejo')->name('pesanan.pakbejo');
 
 Route::prefix('calc')->group(function (){
+    Route::any('/generate','LogamController@generate')->name('generate.backend');
     Route::any('/','LogamController@calc')->name('kalkulator.backend');
     Route::get('/pricelist','LogamController@pergram')->name('pergram.backend');
     Route::get('/paket/{no?}','LogamController@paket')->name('paket.backend');
